@@ -2,12 +2,35 @@
 # least squares fits.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-1-18
+# last revision: 2006-4-21
 #
 
 from Scientific import N, LA
 from FirstDerivatives import DerivVar
 from Scientific import IterationCountExceededError
+
+"""
+X{Non-linear least squares} fitting.
+
+Usage example::
+
+    from Numeric import exp
+
+    def f(param, t):
+        return param[0]*exp(-param[1]/t)
+
+    data_quantum = [(100, 3.445e+6),(200, 2.744e+7),
+                    (300, 2.592e+8),(400, 1.600e+9)]
+    data_classical = [(100, 4.999e-8),(200, 5.307e+2),
+                      (300, 1.289e+6),(400, 6.559e+7)]
+
+    print leastSquaresFit(f, (1e13,4700), data_classical)
+
+    def f2(param, t):
+        return 1e13*exp(-param[0]/t)
+
+    print leastSquaresFit(f2, (3000.,), data_quantum)
+"""
 
 def _chiSquare(model, parameters, data):
     n_param = len(parameters)
@@ -26,32 +49,36 @@ def _chiSquare(model, parameters, data):
 def leastSquaresFit(model, parameters, data, max_iterations=None,
                     stopping_limit = 0.005):
     """General non-linear least-squares fit using the
-    Levenberg-Marquardt algorithm and automatic derivatives.
+    X{Levenberg-Marquardt} algorithm and X{automatic differentiation}.
 
-    The parameter |model| specifies the function to be fitted. It will be
-    called with two parameters: the first is a tuple containing all fit
-    parameters, and the second is the first element of a data point (see
-    below). The return value must be a number.  Since automatic
-    differentiation is used to obtain the derivatives with respect to the
-    parameters, the function may only use the mathematical functions known
-    to the module FirstDerivatives.
+    @param model: the function to be fitted. It will be called
+        with two parameters: the first is a tuple containing all fit
+        parameters, and the second is the first element of a data point (see
+        below). The return value must be a number.  Since automatic
+        differentiation is used to obtain the derivatives with respect to the
+        parameters, the function may only use the mathematical functions known
+        to the module FirstDerivatives.
+    @type param: callable
 
-    The parameter |parameter| is a tuple of initial values for the
-    fit parameters.
+    @param parameters: a tuple of initial values for the
+        fit parameters
+    @type parameters: C{tuple} of numbers
 
-    The parameter |data| is a list of data points to which the model
-    is to be fitted. Each data point is a tuple of length two or
-    three. Its first element specifies the independent variables
-    of the model. It is passed to the model function as its first
-    parameter, but not used in any other way. The second element
-    of each data point tuple is the number that the return value
-    of the model function is supposed to match as well as possible.
-    The third element (which defaults to 1.) is the statistical
-    variance of the data point, i.e. the inverse of its statistical
-    weight in the fitting procedure.
+    @param data: a list of data points to which the model
+        is to be fitted. Each data point is a tuple of length two or
+        three. Its first element specifies the independent variables
+        of the model. It is passed to the model function as its first
+        parameter, but not used in any other way. The second element
+        of each data point tuple is the number that the return value
+        of the model function is supposed to match as well as possible.
+        The third element (which defaults to 1.) is the statistical
+        variance of the data point, i.e. the inverse of its statistical
+        weight in the fitting procedure.
+    @type data: C{list}
 
-    The function returns a list containing the optimal parameter values
-    and the chi-squared value describing the quality of the fit.
+    @returns: a list containing the optimal parameter values
+        and the chi-squared value describing the quality of the fit
+    @rtype: C{(list, float)}
     """
     n_param = len(parameters)
     p = ()
@@ -79,23 +106,35 @@ def leastSquaresFit(model, parameters, data, max_iterations=None,
         niter = niter + 1
         if max_iterations is not None and niter == max_iterations:
             raise IterationCountExceededError
-    return map(lambda p: p[0], next_p), next_chi_sq[0]
+    return [p[0] for p in next_p], next_chi_sq[0]
 
 #
 # The special case of n-th order polynomial fits
 # was contributed by David Ascher. Note: this could also be
 # done with linear least squares, e.g. from LinearAlgebra.
 #
-def polynomialModel(params, t):
+def _polynomialModel(params, t):
     r = 0.0
     for i in range(len(params)):
         r = r + params[i]*N.power(t, i)
     return r
 
 def polynomialLeastSquaresFit(parameters, data):
-    """Least-squares fit to a polynomial whose order is defined by
-    the number of parameter values."""
-    return leastSquaresFit(polynomialModel, parameters, data)
+    """
+    Least-squares fit to a polynomial whose order is defined by
+    the number of parameter values.
+
+    @note: This could also be done with a linear least squares fit
+        from L{LinearAlgebra}
+
+    @param parameters: a tuple of initial values for the polynomial
+        coefficients
+    @type parameters: C{tuple}
+
+    @param data: the data points, as for L{leastSquaresFit}
+    @type data: C{list}
+    """
+    return leastSquaresFit(_polynomialModel, parameters, data)
 
 
 # Test code
