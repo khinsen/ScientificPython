@@ -1,23 +1,8 @@
 # High-level parallelization classes
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-26
+# last revision: 2006-4-28
 #
-
-"""This module contains high-level parallelization constructs
-based on the Bulk Synchronous Parallel (BSP) model.
-
-Parallelization requires a low-level communications library, which can
-be either BSPlib or MPI. Programs must be run with the bsppython or
-mpipython executables in order to use several processors. When run
-with a standard Python interpreter, only one processor is available.
-
-A warning about object identity: when a communication operation
-transmits a Python object to the same processor, the object in the
-return list can either be the sent object or a copy of it. Application
-programs thus should not make any assumptions about received objects
-being different from sent objects.
-"""
 
 _undocumented = 1
 
@@ -271,7 +256,8 @@ def global_object(local_object):
 #
 class ParValue(object):
 
-    """Global data
+    """
+    Global data
 
     ParValue instances are created internally, but are not meant to be
     created directly by application programs. Use the subclasses instead.
@@ -283,7 +269,14 @@ class ParValue(object):
     if their local values are callable.
     """
 
-    def __init__(self, value, valid=1):
+    def __init__(self, value, valid=True):
+        """
+        @param value: the local value
+        @type value: any
+        @param valid: C{True} if the value is valid, C{False} if it is not.
+        Invalid values are not treated, any operation on them produces
+        an invalid result.
+        """
         self.value = value
         self.valid = valid
 
@@ -318,10 +311,15 @@ class ParValue(object):
             return ParValue(None, 0)
 
     def put(self, pid_list):
-        """Sends the local data to all processors in |pid_list| (a global
-        object). Returns a ParValue object whose local value is a list of
+        """
+        Send the local data to all specified processors.
+
+        @param pid_list: a list of processor IDs to which the data is sent.
+        @type pid_list: Global C{list} of C{int}
+        @returns: a global object whose local value is a list of
         all the data received from other processors. The order of the
         data in that list is not defined.
+        @rtype: L{ParValue}
         """
         if self.valid:
             if not pid_list.valid:
@@ -330,10 +328,15 @@ class ParValue(object):
         return ParValue(retrieveMessages())
 
     def get(self, pid_list):
-        """Requests the local data from all processors in |pid_list| (a global
-        object). Returns a ParValue object whose local value is a list of
+        """
+        Request the local data from all specified processors.
+
+        @param pid_list: a list of processor IDs to which the data is sent.
+        @type pid_list: Global C{list} of C{int}
+        @returns: a global object whose local value is a list of
         all the data received from other processors. The order of the
         data in that list is not defined.
+        @rtype: L{ParValue}
         """
         if not pid_list.valid:
             raise ValueError("Invalid processor ID list")
@@ -344,8 +347,13 @@ class ParValue(object):
         return ParValue(retrieveMessages())
 
     def broadcast(self, from_pid=0):
-        """Transmits the local data on processor |from_pid| to all
-        processors. Returns a ParValue object.
+        """
+        Transmit the local data of one processor to all processors.
+
+        @param from_pid: the ID of the processor that sends data
+        @type from_pid: C{int}
+        @returns: the transmitted data on all processors
+        @rtype: L{ParValue}
         """
         if processorID == from_pid:
             if self.valid:
@@ -355,18 +363,26 @@ class ParValue(object):
         return ParValue(retrieveMessages()[0])
 
     def fullExchange(self):
-        """Transmits the local data of each processor to all other
-        processors. Returns a ParValue object.
+        """
+        Transmit the local data of each processor to all other processors.
+
+        @returns: the transmitted data on all processors
+        @rtype: L{ParValue}
         """
         if self.valid:
             put(self.value, range(numberOfProcessors))
         return ParValue(retrieveMessages())
 
     def reduce(self, operator, zero):
-        """Performs a reduction with |operator| over the local values
-        of all processors using |zero| as initial value. The result
-        is a ParValue object with the reduction result on processor 0
-        and |zero| on all other processors.
+        """
+        Perform a reduction over the local values of all processors.
+
+        @param operator: the binary operator used in the reduction
+        @type operator: function of two variables
+        @param zero: the initial value of the reduction
+        @type zero: any
+        @returns: the reduction on processor 0, zero elsewhere
+        @rtype: L{ParValue}
         """
         if self.valid:
             put(self.value, [0])
@@ -374,11 +390,16 @@ class ParValue(object):
                         processorID == 0)
 
     def accumulate(self, operator, zero):
-        """Performs an accumulation with |operator| over the local values
-        of all processors using |zero| as initial value. The result
-        is a ParValue object whose local value on each processor is the
-        reduction of the values from all processors with lower or equal
-        number.
+        """
+        Perform an accumulation over the local values of all processors.
+
+        @param operator: the binary operator used in the accumulation
+        @type operator: function of two variables
+        @param zero: the initial value of the accumulation
+        @type zero: any
+        @returns: on each processor, the reduction of the values from
+        processors with a lower or equal number
+        @rtype: L{ParValue}
         """
         if self.valid:
             data = self
@@ -393,8 +414,9 @@ class ParValue(object):
         return operator.truth(self.value)
 
     def alltrue(self):
-        """Returns 1 (local value) if the local values on all
-        processors are true.
+        """
+        @returns: C{True} if the local values on all processors are true.
+        @rtype: Local C{bool}
         """
         if self.valid:
             put(operator.truth(self.value), [0])
@@ -405,8 +427,10 @@ class ParValue(object):
         return sync()[0]
 
     def anytrue(self):
-        """Returns 1 (local value) if at least one of the local values on all
+        """
+        @returns: C{True} if at least one of the local values on all
         processors is true.
+        @rtype: Local C{bool}
         """
         if self.valid:
             put(operator.truth(self.value), [0])
@@ -561,16 +585,16 @@ class ParConstant(ParValue):
 
     """Global constant
 
-    A subclass of ParValue.
-
-    Constructor: ParConstant(|value|)
-
-    Arguments:
-
-    |value| -- any local or global object
+    A subclass of ParValue that stores an identical value on each processor.
+    It must be called with the same argument on all processors, but this
+    is not verified in the current implementation.
     """
 
     def __init__(self, value):
+        """
+        @param value: any local or global object
+        @type value: any
+        """
         if hasattr(value, 'is_parvalue'):
             self.value = value.value
         else:
@@ -583,20 +607,21 @@ class ParConstant(ParValue):
 #
 class ParData(ParValue):
 
-    """Global data
+    """
+    Global data
 
-    A subclass of ParValue
-
-    Constructor: ParData(|function|)
-
-    Arguments:
-
-    |function| -- a function of two arguments (processor number and
-                  number of processors in the machine) whose return
-                  value becomes the local value of the global object.
+    A subclass of ParValue that calculates its local value from the
+    processor number.
     """
 
     def __init__(self, function):
+        """
+        @param function: a function that is called with two arguments
+                         (processor number and number of processors
+                         in the system) and whose return value becomes
+                         the local value of the global object.
+        @type function: function of two arguments
+        """
         self.value = function(processorID, numberOfProcessors)
         self.valid = 1
 
@@ -605,22 +630,21 @@ class ParData(ParValue):
 #
 class ParSequence(ParValue):
 
-    """Global distributed sequence
+    """
+    Global distributed sequence
 
-    A subclass of ParValue.
-
-    Constructor: ParSequence(|full_sequence|)
-
-    Arguments:
-
-    |full_sequence| -- any indexable and sliceable Python sequence
-
-    The local value of a ParSequence object is a slice of |full_sequence|,
+    The local value of a ParSequence object is a slice of the input sequence,
     which is constructed such that the concatenation of the local values
-    of all processors equals |full_sequence|.
+    of all processors equals the input sequence while making the number of
+    elements on each processor as equal as possible.
     """
 
     def __init__(self, full_sequence):
+        """
+        @param full_sequence: the full sequence, equal to the concatenation
+        of the local values of all processors
+        @type full_sequence: arbitrary sequence object
+        """
         if hasattr(full_sequence, 'is_parvalue'):
             if not full_sequence.valid:
                 self.valid = 0
@@ -635,9 +659,21 @@ class ParSequence(ParValue):
         self.valid = 1
 
     def totalLength(self):
+        """
+        @returns: the sum of the lengths of the local values
+        @rtype: C{int}
+        """
         return ParValue(self.length)
 
     def __getitem__(self, item):
+        """
+        @param item: an index into the total sequence
+        @type item: C{int} or L{ParIndex}
+        @returns: the element referred to by the index, if it is in the local
+        subset
+        @rtype: any
+        @raise IndexError: if the index refers to an item on another processor
+        """
         if not self.valid:
             return ParValue(None, 0)
         if hasattr(item, 'is_parindex'):
@@ -666,39 +702,43 @@ class ParSequence(ParValue):
 #
 class ParMessages(ParValue):
 
-    """Global message list
-
-    A subclass of ParValue.
-
-    Constructor: ParMessage(|messages|)
-
-    Arguments:
-
-    |messages| -- a global object whose local value is a list of
-                  (pid, data) pairs.
+    """
+    Global message list
     """
 
     def __init__(self, messages):
+        """
+        @param messages: a global object whose local value is a list of
+                         (pid, data) pairs.
+        @type messages: Global sequence
+        """
         if hasattr(messages, 'is_parvalue'):
             messages = messages.value
         self.value = messages
         self.valid = 1
 
     def processorIds(self):
-        """Returns a ParValue object whose local value is a list of
-        all processor Ids referenced in a message.
+        """
+        @returns: a global object whose local value is a list of
+        all processor Ids referenced in a message
+        @rtype: L{ParValue}
         """
         return ParValue(map(lambda x: x[0], self.value))
 
     def data(self):
-        """Returns a ParValue object whose local value is a list of
+        """
+        @returns:  a global object whose local value is a list of
         all data items in the messages.
+        @rtype: L{ParValue}
         """
         return ParValue(map(lambda x: x[1], self.value))
 
     def exchange(self):
-        """Sends all the messages and returns a ParValue object
-        containing the received messages.
+        """
+        Transmit all the messages
+
+        @returns: a global object containing the received messages
+        @rtype: L{ParValue}
         """
         if self.valid:
             send(self.value)
@@ -709,15 +749,8 @@ class ParMessages(ParValue):
 #
 class ParTuple(ParValue):
 
-    """Global data tuple
-
-    A subclass of ParValue.
-
-    Constructor: ParTuple(|x1|, |x2|, ...)
-
-    Arguments:
-
-    |x1|, |x2|, ... -- global objects
+    """
+    Global data tuple
 
     ParTuple objects are used to speed up communication when many data
     items need to be sent to the same processors. The construct
@@ -726,6 +759,10 @@ class ParTuple(ParValue):
     """
 
     def __init__(self, *args):
+        """
+        @param args: any global objects
+        @type args: C{tuple}
+        """
         self.value = map(lambda pv: pv.value, args)
         self.valid = reduce(operator.and_, map(lambda pv: pv.valid, args))
 
@@ -743,40 +780,39 @@ class ParTuple(ParValue):
 #
 class ParAccumulator(ParValue):
 
-    """Global accumulator
-
-    A subclass of ParValue.
-
-    Constructor: ParAccumulator(|operator|, |zero|)
-
-    Arguments:
-
-    |operator| -- a local function taking two arguments and returning
-                  one argument of the same type.
-
-    |zero| -- an initial value for reduction.
+    """
+    Global accumulator
 
     ParAccumulator objects are used to perform iterative reduction
-    operations in loops. The initial local value is |zero|, which is
+    operations in loops. The initial local value is zero (i.e. the
+    passed-in zero object, not the number 0), which is
     modified by subsequent calls to the method addValue.
     """
 
     def __init__(self, operator, zero):
+        """
+        @param operator: a local function taking two arguments and returning
+                         one argument of the same type
+        @type operator: function of two variables
+        @param zero: the initial value for reduction
+        """
         self.operator = operator
         self.zero = zero
         self.value = zero
         self.valid = 1
 
     def addValue(self, value):
-        """Replaces the internal value of the accumulator by
+        """
+        Replace the internal value of the accumulator by
         internal_value = operator(internal_value, value).
         """
         if value.valid:
             self.value = self.operator(self.value, value.value)
 
     def calculateTotal(self):
-        """Performs a reduction operation over the current local
-        values on all processors. Returns a ParValue object.
+        """
+        @returns: a reduction over the local values on all processors
+        @rtype: L{ParValue}
         """
         return self.reduce(self.operator, self.zero)
 
@@ -788,20 +824,16 @@ class ParFunction(ParValue):
 
     """Global function
 
-    A subclass of ParValue.
-
-    Constructor: ParFunction(|local_function|)
-
-    Arguments:
-
-    |local_function| -- a local function
-
     Global functions are called with global object arguments.
     The local values of these arguments are then passed to the local
     function, and the result is returned in a ParValue object.
     """
 
     def __init__(self, local_function):
+        """
+        @param local_function: any function
+        @type local_function: callable
+        """
         self.value = local_function
         self.valid = 1
 
@@ -821,11 +853,6 @@ class ParRootFunction(ParFunction):
 
     Arguments:
 
-    |root_function| -- the local function for processor 0
-
-    |other_function| -- the local function for all other processors. The
-                        default is a function that returns None.
-
     Global functions are called with global object arguments.
     The local values of these arguments are then passed to the local
     function, and the result is returned in a ParValue object.
@@ -836,6 +863,13 @@ class ParRootFunction(ParFunction):
     """
 
     def __init__(self, local_function, other_function=None):
+        """
+        @param root_function: the local function for processor 0
+        @type root_function: callable
+        @param other_function: the local function for all other processors.
+                               The default is a function that returns None.
+        @type other_function: callable
+        """
         if processorID == 0:
             self.value = local_function
         else:
@@ -851,6 +885,12 @@ class ParRootFunction(ParFunction):
 #
 class ParIndex(object):
 
+    """
+    Parallel index value
+
+    ParIndex objects are returned by ParIndexIterator. They are not meant
+    ot be created in any other way.
+    """
     def __init__(self, index, valid=1):
         if hasattr(index, 'is_parvalue'):
             self.valid = index.valid
@@ -874,6 +914,9 @@ class ParIndex(object):
 
 class ParSlice(ParIndex):
 
+    """
+    Parallel slice value
+    """
     def __init__(self, start=0, stop=None, skip=1, valid=1):
         self.start = start
         self.stop = stop
@@ -890,14 +933,13 @@ class ParSlice(ParIndex):
 #
 class ParIterator(object):
 
-    """Parallel iterator
+    """
+    Parallel iterator
 
     Constructor: ParIterator(|global_sequence|)
 
     Arguments:
 
-    |global_sequence| -- a global object representing a distributed
-                         sequence
 
     A ParIterator is used to loop element by element over a distributed
     sequence. At each iteration, the returned item (a global object)
@@ -905,6 +947,11 @@ class ParIterator(object):
     """
 
     def __init__(self, sequence):
+        """
+        @param global_sequence: a global object representing a distributed
+                                sequence
+        @type global_sequence: L{ParSequence}
+        """
         self.sequence = sequence.value
         self.n = len(sequence.value)
         self.max_n = ParValue(self.n).reduce(max, 0).broadcast().value
@@ -921,23 +968,22 @@ class ParIterator(object):
 #
 class ParIndexIterator(object):
 
-    """Parallel index iterator
-
-    Constructor: ParIndexIterator(|global_sequence|)
-
-    Arguments:
-
-    |global_sequence| -- a global object representing a distributed
-                         sequence
+    """
+    Parallel index iterator
 
     A ParIndexIterator is used to loop index by index over one or more
     distributed sequences. At each iteration, the returned item (a
-    global index object) contains indices of different elements of the
+    L{ParIndex} object) contains indices of different elements of the
     distributed sequence(s). The index objects can be used to index
     any ParValue object whose local value is a sequence object.
     """
 
     def __init__(self, sequence):
+        """
+        @param global_sequence: a global object representing a distributed
+                                sequence
+        @type global_sequence: L{ParSequence}
+        """
         self.n = len(sequence.value)
         self.max_n = ParValue(self.n).reduce(max, 0).broadcast().value
 
@@ -954,18 +1000,13 @@ class ParIndexIterator(object):
 #
 class ParClass(object):
 
-    """Global class
-
-    Constructor: ParClass(|local_class|)
-
-    Arguments:
-
-    |local_class| -- a local class
+    """
+    Global class
 
     Global classes are needed to construct global objects that
     have more functionalities than offered by the ParValue class hierarchy.
     When an instance of a global class is generated, each processor
-    generates an instance of |local_class| that becomes the local value
+    generates an instance of the local class that becomes the local value
     of the new global object. Attribute requests and method calls
     are passed through to the local objects and the results are
     assembled into global objects (ParValue or ParFunction). The arguments
@@ -983,9 +1024,12 @@ class ParClass(object):
     """
 
     def __init__(self, local_class):
+        """
+        @param local_class: a standard Python class
+        """
         self.local_class = local_class
         self.attributes = {}
-        self.collectAttributes(local_class, self.attributes)
+        self._collectAttributes(local_class, self.attributes)
         try:
             del self.attributes['__init__']
         except KeyError:
@@ -1049,16 +1093,16 @@ class ParClass(object):
         self.wrapper.local_class = local_class
         _wrappers[local_class] = self.wrapper
 
-    def collectAttributes1(self, klass, attrib_dict):
+    def _collectAttributes1(self, klass, attrib_dict):
         for key in klass.__dict__.keys():
             if key not in ['__doc__', '__module__', '__name__', '__bases__']:
                 if not attrib_dict.has_key(key):
                     attrib_dict[key] = getattr(klass, key)
 
-    def collectAttributes(self, klass, attrib_dict):
-        self.collectAttributes1(klass, attrib_dict)
+    def _collectAttributes(self, klass, attrib_dict):
+        self._collectAttributes1(klass, attrib_dict)
         for base_class in klass.__bases__:
-            self.collectAttributes(base_class, attrib_dict)
+            self._collectAttributes(base_class, attrib_dict)
             
     def __call__(self, *args, **kwargs):
         args = (processorID, numberOfProcessors) + args
@@ -1089,6 +1133,13 @@ _wrappers[_ParInvalid] = lambda x: ParValue(None, 0)
 # on all processors.
 #
 class ParMethod(ParFunction):
+
+    """
+    Method of a global class
+
+    ParMethod objects are created by ParClass. They are not meant to be used
+    directly in application code.
+    """
 
     def __init__(self, local_function, local_instance):
         self.value = local_function
@@ -1125,7 +1176,8 @@ class ParMethod(ParFunction):
 #
 class ParBase(object):
 
-    """Distributed data base class
+    """
+    Distributed data base class
 
     Local classes that are to be used in global classes
     must inherit from this class.
@@ -1134,15 +1186,30 @@ class ParBase(object):
     is_parclass = 1
 
     def put(self, data, pid_list):
-        """Send |data| to all processors in |pid_list|. Returns the list
-        of received objects.
+        """
+        Send data to other processors
+
+        @param data: the data to be sent
+        @type data: any
+        @param pid_list: the list of processor numbers to which the data is sent
+        @type pid_list: C{list}
+        @returns: the values received from other processors
+        @rtype: C{list}
         """
         put(data, pid_list)
         return retrieveMessages()
 
     def get(self, data, pid_list):
-        """Requests the local values of |data| of all processors in |pid_list|.
-        Returns the list of received objects.
+        """
+        Request the local values of other processors.
+
+        @param data: the data to be sent to processors who request it
+        @type data: any
+        @param pid_list: the list of processor numbers to which data requests
+                         are sent
+        @type pid_list: C{list}
+        @returns: the values received from other processors
+        @rtype: C{list}
         """
         put(processorID, pid_list)
         destinations = sync()
@@ -1150,16 +1217,26 @@ class ParBase(object):
         return retrieveMessages()
 
     def broadcast(self, data, from_pid=0):
-        """Sends the local value of |data| on processor |from_pid| to
-        all processors. Returns the received object.
+        """
+        Send a local value of one processor to all processors.
+
+        @param data: the data to be transmitted. This value is used
+                     only on one processor.
+        @param from_pid: the processor whose data is broadcast
+        @type from_pid: any
+        @returns: the received data
+        @rtype: any
         """
         if processorID == from_pid:
             put(data, range(numberOfProcessors))
         return retrieveMessages()[0]
 
     def exchangeMessages(self, message_list):
-        """Sends the (pid, data) messages in |message_list| to the destination
-        processors. Returns the list of incoming data.
+        """
+        @param message_list: a list of (pid, data) pairs to be transmitted
+        @type message_list: C{list}
+        @returns: the incoming data
+        @rtype: C{list}
         """
         send(message_list)
         return retrieveMessages()
