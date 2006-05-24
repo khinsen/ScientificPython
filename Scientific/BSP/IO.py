@@ -1,10 +1,11 @@
 # Parallel IO
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-28
 #
 
-"""This module provides parallel acces to netCDF files. One netCDF dimension
+"""
+This module provides parallel acces to netCDF files. One netCDF dimension
 is defined for splitting the data among processors such that each processor
 is responsible for one slice of the file along that dimension.
 
@@ -22,30 +23,6 @@ class _ParNetCDFFile(ParBase):
 
     """Distributed netCDF file
 
-    Constructor: ParNetCDFFile(|filename|, |split_dimension|, |mode|='r',
-                               |local_access| = 0)
-
-    Arguments:
-
-    |filename| -- the name of the netCDF file
-
-    |split_dimension| -- the name of the dimension along which the data
-                         is distributed over the processors
-
-    |mode| -- read ('r'), write ('w'), or append ('a'). Default is 'r'.
-
-    |local_access| -- if 0 (default), processor 0 is the only one to access
-                      the file, all others communicate with processor 0. If
-                      1 (only for reading), each processor accesses the
-                      file directly. In the latter case, the file must be
-                      accessible on all processors under the same name.
-                      A third mode is 'auto', which uses some heuristics
-                      to decide if the file is accessible everywhere:
-                      it checks for existence of the file, then compares
-                      the size on all processors, and finally verifies
-                      that the same variables exist everywhere, with
-                      identical names, types, and sizes.
-
     A ParNetCDFFile object acts as much as possible like a NetCDFFile object.
     Variables become ParNetCDFVariable objects, which behave like
     distributed sequences. Variables that use the dimension named by
@@ -54,7 +31,29 @@ class _ParNetCDFFile(ParBase):
     """
 
     def __parinit__(self, pid, nprocs, filename, split_dimension,
-                    mode = 'r', local_access = 0):
+                    mode = 'r', local_access = False):
+        """
+        @param filename: the name of the netCDF file
+        @type filename: C{str}
+        @param split_dimension: the name of the dimension along which the data
+                                is distributed over the processors
+        @type split_dimension: C{str}
+        @param mode: read ('r'), write ('w'), or append ('a')
+        @type mode: C{str}
+        @param local_access: if C{False}, processor 0 is the only one to
+                             access the file, all others communicate with
+                             processor 0. If C{True} (only for reading), each
+                             processor accesses the file directly. In the
+                             latter case, the file must be accessible on all
+                             processors under the same name. A third mode is
+                             'auto', which uses some heuristics to decide
+                             if the file is accessible everywhere: it checks
+                             for existence of the file, then compares
+                             the size on all processors, and finally verifies
+                             that the same variables exist everywhere, with
+                             identical names, types, and sizes.
+        @type local_access: C{bool} or C{str}
+        """
         if mode != 'r':
             local_access = 0
         self.pid = pid
