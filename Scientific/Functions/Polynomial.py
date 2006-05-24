@@ -1,7 +1,7 @@
 # This module defines a multivariate polynomial class
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-27
 #
 
 from Scientific import N, LA; Numeric = N; LinearAlgebra = LA
@@ -11,25 +11,35 @@ from Scientific.indexing import index_expression
 
 class Polynomial:
 
-    """Multivariate polynomial
+    """X{Multivariate} X{polynomial}
 
     Instances of this class represent polynomials of any order and
-    in any number of variables. They can be evaluated like functions.
-
-    Constructor: Polynomial(|coefficients|), where |coefficients| is
-    an array whose dimension defines the number of variables and whose
-    length along each axis defines the order in the corresponding
-    variable. The coefficients are ordered according to increasing
-    powers, i.e.\ [1., 2.] stands for 1.+2.*x.
+    in any number of variables. The coefficients and thus the values
+    can be real or complex. Polynomials can be evaluated like functions.
     """
 
     def __init__(self, coefficients):
+        """
+        @param coefficients: an M{N}-dimnesional array for a polynomial
+            in M{N} variables. C{coeffcients[i, j, ...]} is the coefficient
+            of M{x_1^i x_2^j ...}
+        @type coefficients: C{Numeric.array} or nested list of numbers
+        """
         self.coeff = Numeric.array(coefficients)
         self.dim = len(self.coeff.shape)
 
     is_polynomial = 1
 
     def __call__(self, *args):
+        """
+        @param args: tuple of values, one for each variable of the
+            polynomial
+        @type args: C{tuple} of numbers
+        @returns: the value of the polynomial at the given point
+        @rtype: number
+        @raise TypeError: if the number of arguments is not equal
+            to the number of variable of the polynomial
+        """
         if len(args) != self.dim:
             raise TypeError('Wrong number of arguments')
         p = _powers(args, self.coeff.shape)
@@ -87,7 +97,13 @@ class Polynomial:
         return RationalFunction(other, self)
 
     def derivative(self, variable=0):
-        "Returns the derivative with respect to |variable|."
+        """
+        @param variable: the index of the variable with respect to which
+            the X{derivative} is taken
+        @type variable: C{int}
+        @returns: a polynomial of reduced order in one variable
+        @rtype: L{Polynomial}
+        """
         n = self.coeff.shape[variable]
         if n == 1:
             return Polynomial(apply(Numeric.zeros, self.dim*(1,)))
@@ -100,7 +116,13 @@ class Polynomial:
         return Polynomial(factor*self.coeff[index])
 
     def integral(self, variable=0):
-        "Returns the indefinite integral with respect to |variable|."
+        """
+        @param variable: the index of the variable with respect to which
+            the X{integral} is computed
+        @type variable: C{int}
+        @returns: a polynomial of higher order in one variable
+        @rtype: L{Polynomial}
+        """
         n = self.coeff.shape[variable]
         factor = 1./Numeric.arange(1.,n+1)
         factor = factor[index_expression[::] +
@@ -113,7 +135,15 @@ class Polynomial:
         return Polynomial(intcoeff)
 
     def zeros(self):
-        "Returns an array containing the zeros (one variable only)."
+        """
+        Find the X{zeros} (X{roots}) of the polynomial by diagonalization
+        of the associated Frobenius matrix.
+
+        @returns: an array containing the zeros
+        @rtype: C{Numeric.array}
+        @note: this is defined only for polynomials in one variable
+        @raise ValueError: is the polynomial has more than one variable
+        """
         if self.dim != 1:
             raise ValueError("not implemented")
         n = len(self.coeff)-1
@@ -126,9 +156,9 @@ class Polynomial:
         from LinearAlgebra import eigenvalues
         return eigenvalues(a)
 
-# Polynomial fit constructor
+# Polynomial fit constructor for use in module Interpolation
 
-def fitPolynomial(order, points, values):
+def _fitPolynomial(order, points, values):
     if len(points) != len(values):
         raise ValueError('Inconsistent arguments')
     if type(order) != type(()):
@@ -168,6 +198,11 @@ def _isSequence(object):
     try: n = len(object)
     except: pass
     return n >= 0
+
+
+# Clean up module (mostly for epydoc)
+
+del index_expression
 
 # Test code
 
