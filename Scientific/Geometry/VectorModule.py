@@ -3,10 +3,8 @@
 # array.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-28
 #
-
-_undocumented = 1
 
 from Scientific import N; Numeric = N
 
@@ -17,21 +15,19 @@ class Vector:
 
     Constructor:
 
-    - Vector(|x|, |y|, |z|)   (from three coordinates)
-    - Vector(|coordinates|)   (from any sequence containing three coordinates)
 
     Vectors support the usual arithmetic operations
     ('v1', 'v2': vectors, 's': scalar): 
 
-    -  'v1+v2'           (addition)
-    -  'v1-v2'           (subtraction)
-    -  'v1*v2'           (scalar product)
-    -  's*v1', 'v1*s'    (multiplication with a scalar)
-    -  'v1/s'            (division by a scalar)
+     -  'v1+v2'           (addition)
+     -  'v1-v2'           (subtraction)
+     -  'v1*v2'           (scalar product)
+     -  's*v1', 'v1*s'    (multiplication with a scalar)
+     -  'v1/s'            (division by a scalar)
 
     The three coordinates can be extracted by indexing.
 
-    Vectors are *immutable*, i.e. their elements cannot be changed.
+    Vectors are B{immutable}, i.e. their elements cannot be changed.
 
     Vector elements can be any objects on which the standard
     arithmetic operations plus the functions sqrt and arccos are defined.
@@ -40,6 +36,13 @@ class Vector:
     is_vector = 1
 
     def __init__(self, x=None, y=None, z=None):
+        """
+        There are two supported calling patterns:
+         1. C{Vector(x, y, z)}
+            (from three coordinates)
+         2. C{Vector(coordinates)}
+            (from any sequence containing three coordinates)
+        """
         if x is None:
             self.array = [0.,0.,0.]
         elif y is None and z is None:
@@ -125,28 +128,49 @@ class Vector:
         return self.array[index]
 
     def x(self):
-        "Returns the x coordinate."
+        """
+        @returns: the x coordinate
+        @rtype: type of vector elements
+        """
         return self.array[0]
     def y(self):
-        "Returns the y coordinate."
+        """
+        @returns: the y coordinate
+        @rtype: type of vector elements
+        """
         return self.array[1]
     def z(self):
-        "Returns the z coordinate."
+        """
+        @returns: the z coordinate
+        @rtype: type of vector elements
+        """
         return self.array[2]
 
     def length(self):
-        "Returns the length (norm)."
+        """
+        @returns: the length (norm) of the vector
+        @rtype: type of vector elements
+        """
         return Numeric.sqrt(Numeric.add.reduce(self.array*self.array))
 
     def normal(self):
-        "Returns a normalized copy."
+        """
+        @returns: a normalized (length 1) copy of the vector
+        @rtype: L{Vector}
+        @raises ZeroDivisionError: if vector length is zero
+        """
         len = Numeric.sqrt(Numeric.add.reduce(self.array*self.array))
         if len == 0:
             raise ZeroDivisionError("Can't normalize a zero-length vector")
         return Vector(Numeric.divide(self.array, len))
 
     def cross(self, other):
-        "Returns the cross product with vector |other|."
+        """
+        @param other: a vector
+        @type other: L{Vector}
+        @returns: cross product with other
+        @rtype: L{Vector}
+        """
         if not isVector(other):
             raise TypeError("Cross product with non-vector")
         return Vector(self.array[1]*other.array[2]
@@ -157,12 +181,21 @@ class Vector:
                                 -self.array[1]*other.array[0])
 
     def asTensor(self):
+        """
+        @returns: an equivalent rank-1 tensor object
+        @rtype: L{Scientific.Geometry.Tensor}
+        """
         from Scientific import Geometry
-        "Returns an equivalent tensor object of rank 1."
         return Geometry.Tensor(self.array, 1)
 
     def dyadicProduct(self, other):
-        "Returns the dyadic product with vector or tensor |other|."
+        """
+        @param other: a vector or a tensor
+        @type other: L{Vector} or L{Scientific.Geometry.Tensor}
+        @returns: the dyadic product with other
+        @rtype: L{Scientific.Geometry.Tensor}
+        @raises TypeError: if other is not a vector or a tensor
+        """
         from Scientific import Geometry
         if isVector(other):
             return Geometry.Tensor(self.array, 1) * \
@@ -173,7 +206,13 @@ class Vector:
             raise TypeError("Dyadic product with non-vector")
         
     def angle(self, other):
-        "Returns the angle to vector |other|."
+        """
+        @param other: a vector
+        @type other: L{Vector}
+        @returns: the angle to other
+        @rtype: C{float}
+        @raises TypeError: if other is not a vector
+        """
         if not isVector(other):
             raise TypeError("Angle between vector and non-vector")
         cosa = Numeric.add.reduce(self.array*other.array) / \
@@ -186,5 +225,7 @@ class Vector:
 # Type check
 
 def isVector(x):
-    "Return 1 if |x| is a vector."
+    """
+    @returns: C{True} if x is a L{Vector}
+    """
     return hasattr(x,'is_vector')
