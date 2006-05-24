@@ -3,7 +3,7 @@
 # of rotations in 3d space. To be completed later...
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-6-5
+# last revision: 2006-4-28
 #
 
 from Scientific import N; Numeric = N
@@ -11,17 +11,12 @@ from Scientific.Geometry import Transformation
 
 class Quaternion:
 
-    """Quaternion (hypercomplex number)
+    """
+    Quaternion (hypercomplex number)
 
     This implementation of quaternions is not complete; only the features
     needed for representing rotation matrices by quaternions are
     implemented.
-
-    Constructor:
-
-    - Quaternion(|q0|, |q1|, |q2|, |q3|)  (from four real components)
-
-    - Quaternion(|q|)  (from a sequence containing the four components)
 
     Quaternions support addition, subtraction, and multiplication,
     as well as multiplication and division by scalars. Division
@@ -32,6 +27,13 @@ class Quaternion:
     """
 
     def __init__(self, *data):
+        """
+        There are two calling patterns:
+
+         - Quaternion(q0, q1, q2, q3)  (from four real components)
+
+         - Quaternion(q)  (from a sequence containing the four components)
+        """
         if len(data) == 1:
             self.array = Numeric.array(data[0])
         elif len(data) == 4:
@@ -75,21 +77,33 @@ class Quaternion:
         return Numeric.add.reduce(self.array*other.array)
 
     def norm(self):
-        "Returns the norm."
+        """
+        @returns: the norm
+        @rtype: C{float}
+        """
         return Numeric.sqrt(self.dot(self))
 
     def normalized(self):
-        "Returns the quaternion scaled to norm 1."
+        """
+        @returns: the quaternion scaled such that its norm is 1
+        @rtype: L{Quaternion}
+        """
         return self/self.norm()
 
     def inverse(self):
-        "Returns the inverse."
+        """
+        @returns: the inverse
+        @rtype: L{Quaternion}
+        """
         import LinearAlgebra
         inverse = LinearAlgebra.inverse(self.asMatrix())
         return Quaternion(inverse[:, 0])
 
     def asMatrix(self):
-        "Returns a 4x4 matrix representation."
+        """
+        @returns: a 4x4 matrix representation
+        @rtype: C{Numeric.array}
+        """
         return Numeric.dot(self._matrix, self.array)
     _matrix = Numeric.zeros((4,4,4))
     _matrix[0,0,0] =  1
@@ -110,8 +124,11 @@ class Quaternion:
     _matrix[3,3,0] =  1
 
     def asRotation(self):
-        """Returns the corresponding rotation matrix (the quaternion
-        must be normalized)."""
+        """
+        @returns: the corresponding rotation matrix
+        @rtype: L{Scientific.Geometry.Transformation.Rotation}
+        @raises ValueError: if the quaternion is not normalized
+        """
         if Numeric.fabs(self.norm()-1.) > 1.e-5:
             raise ValueError('Quaternion not normalized')
         d = Numeric.dot(Numeric.dot(self._rot, self.array), self.array)
@@ -146,7 +163,11 @@ class Quaternion:
 
 # Type check
 def isQuaternion(x):
-    "Returns 1 if |x| is a quaternion."
+    """
+    @param x: any object
+    @type x: any
+    @returns: C{True} if x is a quaternion
+    """
     return hasattr(x,'is_quaternion')
 
 # Test data
