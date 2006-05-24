@@ -1,7 +1,7 @@
 # This module defines some geometrical objects in 3D-space.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-28
 #
 
 from Scientific.Geometry import Vector
@@ -16,20 +16,25 @@ _eps = 1.e-16
 #
 class GeometricalObject3D:
 
-    """Geometrical object in 3D space
+    """
+    Geometrical object in 3D space
 
     This is an abstract base class; to create instances, use one of
     the subclasses.
     """
  
     def intersectWith(self, other):
-        """Returns the geometrical object that results from the
-        intersection with |other|. If there is no intersection,
-        the result is 'None'.
-
-        Note that intersection is not implemented for all possible
-        pairs of objects. A 'ValueError' is raised for combinations
-        that haven't been implemented yet."""
+        """
+        @param other: another geometrical object
+        @type other: L{GeometricalObject3D}
+        @returns: the geometrical object that results from the
+        intersection with other. If there is no intersection,
+        the result is C{None}.
+        @rtype: L{GeometricalObject3D} or C{NoneType}
+        @note: Intersection is not implemented for all possible
+               pairs of objects. A 'ValueError' is raised for combinations
+               that haven't been implemented yet.
+        """
         if self.__class__ > other.__class__:
             self, other = other, self
         try:
@@ -44,16 +49,29 @@ class GeometricalObject3D:
                              other.__class__.__name__)
 
     def hasPoint(self, point):
-        "Returns 1 if |point| is in the object."
+        """
+        @param point: a point in space
+        @type point: L{Scientific.Geometry.Vector}
+        @returns: C{True} if point is in the object
+        @rtype: C{bool}
+        """
         return self.distanceFrom(point) < _eps
 
     def distanceFrom(self, point):
-        "Returns the distance of |point| from the closest point of the object."
+        """
+        @param point: a point in space
+        @type point: L{Scientific.Geometry.Vector}
+        @returns the distance of point from the closest point of the object
+        @rtype: C{float}
+        """
         raise ValueError("not yet implemented")
 
     def volume(self):
-        """Returns the volume. The result is 'None' for unbounded objects
-        and zero for lower-dimensional objects."""
+        """
+        @returns: the volume of the object. The result is C{None} for
+                  unbounded objects and zero for lower-dimensional objects.
+        @rtype: C{float} or C{NoneType}
+        """
         raise ValueError("not yet implemented")
 
 _intersectTable = {}
@@ -63,15 +81,17 @@ _intersectTable = {}
 #
 class Sphere(GeometricalObject3D):
 
-    """Sphere
-
-    A subclass of GeometricalObject3D.
-    
-    Constructor: Sphere(|center|, |radius|), where |center| is a vector and
-    |radius| a float.
+    """
+    Sphere
     """
 
     def __init__(self, center, radius):
+        """
+        @param center: the point that is the center of the sphere
+        @type center: L{Scientific.Geometry.Vector}
+        @param radius: the radius
+        @type radius: C{float}
+        """
         self.center = center
         self.radius = radius
 
@@ -90,21 +110,21 @@ class Sphere(GeometricalObject3D):
 #
 class Plane(GeometricalObject3D):
 
-    """Plane
-
-    A subclass of GeometricalObject3D.
-    
-    Constructor:
-
-    - Plane(|point|, |normal|), where |point| (a vector) is an arbitrary
-      point in the plane and |normal| (a vector) indicated the direction
-      normal to the plane.
-
-    - Plane(|p1|, |p2|, |p3|), where each argument is a vector and describes
-      a point in the plane. The three points may not be colinear.
+    """
+    Plane
     """
 
     def __init__(self, *args):
+        """
+        There are two calling patterns:
+
+          - Plane(point, normal), where point (a vector) is an arbitrary
+            point in the plane and normal (a vector) indicated the direction
+            normal to the plane.
+
+          - Plane(p1, p2, p3), where each argument is a vector and describes
+            a point in the plane. The three points may not be colinear.
+        """
         if len(args) == 2:   # point, normal
             self.normal = args[1].normal()
             self.distance_from_zero = self.normal*args[0]
@@ -118,12 +138,24 @@ class Plane(GeometricalObject3D):
         return abs(self.normal*point-self.distance_from_zero)
 
     def projectionOf(self, point):
-        "Returns the projection of |point| onto the plane."
+        """
+        @param point: a point in space
+        @type point: L{Scientific.Geometry.Vector}
+        @returns: the projection of point onto the plane
+        @rtype: L{Scientific.Geometry.Vector}
+        """
         distance = self.normal*point-self.distance_from_zero
         return point - distance*self.normal
 
     def rotate(self, axis, angle):
-        "Returns a copy of the plane rotated around the coordinate origin."
+        """
+        @param axis: the rotation axis
+        @type axis: L{Scientific.Geometry.Vector}
+        @param angle: the rotation angle
+        @type angle: C{float}
+        @returns: a copy of the plane rotated around the coordinate origin
+        @rtype: L{Plane}
+        """
         point = rotatePoint(self.distance_from_zero*self.normal, axis, angle)
         normal = rotateDirection(self.normal, axis, angle)
         return Plane(point, normal)
@@ -136,18 +168,20 @@ class Plane(GeometricalObject3D):
 #
 class Cone(GeometricalObject3D):
 
-    """Cone
-
-    A subclass of GeometricalObject3D.
-    
-    Constructor: Cone(|tip|, |axis|, |angle|), where |tip| is a vector
-    indicating the location of the tip, |axis| is a vector that
-    describes the direction of the line of symmetry, and |angle| is
-    the angle between the line of symmetry and the cone surface.
+    """
+    Cone
     """
 
-    def __init__(self, center, axis, angle):
-        self.center = center
+    def __init__(self, tip, axis, angle):
+        """
+        @param tip: the location of the tip
+        @type tip: L{Scientific.Geometry.Vector}
+        @param axis: direction of the symmetry axis
+        @type axis: L{Scientific.Geometry.Vector}
+        @param angle: the angle between the symmetry axis and the surface
+        @type angle: C{float}
+        """
+        self.center = tip
         self.axis = axis.normal()
         self.angle = angle
 
@@ -159,17 +193,19 @@ class Cone(GeometricalObject3D):
 #
 class Circle(GeometricalObject3D):
 
-    """Circle
-
-    A subclass of GeometricalObject3D.
-    
-    Constructor: Circle(|center|, |normal|, |radius|), where |center|
-    is a vector indicating the center of the circle, |normal| is a
-    vector describing the direction normal to the plane of the circle,
-    and |radius| is a float.
+    """
+    Circle
     """
 
     def __init__(self, center, normal, radius):
+        """
+        @param center: the location of the center
+        @type center: L{Scientific.Geometry.Vector}
+        @param normal: a direction nornal to the plane of the circle
+        @type normal: L{Scientific.Geometry.Vector}
+        @param radius: the radius of the circle
+        @type radius: C{float}
+        """
         self.center = center
         self.normal = normal
         self.radius = radius
@@ -182,16 +218,17 @@ class Circle(GeometricalObject3D):
 #
 class Line(GeometricalObject3D):
 
-    """Line
-
-    A subclass of GeometricalObject3D.
-    
-    Constructor: Line(|point|, |direction|), where |point| is a vector
-    indicating any point on the line and |direction| is a vector
-    describing the direction of the line.
+    """
+    Line
     """
 
     def __init__(self, point, direction):
+        """
+        @param point: any point on the line
+        @type point: L{Scientific.Geometry.Vector}
+        @param direction: the direction of the line
+        @type direction: L{Scientific.Geometry.Vector}
+        """
         self.point = point
         self.direction = direction.normal()
 
@@ -201,7 +238,12 @@ class Line(GeometricalObject3D):
         return d.length()
 
     def projectionOf(self, point):
-        "Returns the projection of |point| onto the line."
+        """
+        @param point: a point in space
+        @type point: L{Scientific.Geometry.Vector}
+        @returns: the projection of point onto the line
+        @rtype: L{Scientific.Geometry.Vector}
+        """
         d = self.point-point
         d = d - (d*self.direction)*self.direction
         return point+d
@@ -328,36 +370,38 @@ class Lattice:
 #
 class RhombicLattice(Lattice):
 
-    """Lattice with rhombic elementary cell
+    """
+    Lattice with rhombic elementary cell
 
     A lattice object contains values defined on a finite periodic
     structure that is created by replicating a given elementary
     cell along the three lattice vectors. The elementary cell can
     contain any number of points.
-
-    Constructor: RhombicLattice(|elementary_cell|, |lattice_vectors|, |cells|,
-                                |function|='None', |base|='None')
-
-    Arguments:
-
-    |elementary_cell| -- a list of the points (vectors) in the elementary cell
-
-    |lattice_vectors| -- a tuple of three vectors describing the edges
-                         of the elementary cell
-
-    |cells| -- a tuple of three integers, indicating how often the elementary
-               cell should be replicated along each lattice vector
-
-    |function| -- the function to be applied to each point in the lattice
-                  in order to obtain the value stored in the lattice.
-                  If no function is specified, the point itself becomes
-                  the value stored in the lattice.
-
-    |base| -- an offset added to all lattice points
     """
 
     def __init__(self, elementary_cell, lattice_vectors, cells,
                  function=None, base=None):
+        """
+        @param elementary_cell: a list of the points in the elementary cell
+        @type elementary_cell: C{list} of L{Scientific.Geometry.Vector}
+
+        @param lattice_vectors: the edges of the elementary cell
+        @type lattice_vectors: C{tuple} of three L{Scientific.Geometry.Vector}
+        
+        @param cells: a tuple of three integers, indicating how often the
+                      elementary cell should be replicated along each
+                      lattice vector
+        @param cells: C{tuple} of C{int}
+
+        @param function: the function to be applied to each point in the
+                         lattice in order to obtain the value stored in the
+                         lattice. If no function is specified, the point
+                         itself becomes the value stored in the lattice.
+        @type function: callable
+        
+        @param base: an offset added to all lattice points
+        @type base: L{Scientific.Geometry.Vector}
+        """
         if len(lattice_vectors) != len(cells):
             raise TypeError('Inconsistent dimension specification')
         if base is None:
@@ -381,31 +425,32 @@ class RhombicLattice(Lattice):
 #
 class BravaisLattice(RhombicLattice):
 
-    """General Bravais lattice
+    """
+    General Bravais lattice
 
     This is a subclass of RhombicLattice, describing the special case
     of an elementary cell containing one point.
-
-    Constructor: BravaisLattice(|lattice_vectors|, |cells|,
-                                |function|='None', |base|='None')
-
-    Arguments:
-
-    |lattice_vectors| -- a tuple of three vectors describing the edges
-                         of the elementary cell
-
-    |cells| -- a tuple of three integers, indicating how often the elementary
-               cell should be replicated along each lattice vector
-
-    |function| -- the function to be applied to each point in the lattice
-                  in order to obtain the value stored in the lattice.
-                  If no function is specified, the point itself becomes
-                  the value stored in the lattice.
-
-    |base| -- an offset added to all lattice points
     """
 
     def __init__(self, lattice_vectors, cells, function=None, base=None):
+        """
+        @param lattice_vectors: the edges of the elementary cell
+        @type lattice_vectors: C{tuple} of three L{Scientific.Geometry.Vector}
+        
+        @param cells: a tuple of three integers, indicating how often the
+                      elementary cell should be replicated along each
+                      lattice vector
+        @param cells: C{tuple} of C{int}
+
+        @param function: the function to be applied to each point in the
+                         lattice in order to obtain the value stored in the
+                         lattice. If no function is specified, the point
+                         itself becomes the value stored in the lattice.
+        @type function: callable
+        
+        @param base: an offset added to all lattice points
+        @type base: L{Scientific.Geometry.Vector}
+        """
         cell = [Vector(0,0,0)]
         RhombicLattice.__init__(self, cell, lattice_vectors, cells,
                                 function, base)
@@ -419,26 +464,27 @@ class SCLattice(BravaisLattice):
 
     This is a subclass of BravaisLattice, describing the special case
     of a cubic elementary cell.
-
-    Constructor: SCLattice(|cellsize|, |cells|, |function|='None',
-                           |base|='None')
-
-    Arguments:
-
-    |cellsize| -- the edge length of the cubic elementary cell
-
-    |cells| -- a tuple of three integers, indicating how often the elementary
-               cell should be replicated along each lattice vector
-
-    |function| -- the function to be applied to each point in the lattice
-                  in order to obtain the value stored in the lattice.
-                  If no function is specified, the point itself becomes
-                  the value stored in the lattice.
-
-    |base| -- an offset added to all lattice points
     """
 
     def __init__(self, cellsize, cells, function=None, base=None):
+        """
+        @param cellsize: the edge length of the cubic elementary cell
+        @type cellsize: C{float}
+        
+        @param cells: a tuple of three integers, indicating how often the
+                      elementary cell should be replicated along each
+                      lattice vector
+        @param cells: C{tuple} of C{int}
+
+        @param function: the function to be applied to each point in the
+                         lattice in order to obtain the value stored in the
+                         lattice. If no function is specified, the point
+                         itself becomes the value stored in the lattice.
+        @type function: callable
+        
+        @param base: an offset added to all lattice points
+        @type base: L{Scientific.Geometry.Vector}
+        """
         lattice_vectors = (cellsize*Vector(1., 0., 0.),
                            cellsize*Vector(0., 1., 0.),
                            cellsize*Vector(0., 0., 1.))
