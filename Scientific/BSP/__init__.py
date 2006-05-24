@@ -1,12 +1,29 @@
+"""This module contains high-level parallelization constructs
+based on the Bulk Synchronous Parallel (BSP) model.
+
+Parallelization requires a low-level communications library, which can
+be either BSPlib or MPI. Programs must be run with the bsppython or
+mpipython executables in order to use several processors. When run
+with a standard Python interpreter, only one processor is available.
+
+A warning about object identity: when a communication operation
+transmits a Python object to the same processor, the object in the
+return list can either be the sent object or a copy of it. Application
+programs thus should not make any assumptions about received objects
+being different from sent objects.
+
+@undocumented: RemoteObjects
+@undocumented: Tasks
+"""
+
 from core import numberOfProcessors, processorID, ParValue, ParConstant, \
      ParData, ParSequence, ParMessages, ParTuple, ParAccumulator, \
      ParFunction, ParRootFunction, ParIndex, ParIterator, \
      ParIndexIterator, ParClass, ParBase, ParInvalid, is_invalid
 
 import sys
-if sys.modules.has_key('pythondoc'):
+if False and sys.modules.has_key('epydoc'):
     import core, types
-    from core import __doc__
     for name in dir(core):
         object = getattr(core, name)
         if type(object) == types.ClassType:
