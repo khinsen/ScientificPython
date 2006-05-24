@@ -1,0 +1,496 @@
+<h1>Module Scientific.Visualization.VMD</h1>
+
+
+
+
+
+<p>This module provides definitions of simple 3D graphics objects and
+scenes containing them, in a form that can be fed to the molecular
+visualization program VMD. Scenes can either be written as VMD script
+files, or visualized directly by running VMD.</p>
+
+
+
+There are a few attributes that are common to all graphics objects:
+
+<p><dl>
+
+
+<dt>material</dt>
+
+
+<dd><p>
+a Material object defining color and surface properties</p></dd>
+
+
+<dt>comment</dt>
+
+
+<dd><p>
+a comment string that will be written to the VRML file</p></dd>
+
+
+<dt>reuse</dt>
+
+
+<dd><p>
+a boolean flag (defaulting to false). If set to one,
+           the object may share its VRML definition with other
+           objects. This reduces the size of the VRML file, but
+           can yield surprising side effects in some cases.</p></dd>
+
+
+</dl>
+</p>
+
+
+
+
+
+<p>This module is almost compatible with the modules VRML and VRML2, which
+provide visualization by VRML browsers. There is no Polygon objects,
+and the only material attribute supported is diffuse_color. Note
+also that loading a scene with many cubes into VMD is very slow, because
+each cube is represented by 12 individual triangles.</p>
+
+
+
+<p>Example:</p>
+
+
+
+<pre>
+from VMD import *
+scene = Scene([])
+scale = ColorScale(10.)
+for x in range(11):
+    color = scale(x)
+    scene.addObject(Cube(Vector(x, 0., 0.), 0.2,
+                         material=Material(diffuse_color = color)))
+scene.view()
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr width=70%>
+<h2>Functions</h2>
+
+
+
+
+
+<ul>
+
+
+<li> <p>
+
+<b><i>DiffuseMaterial</i></b>()<br>
+
+
+</p>
+
+
+
+<p>Returns a material with the <tt>diffuse color</tt> attribute set to <i>color</i>.</p>
+
+</ul>
+
+
+
+
+<hr width=70%>
+<h2>Class Scene: VMD scene</h2>
+
+
+
+
+
+<p>A VMD scene is a collection of graphics objects that can be
+written to a VMD script file or fed directly to VMD.</p>
+
+
+
+<p>Constructor: Scene(<i>objects</i>=None, **|options|)</p>
+
+
+
+<p><dl>
+
+
+<dt><i>objects</i></dt>
+
+
+<dd><p>
+a list of graphics objects or <tt>None</tt> for an empty scene</p></dd>
+
+
+<dt><i>options</i></dt>
+
+
+<dd><p>
+options as keyword arguments. The only option available
+             is "scale", whose value must be a positive number which
+             specifies a scale factor applied to all coordinates of
+             geometrical objects <i>except</i> for molecule objects, which
+             cannot be scaled.
+</p></dd>
+
+
+</dl>
+</p>
+
+
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>addObject</i></b>(<i>object</i>)
+
+
+
+
+<p>Adds <i>object</i> to the list of graphics objects.</p>
+
+
+
+
+
+<li> <b><i>writeToFile</i></b>(<i>filename</i>, <i>delete</i>=<tt>0</tt>)
+
+
+
+
+
+
+<p>Writes the scene to a VRML file with name <i>filename</i>.</p>
+
+
+
+
+
+<li> <b><i>view</i></b>()
+
+
+<p>Start VMD for the scene.</p>
+
+
+
+
+
+</ul>
+<hr width=70%>
+<h2>Class Molecules: Molecules from a PDB file</h2>
+
+
+
+
+
+<p>Constructor: Molecules(<i>pdb_file</i>)
+</p>
+
+
+
+<hr width=70%>
+<h2>Class Sphere: Sphere</h2>
+
+
+
+
+
+<p>Constructor: Sphere(<i>center</i>, <i>radius</i>, **|attributes|)</p>
+
+
+
+<p><dl>
+
+
+<dt><i>center</i></dt>
+
+
+<dd><p>
+the center of the sphere (a vector)</p></dd>
+
+
+<dt><i>radius</i></dt>
+
+
+<dd><p>
+the sphere radius (a positive number)</p></dd>
+
+
+<dt><i>attributes</i></dt>
+
+
+<dd><p>
+any graphics object attribute
+</p></dd>
+
+
+</dl>
+</p>
+
+
+
+<hr width=70%>
+<h2>Class Cube: Cube</h2>
+
+
+
+
+
+<p>Constructor: Cube(<i>center</i>, <i>edge</i>, **|attributes|)</p>
+
+
+
+<p><dl>
+
+
+<dt><i>center</i></dt>
+
+
+<dd><p>
+the center of the cube (a vector)</p></dd>
+
+
+<dt><i>edge</i></dt>
+
+
+<dd><p>
+the length of an edge  (a positive number)</p></dd>
+
+
+<dt><i>attributes</i></dt>
+
+
+<dd><p>
+any graphics object attribute</p></dd>
+
+
+</dl>
+</p>
+
+
+
+<p>The edges of a cube are always parallel to the coordinate axes.
+</p>
+
+
+
+<hr width=70%>
+<h2>Class Cylinder: Cylinder</h2>
+
+
+
+
+
+<p>Constructor: Cylinder(<i>point1</i>, <i>point2</i>, <i>radius</i>,
+                      <i>faces</i>=<tt>(1, 1, 1)</tt>, **|attributes|)</p>
+
+
+
+<p><dl>
+
+
+<dt><i>point1</i>, <i>point2</i></dt>
+
+
+<dd><p>
+the end points of the cylinder axis (vectors)</p></dd>
+
+
+<dt><i>radius</i></dt>
+
+
+<dd><p>
+the radius  (a positive number)</p></dd>
+
+
+<dt><i>attributes</i></dt>
+
+
+<dd><p>
+any graphics object attribute</p></dd>
+
+
+<dt><i>faces</i></dt>
+
+
+<dd><p>
+a sequence of three boolean flags, corresponding to
+           the cylinder hull and the two circular end pieces,
+           specifying for each of these parts whether it is visible
+           or not.
+</p></dd>
+
+
+</dl>
+</p>
+
+
+
+<hr width=70%>
+<h2>Class Cone: Cone</h2>
+
+
+
+
+
+<p>Constructor: Cone(<i>point1</i>, <i>point2</i>, <i>radius</i>, <i>face</i>=<tt>1</tt>, **|attributes|)</p>
+
+
+
+<p><dl>
+
+
+<dt><i>point1</i>, <i>point2</i></dt>
+
+
+<dd><p>
+the end points of the cylinder axis (vectors).
+                      <i>point1</i> is the tip of the cone.</p></dd>
+
+
+<dt><i>radius</i></dt>
+
+
+<dd><p>
+the radius  (a positive number)</p></dd>
+
+
+<dt><i>attributes</i></dt>
+
+
+<dd><p>
+any graphics object attribute</p></dd>
+
+
+<dt><i>face</i></dt>
+
+
+<dd><p>
+a boolean flag, specifying if the circular bottom is visible
+</p></dd>
+
+
+</dl>
+</p>
+
+
+
+<hr width=70%>
+<h2>Class Line: Line</h2>
+
+
+
+
+
+<p>Constructor: Line(<i>point1</i>, <i>point2</i>, **|attributes|)</p>
+
+
+
+<p><dl>
+
+
+<dt><i>point1</i>, <i>point2</i></dt>
+
+
+<dd><p>
+the end points of the line (vectors)</p></dd>
+
+
+<dt><i>attributes</i></dt>
+
+
+<dd><p>
+any graphics object attribute
+</p></dd>
+
+
+</dl>
+</p>
+
+
+
+<hr width=70%>
+<h2>Class Arrow: Arrow</h2>
+
+
+
+
+
+<p>An arrow consists of a cylinder and a cone.</p>
+
+
+
+<p>Constructor: Arrow(<i>point1</i>, <i>point2</i>, <i>radius</i>, **|attributes|)</p>
+
+
+
+<p><dl>
+
+
+<dt><i>point1</i>, <i>point2</i></dt>
+
+
+<dd><p>
+the end points of the arrow (vectors).
+                      <i>point2</i> defines the tip of the arrow.</p></dd>
+
+
+<dt><i>radius</i></dt>
+
+
+<dd><p>
+the radius of the arrow shaft (a positive number)</p></dd>
+
+
+<dt><i>attributes</i></dt>
+
+
+<dd><p>
+any graphics object attribute
+</p></dd>
+
+
+</dl>
+</p>
+
+
+
+<hr width=70%>
+<h2>Class Material: Material for graphics objects</h2>
+
+
+
+
+
+<p>A material defines the color and surface properties of an object.</p>
+
+
+
+<p>Constructor: Material(**|attributes|)</p>
+
+
+
+<p>The accepted attributes are "ambient_color", "diffuse_color",
+"specular_color", "emissive_color", "shininess", and "transparency".
+Only "diffuse_color" is used, the others are permitted for compatibility
+with the VRML modules.
+</p>
+
+
+

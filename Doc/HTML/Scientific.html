@@ -1,0 +1,55 @@
+<center>
+<title>ScientificPython User's Guide</title>
+<h1>ScientificPython User's Guide</h1>
+Konrad Hinsen<br>
+Centre de Biophysique Moléculaire<br>
+CNRS<br>
+Rue Charles Sadron<br>
+        45071 Orléans
+        Cedex 2 
+        <br>
+France<br>
+        E-Mail: <a href="mailto:hinsen@cnrs-orleans.fr">hinsen@cnrs-orleans.fr</a><br>Last revision: 2000-8-3<br></center>
+<a name="introduction"><h3>Introduction</h3><a>
+
+<p>ScientificPython is a collection of Python modules that are
+useful for scientific computing. Most modules are rather general,
+others belong to specific domains and will be of interest to only a
+small number of users (e.g. the module Scientific.IO.PDB). Almost all
+modules make extensive use of Numerical Python (NumPy), which must be
+installed prior to Scientific Python. Python 1.5 or later is also
+required.  For more information about Numerical Python and about other
+packages for scientific computing, see the <a href="http://www.python.org/topics/scicomp/">Topic Guide
+"Scientific Computing"</a> on the Python home page.
+</p>
+
+<p>This manual describes version 2.1 of ScientificPython. The 2.x
+versions are completely revised and <i>not</i>
+compatible with earlier releases. The major difference is the
+introduction of a package structure; all modules are now submodules of
+the top-level module Scientific. The package structure should prevent
+name clashes with other modules, which have occurred in the past (e.g.
+the module PDB was indistinguishable from the module pdb in the Python
+standard library on operating systems without case distinction in
+filenames).
+</p>
+
+<p>For most code written for versions 1.x of ScientificPython,
+a change of the import statements should be all that is required to make
+it compatible with this release. The only module with significantly
+changed functionality is Scientific.Statistics.Histogram; the changes
+were necessary to implement an algorithm that is much more efficient
+for large data sets. There are of course also additional modules and
+enhancements to existing ones, but they don't affect compatibility.
+The most significant addition is the module Scientific.IO.NetCDF, which
+was previously distributed separately.
+</p>
+
+<p>It should be noted that ScientificPython 2.x can coexist with
+an 1.x version, as all module names are different. However, the
+availability of both versions in parallel makes it difficult to verify
+that code has been fully ported to use the new one.
+</p>
+
+<ul><li><a href="Scientific_1.html">Installation on Unix systems</a></ul>
+<ul><li><a href="Scientific_2.html">Reference for Module Scientific</a></ul>

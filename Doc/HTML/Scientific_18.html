@@ -1,0 +1,52 @@
+<a name="Module:Scientific.IO.ArrayIO"><h1>Module Scientific.IO.ArrayIO</h1></a>
+
+<p>This module contains elementary support for I/O of one- and
+two-dimensional numerical arrays to and from plain text files. The
+text file format is very simple and used by many other programs as
+well:</p>
+
+<ul>
+<li> <p>
+each line corresponds to one row of the array</p><li> <p>
+the numbers within a line are separated by white space</p><li> <p>
+lines starting with # are ignored (comment lines)</p></ul>
+<p>An array containing only one line or one column is returned as a
+one-dimensional array on reading. One-dimensional arrays are written
+as one item per line.</p>
+
+<p>Numbers in files to be read must conform to Python/C syntax.  For
+reading files containing Fortran-style double-precision numbers
+(exponent prefixed by D), use the module Scientific.IO.FortranFormat.
+</p>
+
+<hr width=70%>
+<h2>Functions</h2>
+
+<ul>
+<li> <p>
+
+<a name="Function:Scientific.IO.ArrayIO.readArray"><b><i>readArray</i></b>(<i>filename</i>)</a><br>
+
+
+</p>
+
+<p>Return an array containing the data from file <i>filename</i>.</p><li> <p>
+
+<a name="Function:Scientific.IO.ArrayIO.writeArray"><b><i>writeArray</i></b>(<i>array</i>, <i>filename</i>)</a><br>
+
+
+</p>
+
+<p>Write array <i>a</i> to file <i>filename</i>.</p><li> <p>
+
+<a name="Function:Scientific.IO.ArrayIO.writeDataSets"><b><i>writeDataSets</i></b>(<i>datasets</i>, <i>filename</i>, <i>separator</i>=<tt>''</tt>)</a><br>
+
+
+</p>
+
+<p>Write each of the items in the sequence <i>datasets</i>
+to the file <i>filename</i>, separating the datasets by a line
+containing <i>separator</i>. The items in the data sets can be
+one- or two-dimensional arrays or equivalent nested sequences.
+The output file format is understood by many plot programs.
+</p></ul>

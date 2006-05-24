@@ -1,0 +1,22 @@
+<a name="Module:Scientific.IO.TextFile"><h1>Module Scientific.IO.TextFile</h1></a>
+
+<hr width=70%>
+<a name="Class:Scientific.IO.TextFile.TextFile"><h2>Class TextFile: Text files with line iteration and transparent compression</h2></a>
+
+<p>TextFile instances can be used like normal file objects
+(i.e. by calling readline(), readlines(), and write()), but can
+also be used as sequences of lines in for-loops.</p>
+
+<p>TextFile objects also handle compression transparently. i.e. it is
+possible to read lines from a compressed text file as if it were not
+compressed.  Compression is deduced from the file name suffixes <tt>.Z</tt>
+(compress/uncompress) and <tt>.gz</tt> (gzip/gunzip).</p>
+
+<p>Finally, TextFile objects accept file names that start with <tt>~</tt> or
+<tt>~user</tt> to indicate a home directory, as well as URLs (for reading only).</p>
+
+<p>Constructor: TextFile(<i>filename</i>, <i>mode</i>=<tt>"r"</tt>), where <i>filename</i> is
+the name of the file (or a URL) and <i>mode</i> is one of <tt>"r"</tt> (read),
+<tt>"w"</tt> (write) or <tt>"a"</tt> (append, not supported for .Z files).
+</p>
+

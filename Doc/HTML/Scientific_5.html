@@ -1,0 +1,166 @@
+<a name="Module:Scientific.Functions.Derivatives"><h1>Module Scientific.Functions.Derivatives</h1></a>
+
+<p>This module provides automatic differentiation for functions with
+any number of variables up to any order. An instance of the class
+DerivVar represents the value of a function and the values of its partial
+derivatives with respect to a list of variables. All common
+mathematical operations and functions are available for these numbers.
+There is no restriction on the type of the numbers fed into the
+code; it works for real and complex numbers as well as for
+any Python type that implements the necessary operations.</p>
+
+<p>If only first-order derivatives are required, the module
+FirstDerivatives should be used. It is compatible to this
+one, but significantly faster.</p>
+
+Example:
+
+<p>  <tt>print sin(DerivVar(2))</tt></p>
+
+<p>  produces the output</p>
+
+<p>  <tt>(0.909297426826, [-0.416146836547])</tt></p>
+
+<p>The first number is the value of sin(2); the number in the following
+list is the value of the derivative of sin(x) at x=2, i.e. cos(2).</p>
+
+<p>When there is more than one variable, DerivVar must be called with
+an integer second argument that specifies the number of the variable.</p>
+
+Example:
+
+<pre>
+x = DerivVar(7., 0)
+y = DerivVar(42., 1)
+z = DerivVar(pi, 2)
+print (sqrt(pow(x,2)+pow(y,2)+pow(z,2)))
+</pre>
+<p>  produces the output</p>
+
+<pre>
+(42.6950770511, [0.163953328662, 0.98371997197, 0.0735820818365])
+</pre>
+<p>The numbers in the list are the partial derivatives with respect
+to x, y, and z, respectively.</p>
+
+<p>Higher-order derivatives are requested with an optional third
+argument to DerivVar.</p>
+
+Example:
+
+<pre>
+x = DerivVar(3., 0, 3)
+y = DerivVar(5., 1, 3)
+print sqrt(x*y)
+</pre>
+<p>  produces the output</p>
+
+<pre>
+(3.87298334621,
+    [0.645497224368, 0.387298334621],
+      [[-0.107582870728, 0.0645497224368],
+        [0.0645497224368, -0.0387298334621]],
+          [[[0.053791435364, -0.0107582870728],
+            [-0.0107582870728, -0.00645497224368]],
+           [[-0.0107582870728, -0.00645497224368],
+            [-0.00645497224368, 0.0116189500386]]])
+</pre>
+The individual orders can be extracted by indexing:
+
+<pre>
+print sqrt(x*y)[0]
+3.87298334621
+print sqrt(x*y)[1]
+[0.645497224368, 0.387298334621]
+</pre>
+<p>An n-th order derivative is represented by a nested list of
+depth n.</p>
+
+<p>When variables with different differentiation orders are mixed,
+the result has the lower one of the two orders. An exception are
+zeroth-order variables, which are treated as constants.</p>
+
+<p>Caution: Higher-order derivatives are implemented by recursively
+using DerivVars to represent derivatives. This makes the code
+very slow for high orders.</p>
+
+Note: It doesn't make sense to use multiple DerivVar objects with
+different values for the same variable index in one calculation, but
+there is no check for this. I.e.
+
+<pre>
+print DerivVar(3, 0)+DerivVar(5, 0)
+</pre>
+<p>  produces</p>
+
+<pre>
+(8, [2])
+</pre>
+<p>but this result is meaningless.
+</p>
+
+<hr width=70%>
+<h2>Functions</h2>
+
+<ul>
+<li> <p>
+
+<a name="Function:Scientific.Functions.Derivatives.isDerivVar"><b><i>isDerivVar</i></b>(<i>x</i>)</a><br>
+
+
+</p>
+
+<p>Returns 1 if <i>x</i> is a DerivVar object.</p><li> <p>
+
+<a name="Function:Scientific.Functions.Derivatives.DerivVector"><b><i>DerivVector</i></b>(<i>x</i>, <i>y</i>, <i>z</i>, <i>index</i>=<tt>0</tt>, <i>order</i>=<tt>1</tt>)</a><br>
+
+
+</p>
+
+<p>Returns a vector whose components are DerivVar objects.</p>
+
+<p><dl>
+<dt><i>x</i>, <i>y</i>, <i>z</i></dt>
+<dd><p>
+vector components (numbers)</p></dd>
+<dt><i>index</i></dt>
+<dd><p>
+the DerivVar index for the x component. The y and z
+           components receive consecutive indices.</p></dd>
+<dt><i>order</i></dt>
+<dd><p>
+the derivative order
+</p></dd>
+</dl>
+</p></ul>
+<hr width=70%>
+<a name="Class:Scientific.Functions.Derivatives.DerivVar"><h2>Class DerivVar: Variable with derivatives</h2></a>
+
+<p>Constructor: DerivVar(<i>value</i>, <i>index</i> = 0, <i>order</i> = 1)</p>
+
+<p><dl>
+<dt><i>value</i></dt>
+<dd><p>
+the numerical value of the variable</p></dd>
+<dt><i>index</i></dt>
+<dd><p>
+the variable index (an integer), which serves to
+           distinguish between variables and as an index for
+           the derivative lists. Each explicitly created
+           instance of DerivVar must have a unique index.</p></dd>
+<dt><i>order</i></dt>
+<dd><p>
+the derivative order</p></dd>
+</dl>
+</p>
+
+<p>Indexing with an integer yields the derivatives of the corresponding
+order.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>toOrder</i></b>(<i>order</i>)
+<p>Returns a DerivVar object with a lower derivative order.</p>
+
+</ul>

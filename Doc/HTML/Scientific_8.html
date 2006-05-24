@@ -1,0 +1,103 @@
+<a name="Module:Scientific.Functions.Interpolation"><h1>Module Scientific.Functions.Interpolation</h1></a>
+
+<hr width=70%>
+<a name="Class:Scientific.Functions.Interpolation.InterpolatingFunction"><h2>Class InterpolatingFunction: Function defined by values on a grid using interpolation</h2></a>
+
+<p>An interpolating function of n variables with m-dimensional values
+is defined by an (n+m)-dimensional array of values and n
+one-dimensional arrays that define the variables values
+corresponding to the grid points. The grid does not have to be
+equidistant.</p>
+
+<p>Constructor: InterpolatingFunction(<i>axes</i>, <i>values</i>, <i>default</i>=None)</p>
+
+<p><dl>
+<dt><i>axes</i></dt>
+<dd><p>
+a sequence of one-dimensional arrays, one for each
+          variable, specifying the values of the variables at
+          the grid points</p></dd>
+<dt><i>values</i></dt>
+<dd><p>
+an array containing the function values on the grid</p></dd>
+<dt><i>default</i></dt>
+<dd><p>
+the value of the function outside the grid. A value
+             of <tt>None</tt> means that the function is undefined outside
+             the grid and that any attempt to evaluate it there
+             yields an exception.</p></dd>
+</dl>
+</p>
+
+<p>Evaluation: <tt>function(x1, x2, ...)</tt> yields the function value
+            obtained by linear interpolation.</p>
+
+<p>Indexing: all array indexing operations except for the
+          NexAxis operator are supported.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>selectInterval</i></b>(<i>first</i>, <i>last</i>, <i>variable</i>=<tt>0</tt>)
+<p>Returns a new InterpolatingFunction whose grid is restricted
+to the interval from <i>first</i> to <i>last</i> along the variable
+whose number is <i>variable</i>.
+</p>
+
+<li> <b><i>derivative</i></b>(<i>variable</i>=<tt>0</tt>)
+<p>Returns a new InterpolatingFunction describing the derivative
+with respect to <i>variable</i> (an integer).
+</p>
+
+<li> <b><i>integral</i></b>(<i>variable</i>=<tt>0</tt>)
+<p>Returns a new InterpolatingFunction describing the integral
+with respect to <i>variable</i> (an integer). The integration constant
+is defined in such a way that the value of the integral at the
+first grid point along <i>variable</i> is zero.</p>
+
+<li> <b><i>definiteIntegral</i></b>(<i>variable</i>=<tt>0</tt>)
+<p>Returns a new InterpolatingFunction describing the definite integral
+with respect to <i>variable</i> (an integer). The integration constant
+is defined in such a way that the value of the integral at the
+first grid point along <i>variable</i> is zero. In the case of a
+function of one variable, the definite integral is a number.</p>
+
+<li> <b><i>fitPolynomial</i></b>(<i>order</i>)
+<p>Returns a polynomial of <i>order</i> with parameters obtained from
+a least-squares fit to the grid values.</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Functions.Interpolation.NetCDFInterpolatingFunction"><h2>Class NetCDFInterpolatingFunction: Function defined by values on a grid in a netCDF file</h2></a>
+
+<p>A subclass of InterpolatingFunction.</p>
+
+<p>Constructor: NetCDFInterpolatingFunction(<i>filename</i>, <i>axesnames</i>,
+                                         <i>variablename</i>,
+                                         <i>default</i>=None)</p>
+
+<p><dl>
+<dt><i>filename</i></dt>
+<dd><p>
+the name of the netCDF file</p></dd>
+<dt><i>axesnames</i></dt>
+<dd><p>
+the names of the netCDF variables that contain the
+               axes information</p></dd>
+<dt><i>variablename</i></dt>
+<dd><p>
+the name of the netCDF variable that contains
+                  the data values</p></dd>
+<dt><i>default</i></dt>
+<dd><p>
+the value of the function outside the grid. A value
+             of <tt>None</tt> means that the function is undefined outside
+             the grid and that any attempt to evaluate it there
+             yields an exception.</p></dd>
+</dl>
+</p>
+
+<p>Evaluation: <tt>function(x1, x2, ...)</tt> yields the function value
+            obtained by linear interpolation.
+</p>
+

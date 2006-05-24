@@ -1,0 +1,86 @@
+<a name="Module:Scientific.Geometry.Transformation"><h1>Module Scientific.Geometry.Transformation</h1></a>
+
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Transformation.Transformation"><h2>Class Transformation: Linear coordinate transformation.</h2></a>
+
+<p>Transformation objects represent linear coordinate transformations
+in a 3D space. They can be applied to vectors, returning another vector.
+If <tt>t</tt> is a transformation and <tt>v</tt> is a vector, <tt>t(v)</tt> returns
+the transformed vector.</p>
+
+<p>Transformations support composition: if <tt>t1</tt> and <tt>t2</tt> are transformation
+objects, <tt>t1*t2</tt> is another transformation object which corresponds
+to applying t1 <i>after</i> t2.</p>
+
+<p>This class is an abstract base class. Instances can only be created
+of concrete subclasses, i.e. translations or rotations.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>rotation</i></b>()
+<p>Returns the rotational component.</p>
+
+<li> <b><i>translation</i></b>()
+<p>Returns the translational component. In the case of a mixed
+rotation/translation, this translation is executed
+<i>after</i> the rotation.</p>
+
+<li> <b><i>inverse</i></b>()
+<p>Returns the inverse transformation.</p>
+
+<li> <b><i>screwMotion</i></b>()
+<p>Returns the four parameters <tt>(reference, direction, angle,
+distance)</tt> of a screw-like motion that is equivalent to the
+transformation. The screw motion consists of a displacement
+of <tt>distance</tt> (a float) along <tt>direction</tt> (a normalized vector)
+plus a rotation of <tt>angle</tt> radians around an axis pointing along
+<tt>direction</tt> and passing through the point <tt>reference</tt> (a vector).
+</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Transformation.Translation"><h2>Class Translation: Translational transformation.</h2></a>
+
+<p>This is a subclass of Transformation.</p>
+
+<p>Constructor: Translation(<i>vector</i>), where <i>vector</i> is the displacement
+vector.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>displacement</i></b>()
+<p>Returns the displacement vector.</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Transformation.Rotation"><h2>Class Rotation: Rotational transformation.</h2></a>
+
+<p>This is a subclass of Transformation.</p>
+
+<p>Constructor:</p>
+
+<ul>
+<li> <p>
+Rotation(<i>tensor</i>), where <i>tensor</i> is a tensor object containing
+  the rotation matrix.</p><li> <p>
+Rotation(<i>axis</i>, <i>angle</i>), where <i>axis</i> is a vector and <i>angle</i>
+  a number (the angle in radians).
+</p></ul>
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>axisAndAngle</i></b>()
+<p>Returns the axis (a normalized vector) and angle (a float,
+in radians).</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Transformation.RotationTranslation"><h2>Class RotationTranslation: Combined translational and rotational transformation.</h2></a>
+
+<p>This is a subclass of Transformation.</p>
+
+<p>Objects of this class are not created directly, but can be the
+result of a composition of rotations and translations.
+</p>
+

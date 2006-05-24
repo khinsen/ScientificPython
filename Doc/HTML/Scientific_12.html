@@ -1,0 +1,151 @@
+<a name="Module:Scientific.Geometry"><h1>Module Scientific.Geometry</h1></a>
+
+<p>This subpackage contains classes that deal with geometrical
+quantities and objects. The geometrical quantities are vectors and
+tensors, transformations, and quaternions as descriptions of
+rotations.  There are also tensor fields, which were included here
+(rather than in the subpackage Scientific.Functions) because they are
+most often used in a geometric context. Finally, there are classes for
+elementary geometrical objects such as spheres and planes.
+</p>
+
+<h1>Submodules:</h1>
+<ul><li><a href="Scientific_13.html">Module Scientific.Geometry.Objects3D</a></ul>
+<ul><li><a href="Scientific_14.html">Module Scientific.Geometry.Quaternion</a></ul>
+<ul><li><a href="Scientific_15.html">Module Scientific.Geometry.TensorAnalysis</a></ul>
+<ul><li><a href="Scientific_16.html">Module Scientific.Geometry.Transformation</a></ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Tensor"><h2>Class Tensor: Tensor in 3D space</h2></a>
+
+<p>Constructor: Tensor([[xx, xy, xz], [yx, yy, yz], [zx, zy, zz]])</p>
+
+<p>Tensors support the usual arithmetic operations
+(<tt>t1</tt>, <tt>t2</tt>: tensors, <tt>v</tt>: vector, <tt>s</tt>: scalar): </p>
+
+<ul>
+<li> <p>
+
+<tt>t1+t2</tt>        (addition)
+</p><li> <p>
+
+<tt>t1-t2</tt>        (subtraction)
+</p><li> <p>
+
+<tt>t1*t2</tt>        (tensorial (outer) product)
+</p><li> <p>
+
+<tt>t1*v</tt>         (contraction with a vector, same as t1.dot(v.asTensor()))
+</p><li> <p>
+
+<tt>s*t1</tt>, <tt>t1*s</tt> (multiplication with a scalar)
+</p><li> <p>
+
+<tt>t1/s</tt>         (division by a scalar)</p></ul>
+<p>The coordinates can be extracted by indexing; a tensor of rank N
+can be indexed like an array of dimension N.</p>
+
+<p>Tensors are <i>immutable</i>, i.e. their elements cannot be changed.</p>
+
+<p>Tensor elements can be any objects on which the standard
+arithmetic operations are defined. However, eigenvalue calculation
+is supported only for float elements.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>asVector</i></b>()
+<p>Returns an equivalent vector object (only for rank 1).</p>
+
+<li> <b><i>dot</i></b>(<i>other</i>)
+<p>Returns the contraction with <i>other</i>.</p>
+
+<li> <b><i>trace</i></b>(<i>axis1</i>=<tt>0</tt>, <i>axis2</i>=<tt>1</tt>)
+<p>Returns the trace of a rank-2 tensor.</p>
+
+<li> <b><i>transpose</i></b>()
+<p>Returns the transposed (index reversed) tensor.</p>
+
+<li> <b><i>symmetricalPart</i></b>()
+<p>Returns the symmetrical part of a rank-2 tensor.</p>
+
+<li> <b><i>asymmetricalPart</i></b>()
+<p>Returns the asymmetrical part of a rank-2 tensor.</p>
+
+<li> <b><i>eigenvalues</i></b>()
+<p>Returns the eigenvalues of a rank-2 tensor in an array.</p>
+
+<li> <b><i>diagonalization</i></b>()
+<p>Returns the eigenvalues of a rank-2 tensor and a tensor
+representing the rotation matrix to the diagonalized form.</p>
+
+<li> <b><i>inverse</i></b>()
+<p>Returns the inverse of a rank-2 tensor.</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Vector"><h2>Class Vector: Vector in 3D space</h2></a>
+
+<p>Constructor:</p>
+
+<ul>
+<li> <p>
+Vector(<i>x</i>, <i>y</i>, <i>z</i>)   (from three coordinates)
+</p><li> <p>
+Vector(<i>coordinates</i>)   (from any sequence containing three coordinates)</p></ul>
+<p>Vectors support the usual arithmetic operations
+(<tt>v1</tt>, <tt>v2</tt>: vectors, <tt>s</tt>: scalar): </p>
+
+<ul>
+<li> <p>
+
+<tt>v1+v2</tt>           (addition)
+</p><li> <p>
+
+<tt>v1-v2</tt>           (subtraction)
+</p><li> <p>
+
+<tt>v1*v2</tt>           (scalar product)
+</p><li> <p>
+
+<tt>s*v1</tt>, <tt>v1*s</tt>    (multiplication with a scalar)
+</p><li> <p>
+
+<tt>v1/s</tt>            (division by a scalar)</p></ul>
+<p>The three coordinates can be extracted by indexing.</p>
+
+<p>Vectors are <i>immutable</i>, i.e. their elements cannot be changed.</p>
+
+<p>Vector elements can be any objects on which the standard
+arithmetic operations plus the functions sqrt and arccos are defined.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>x</i></b>()
+<p>Returns the x coordinate.</p>
+
+<li> <b><i>y</i></b>()
+<p>Returns the y coordinate.</p>
+
+<li> <b><i>z</i></b>()
+<p>Returns the z coordinate.</p>
+
+<li> <b><i>length</i></b>()
+<p>Returns the length (norm).</p>
+
+<li> <b><i>normal</i></b>()
+<p>Returns a normalized copy.</p>
+
+<li> <b><i>cross</i></b>(<i>other</i>)
+<p>Returns the cross product with vector <i>other</i>.</p>
+
+<li> <b><i>asTensor</i></b>()
+<p>Returns an equivalent tensor object of rank 1.</p>
+
+<li> <b><i>dyadicProduct</i></b>(<i>other</i>)
+<p>Returns the dyadic product with vector or tensor <i>other</i>.</p>
+
+<li> <b><i>angle</i></b>(<i>other</i>)
+<p>Returns the angle to vector <i>other</i>.</p>
+
+</ul>

@@ -1,0 +1,4 @@
+#!/usr/bin/env bsppython
+
+from Scientific.BSP.Console import parallel_console
+parallel_console()

@@ -1,0 +1,88 @@
+<a name="Module:Scientific.IO.FortranFormat"><h1>Module Scientific.IO.FortranFormat</h1></a>
+
+<p>Fortran-compatible input/output</p>
+
+<p>This module provides two classes that aid in reading and writing
+Fortran-formatted text files.</p>
+
+Examples:
+
+<p>  Input:</p>
+
+<pre>
+s = '   59999'
+format = FortranFormat('2I4')
+line = FortranLine(s, format)
+print line[0]
+print line[1]
+</pre>
+<p>  prints</p>
+
+<pre>
+5
+9999
+</pre>
+<p>  Output:</p>
+
+<pre>
+format = FortranFormat('2D15.5')
+line = FortranLine([3.1415926, 2.71828], format)
+print str(line)
+</pre>
+<p>  prints</p>
+
+<p>  <tt>3.14159D+00    2.71828D+00</tt>
+
+</p>
+
+<hr width=70%>
+<a name="Class:Scientific.IO.FortranFormat.FortranLine"><h2>Class FortranLine: Fortran-style record in formatted files</h2></a>
+
+<p>FortranLine objects represent the content of one record of a
+Fortran-style formatted file. Indexing yields the contents as
+Python objects, whereas transformation to a string (using the
+built-in function <tt>str</tt>) yields the text representation.</p>
+
+<p>Constructor: FortranLine(<i>data</i>, <i>format</i>, <i>length</i>=<tt>80</tt>)</p>
+
+<p><dl>
+<dt><i>data</i></dt>
+<dd><p>
+either a sequence of Python objects, or a string
+          formatted according to Fortran rules</p></dd>
+<dt><i>format</i></dt>
+<dd><p>
+either a Fortran-style format string, or a
+            FortranFormat object. A FortranFormat should
+            be used when the same format string is used repeatedly,
+            because then the rather slow parsing of the string
+            is performed only once.</p></dd>
+<dt><i>length</i></dt>
+<dd><p>
+the length of the Fortran record. This is relevant
+            only when <i>data</i> is a string; this string is then
+            extended by spaces to have the indicated length.
+            The default value of 80 is almost always correct.</p></dd>
+</dl>
+</p>
+
+<p>Restrictions:</p>
+
+<p>1) Only A, D, E, F, G, I, and X formats are supported (plus string
+   constants for output).</p>
+
+<p>2) No direct support for complex numbers; they must be split into
+   real and imaginary parts before output.</p>
+
+<p>3) No overflow check. If an output field gets too large, it will
+   take more space, instead of being replaced by stars according
+   to Fortran conventions.
+</p>
+
+<hr width=70%>
+<a name="Class:Scientific.IO.FortranFormat.FortranFormat"><h2>Class FortranFormat: Parsed fortran-style format string</h2></a>
+
+<p>Constructor: FortranFormat(<i>format</i>), where <i>format</i> is a
+format specification according to Fortran rules.
+</p>
+

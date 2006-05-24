@@ -1,0 +1,14 @@
+include README README.BSP README.MPI README.BSPlib LICENSE LICENCE MANIFEST.in
+include bsp_virtual bsp_virtual_stackless
+include Src/Scientific_vector.pyx
+include Src/MPI/Scientific_mpi.c Src/MPI/Scientific_mpi.export Src/MPI/mpipython.c Src/MPI/compile.py Src/MPI/impipython
+include Src/BSPlib/Scientific_bsplib.c Src/BSPlib/Scientific_bsplib.export Src/BSPlib/bsppython.c Src/BSPlib/compile.py Src/BSPlib/ibsppython
+include Doc/CHANGELOG
+include Doc/XML/manual.xml
+exclude Doc/XML/*~
+include Doc/PDF/*
+include Doc/HTML/*
+include Examples/*.c Examples/*.py Examples/BSP/*.py Examples/README Examples/Setup.template
+recursive-include Include *.h
+include Tools/makeheader.py
+exclude Scientific/BSP/Tasks.py

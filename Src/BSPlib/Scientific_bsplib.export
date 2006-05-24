@@ -1,0 +1,59 @@
+Scientific.BSPlib
+import_bsplib
+PyBSP
+_BSP_MODULE
+
+function
+void
+PyBSP_Sync
+(void)
+
+function
+void
+PyBSP_SetTagSize
+(int *tag_nbytes)
+
+function
+void
+PyBSP_Send
+(int pid, const void *tag, const void *payload, int payload_nbytes)
+
+function
+void
+PyBSP_QSize
+(int *nmessages, int *accum_nbytes)
+
+function
+void
+PyBSP_GetTag
+(int *status, void *tag)
+
+function
+void
+PyBSP_Move
+(void *payload, int reception_nbytes)
+
+function
+int
+PyBSP_HPMove
+(void **tag_ptr, void **payload_ptr)
+
+function
+int
+PyBSP_SendString
+(PyStringObject *string, int dest_pid)
+
+function
+int
+PyBSP_SendArray
+(PyArrayObject *array, int dest_pid)
+
+function
+int
+PyBSP_NumberOfObjects
+(void)
+
+function
+PyObject *
+PyBSP_ReceiveObject
+(void)

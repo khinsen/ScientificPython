@@ -1,0 +1,199 @@
+<a name="Module:Scientific.Geometry.Objects3D"><h1>Module Scientific.Geometry.Objects3D</h1></a>
+
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.GeometricalObject3D"><h2>Class GeometricalObject3D: Geometrical object in 3D space</h2></a>
+
+<p>This is an abstract base class; to create instances, use one of
+the subclasses.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>intersectWith</i></b>(<i>other</i>)
+<p>Returns the geometrical object that results from the
+intersection with <i>other</i>. If there is no intersection,
+the result is <tt>None</tt>.</p>
+
+<p>Note that intersection is not implemented for all possible
+pairs of objects. A <tt>ValueError</tt> is raised for combinations
+that haven't been implemented yet.</p>
+
+<li> <b><i>hasPoint</i></b>(<i>point</i>)
+<p>Returns 1 if <i>point</i> is in the object.</p>
+
+<li> <b><i>distanceFrom</i></b>(<i>point</i>)
+<p>Returns the distance of <i>point</i> from the closest point of the object.</p>
+
+<li> <b><i>volume</i></b>()
+<p>Returns the volume. The result is <tt>None</tt> for unbounded objects
+and zero for lower-dimensional objects.</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.Sphere"><h2>Class Sphere: Sphere</h2></a>
+
+<p>A subclass of GeometricalObject3D.</p>
+
+<p>Constructor: Sphere(<i>center</i>, <i>radius</i>), where <i>center</i> is a vector and
+<i>radius</i> a float.
+</p>
+
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.Plane"><h2>Class Plane: Plane</h2></a>
+
+<p>A subclass of GeometricalObject3D.</p>
+
+<p>Constructor:</p>
+
+<ul>
+<li> <p>
+Plane(<i>point</i>, <i>normal</i>), where <i>point</i> (a vector) is an arbitrary
+  point in the plane and <i>normal</i> (a vector) indicated the direction
+  normal to the plane.</p><li> <p>
+Plane(<i>p1</i>, <i>p2</i>, <i>p3</i>), where each argument is a vector and describes
+  a point in the plane. The three points may not be colinear.
+</p></ul>
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>projectionOf</i></b>(<i>point</i>)
+<p>Returns the projection of <i>point</i> onto the plane.</p>
+
+<li> <b><i>rotate</i></b>(<i>axis</i>, <i>angle</i>)
+<p>Returns a copy of the plane rotated around the coordinate origin.</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.Cone"><h2>Class Cone: Cone</h2></a>
+
+<p>A subclass of GeometricalObject3D.</p>
+
+<p>Constructor: Cone(<i>tip</i>, <i>axis</i>, <i>angle</i>), where <i>tip</i> is a vector
+indicating the location of the tip, <i>axis</i> is a vector that
+describes the direction of the line of symmetry, and <i>angle</i> is
+the angle between the line of symmetry and the cone surface.
+</p>
+
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.Circle"><h2>Class Circle: Circle</h2></a>
+
+<p>A subclass of GeometricalObject3D.</p>
+
+<p>Constructor: Circle(<i>center</i>, <i>normal</i>, <i>radius</i>), where <i>center</i>
+is a vector indicating the center of the circle, <i>normal</i> is a
+vector describing the direction normal to the plane of the circle,
+and <i>radius</i> is a float.
+</p>
+
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.Line"><h2>Class Line: Line</h2></a>
+
+<p>A subclass of GeometricalObject3D.</p>
+
+<p>Constructor: Line(<i>point</i>, <i>direction</i>), where <i>point</i> is a vector
+indicating any point on the line and <i>direction</i> is a vector
+describing the direction of the line.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>projectionOf</i></b>(<i>point</i>)
+<p>Returns the projection of <i>point</i> onto the line.</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.RhombicLattice"><h2>Class RhombicLattice: Lattice with rhombic elementary cell</h2></a>
+
+<p>A lattice object contains values defined on a finite periodic
+structure that is created by replicating a given elementary
+cell along the three lattice vectors. The elementary cell can
+contain any number of points.</p>
+
+<p>Constructor: RhombicLattice(<i>elementary_cell</i>, <i>lattice_vectors</i>, <i>cells</i>,
+                            <i>function</i>=<tt>None</tt>, <i>base</i>=<tt>None</tt>)</p>
+
+<p><dl>
+<dt><i>elementary_cell</i></dt>
+<dd><p>
+a list of the points (vectors) in the elementary cell</p></dd>
+<dt><i>lattice_vectors</i></dt>
+<dd><p>
+a tuple of three vectors describing the edges
+                     of the elementary cell</p></dd>
+<dt><i>cells</i></dt>
+<dd><p>
+a tuple of three integers, indicating how often the elementary
+           cell should be replicated along each lattice vector</p></dd>
+<dt><i>function</i></dt>
+<dd><p>
+the function to be applied to each point in the lattice
+              in order to obtain the value stored in the lattice.
+              If no function is specified, the point itself becomes
+              the value stored in the lattice.</p></dd>
+<dt><i>base</i></dt>
+<dd><p>
+an offset added to all lattice points
+</p></dd>
+</dl>
+</p>
+
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.BravaisLattice"><h2>Class BravaisLattice: General Bravais lattice</h2></a>
+
+<p>This is a subclass of RhombicLattice, describing the special case
+of an elementary cell containing one point.</p>
+
+<p>Constructor: BravaisLattice(<i>lattice_vectors</i>, <i>cells</i>,
+                            <i>function</i>=<tt>None</tt>, <i>base</i>=<tt>None</tt>)</p>
+
+<p><dl>
+<dt><i>lattice_vectors</i></dt>
+<dd><p>
+a tuple of three vectors describing the edges
+                     of the elementary cell</p></dd>
+<dt><i>cells</i></dt>
+<dd><p>
+a tuple of three integers, indicating how often the elementary
+           cell should be replicated along each lattice vector</p></dd>
+<dt><i>function</i></dt>
+<dd><p>
+the function to be applied to each point in the lattice
+              in order to obtain the value stored in the lattice.
+              If no function is specified, the point itself becomes
+              the value stored in the lattice.</p></dd>
+<dt><i>base</i></dt>
+<dd><p>
+an offset added to all lattice points
+</p></dd>
+</dl>
+</p>
+
+<hr width=70%>
+<a name="Class:Scientific.Geometry.Objects3D.SCLattice"><h2>Class SCLattice: Simple cubic lattice</h2></a>
+
+<p>This is a subclass of BravaisLattice, describing the special case
+of a cubic elementary cell.</p>
+
+<p>Constructor: SCLattice(<i>cellsize</i>, <i>cells</i>, <i>function</i>=<tt>None</tt>,
+                       <i>base</i>=<tt>None</tt>)</p>
+
+<p><dl>
+<dt><i>cellsize</i></dt>
+<dd><p>
+the edge length of the cubic elementary cell</p></dd>
+<dt><i>cells</i></dt>
+<dd><p>
+a tuple of three integers, indicating how often the elementary
+           cell should be replicated along each lattice vector</p></dd>
+<dt><i>function</i></dt>
+<dd><p>
+the function to be applied to each point in the lattice
+              in order to obtain the value stored in the lattice.
+              If no function is specified, the point itself becomes
+              the value stored in the lattice.</p></dd>
+<dt><i>base</i></dt>
+<dd><p>
+an offset added to all lattice points
+</p></dd>
+</dl>
+</p>
+

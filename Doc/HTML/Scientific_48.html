@@ -1,0 +1,26 @@
+<h1>Module Scientific.indexing</h1>
+
+
+
+
+
+<p>This module provides a convenient method for constructing
+array indices algorithmically. It provides one importable object,
+<tt>index_expression</tt>.</p>
+
+
+
+<p>For any index combination, including slicing and axis insertion,
+<tt>a[indices]</tt> is the same as <tt>a[index_expression[indices]]</tt> for any
+array <tt>a</tt>. However, <tt>index_expression[indices]</tt> can be used anywhere
+in Python code and returns a tuple of indexing objects that can be
+used in the construction of complex index expressions.</p>
+
+
+
+<p>Sole restriction: Slices must be specified in the double-colon
+form, i.e. a[::] is allowed, whereas a[:] is not.
+</p>
+
+
+

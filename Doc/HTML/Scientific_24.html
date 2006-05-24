@@ -1,0 +1,45 @@
+<a name="Module:Scientific.MPI.IO"><h1>Module Scientific.MPI.IO</h1></a>
+
+<hr width=70%>
+<a name="Class:Scientific.MPI.IO.LogFile"><h2>Class LogFile: File for logging events from all processes</h2></a>
+
+<p>Constructor: LogFile(<i>filename</i>, <i>communicator</i>=None)</p>
+
+<p><dl>
+<dt><i>filename</i></dt>
+<dd><p>
+the name of the file</p></dd>
+<dt><i>communicator</i></dt>
+<dd><p>
+the communicator in which the file is accesible.
+                  The default value of <tt>None</tt> means to use the
+                  global world communicator, i.e. all possible
+                  processes.</p></dd>
+</dl>
+</p>
+
+<p>The purpose of LogFile objects is to collect short text output from
+all processors into a single file. All processes can write whatever
+they want at any time; the date is simply stored locally.
+After the file has been closed by all processes, the
+data is sent to process 0, which then writes everything to one
+text file, neatly separated by process rank number.</p>
+
+<p>Note that due to the intermediate storage of the data, LogFile
+objects should not be used for large amounts of data. Also
+note that all data is lost if a process crashes before closing
+the file.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>write</i></b>(<i>string</i>)
+<p>Write <i>string</i> to the file.</p>
+
+<li> <b><i>flush</i></b>()
+<p>Write buffered data to the text file.</p>
+
+<li> <b><i>close</i></b>()
+<p>Close the file, causing the real text file to be written.</p>
+
+</ul>

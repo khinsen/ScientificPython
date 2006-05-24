@@ -1,0 +1,110 @@
+<a name="Module:Scientific.Geometry.TensorAnalysis"><h1>Module Scientific.Geometry.TensorAnalysis</h1></a>
+
+<hr width=70%>
+<a name="Class:Scientific.Geometry.TensorAnalysis.TensorField"><h2>Class TensorField: Tensor field of arbitrary rank</h2></a>
+
+<p>A tensor field is described by a tensor at each point of
+a three-dimensional rectangular grid. The grid spacing
+may be non-uniform. Tensor fields are implemented as a subclass
+of InterpolatingFunction from the module
+Scientific.Functions.Interpolation and thus share all methods
+defined in that class.</p>
+
+<p>Constructor: TensorField(<i>rank</i>, <i>axes</i>, <i>values</i>, <i>default</i>=<tt>None</tt>)</p>
+
+<p><dl>
+<dt><i>rank</i></dt>
+<dd><p>
+a non-negative integer indicating the tensor rank</p></dd>
+<dt><i>axes</i></dt>
+<dd><p>
+a sequence of three one-dimensional arrays, each
+          of which specifies one coordinate (x, y, z) of the
+          grid points</p></dd>
+<dt><i>values</i></dt>
+<dd><p>
+an array of <tt>rank+3</tt> dimensions. Its first
+            three dimensions correspond to the x, y, z
+            directions and must have lengths compatible with
+            the axis arrays. The remaining dimensions must
+            have length 3.</p></dd>
+<dt><i>default</i></dt>
+<dd><p>
+the value of the field for points outside the grid.
+             A value of <tt>None</tt> means that an exception will be
+             raised for an attempt to evaluate the field outside
+             the grid. Any other value must a tensor of the
+             correct rank.</p></dd>
+</dl>
+</p>
+
+<p>Evaluation:</p>
+
+<ul>
+<li> <p>
+
+<tt>tensorfield(x, y, z)</tt>   (three coordinates)
+</p><li> <p>
+
+<tt>tensorfield(coordinates)</tt>  (any sequence containing three coordinates)
+</p></ul>
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>zero</i></b>()
+<p>Returns a tensor of the correct rank with zero elements.</p>
+
+<li> <b><i>derivative</i></b>(<i>variable</i>)
+<p>Returns the derivative with respect to <i>variable</i>, which
+must be one of 0, 1, or 2.</p>
+
+<li> <b><i>allDerivatives</i></b>()
+<p>Returns all three derivatives (x, y, z).</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.TensorAnalysis.ScalarField"><h2>Class ScalarField: Scalar field (tensor field of rank 0)</h2></a>
+
+<p>Constructor: ScalarField(<i>axes</i>, <i>values</i>, <i>default</i>=<tt>None</tt>)</p>
+
+<p>A subclass of TensorField.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>gradient</i></b>()
+<p>Returns the gradient (a vector field).</p>
+
+<li> <b><i>laplacian</i></b>()
+<p>Returns the laplacian (a scalar field).</p>
+
+</ul>
+<hr width=70%>
+<a name="Class:Scientific.Geometry.TensorAnalysis.VectorField"><h2>Class VectorField: Vector field (tensor field of rank 1)</h2></a>
+
+<p>Constructor: VectorField(<i>axes</i>, <i>values</i>, <i>default</i>=<tt>None</tt>)</p>
+
+<p>A subclass of TensorField.
+</p>
+
+<b>Methods:</b><br>
+<ul>
+<li> <b><i>divergence</i></b>()
+<p>Returns the divergence (a scalar field).</p>
+
+<li> <b><i>curl</i></b>()
+<p>Returns the curl (a vector field).</p>
+
+<li> <b><i>strain</i></b>()
+<p>Returns the strain (a tensor field of rank 2).</p>
+
+<li> <b><i>divergenceCurlAndStrain</i></b>()
+<p>Returns all derivative fields: divergence, curl, and strain.</p>
+
+<li> <b><i>laplacian</i></b>()
+<p>Returns the laplacian (a vector field).</p>
+
+<li> <b><i>length</i></b>()
+<p>Returns a scalar field corresponding to the length (norm) of
+the vector field.</p>
+
+</ul>

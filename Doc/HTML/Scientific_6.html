@@ -1,0 +1,31 @@
+<a name="Module:Scientific.Functions.FindRoot"><h1>Module Scientific.Functions.FindRoot</h1></a>
+
+<hr width=70%>
+<h2>Functions</h2>
+
+<ul>
+<li> <p>
+
+<a name="Function:Scientific.Functions.FindRoot.newtonRaphson"><b><i>newtonRaphson</i></b>(<i>function</i>, <i>lox</i>, <i>hix</i>, <i>xacc</i>)</a><br>
+
+
+</p>
+
+<p>Finds the root of <i>function</i> which is bracketed by values
+<i>lox</i> and <i>hix</i> to an accuracy of +/- <i>xacc</i>. The algorithm
+used is a safe version of Newton-Raphson (see page 366 of NR in
+C, 2ed). <i>function</i> must be a function of one variable, and may
+only use operations defined for the DerivVar objects in the
+module FirstDerivatives.</p>
+
+Example:
+
+<pre>
+from Scientific.Functions.FindRoot import newtonRaphson
+from math import pi
+def func(x):
+    return (2*x*cos(x) - sin(x))*cos(x) - x + pi/4.0
+newtonRaphson(func, 0.0, 1.0, 1.0e-12)
+</pre>
+<p>  yields <tt>0.952847864655</tt>.
+</p></ul>

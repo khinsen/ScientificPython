@@ -1,0 +1,125 @@
+ScientificPython is a collection of Python modules that are useful for
+scientific applications. Most of them need the Numerical Python
+extension (aka NumPy), which is available from SourceForge; see
+http://numpy.sourceforge.net for details.
+
+This is release 2.5 of ScientificPython. The odd minor release number
+indicates a development release. The main new feature is partial
+compatibility with numarray (see below).
+
+If you find bugs, please tell me, and if you improve something, please
+send me the modified version. I don't promise anything, but since I
+use these modules a lot for my own work, I have an interest in keeping
+them bug-free and usable.
+
+For updates, check
+
+  http://dirac.cnrs-orleans.fr/ScientificPython/
+
+from time to time.
+
+
+Konrad Hinsen
+Laboratoire LÅÈon Brillouin (CEA-CNRS)
+CEA Saclay
+91191 Gif sur Yvette Cedex
+France
+
+E-Mail: hinsen@llb.saclay.cea.fr
+
+---------------------------------------------------------------------------
+
+Installation:
+-------------
+
+Required: Python 1.5 or higher, the BSP module requires Python 2.1 or
+higher. Most modules also require Numerical Python. If you want to use
+the netCDF interface module, you also need the netCDF library, version
+3.0 or higher.
+
+Installation is as simple as
+
+    python setup.py build
+    python setup.py install
+
+(the second command requires root priviledges on many installations).
+This will build the netCDF module if it can find a netCDF installation
+in either /usr/local or in /usr. If you you have installed netCDF
+somewhere else, you must edit the file setup.py and replace "None" in
+line 10 by the name of the base directory in quotes.
+
+
+Note for Macintosh users: Scientific Python is available through the
+fink project. However, you can also use the standard Unix installation
+procedure if you prefer.
+
+
+Using numarray:
+---------------
+
+There are two nearly compatible implementations of numeric arrays for
+Python: the original one, Numerical Python (module name "Numeric"),
+and a later rewrite called numarray. numarray is an improvement in
+many respects (in particular the efficiency at handling large arrays),
+but at the time of this writing slower for small arrays. Moreover,
+numarray does not (yet) implement all the features of Numeric.
+
+Scientific Python was written for Numeric and still uses Numeric by
+default. However, it is possible to use numarray instead of Numeric
+for all array operations. To do this, use
+
+    python setup.py build --numarray
+    python setup.py install
+
+for installation.
+
+Note that this is a new feature and not very well tested. Feedback is welcome.
+Note also that the modules
+
+  Scientific.Functions.Derivatives
+  Scientific.Functions.FirstDerivatives
+  Scientific.Functions.LeastSquares
+
+do not work correctly with numarray because they rely on a feature of
+Numeric that is missing in current numarray releases. For the same reason,
+the modules
+
+  Scientific.Functions.Interpolation
+  Scientific.Physics.PhysicalQuantities
+
+can be used only partially with numarray, the application of mathematical
+functions to the defined objects does not work.
+
+---------------------------------------------------------------------------
+
+Manual:
+-------
+
+The reference manual is provided in HTML and PDF formats:
+
+HTML: Doc/HTML/Scientific.html 
+
+PDF:  Doc/PDF/manual.pdf
+
+The DocBook XML source is also provided in Doc/XML. The BSP tutorial
+is in Doc/PDF/BSP_Tutorial.pdf.
+
+
+Examples:
+---------
+
+The directory Examples provides a few simple example applications,
+including a C extension module that uses the netCDF C-API.
+
+
+Using Scientific.Visualization.VMD under Windows
+------------------------------------------------
+
+If VMD is installed in its default location, everything should work
+fine automatically. Otherwise, an error message will be printed. The
+default location is
+
+	c:\Program Files\University of Illinois\VMD\vmd.exe
+
+or its equivalent on non-English Windows versions ("Program Files"
+changes its name).
