@@ -1,16 +1,12 @@
 # Physical quantities with units
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# with contributions from Greg Ward
+# last revision: 2006-4-28
 #
 
-# hacked 1998/09/28 GPW: now removes __args__ from local dict after eval
-#        1998/09/29 GPW: now supports conversions with offset
-#                        (for temperature units)
-
-# $Id: PhysicalQuantities.py,v 1.3.1.7 1999/01/11 21:49:36 gward Exp $
-
-"""Physical quantities with units.
+"""
+Physical quantities with units.
 
 This module provides a data type that represents a physical
 quantity together with its unit. It is possible to add and
@@ -26,7 +22,7 @@ The values of physical constants are taken from the 1986
 recommended values from CODATA. Other conversion factors
 (e.g. for British units) come from various sources. I can't
 guarantee for the correctness of all entries in the unit
-table, so use this at your own risk!
+table, so use this at your own risk.
 """
 
 from Scientific.NumberDict import NumberDict
@@ -37,16 +33,8 @@ import re, string
 
 class PhysicalQuantity:
 
-    """Physical quantity with units
-
-    Constructor:
-
-    - PhysicalQuantity(|value|, |unit|), where |value| is a number of
-      arbitrary type and |unit| is a string containing the unit name.
-
-    - PhysicalQuantity(|string|), where |string| contains both the value
-      and the unit. This form is provided to make interactive use more
-      convenient.
+    """
+    Physical quantity with units
 
     PhysicalQuantity instances allow addition, subtraction,
     multiplication, and division with each other as well as
@@ -56,13 +44,27 @@ class PhysicalQuantity:
     operand. A limited set of mathematical functions (from module
     Numeric) is applicable as well:
 
-    sqrt -- equivalent to exponentiation with 0.5.
+      - sqrt: equivalent to exponentiation with 0.5.
 
-    sin, cos, tan -- applicable only to objects whose unit is compatible
-                     with 'rad'.
+      - sin, cos, tan: applicable only to objects whose unit is
+        compatible with 'rad'.
     """
 
     def __init__(self, *args):
+        """
+        There are two constructor calling patterns:
+
+            1. PhysicalQuantity(value, unit), where value is any number
+            and unit is a string defining the unit
+
+            2. PhysicalQuantity(value_with_unit), where value_with_unit
+            is a string that contains both the value and the unit,
+            i.e. '1.5 m/s'. This form is provided for more convenient
+            interactive use.
+
+        @param args: either (value, unit) or (value_with_unit,)
+        @type args: (number, C{str}) or (C{str},)
+        """
         if len(args) == 2:
             self.value = args[0]
             self.unit = _findUnit(args[1])
@@ -158,27 +160,38 @@ class PhysicalQuantity:
         return self.value != 0
 
     def convertToUnit(self, unit):
-        """Changes the unit to |unit| and adjusts the value such that
-        the combination is equivalent. The new unit is by a string containing
-        its name. The new unit must be compatible with the previous unit
-        of the object."""
+        """
+        Change the unit and adjust the value such that
+        the combination is equivalent to the original one. The new unit
+        must be compatible with the previous unit of the object.
+
+        @param unit: a unit
+        @type unit: C{str}
+        @raise TypeError: if the unit string is not a know unit or a
+        unit incompatible with the current one
+        """
         unit = _findUnit(unit)
         self.value = _convertValue (self.value, self.unit, unit)
         self.unit = unit
 
     def inUnitsOf(self, *units):
-        """Returns one or more PhysicalQuantity objects that express
-        the same physical quantity in different units. The units are
-        specified by strings containing their names. The units must be
-        compatible with the unit of the object. If one unit is
-        specified, the return value is a single PhysicalObject. If
-        several units are specified, the return value is a tuple of
+        """
+        Express the quantity in different units. If one unit is
+        specified, a new PhysicalQuantity object is returned that
+        expresses the quantity in that unit. If several units
+        are specified, the return value is a tuple of
         PhysicalObject instances with with one element per unit such
         that the sum of all quantities in the tuple equals the the
         original quantity and all the values except for the last one
         are integers. This is used to convert to irregular unit
-        systems like hour/minute/second. The original object will not
-        be changed.
+        systems like hour/minute/second.
+
+        @param units: one or several units
+        @type units: C{str} or sequence of C{str}
+        @returns: one or more physical quantities
+        @rtype: L{PhysicalQuantity} or C{tuple} of L{PhysicalQuantity}
+        @raises TypeError: if any of the specified units are not compatible
+        with the original unit
         """
         units = map(_findUnit, units)
         if len(units) == 1:
@@ -203,6 +216,11 @@ class PhysicalQuantity:
 
     # Contributed by Berthold Hoellmann
     def inBaseUnits(self):
+        """
+        @returns: the same quantity converted to base units,
+        i.e. SI units in most cases
+        @rtype: L{PhysicalQuantity}
+        """
         new_value = self.value * self.unit.factor
         num = ''
         denom = ''
@@ -224,6 +242,13 @@ class PhysicalQuantity:
         return self.__class__(new_value, num + denom)
 
     def isCompatible (self, unit):
+        """
+        @param unit: a unit
+        @type unit: C{str}
+        @returns: C{True} if the specified unit is compatible with the
+        one of the quantity
+        @rtype: C{bool}
+        """
         unit = _findUnit (unit)
         return self.unit.isCompatible (unit)
 
@@ -254,7 +279,29 @@ class PhysicalQuantity:
 
 class PhysicalUnit:
 
+    """
+    Physical unit
+
+    A physical unit is defined by a name (possibly composite), a scaling
+    factor, and the exponentials of each of the SI base units that enter into
+    it. Units can be multiplied, divided, and raised to integer powers.
+    """
+    
     def __init__(self, names, factor, powers, offset=0):
+        """
+        @param names: a dictionary mapping each name component to its
+                      associated integer power (e.g. C{{'m': 1, 's': -1}})
+                      for M{m/s}). As a shorthand, a string may be passed
+                      which is assigned an implicit power 1.
+        @type names: C{dict} or C{str}
+        @param factor: a scaling factor
+        @type factor: C{float}
+        @param powers: the integer powers for each of the nine base units
+        @type powers: C{list} of C{int}
+        @param offset: an additive offset to the base unit (used only for
+                       temperatures)
+        @type offset: C{float}
+        """
         if type(names) == type(''):
             self.names = NumberDict()
             self.names[names] = 1
@@ -345,6 +392,13 @@ class PhysicalUnit:
         raise TypeError('Only integer and inverse integer exponents allowed')
 
     def conversionFactorTo(self, other):
+        """
+        @param other: another unit
+        @type other: L{PhysicalUnit}
+        @returns: the conversion factor from this unit to another unit
+        @rtype: C{float}
+        @raises TypeError: if the units are not compatible
+        """
         if self.powers != other.powers:
             raise TypeError('Incompatible units')
         if self.offset != other.offset and self.factor != other.factor:
@@ -354,6 +408,14 @@ class PhysicalUnit:
         return self.factor/other.factor
 
     def conversionTupleTo(self, other): # added 1998/09/29 GPW
+        """
+        @param other: another unit
+        @type other: L{PhysicalUnit}
+        @returns: the conversion factor and offset from this unit to
+                  another unit
+        @rtype: (C{float}, C{float})
+        @raises TypeError: if the units are not compatible
+        """
         if self.powers != other.powers:
             raise TypeError('Incompatible units')
 
@@ -377,6 +439,13 @@ class PhysicalUnit:
         return (factor, offset)
 
     def isCompatible (self, other):     # added 1998/10/01 GPW
+        """
+        @param other: another unit
+        @type other: L{PhysicalUnit}
+        @returns: C{True} if the units are compatible, i.e. if the powers of
+                  the base units are the same
+        @rtype: C{bool}
+        """
         return self.powers == other.powers
 
     def isDimensionless(self):
@@ -413,10 +482,21 @@ class PhysicalUnit:
 # Type checks
 
 def isPhysicalUnit(x):
+    """
+    @param x: an object
+    @type x: any
+    @returns: C{True} if x is a L{PhysicalUnit}
+    @rtype: C{bool}
+    """
     return hasattr(x, 'factor') and hasattr(x, 'powers')
 
 def isPhysicalQuantity(x):
-    "Returns 1 if |x| is an instance of PhysicalQuantity."
+    """
+    @param x: an object
+    @type x: any
+    @returns: C{True} if x is a L{PhysicalQuantity}
+    @rtype: C{bool}
+    """
     return hasattr(x, 'value') and hasattr(x, 'unit')
 
 
@@ -532,6 +612,7 @@ del _unit_table['kg']
 
 for unit in _unit_table.keys():
     _addPrefixed(unit)
+del unit
 
 # Fundamental constants
 
