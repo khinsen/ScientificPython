@@ -2,10 +2,8 @@
 # operations on them. The elements are stored in an array.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-11-29
+# last revision: 2006-4-28
 #
-
-_undocumented = 1
 
 from Scientific import N; Numeric = N
 
@@ -13,22 +11,20 @@ class Tensor:
 
     """Tensor in 3D space
 
-    Constructor: Tensor([[xx, xy, xz], [yx, yy, yz], [zx, zy, zz]])
-
     Tensors support the usual arithmetic operations
     ('t1', 't2': tensors, 'v': vector, 's': scalar): 
 
-    -  't1+t2'        (addition)
-    -  't1-t2'        (subtraction)
-    -  't1*t2'        (tensorial (outer) product)
-    -  't1*v'         (contraction with a vector, same as t1.dot(v.asTensor()))
-    -  's*t1', 't1*s' (multiplication with a scalar)
-    -  't1/s'         (division by a scalar)
+     -  't1+t2'        (addition)
+     -  't1-t2'        (subtraction)
+     -  't1*t2'        (tensorial (outer) product)
+     -  't1*v'         (contraction with a vector, same as t1.dot(v.asTensor()))
+     -  's*t1', 't1*s' (multiplication with a scalar)
+     -  't1/s'         (division by a scalar)
 
     The coordinates can be extracted by indexing; a tensor of rank N
     can be indexed like an array of dimension N.
 
-    Tensors are *immutable*, i.e. their elements cannot be changed.
+    Tensors are I{immutable}, i.e. their elements cannot be changed.
 
     Tensor elements can be any objects on which the standard
     arithmetic operations are defined. However, eigenvalue calculation
@@ -38,6 +34,12 @@ class Tensor:
     is_tensor = 1
 
     def __init__(self, elements, nocheck = None):
+        """
+        @param elements: 2D array or nested list specifying the nine
+                         tensor components
+                         [[xx, xy, xz], [yx, yy, yz], [zx, zy, zz]]
+        @type elements: C{Numeric.array} or C{list}
+        """
         self.array = N.array(elements)
         if nocheck is None:
             if not N.logical_and.reduce(N.equal(N.array(self.array.shape), 3)):
@@ -106,7 +108,11 @@ class Tensor:
             return elements
 
     def asVector(self):
-        "Returns an equivalent vector object (only for rank 1)."
+        """
+        @returns: an equivalent vector object
+        @rtype: L{Scientific.Geometry.Vector}
+        @raises ValueError: if rank > 1
+        """
         from Scientific import Geometry
         if self.rank == 1:
             return Geometry.Vector(self.array)
@@ -114,7 +120,10 @@ class Tensor:
             raise ValueError('rank > 1')
 
     def dot(self, other):
-        "Returns the contraction with |other|."
+        """
+        @returns: the contraction with other
+        @rtype: L{Tensor}
+        """
         if isTensor(other):
             a = self.array
             b =  N.transpose(other.array, range(1, other.rank)+[0])
@@ -130,18 +139,29 @@ class Tensor:
             raise ValueError('Not yet implemented')
 
     def trace(self, axis1=0, axis2=1):
-        "Returns the trace of a rank-2 tensor."
+        """
+        @returns: the trace of the tensor
+        @rtype: type of tensor elements
+        @raises ValueError: if rank !=2 
+        """
         if self.rank == 2:
             return self.array[0,0]+self.array[1,1]+self.array[2,2]
         else:
             raise ValueError('Not yet implemented')
 
     def transpose(self):
-        "Returns the transposed (index reversed) tensor."
+        """
+        @returns: the transposed (index reversed) tensor
+        @rtype: L{Tensor}
+        """
         return Tensor(N.transpose(self.array))
 
     def symmetricalPart(self):
-        "Returns the symmetrical part of a rank-2 tensor."
+        """
+        @returns: the symmetrical part of the tensor
+        @rtype: L{Tensor}
+        @raises ValueError: if rank !=2 
+        """
         if self.rank == 2:
             return Tensor(0.5*(self.array + \
                                N.transpose(self.array,
@@ -151,7 +171,11 @@ class Tensor:
             raise ValueError('Not yet implemented')
 
     def asymmetricalPart(self):
-        "Returns the asymmetrical part of a rank-2 tensor."
+        """
+        @returns: the asymmetrical part of the tensor
+        @rtype: L{Tensor}
+        @raises ValueError: if rank !=2 
+        """
         if self.rank == 2:
             return Tensor(0.5*(self.array - \
                                N.transpose(self.array,
@@ -161,7 +185,11 @@ class Tensor:
             raise ValueError('Not yet implemented')
 
     def eigenvalues(self):
-        "Returns the eigenvalues of a rank-2 tensor in an array."
+        """
+        @returns: the eigenvalues of the tensor
+        @rtype: C{Numeric.array}
+        @raises ValueError: if rank !=2 
+        """
         if self.rank == 2:
             from LinearAlgebra import eigenvalues
             return eigenvalues(self.array)
@@ -169,8 +197,12 @@ class Tensor:
             raise ValueError('Undefined operation')
 
     def diagonalization(self):
-        """Returns the eigenvalues of a rank-2 tensor and a tensor
-        representing the rotation matrix to the diagonalized form."""
+        """
+        @returns: the eigenvalues of the tensor and a tensor
+                  representing the rotation matrix to the diagonal form
+        @rtype: (C{Numeric.array}, L{Tensor})
+        @raises ValueError: if rank !=2 
+        """
         if self.rank == 2:
             from LinearAlgebra import eigenvectors
             ev, vectors = eigenvectors(self.array)
@@ -179,7 +211,11 @@ class Tensor:
             raise ValueError, 'Undefined operation'
 
     def inverse(self):
-        "Returns the inverse of a rank-2 tensor."
+        """
+        @returns: the inverse of the tensor
+        @rtype: L{Tensor}
+        @raises ValueError: if rank !=2 
+        """
         if self.rank == 2:
             from LinearAlgebra import inverse
             return Tensor(inverse(self.array))
@@ -189,5 +225,7 @@ class Tensor:
 # Type check
 
 def isTensor(x):
-    "Return 1 if |x| is a tensor."
+    """
+    @returns: C{True} if x is a L{Tensor}
+    """
     return hasattr(x,'is_tensor')
