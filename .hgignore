@@ -1,5 +1,7 @@
-.*~
-.*\.pyc
-.*\.pyo
+syntax: glob
+
+*~
+**.pyc
+**.pyo
 build
 dist
