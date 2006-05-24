@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2006-1-11
+# Last revision: 2006-4-23
 # 
 
 """This module provides classes that represent PDB (Protein Data Bank)
@@ -22,7 +22,7 @@ to be replaced by a digit. Many programs ignore all this and treat the
 name as an arbitrary left-justified four-character name. This makes it
 difficult to extract the chemical element accurately; most programs
 write the '"CA"' for C_alpha in such a way that it actually stands for
-a calcium atom! For this reason a special element field has been added
+a calcium atom. For this reason a special element field has been added
 later, but only few files use it.
 
 The low-level routines in this module do not try to deal with the atom
@@ -403,6 +403,8 @@ class Atom:
                 self.properties['element'] = name[1]
             elif name[1] in string.digits:
                 self.properties['element'] = name[0]
+            else:
+                self.properties['element'] = name[0:2]
         self.name = string.strip(name)
 
     def __getitem__(self, item):
@@ -590,6 +592,11 @@ class AminoAcidResidue(Residue):
         """
         return self.atoms.has_key('1HT') or self.atoms.has_key('2HT') \
                or self.atoms.has_key('3HT')
+
+    def addAtom(self, atom):
+        Residue.addAtom(self, atom)
+        if atom.name == 'CA': # Make sure it's not a calcium
+            atom.properties['element'] = 'C'
 
     def writeToFile(self, file):
         close = 0
@@ -1144,7 +1151,5 @@ if __name__ == '__main__':
 
     if 1:
 
-        s = Structure('~/1C1C.pdb')
-        #s = Structure('./3lzt.pdb')
-        #s = Structure('~/1tka.pdb')
+        s = Structure('~/Desktop/1G61.pdb')
         print s
