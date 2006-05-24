@@ -1,8 +1,8 @@
 # Definitions to help evaluating potentials and their
 # gradients using DerivVars and DerivVectors.
 #
-# Written by: Konrad Hinsen <hinsen@llb.saclay.cea.fr>
-# Last revision: 2004-12-13
+# Written by: Konrad Hinsen <khinsen@cea.fr>
+# Last revision: 2006-4-24
 # 
 
 """This module offers two strategies for automagically calculating the
@@ -14,7 +14,7 @@ defining the potential energy and is itself a callable object
 returning the energy and its gradients with respect to all arguments
 that are vectors.
 
-Example:
+Example::
 
   >>>def _harmonic(k,r1,r2):
   >>>    dr = r2-r1
@@ -23,7 +23,7 @@ Example:
   >>>energy, gradients = harmonic(1., Vector(0,3,1), Vector(1,2,0))
   >>>print energy, gradients
 
-  prints
+prints::
 
   >>>3.0
   >>>[Vector(-2.0,2.0,2.0), Vector(2.0,-2.0,-2.0)]
@@ -35,7 +35,7 @@ function from this module into the definition of the energy
 function. The first, DerivVectors(), is called to indicate which
 vectors correspond to gradients, and the second, EnergyGradients(),
 extracts energy and gradients from the result of the calculation.
-The above example is therefore equivalent to
+The above example is therefore equivalent to::
 
   >>>def harmonic(k, r1, r2):
   >>>    r1, r2 = DerivVectors(r1, r2)
@@ -44,7 +44,7 @@ The above example is therefore equivalent to
   >>>    return EnergyGradients(e,2)
 
 To include the force constant matrix, the above example has to be
-modified as follows:
+modified as follows::
 
   >>>def _harmonic(k,r1,r2):
   >>>    dr = r2-r1
