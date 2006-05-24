@@ -1,12 +1,13 @@
 # Automatic first-order derivatives
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-21
 #
 
-"""This module provides automatic differentiation for functions with
+"""
+This module provides X{automatic differentiation} for functions with
 any number of variables. Instances of the class DerivVar represent the
-values of a function and its partial derivatives with respect to a
+values of a function and its partial X{derivatives} with respect to a
 list of variables. All common mathematical operations and functions
 are available for these numbers.  There is no restriction on the type
 of the numbers fed into the code; it works for real and complex
@@ -17,13 +18,13 @@ This module is as far as possible compatible with the n-th order
 derivatives module Derivatives. If only first-order derivatives
 are required, this module is faster than the general one.
 
-Example:
+Example::
 
-  >>>print sin(DerivVar(2))
+  print sin(DerivVar(2))
 
-  produces the output
+produces the output::
 
-  >>>(0.909297426826, [-0.416146836547])
+  (0.909297426826, [-0.416146836547])
 
 The first number is the value of sin(2); the number in the following
 list is the value of the derivative of sin(x) at x=2, i.e. cos(2).
@@ -31,29 +32,29 @@ list is the value of the derivative of sin(x) at x=2, i.e. cos(2).
 When there is more than one variable, DerivVar must be called with
 an integer second argument that specifies the number of the variable.
 
-Example:
+Example::
 
-  >>>x = DerivVar(7., 0)
-  >>>y = DerivVar(42., 1)
-  >>>z = DerivVar(pi, 2)
-  >>>print (sqrt(pow(x,2)+pow(y,2)+pow(z,2)))
+    >>>x = DerivVar(7., 0)
+    >>>y = DerivVar(42., 1)
+    >>>z = DerivVar(pi, 2)
+    >>>print (sqrt(pow(x,2)+pow(y,2)+pow(z,2)))
 
-  produces the output
+    produces the output
 
-  >>>(42.6950770511, [0.163953328662, 0.98371997197, 0.0735820818365])
+    >>>(42.6950770511, [0.163953328662, 0.98371997197, 0.0735820818365])
 
 The numbers in the list are the partial derivatives with respect
 to x, y, and z, respectively.
 
 Note: It doesn't make sense to use DerivVar with different values
 for the same variable index in one calculation, but there is
-no check for this. I.e.
+no check for this. I.e.::
 
-  >>>print DerivVar(3, 0)+DerivVar(5, 0)
+    >>>print DerivVar(3, 0)+DerivVar(5, 0)
 
-  produces
+    produces
 
-  >>>(8, [2])
+    >>>(8, [2])
 
 but this result is meaningless.
 """
@@ -65,6 +66,10 @@ from Scientific import N; Numeric = N
 # The following class represents variables with derivatives:
 
 class DerivVar:
+
+    """
+    Numerical variable with automatic derivatives of first order
+    """
 
     """Variable with derivatives
 
@@ -84,7 +89,19 @@ class DerivVar:
     """
 
     def __init__(self, value, index=0, order=1):
-        if order > 1:
+        """
+        @param value: the numerical value of the variable
+        @type value: number
+        @param index: the variable index, which serves to
+            distinguish between variables and as an index for
+            the derivative lists. Each explicitly created
+            instance of DerivVar must have a unique index.
+        @type index: C{int}
+        @param order: the derivative order, must be zero or one
+        @type order: C{int}
+        @raise ValueError: if order < 0 or order > 1
+        """
+        if order < 0 or order > 1:
             raise ValueError('Only first-order derivatives')
         self.value = value
         if order == 0:
@@ -94,10 +111,17 @@ class DerivVar:
         else:
             self.deriv = index*[0] + [1]
 
-    def __getitem__(self, item):
-        if item < 0 or item > 1:
+    def __getitem__(self, order):
+        """
+        @param order: derivative order
+        @type order: C{int}
+        @return: a list of all derivatives of the given order
+        @rtype: C{list}
+        @raise ValueError: if order < 0 or order > 1
+        """
+        if order < 0 or order > 1:
             raise ValueError('Index out of range')
-        if item == 0:
+        if order == 0:
             return self.value
         else:
             return self.deriv
@@ -265,7 +289,11 @@ class DerivVar:
 # Type check
 
 def isDerivVar(x):
-    "Returns 1 if |x| is a DerivVar object."
+    """
+    @param x: an arbitrary object
+    @return: True if x is a DerivVar object, False otherwise
+    @rtype: bool
+    """
     return hasattr(x,'value') and hasattr(x,'deriv')
 
 # Map a binary function on two first derivative lists
@@ -281,14 +309,18 @@ def _mapderiv(func, a, b):
 
 def DerivVector(x, y, z, index=0):
 
-    """Returns a vector whose components are DerivVar objects.
-
-    Arguments:
-
-    |x|, |y|, |z| -- vector components (numbers)
-
-    |index| -- the DerivVar index for the x component. The y and z
-               components receive consecutive indices.
+    """
+    @param x: x component of the vector
+    @type x: number
+    @param y: y component of the vector
+    @type y: number
+    @param z: z component of the vector
+    @type z: number
+    @param index: the DerivVar index for the x component. The y and z
+                  components receive consecutive indices.
+    @type index: C{int}
+    @return: a vector whose components are DerivVar objects
+    @rtype: L{Scientific.Geometry.Vector}
     """
 
     from Scientific.Geometry.VectorModule import Vector
