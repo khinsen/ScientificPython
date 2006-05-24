@@ -1,7 +1,7 @@
 # This module provides a class representing scalar, vector, and tensor fields.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-28
 #
 
 
@@ -24,35 +24,37 @@ class TensorField(Interpolation.InterpolatingFunction):
     Scientific.Functions.Interpolation and thus share all methods
     defined in that class.
 
-    Constructor: TensorField(|rank|, |axes|, |values|, |default|='None')
-
-    Arguments:
-
-    |rank| -- a non-negative integer indicating the tensor rank
-
-    |axes| -- a sequence of three one-dimensional arrays, each
-              of which specifies one coordinate (x, y, z) of the
-              grid points
-
-    |values| -- an array of 'rank+3' dimensions. Its first
-                three dimensions correspond to the x, y, z
-                directions and must have lengths compatible with
-                the axis arrays. The remaining dimensions must
-                have length 3.
-
-    |default| -- the value of the field for points outside the grid.
-                 A value of 'None' means that an exception will be
-                 raised for an attempt to evaluate the field outside
-                 the grid. Any other value must a tensor of the
-                 correct rank.
-                 
     Evaluation:
 
-    - 'tensorfield(x, y, z)'   (three coordinates)
-    - 'tensorfield(coordinates)'  (any sequence containing three coordinates)
+     - 'tensorfield(x, y, z)'   (three coordinates)
+     - 'tensorfield(coordinates)'  (sequence containing three coordinates)
     """
 
-    def __init__(self, rank, axes, values, default = None, check = 1):
+    def __init__(self, rank, axes, values, default = None, check = True):
+        """
+        @param rank: the tensor rank
+        @type rank: C{int}
+
+        @param axes: three arrays specifying the axis ticks for the three
+                     axes
+        @type axes: sequence of C{Numeric.array} of rank 1
+
+        @param values: an array containing the field values. Its first
+                       three dimensions correspond to the x, y, z
+                       directions and must have lengths compatible with
+                       the axis arrays. The remaining dimensions must
+                       have length 3.
+        @type values: C{Numeric.array} of rank+3 dimensions
+
+        @param default: the value of the field for points outside the grid.
+                        A value of 'None' means that an exception will be
+                        raised for an attempt to evaluate the field outside
+                        the grid. Any other value must a tensor of the
+                        correct rank.
+        @type default: L{Scientific.Geometry.Tensor} or C{NoneType}
+
+        @raise ValueError: if the arguments are not consistent
+        """
         if check:
             if len(axes) != 3:
                 raise ValueError('Field must have three axes')
@@ -101,15 +103,23 @@ class TensorField(Interpolation.InterpolatingFunction):
             return TensorField(self.axes, rank, self.values[index], default, 0)
 
     def zero(self):
-        "Returns a tensor of the correct rank with zero elements."
+        """
+        @returns: a tensor of the same rank as the field values
+                  with all elements equal to zero
+        @rtype: L{Scientifc.Geometry.Tensor}
+        """
         if self.rank == 0:
             return 0.
         else:
             return Tensor(Numeric.zeros(self.rank*(3,), Numeric.Float))
 
     def derivative(self, variable):
-        """Returns the derivative with respect to |variable|, which
-        must be one of 0, 1, or 2."""
+        """
+        @param variable: 0 for x, 1 for y, 2 for z
+        @type variable: C{int}
+        @returns: the derivative with respect to variable
+        @rtype: L{TensorField}
+        """
         ui = variable*index_expression[::] + \
              index_expression[2::] + index_expression[...]
         li = variable*index_expression[::] + \
@@ -124,7 +134,10 @@ class TensorField(Interpolation.InterpolatingFunction):
         return self._constructor(d_axes, d_values, d_default, 0)
 
     def allDerivatives(self):
-        "Returns all three derivatives (x, y, z)."
+        """
+        @returns: all three derivatives (x, y, z) on equal-sized grids
+        @rtype: (L{TensorField}, L{TensorField}, L{TensorField})
+        """
         x = self.derivative(0)
         x._reduceAxis(1)
         x._reduceAxis(2)
@@ -170,16 +183,37 @@ class ScalarField(TensorField):
 
     """Scalar field (tensor field of rank 0)
 
-    Constructor: ScalarField(|axes|, |values|, |default|='None')
-
     A subclass of TensorField.
     """
 
-    def __init__(self, axes, values, default = None, check = 1):
+    def __init__(self, axes, values, default = None, check = True):
+        """
+        @param axes: three arrays specifying the axis ticks for the three
+                     axes
+        @type axes: sequence of C{Numeric.array} of rank 1
+
+        @param values: an array containing the field values. The
+                       three dimensions correspond to the x, y, z
+                       directions and must have lengths compatible with
+                       the axis arrays.
+        @type values: C{Numeric.array} of 3 dimensions
+
+        @param default: the value of the field for points outside the grid.
+                        A value of 'None' means that an exception will be
+                        raised for an attempt to evaluate the field outside
+                        the grid. Any other value must a tensor of the
+                        correct rank.
+        @type default: number or C{NoneType}
+
+        @raise ValueError: if the arguments are not consistent
+        """
         TensorField.__init__(self, 0, axes, values, default, check)
 
     def gradient(self):
-        "Returns the gradient (a vector field)."
+        """
+        @returns: the gradient
+        @rtype: L{VectorField}
+        """
         x, y, z = self.allDerivatives()
         grad = Numeric.transpose(Numeric.array([x.values, y.values, z.values]),
                                  [1,2,3,0])
@@ -190,7 +224,10 @@ class ScalarField(TensorField):
         return VectorField(x.axes, grad, default, 0)
 
     def laplacian(self):
-        "Returns the laplacian (a scalar field)."
+        """
+        @returns: the laplacian (gradient of divergence)
+        @rtype L{ScalarField}
+        """
         return self.gradient().divergence()
 
 ScalarField._constructor = ScalarField
@@ -202,12 +239,30 @@ class VectorField(TensorField):
 
     """Vector field (tensor field of rank 1)
 
-    Constructor: VectorField(|axes|, |values|, |default|='None')
-
     A subclass of TensorField.
     """
 
-    def __init__(self, axes, values, default = None, check = 1):
+    def __init__(self, axes, values, default = None, check = True):
+        """
+        @param axes: three arrays specifying the axis ticks for the three
+                     axes
+        @type axes: sequence of C{Numeric.array} of rank 1
+
+        @param values: an array containing the field values. Its first
+                       three dimensions correspond to the x, y, z
+                       directions and must have lengths compatible with
+                       the axis arrays. The fourth dimension must
+                       have length 3.
+        @type values: C{Numeric.array} of four dimensions
+
+        @param default: the value of the field for points outside the grid.
+                        A value of 'None' means that an exception will be
+                        raised for an attempt to evaluate the field outside
+                        the grid. Any other value must a vector
+        @type default: L{Scientific.Geometry.Vector} or C{NoneType}
+
+        @raise ValueError: if the arguments are not consistent
+        """
         TensorField.__init__(self, 1, axes, values, default, check)
 
     def zero(self):
@@ -243,45 +298,58 @@ class VectorField(TensorField):
         return TensorField(2, x.axes, strain, default, 0)
         
     def divergence(self):
-        "Returns the divergence (a scalar field)."
+        """
+        @returns: the divergence
+        @rtype L{ScalarField}
+        """
         x, y, z = self.allDerivatives()
         return self._divergence(x, y, z)
 
     def curl(self):
-        "Returns the curl (a vector field)."
+        """
+        @returns: the curl
+        @rtype L{VectorField}
+        """
         x, y, z = self.allDerivatives()
         return self._curl(x, y, z)
 
-    def strain(self):
-        "Returns the strain (a tensor field of rank 2)."
+    def strain(self): 
+        """
+        @returns: the strain
+        @rtype L{TensorField} of rank 2
+        """
         x, y, z = self.allDerivatives()
         return self._strain(x, y, z)
 
     def divergenceCurlAndStrain(self):
-        "Returns all derivative fields: divergence, curl, and strain."
+        """
+        @returns: all derivative fields: divergence, curl, and strain
+        @rtype (L{ScalarField}, L{VectorField}, L{TensorField})
+        """
         x, y, z = self.allDerivatives()
         return self._divergence(x, y, z), self._curl(x, y, z), \
                self._strain(x, y, z)
 
     def laplacian(self):
-        "Returns the laplacian (a vector field)."
+        """
+        @returns: the laplacian
+        @rtype L{VectorField}
+        """
         x, y, z = self.allDerivatives()
         return self._divergence(x, y, z).gradient()-self._curl(x, y, z).curl()
 
     def length(self):
-        """Returns a scalar field corresponding to the length (norm) of
-        the vector field."""
+        """
+        @returns: a scalar field corresponding to the length (norm) of
+        the vector field.
+        @rtype: L{ScalarField}
+        """
         l = Numeric.sqrt(Numeric.add.reduce(self.values**2, -1))
         try: default = Numeric.sqrt(Numeric.add.reduce(self.default))
         except ValueError: default = None
         return ScalarField(self.axes, l, default, 0)
 
 VectorField._constructor = VectorField
-
-# Sort indices for automatic document string extraction
-TensorField._documentation_sort_index = 0
-ScalarField._documentation_sort_index = 1
-VectorField._documentation_sort_index = 2
 
 #
 # Test code
