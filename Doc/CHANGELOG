@@ -1,8 +1,18 @@
-2.5.7 --> 2.5.8svn
-------------------
+2.5.8 --> 2.5.9hg
+-----------------
+
+Improvements:
+
+- Scientifc.IO.NetCDF supports the new 64-bit data structures in Python 2.5
+  (not yet tested on a 64-bit machine)
+
+
+2.5.7 --> 2.5.8
+---------------
 
 Bug fixes:
 
+- Syntax error in Scientific.IO.PDB
 - Attribute deletion in netCDF file and variable objects caused a crash.
 
 2.5.6 --> 2.5.7
