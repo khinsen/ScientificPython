@@ -1,7 +1,7 @@
 # This module defines a univariate rational function class
 #
-# Written by Konrad Hinsen <hinsen@llb.saclay.cea.fr>
-# last revision: 2004-12-13
+# Written by Konrad Hinsen <khinsen@cea.fr>
+# last revision: 2006-4-21
 #
 
 from Polynomial import Polynomial
@@ -14,18 +14,21 @@ class RationalFunction:
     Instances of this class represent rational functions
     in a single variable. They can be evaluated like functions.
 
-    Constructor: RationalFunction(|numerator|, |denominator|)
-
-    Arguments:
-
-    |numerator|, |denominator| -- polynomials or sequences of numbers that
-                                  represent the polynomial coefficients
-
     Rational functions support addition, subtraction, multiplication,
     and division.
     """
 
     def __init__(self, numerator, denominator=[1.]):
+        """
+        @param numerator: polynomial in one variable, or a list
+            of polynomial coefficients
+        @type numerator: L{Scientific.Functions.Polynomial.Polynomial}
+            or C{list} of numbers
+        @param denominator: polynomial in one variable, or a list
+            of polynomial coefficients
+        @type denominator: L{Scientific.Functions.Polynomial.Polynomial}
+            or C{list} of numbers
+        """
         if hasattr(numerator, 'is_polynomial'):
             self.numerator = numerator
         else:
@@ -111,14 +114,16 @@ class RationalFunction:
                                 self.denominator*other.denominator)
 
     def divide(self, shift=0):
-        """Returns a polynomial and a rational function such that the
-        sum of the two is equal to the original rational function. The
-        returned rational function's numerator is of lower order than
-        its denominator.
-
-        The argument |shift| (default: 0) specifies a positive integer
-        power of the independent variable by which the numerator
-        is multiplied prior to division.
+        """
+        @param shift: the power of the independent variable by which
+            the numerator is multiplied prior to division
+        @type shift: C{int} (non-negative)
+        @return: a polynomial and a rational function such that the
+            sum of the two is equal to the original rational function. The
+            returned rational function's numerator is of lower order than
+            its denominator.
+        @rtype: (L{Scientific.Functions.Polynomial.Polynomial},
+            L{RationalFunction})
         """
         num = Numeric.array(self.numerator.coeff, copy=1)
         if shift > 0:
@@ -139,11 +144,23 @@ class RationalFunction:
         return Polynomial(coeff), RationalFunction(num, den)
 
     def zeros(self):
-        "Returns an array containing the zeros."
+        """
+        Find the X{zeros} (X{roots}) of the numerator by diagonalization
+        of the associated Frobenius matrix.
+
+        @returns: an array containing the zeros
+        @rtype: C{Numeric.array}
+        """
         return self.numerator.zeros()
 
     def poles(self):
-        "Returns an array containing the poles."
+        """
+        Find the X{poles} (zeros of the denominator) by diagonalization
+        of the associated Frobenius matrix.
+
+        @returns: an array containing the poles
+        @rtype: C{Numeric.array}
+        """
         return self.denominator.zeros()
 
 
