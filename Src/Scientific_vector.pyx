@@ -1,7 +1,7 @@
 # Implementation of Scientific.Geometry.Vector in Pyrex
 #
 # Written by Konrad Hinsen
-# last revision: 2005-6-1
+# last revision: 2006-4-28
 #
 
 
@@ -126,11 +126,14 @@ cdef class vector:
         vector.set(result, self.xv/factor, self.yv/factor, self.zv/factor)
         return result
 
-    def __richcmp__(vector self, vector other, int op):
+    def __richcmp__(vector self, other, int op):
         if op != 2 and op != 3:
             return NotImplemented
-        eq = self.xv == other.xv and self.yv == other.yv \
-             and self.zv == other.zv
+        if isinstance(other, vector):
+            eq = self.xv == other.xv and self.yv == other.yv \
+                 and self.zv == other.zv
+        else:
+            eq = False
         if op == 2:
             return eq
         else:
@@ -162,7 +165,7 @@ cdef class vector:
         vector.set(result, self.xv/len, self.yv/len, self.zv/len)
         return result
 
-    def cross(self, vector other):
+    def cross(vector self, vector other):
         "Returns the cross product with vector |other|."
         result = vector()
         vector.set(result, self.yv*other.zv-self.zv*other.yv,
@@ -170,7 +173,7 @@ cdef class vector:
                            self.xv*other.yv-self.yv*other.xv)
         return result
 
-    def angle(self, vector other):
+    def angle(vector self, vector other):
         "Returns the angle to vector |other|."
         cdef double cosa
         cosa = (self.xv*other.xv+self.yv*other.yv+self.zv*other.zv) / \
