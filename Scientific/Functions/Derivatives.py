@@ -1,13 +1,14 @@
 # Automatic nth-order derivatives
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-21
 #
 
-"""This module provides automatic differentiation for functions with
+"""
+This module provides X{automatic differentiation} for functions of
 any number of variables up to any order. An instance of the class
 DerivVar represents the value of a function and the values of its partial
-derivatives with respect to a list of variables. All common
+X{derivatives} with respect to a list of variables. All common
 mathematical operations and functions are available for these numbers.
 There is no restriction on the type of the numbers fed into the
 code; it works for real and complex numbers as well as for
@@ -17,13 +18,13 @@ If only first-order derivatives are required, the module
 FirstDerivatives should be used. It is compatible to this
 one, but significantly faster.
 
-Example:
+Example::
 
-  'print sin(DerivVar(2))'
+  print sin(DerivVar(2))
 
-  produces the output
+produces the output::
 
-  '(0.909297426826, [-0.416146836547])'
+  (0.909297426826, [-0.416146836547])
 
 The first number is the value of sin(2); the number in the following
 list is the value of the derivative of sin(x) at x=2, i.e. cos(2).
@@ -31,16 +32,16 @@ list is the value of the derivative of sin(x) at x=2, i.e. cos(2).
 When there is more than one variable, DerivVar must be called with
 an integer second argument that specifies the number of the variable.
 
-Example:
+Example::
 
-  >>>x = DerivVar(7., 0)
-  >>>y = DerivVar(42., 1)
-  >>>z = DerivVar(pi, 2)
-  >>>print (sqrt(pow(x,2)+pow(y,2)+pow(z,2)))
+    >>>x = DerivVar(7., 0)
+    >>>y = DerivVar(42., 1)
+    >>>z = DerivVar(pi, 2)
+    >>>print (sqrt(pow(x,2)+pow(y,2)+pow(z,2)))
 
-  produces the output
+    produces the output
 
-  >>>(42.6950770511, [0.163953328662, 0.98371997197, 0.0735820818365])
+    >>>(42.6950770511, [0.163953328662, 0.98371997197, 0.0735820818365])
 
 The numbers in the list are the partial derivatives with respect
 to x, y, and z, respectively.
@@ -48,29 +49,29 @@ to x, y, and z, respectively.
 Higher-order derivatives are requested with an optional third
 argument to DerivVar.
 
-Example:
+Example::
 
-  >>>x = DerivVar(3., 0, 3)
-  >>>y = DerivVar(5., 1, 3)
-  >>>print sqrt(x*y)
+    >>>x = DerivVar(3., 0, 3)
+    >>>y = DerivVar(5., 1, 3)
+    >>>print sqrt(x*y)
 
-  produces the output
+    produces the output
 
-  >>>(3.87298334621,
-  >>>    [0.645497224368, 0.387298334621],
-  >>>      [[-0.107582870728, 0.0645497224368],
-  >>>        [0.0645497224368, -0.0387298334621]],
-  >>>          [[[0.053791435364, -0.0107582870728],
-  >>>            [-0.0107582870728, -0.00645497224368]],
-  >>>           [[-0.0107582870728, -0.00645497224368],
-  >>>            [-0.00645497224368, 0.0116189500386]]])
+    >>>(3.87298334621,
+    >>>    [0.645497224368, 0.387298334621],
+    >>>      [[-0.107582870728, 0.0645497224368],
+    >>>        [0.0645497224368, -0.0387298334621]],
+    >>>          [[[0.053791435364, -0.0107582870728],
+    >>>            [-0.0107582870728, -0.00645497224368]],
+    >>>           [[-0.0107582870728, -0.00645497224368],
+    >>>            [-0.00645497224368, 0.0116189500386]]])
 
-The individual orders can be extracted by indexing:
+The individual orders can be extracted by indexing::
 
-  >>>print sqrt(x*y)[0]
-  >>>3.87298334621
-  >>>print sqrt(x*y)[1]
-  >>>[0.645497224368, 0.387298334621]
+    >>>print sqrt(x*y)[0]
+    >>>3.87298334621
+    >>>print sqrt(x*y)[1]
+    >>>[0.645497224368, 0.387298334621]
 
 An n-th order derivative is represented by a nested list of
 depth n.
@@ -85,13 +86,13 @@ very slow for high orders.
 
 Note: It doesn't make sense to use multiple DerivVar objects with
 different values for the same variable index in one calculation, but
-there is no check for this. I.e.
+there is no check for this. I.e.::
 
-  >>>print DerivVar(3, 0)+DerivVar(5, 0)
+    >>>print DerivVar(3, 0)+DerivVar(5, 0)
 
-  produces
+    produces
 
-  >>>(8, [2])
+    >>>(8, [2])
 
 but this result is meaningless.
 """
@@ -104,26 +105,25 @@ from Scientific import N; Numeric = N
 
 class DerivVar:
 
-    """Variable with derivatives
-
-    Constructor: DerivVar(|value|, |index| = 0, |order| = 1)
-
-    Arguments:
-
-    |value| -- the numerical value of the variable
-
-    |index| -- the variable index (an integer), which serves to
-               distinguish between variables and as an index for
-               the derivative lists. Each explicitly created
-               instance of DerivVar must have a unique index.
-
-    |order| -- the derivative order
-
-    Indexing with an integer yields the derivatives of the corresponding
-    order.
+    """
+    Numerical variable with automatic derivatives of arbitrary order
     """
 
     def __init__(self, value, index=0, order = 1, recursive = None):
+        """
+        @param value: the numerical value of the variable
+        @type value: number
+        @param index: the variable index, which serves to
+            distinguish between variables and as an index for
+            the derivative lists. Each explicitly created
+            instance of DerivVar must have a unique index.
+        @type index: C{int}
+        @param order: the derivative order
+        @type order: C{int}
+        @raise ValueError: if order < 0
+        """
+        if order < 0 or order > 1:
+            raise ValueError('Negative derivative order')
         self.value = value
         if recursive:
             d = 0
@@ -143,7 +143,12 @@ class DerivVar:
         self.order = order
 
     def toOrder(self, order):
-        "Returns a DerivVar object with a lower derivative order."
+        """
+        @param order: the highest derivative order to be kept
+        @type order: C{int}
+        @return: a DerivVar object with a lower derivative order
+        @rtype: L{DerivVar}
+        """
         if self.order <= order:
             return self
         if order == 0:
@@ -151,13 +156,20 @@ class DerivVar:
         return DerivVar(self.value, map(lambda x, o=order-1: x.toOrder(o),
                                         self.deriv), order)
 
-    def __getitem__(self, item):
-        if item < 0 or item > self.order:
+    def __getitem__(self, order):
+        """
+        @param order: derivative order
+        @type order: C{int}
+        @return: a list of all derivatives of the given order
+        @rtype: C{list}
+        @raise ValueError: if order < 0 or order > self.order
+        """
+        if order < 0 or order > self.order:
             raise ValueError('Index out of range')
-        if item == 0:
+        if order == 0:
             return self.value
         else:
-            return map(lambda d, i=item-1: _indexDeriv(d,i), self.deriv)
+            return map(lambda d, i=order-1: _indexDeriv(d,i), self.deriv)
 
     def __repr__(self):
         return repr(tuple(map(lambda n, x=self: x[n], range(self.order+1))))
@@ -337,7 +349,11 @@ class DerivVar:
 # Type check
 
 def isDerivVar(x):
-    "Returns 1 if |x| is a DerivVar object."
+    """
+    @param x: an arbitrary object
+    @return: True if x is a DerivVar object, False otherwise
+    @rtype: C{bool}
+    """
     return hasattr(x,'value') and hasattr(x,'deriv') and hasattr(x,'order')
 
 
@@ -369,16 +385,20 @@ def _indexDeriv(d, i):
 
 def DerivVector(x, y, z, index=0, order = 1):
 
-    """Returns a vector whose components are DerivVar objects.
-
-    Arguments:
-
-    |x|, |y|, |z| -- vector components (numbers)
-
-    |index| -- the DerivVar index for the x component. The y and z
-               components receive consecutive indices.
-
-    |order| -- the derivative order
+    """
+    @param x: x component of the vector
+    @type x: number
+    @param y: y component of the vector
+    @type y: number
+    @param z: z component of the vector
+    @type z: number
+    @param index: the DerivVar index for the x component. The y and z
+                  components receive consecutive indices.
+    @type index: C{int}
+    @param order: the derivative order
+    @type order: C{int}
+    @return: a vector whose components are DerivVar objects
+    @rtype: L{Scientific.Geometry.Vector}
     """
 
     from Scientific.Geometry.VectorModule import Vector
