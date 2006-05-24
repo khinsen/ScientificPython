@@ -1,7 +1,7 @@
 # Text files with automatic (un)compression and URL access.
 #
 # Written by: Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2005-9-5
+# Last revision: 2006-5-4
 # 
 
 import os, string, sys
@@ -106,6 +106,9 @@ class TextFile:
         if not line:
             raise IndexError
         return line
+
+    def read(self, size=-1):
+        return self.file.read(size)
 
     def readline(self):
         return self.file.readline()
