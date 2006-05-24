@@ -1,7 +1,7 @@
 # Autoregressive Model for stochastic processes
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-24
 #
 
 from Scientific.Functions.Interpolation import InterpolatingFunction
@@ -16,26 +16,24 @@ class AutoRegressiveModel:
 
     This implementation uses the Burg algorithm to obtain the
     coefficients of the AR model.
-
-    Constructor: AutoRegressiveModel(|order|, |data|, |delta_t|=1.)
-
-    Arguments:
-
-    |order| -- the order of the model (an integer)
-
-    |data| -- the time series (sequence of floats)
-
-    |delta_t| -- the sampling interval for the time series (default: 1.)
     """
 
     def __init__(self, order, data, delta_t=1):
+        """
+        @param order: the order of the model
+        @type order: C{int}
+        @param data: the time series
+        @type data: sequence of C{float} or C{complex}
+        @param delta_t: the sampling interval for the time series
+        @type delta_t: C{float}
+        """
         self.order = order
         self.delta_t = delta_t
         self._poles = None
-        self.findCoefficients(data)
-        self.setTrajectory(data)
+        self._findCoefficients(data)
+        self._setTrajectory(data)
 
-    def findCoefficients(self, data):
+    def _findCoefficients(self, data):
         e = data
         b = data
         a = N.array([1.])
@@ -60,14 +58,18 @@ class AutoRegressiveModel:
         self.sigsq = sigsq
         self.sigma = N.sqrt(sigsq)
 
-    def setTrajectory(self, data):
+    def _setTrajectory(self, data):
         self.trajectory = copy.copy(data[-self.order:])
 
     def predictStep(self):
-        """Return the next step in the series according to linear prediction.
-        The returned value is also appended internally to the current
+        """
+        Calculates the linear prediction of the next step in the series.
+        This step is appended internally  to the current
         trajectory, making it possible to call this method repeatedly
         in order to obtain a sequence of predicted steps.
+        
+        @returns: the predicted step
+        @rtype: C{float} or C{complex}
         """
         next = N.add.reduce(self.coeff*self.trajectory)
         self.trajectory[:-1] = self.trajectory[1:]
@@ -75,8 +77,12 @@ class AutoRegressiveModel:
         return next
 
     def spectrum(self, omega):
-        """Return the frequency spectrum of the process at the
-        angular frequencies |omega| (an array).
+        """
+        @param omega: the angular frequencies at which the spectrum
+        is to be evaluated
+        @type omega: C{Numeric.array} of C{float}
+        @returns: the frequency spectrum of the process
+        @rtype: C{Numeric.array} of C{float}
         """
         sum = 1.
         for i in range(1, len(self.coeff)+1):
@@ -85,6 +91,10 @@ class AutoRegressiveModel:
         return InterpolatingFunction((omega,), s)
 
     def poles(self):
+        """
+        @returns: the poles of the model in the complex M{z}-plane
+        @rtype: C{Numeric.array} of C{complex}
+        """
         if self._poles is None:
             from LinearAlgebra import eigenvalues
             n = len(self.coeff)
@@ -98,8 +108,13 @@ class AutoRegressiveModel:
         return self._poles
 
     def correlation(self, nsteps):
-        """Return the autocorrelation function of the process (as estimated
-        from the AR model) up to |nsteps| times the sampling interval.
+        """
+        @param nsteps: the number of time steps for which the autocorrelation
+        function is to be evaluated
+        @type nsteps: C{int}
+        @returns: the autocorrelation function of the process as estimated
+        from the AR model
+        @rtype: L{Scientific.Functions.Interpolation.InterpolatingFunction}
         """
         poles = self.poles()
         cpoles = N.conjugate(poles)
@@ -122,11 +137,15 @@ class AutoRegressiveModel:
                         pass
                 x = x + power/factor
         cf = -self.sigsq*x/N.conjugate(self.coeff[0])
-        if not isComplex(self.coeff):
-            cf = realPart(cf)
+        if not _isComplex(self.coeff):
+            cf = _realPart(cf)
         return InterpolatingFunction((self.delta_t*N.arange(nsteps),), cf)
 
     def memoryFunctionZ(self):
+        """
+        @returns: the M{z}-transform of the process' memory function
+        @rtype: L{Scientific.Function.Rational.RationalFunction}
+        """
         poles = self.poles()
         cpoles = N.conjugate(poles)
         coeff0 = N.conjugate(self.coeff[0])
@@ -143,12 +162,20 @@ class AutoRegressiveModel:
         for i in range(self.order):
             sum = sum + RationalFunction([beta[i]], [-poles[i], 1.])
         mz = (1./sum+Polynomial([1., -1.]))/self.delta_t**2
-        if not isComplex(self.coeff):
-            mz.numerator.coeff = realPart(mz.numerator.coeff)
-            mz.denominator.coeff = realPart(mz.denominator.coeff)
+        if not _isComplex(self.coeff):
+            mz.numerator.coeff = _realPart(mz.numerator.coeff)
+            mz.denominator.coeff = _realPart(mz.denominator.coeff)
         return mz
 
     def memoryFunctionZapprox(self, den_order):
+        """
+        @param den_order: 
+        @type den_order: C{int}
+        @returns: an approximation to the M{z}-transform of the process'
+        memory function that correponds to an expansion of the
+        denominator up to order den_order
+        @rtype: L{Scientific.Function.Rational.RationalFunction}
+        """
         poles = self.poles()
         cpoles = N.conjugate(poles)
         coeff0 = N.conjugate(self.coeff[0])
@@ -170,26 +197,32 @@ class AutoRegressiveModel:
         den_coeff.reverse()
         mz = (RationalFunction(den_order*[0.] + [1.], den_coeff)
               + Polynomial([1., -1.]))/self.delta_t**2
-        if not isComplex(self.coeff):
-            mz.numerator.coeff = realPart(mz.numerator.coeff)
-            mz.denominator.coeff = realPart(mz.denominator.coeff)
+        if not _isComplex(self.coeff):
+            mz.numerator.coeff = _realPart(mz.numerator.coeff)
+            mz.denominator.coeff = _realPart(mz.denominator.coeff)
         return mz
 
     def memoryFunction(self, nsteps):
-        """Return the memory function corresponding to the autocorrelation
-        function of the process up to |nsteps| times the sampling interval.
+        """
+        @param nsteps: the number of time steps for which the memory
+        function is to be evaluated
+        @type nsteps: C{int}
+        @returns: the memory function of the process as estimated
+        from the AR model
+        @rtype: L{Scientific.Functions.Interpolation.InterpolatingFunction}
         """
         mz = self.memoryFunctionZapprox(nsteps+self.order)
         mem = mz.divide(nsteps-1)[0].coeff[::-1]
         if len(mem) == nsteps+1:
             mem = mem[1:]
-        mem[0] = 2.*realPart(mem[0])
+        mem[0] = 2.*_realPart(mem[0])
         time = self.delta_t*N.arange(nsteps)
         return InterpolatingFunction((time,), mem)
 
     def frictionConstant(self):
-        """Return the friction constant (the integral over the memory function)
-        of the process.
+        """
+        @returns: the friction constant of the process, i.e. the
+        integral over the memory function
         """
         poles = self.poles()
         cpoles = N.conjugate(poles)
@@ -206,8 +239,8 @@ class AutoRegressiveModel:
         sum = 0.
         for i in range(self.order):
             sum = sum + beta[i]/(1.-poles[i])
-        if not isComplex(self.coeff):
-            sum = realPart(sum)
+        if not _isComplex(self.coeff):
+            sum = _realPart(sum)
         return 1./(sum*self.delta_t)
 
 
@@ -219,17 +252,15 @@ class AveragedAutoRegressiveModel(AutoRegressiveModel):
     coefficients of several auto-regressive models of the same
     order. An averaged model is created empty, then individual
     models are added.
-
-    Constructor: AveragedAutoRegressiveModel(|order|, |delta_t|)
-
-    Arguments:
-
-    |order| -- the order of the model (an integer)
-
-    |delta_t| -- the sampling interval for the time series
     """
 
     def __init__(self, order, delta_t):
+        """
+        @param order: the order of the model
+        @type order: C{int}
+        @param delta_t: the sampling interval for the time series
+        @type delta_t: C{float}
+        """
         self.order = order
         self.delta_t = delta_t
         self.weight = 0.
@@ -240,7 +271,15 @@ class AveragedAutoRegressiveModel(AutoRegressiveModel):
         self._poles = None
 
     def add(self, model, weight=1):
-        """Add the coefficients of |model| to the average using |weight|.
+        """
+        Adds the coefficients of an autoregressive model to the average.
+
+        @param model: an autoregressive model
+        @type model: L{AutoRegressiveModel}
+        @param weight: the weight of the model in the average
+        @type weight: C{float}
+        @raise ValueError: if the order of the model does not match the
+        order of the average model
         """
         if self.order != model.order:
             raise ValueError("model orders not equal")
@@ -254,7 +293,7 @@ class AveragedAutoRegressiveModel(AutoRegressiveModel):
 
 
 # Check if data is complex
-def isComplex(x):
+def _isComplex(x):
     try:
         x.imag
         return 1
@@ -262,7 +301,7 @@ def isComplex(x):
         return 0
 
 # Return real part
-def realPart(x):
+def _realPart(x):
     try:
         return x.real
     except (AttributeError, ValueError):
@@ -285,7 +324,7 @@ if __name__ == '__main__':
     from RandomArray import random
     dt = 1.
     t = dt*N.arange(500)
-    if 0:
+    if 1:
         data = N.sin(t) + N.cos(3.*t) + 0.1*(random(len(t))-0.5)
         data = data + 0.1j*(random(len(t))-0.5)
     if 0:
