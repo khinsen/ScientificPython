@@ -3,7 +3,7 @@
 #
 # Written by: Konrad Hinsen <khinsen@cea.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-28
 # 
 
 from Scientific import Geometry
@@ -15,42 +15,56 @@ from math import atan2
 #
 class Transformation:
 
-    """Linear coordinate transformation.
+    """
+    Linear coordinate transformation.
 
     Transformation objects represent linear coordinate transformations
     in a 3D space. They can be applied to vectors, returning another vector.
-    If 't' is a transformation and 'v' is a vector, 't(v)' returns
+    If t is a transformation and v is a vector, t(v) returns
     the transformed vector.
 
-    Transformations support composition: if 't1' and 't2' are transformation
-    objects, 't1*t2' is another transformation object which corresponds
-    to applying t1 *after* t2.
+    Transformations support composition: if t1 and t2 are transformation
+    objects, t1*t2 is another transformation object which corresponds
+    to applying t1 B{after} t2.
 
     This class is an abstract base class. Instances can only be created
     of concrete subclasses, i.e. translations or rotations.
     """
 
     def rotation(self):
-        "Returns the rotational component."
+        """
+        @returns: the rotational component
+        @rtype: L{Rotation}
+        """
         pass
 
     def translation(self):
-        """Returns the translational component. In the case of a mixed
-        rotation/translation, this translation is executed
-        *after* the rotation."""
+        """
+        @returns: the translational component. In the case of a mixed
+                  rotation/translation, this translation is executed
+                  B{after} the rotation.
+        @rtype: L{Translation}
+        """
         pass
 
     def inverse(self):
-        "Returns the inverse transformation."
+        """
+        @returns: the inverse transformation
+        @rtype: L{Transformation}
+        """
         pass
 
     def screwMotion(self):
-        """Returns the four parameters '(reference, direction, angle,
-        distance)' of a screw-like motion that is equivalent to the
-        transformation. The screw motion consists of a displacement
-        of 'distance' (a float) along 'direction' (a normalized vector)
-        plus a rotation of 'angle' radians around an axis pointing along
-        'direction' and passing through the point 'reference' (a vector).
+        """
+        @returns: the four parameters
+                  (reference, direction, angle, distance)
+                  of a screw-like motion that is equivalent to the
+                  transformation. The screw motion consists of a displacement
+                  of distance (a C{float}) along direction (a normalized
+                  L{Scientific.Geometry.Vector}) plus a rotation of
+                  angle radians around an axis pointing along
+                  direction and passing through the point reference
+                  (a L{Scientific.Geometry.Vector}).
         """
         pass
 #
@@ -58,15 +72,15 @@ class Transformation:
 #
 class Translation(Transformation):
 
-    """Translational transformation.
-
-    This is a subclass of Transformation.
-
-    Constructor: Translation(|vector|), where |vector| is the displacement
-    vector.
+    """
+    Translational transformation
     """
 
     def __init__(self, vector):
+        """
+        @param vector: the displacement vector
+        @type vector: L{Scientific.Geometry.Vector}
+        """
         self.vector = vector
 
     is_translation = 1
@@ -85,7 +99,9 @@ class Translation(Transformation):
         return self.vector + vector
 
     def displacement(self):
-        "Returns the displacement vector."
+        """
+        @returns: the displacement vector
+        """
         return self.vector
 
     def rotation(self):
@@ -110,20 +126,20 @@ class Translation(Transformation):
 #
 class Rotation(Transformation):
 
-    """Rotational transformation.
-
-    This is a subclass of Transformation.
-
-    Constructor:
-
-    - Rotation(|tensor|), where |tensor| is a tensor object containing
-      the rotation matrix.
-
-    - Rotation(|axis|, |angle|), where |axis| is a vector and |angle|
-      a number (the angle in radians).
+    """
+    Rotational transformation
     """
 
     def __init__(self, *args):
+        """
+        There are two calling patterns: 
+
+         - Rotation(tensor), where tensor is a L{Scientific.Geometry.Tensor}
+           of rank 2 containing the rotation matrix.
+
+         - Rotation(axis, angle), where axis is a L{Scientific.Geometry.Vector}
+           and angle a number (the angle in radians).       
+        """
         if len(args) == 1:
             self.tensor = args[0]
             if not Geometry.isTensor(self.tensor):
@@ -163,8 +179,11 @@ class Rotation(Transformation):
             raise ValueError('incompatible object')
 
     def axisAndAngle(self):
-        """Returns the axis (a normalized vector) and angle (a float,
-        in radians). The angle is in the interval (-pi, pi]"""
+        """
+        @returns: the axis (a normalized vector) and angle (in radians).
+                  The angle is in the interval (-pi, pi]
+        @rtype: (L{Scientific.Geometry.Vector}, C{float})
+        """
         as = -self.tensor.asymmetricalPart()
         axis = Geometry.Vector(as[1,2], as[2,0], as[0,1])
         sine = axis.length()
@@ -183,11 +202,24 @@ class Rotation(Transformation):
         return axis, angle
 
     def threeAngles(self, e1, e2, e3, tolerance=1e-7):
-        """Find three angles a1, a2, a3 such that
-        Rotation(a1*|e1|)*Rotation(a2*|e2|)*Rotation(a3*|e3|)
-        is equal to the rotation object. |e1|, |e2|, and
-        |e3| are non-zero vectors. The result is a list of the two
-        possible solutions."""
+        """
+        Find three angles a1, a2, a3 such that
+        Rotation(a1*e1)*Rotation(a2*e2)*Rotation(a3*e3)
+        is equal to the rotation object. e1, e2, and
+        e3 are non-zero vectors. There are two solutions, both of which
+        are computed.
+
+        @param e1: a rotation axis
+        @type e1: L{Scientific.Geometry.Vector}
+        @param e2: a rotation axis
+        @type e2: L{Scientific.Geometry.Vector}
+        @param e3: a rotation axis
+        @type e3: L{Scientific.Geometry.Vector}
+        @returns: a list containing two arrays of shape (3,),
+                  each containing the three angles of one solution
+        @rtype: C{list} of C{Numeric.array}
+        @raise ValueError: if two consecutive axes are parallel
+        """
 
         # Written by Pierre Legrand (pierre.legrand@synchrotron-soleil.fr)
         #
@@ -273,7 +305,10 @@ class Rotation(Transformation):
         return solutions
 
     def asQuaternion(self):
-        "Returns a quaternion representing the same rotation."
+        """
+        @returns: a quaternion representing the same rotation
+        @rtype: L{Scientific.Geometry.Quaternion.Quaternion}
+        """
         from Quaternion import Quaternion
         axis, angle = self.axisAndAngle()
         sin_angle_2 = Numeric.sin(0.5*angle)
@@ -299,9 +334,8 @@ class Rotation(Transformation):
 #
 class RotationTranslation(Transformation):
 
-    """Combined translational and rotational transformation.
-
-    This is a subclass of Transformation.
+    """
+    Combined translational and rotational transformation.
 
     Objects of this class are not created directly, but can be the
     result of a composition of rotations and translations.
