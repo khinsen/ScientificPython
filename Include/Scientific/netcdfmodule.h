@@ -8,11 +8,26 @@ extern "C" {
  * Include file for netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2001-5-4
+ * last revision: 2006-5-10
  */
 
 
 #include <stdio.h>
+
+#if PY_VERSION_HEX < 0x02050000
+typedef int Py_ssize_t;
+#define PY_SSIZE_T_MAX INT_MAX
+#define PY_SSIZE_T_MIN INT_MIN
+typedef Py_ssize_t (*lenfunc)(PyObject *);
+typedef PyObject *(*ssizeargfunc)(PyObject *, Py_ssize_t);
+typedef PyObject *(*ssizessizeargfunc)(PyObject *, Py_ssize_t, Py_ssize_t);
+typedef int(*ssizeobjargproc)(PyObject *, Py_ssize_t, PyObject *);
+typedef int(*ssizessizeobjargproc)(PyObject *, Py_ssize_t, Py_ssize_t, PyObject *);
+typedef Py_ssize_t (*readbufferproc)(PyObject *, Py_ssize_t, void **);
+typedef Py_ssize_t (*writebufferproc)(PyObject *, Py_ssize_t, void **);
+typedef Py_ssize_t (*segcountproc)(PyObject *, Py_ssize_t *);
+typedef Py_ssize_t (*charbufferproc)(PyObject *, Py_ssize_t, char **);
+#endif
 
 /* NetCDFFile object */
 
@@ -50,10 +65,10 @@ typedef struct {
 /* Variable index structure */
 
 typedef struct {
-  int start;
-  int stop;
-  int stride;
-  int item;
+  Py_ssize_t start;
+  Py_ssize_t stop;
+  Py_ssize_t stride;
+  Py_ssize_t item;
 } PyNetCDFIndex;
 
 /*

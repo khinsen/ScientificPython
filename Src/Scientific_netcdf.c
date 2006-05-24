@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2006-2-20
+ * last revision: 2006-5-10
  */
 
 #ifdef _WIN32
@@ -476,12 +476,12 @@ set_attribute(int fileid, int varid, PyObject *attributes,
     return 0;
   }
   else if (PyString_Check(value)) {
-    int len = PyString_Size(value);
+    Py_ssize_t len = PyString_Size(value);
     char *string = PyString_AsString(value);
     int ret;
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ret = nc_put_att_text(fileid, varid, name, len, string);
+    ret = nc_put_att_text(fileid, varid, name, (size_t)len, string);
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
     if (ret != NC_NOERR) {
@@ -859,12 +859,18 @@ PyNetCDFFileObject_new_variable(PyNetCDFFileObject *self, PyObject *args)
   char **dimension_names;
   PyObject *item, *dim;
   char *name;
+  Py_ssize_t len_dim;
   int ndim;
   char type;
   int i;
   if (!PyArg_ParseTuple(args, "scO!", &name, &type, &PyTuple_Type, &dim))
     return NULL;
-  ndim = PyTuple_Size(dim);
+  len_dim = PyTuple_Size(dim);
+  if (len_dim > INT_MAX) {
+    PyErr_SetString(PyExc_ValueError, "too many dimensions");
+    return NULL;
+  }
+  ndim = (int)len_dim;
   if (ndim == 0)
     dimension_names = NULL;
   else {
@@ -875,7 +881,7 @@ PyNetCDFFileObject_new_variable(PyNetCDFFileObject *self, PyObject *args)
     }
   }
   for (i = 0; i < ndim; i++) {
-    item = PyTuple_GetItem(dim, i);
+    item = PyTuple_GetItem(dim, (Py_ssize_t)i);
     if (PyString_Check(item))
       dimension_names[i] = PyString_AsString(item);
     else {
@@ -945,7 +951,8 @@ PyNetCDFFile_Close(PyNetCDFFileObject *file)
 {
   PyObject *name;
   PyNetCDFVariableObject *variable;
-  int pos, ret;
+  int ret;
+  Py_ssize_t pos;
 
   if (!check_if_open(file, 0))
     return -1;
@@ -1065,7 +1072,7 @@ static int
 PyNetCDFFile_AddHistoryLine(PyNetCDFFileObject *self, char *text)
 {
   static char *history = "history";
-  int alloc, old, new, new_alloc;
+  Py_ssize_t alloc, old, new, new_alloc;
   PyStringObject *new_string;
   PyObject *h = PyNetCDFFile_GetAttribute(self, history);
   if (h == NULL) {
@@ -1243,7 +1250,7 @@ PyNetCDFVariableObject_typecode(PyNetCDFVariableObject *self, PyObject *args)
   if (!PyArg_ParseTuple(args, ""))
     return NULL;
   t = typecode(self->type);
-  return PyString_FromStringAndSize(&t, 1);
+  return PyString_FromStringAndSize(&t, (Py_ssize_t)1);
 }
 
 /* Method table */
@@ -1289,9 +1296,10 @@ PyNetCDFVariable_GetAttribute(PyNetCDFVariableObject *self, char *name)
     int i;
     if (check_if_open(self->file, -1)) {
       PyNetCDFVariable_GetShape(self);
-      tuple = PyTuple_New(self->nd);
+      tuple = PyTuple_New((Py_ssize_t)self->nd);
       for (i = 0; i < self->nd; i++)
-	PyTuple_SetItem(tuple, i, PyInt_FromLong(self->dimensions[i]));
+	PyTuple_SetItem(tuple, (Py_ssize_t)i,
+			PyInt_FromLong(self->dimensions[i]));
       return tuple;
     }
     else
@@ -1302,14 +1310,14 @@ PyNetCDFVariable_GetAttribute(PyNetCDFVariableObject *self, char *name)
     char name[MAX_NC_NAME];
     int i;
     if (check_if_open(self->file, -1)) {
-      tuple = PyTuple_New(self->nd);
+      tuple = PyTuple_New((Py_ssize_t)self->nd);
       for (i = 0; i < self->nd; i++) {
 	Py_BEGIN_ALLOW_THREADS;
 	acquire_netCDF_lock();
 	ncdiminq(self->file->id, self->dimids[i], name, NULL);
 	release_netCDF_lock();
 	Py_END_ALLOW_THREADS;
-	PyTuple_SetItem(tuple, i, PyString_FromString(name));
+	PyTuple_SetItem(tuple, (Py_ssize_t)i, PyString_FromString(name));
       }
       return tuple;
     }
@@ -1363,13 +1371,13 @@ PyNetCDFVariable_SetAttributeString(PyNetCDFVariableObject *self,
 
 /* Subscripting */
 
-static int
+static Py_ssize_t
 PyNetCDFVariableObject_length(PyNetCDFVariableObject *self)
 {
   if (self->nd > 0)
-    return self->dimensions[0];
+    return (Py_ssize_t)self->dimensions[0];
   else
-    return 0;
+    return (Py_ssize_t)0;
 }
 
 static PyNetCDFIndex *
@@ -1623,7 +1631,7 @@ PyNetCDFVariable_WriteArray(PyNetCDFVariableObject *self,
       size_t *current;
       char *loop;
       long repeat = 1;
-      int lastloop;
+      int lastloop = 0;
       start = (size_t *)malloc(self->nd*sizeof(size_t));
       count = (size_t *)malloc(self->nd*sizeof(size_t));
       count1 = (size_t *)malloc(self->nd*sizeof(size_t));
@@ -1737,18 +1745,14 @@ static int
 PyNetCDFVariable_WriteString(PyNetCDFVariableObject *self,
 			     PyStringObject *value)
 {
-  long len;
   if (self->type != PyArray_CHAR || self->nd != 1) {
     PyErr_SetString(PyExc_IOError, "netcdf: not a string variable");
     return -1;
   }
-  len = PyString_Size((PyObject *)value);
-  if (len > self->dimensions[0]) {
+  if (PyString_Size((PyObject *)value) > self->dimensions[0]) {
     PyErr_SetString(PyExc_ValueError, "string too long");
     return -1;
   }
-  if (self->dimensions[0] > len)
-    len++;
   if (check_if_open(self->file, 1)) {
     int ret;
     define_mode(self->file, 0);
@@ -1769,7 +1773,7 @@ PyNetCDFVariable_WriteString(PyNetCDFVariableObject *self,
 }
 
 static PyObject *
-PyNetCDFVariableObject_item(PyNetCDFVariableObject *self, int i)
+PyNetCDFVariableObject_item(PyNetCDFVariableObject *self, Py_ssize_t i)
 {
   PyNetCDFIndex *indices;
   if (self->nd == 0) {
@@ -1787,7 +1791,8 @@ PyNetCDFVariableObject_item(PyNetCDFVariableObject *self, int i)
 }
 
 static PyObject *
-PyNetCDFVariableObject_slice(PyNetCDFVariableObject *self, int low, int high)
+PyNetCDFVariableObject_slice(PyNetCDFVariableObject *self,
+			     Py_ssize_t low, Py_ssize_t high)
 {
   PyNetCDFIndex *indices;
   if (self->nd == 0) {
@@ -1818,17 +1823,24 @@ PyNetCDFVariableObject_subscript(PyNetCDFVariableObject *self, PyObject *index)
   indices = PyNetCDFVariable_Indices(self);
   if (indices != NULL) {
     if (PySlice_Check(index)) {
-      PySlice_GetIndices((PySliceObject *)index, self->dimensions[0],
+      PySlice_GetIndices((PySliceObject *)index,
+			 (Py_ssize_t)self->dimensions[0],
 			 &indices->start, &indices->stop, &indices->stride);
       return PyArray_Return(PyNetCDFVariable_ReadAsArray(self, indices));
     }
     if (PyTuple_Check(index)) {
-      int ni = PyTuple_Size(index);
+      int ni;
+      Py_ssize_t len_dim = PyTuple_Size(index);
+      if (len_dim > INT_MAX) {
+	PyErr_SetString(PyExc_ValueError, "too many dimensions");
+	return NULL;
+      }
+      ni = (int)len_dim;
       if (ni <= self->nd) {
 	int i, d;
 	d = 0;
 	for (i = 0; i < ni; i++) {
-	  PyObject *subscript = PyTuple_GetItem(index, i);
+	  PyObject *subscript = PyTuple_GetItem(index, (Py_ssize_t)i);
 	  if (PyInt_Check(subscript)) {
 	    int n = PyInt_AsLong(subscript);
 	    indices[d].start = n;
@@ -1867,7 +1879,7 @@ PyNetCDFVariableObject_subscript(PyNetCDFVariableObject *self, PyObject *index)
 
 static int
 PyNetCDFVariableObject_ass_item(PyNetCDFVariableObject *self,
-				int i, PyObject *value)
+				Py_ssize_t i, PyObject *value)
 {
   PyNetCDFIndex *indices;
   if (value == NULL) {
@@ -1890,7 +1902,8 @@ PyNetCDFVariableObject_ass_item(PyNetCDFVariableObject *self,
 
 static int
 PyNetCDFVariableObject_ass_slice(PyNetCDFVariableObject *self,
-				 int low, int high, PyObject *value)
+				 Py_ssize_t low, Py_ssize_t high,
+				 PyObject *value)
 {
   PyNetCDFIndex *indices;
   if (value == NULL) {
@@ -1945,12 +1958,18 @@ PyNetCDFVariableObject_ass_subscript(PyNetCDFVariableObject *self,
       return PyNetCDFVariable_WriteArray(self, indices, value);
     }
     if (PyTuple_Check(index)) {
-      int ni = PyTuple_Size(index);
+      int ni;
+      Py_ssize_t len_dim = PyTuple_Size(index);
+      if (len_dim > INT_MAX) {
+	PyErr_SetString(PyExc_ValueError, "too many dimensions");
+	return -1;
+      }
+      ni = (int)len_dim;
       if (ni <= self->nd) {
 	int i, d;
 	d = 0;
 	for (i = 0; i < ni; i++) {
-	  PyObject *subscript = PyTuple_GetItem(index, i);
+	  PyObject *subscript = PyTuple_GetItem(index, (Py_ssize_t)i);
 	  if (PyInt_Check(subscript)) {
 	    int n = PyInt_AsLong(subscript);
 	    indices[d].start = n;
@@ -1998,7 +2017,7 @@ PyNetCDFVariableObject_error1(PyNetCDFVariableObject *self,
 }
 
 static PyObject *
-PyNetCDFVariableObject_error2(PyNetCDFVariableObject *self, int n)
+PyNetCDFVariableObject_error2(PyNetCDFVariableObject *self, Py_ssize_t n)
 {
   PyErr_SetString(PyExc_TypeError, "can't multiply netCDF variables");
   return NULL;
@@ -2006,19 +2025,19 @@ PyNetCDFVariableObject_error2(PyNetCDFVariableObject *self, int n)
 
 
 static PySequenceMethods PyNetCDFVariableObject_as_sequence = {
-  (inquiry)PyNetCDFVariableObject_length,		/*sq_length*/
+  (lenfunc)PyNetCDFVariableObject_length,	   /*sq_length*/
   (binaryfunc)PyNetCDFVariableObject_error1,       /*nb_add*/
-  (intargfunc)PyNetCDFVariableObject_error2,       /*nb_multiply*/
-  (intargfunc)PyNetCDFVariableObject_item,		/*sq_item*/
-  (intintargfunc)PyNetCDFVariableObject_slice,	/*sq_slice*/
-  (intobjargproc)PyNetCDFVariableObject_ass_item,	/*sq_ass_item*/
-  (intintobjargproc)PyNetCDFVariableObject_ass_slice,   /*sq_ass_slice*/
+  (ssizeargfunc)PyNetCDFVariableObject_error2,     /*nb_multiply*/
+  (ssizeargfunc)PyNetCDFVariableObject_item,	   /*sq_item*/
+  (ssizessizeargfunc)PyNetCDFVariableObject_slice, /*sq_slice*/
+  (ssizeobjargproc)PyNetCDFVariableObject_ass_item,	/*sq_ass_item*/
+  (ssizessizeobjargproc)PyNetCDFVariableObject_ass_slice,   /*sq_ass_slice*/
 };
 
 static PyMappingMethods PyNetCDFVariableObject_as_mapping = {
-  (inquiry)PyNetCDFVariableObject_length,		/*mp_length*/
-  (binaryfunc)PyNetCDFVariableObject_subscript,	      /*mp_subscript*/
-  (objobjargproc)PyNetCDFVariableObject_ass_subscript,   /*mp_ass_subscript*/
+  (lenfunc)PyNetCDFVariableObject_length,		/*mp_length*/
+  (binaryfunc)PyNetCDFVariableObject_subscript,	        /*mp_subscript*/
+  (objobjargproc)PyNetCDFVariableObject_ass_subscript,  /*mp_ass_subscript*/
 };
 
 statichere PyTypeObject PyNetCDFVariable_Type = {
