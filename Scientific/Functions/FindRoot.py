@@ -3,30 +3,45 @@
 # Written by Scott M. Ransom <ransom@cfa.harvard.edu>
 # last revision: 14 Nov 98
 #
-# Cosmetic changes by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2003-3-31
+# Cosmetic changes by Konrad Hinsen <khinsen@cea.fr>
+# last revision: 2006-4-21
 #
+
+"""
+Example::
+
+    >>>from Scientific.Functions.FindRoot import newtonRaphson
+    >>>from Numeric import pi, sin, cos
+    >>>def func(x):
+    >>>    return (2*x*cos(x) - sin(x))*cos(x) - x + pi/4.0
+    >>>newtonRaphson(func, 0.0, 1.0, 1.0e-12)
+
+    yields 0.952847864655.
+"""
 
 from FirstDerivatives import DerivVar
 
 def newtonRaphson(function, lox, hix, xacc):
     
-    """Finds the root of |function| which is bracketed by values
-    |lox| and |hix| to an accuracy of +/- |xacc|. The algorithm
-    used is a safe version of Newton-Raphson (see page 366 of NR in
-    C, 2ed). |function| must be a function of one variable, and may
-    only use operations defined for the DerivVar objects in the
-    module FirstDerivatives.
-
-    Example:
-
-      >>>from Scientific.Functions.FindRoot import newtonRaphson
-      >>>from Numeric import pi, sin, cos
-      >>>def func(x):
-      >>>    return (2*x*cos(x) - sin(x))*cos(x) - x + pi/4.0
-      >>>newtonRaphson(func, 0.0, 1.0, 1.0e-12)
-
-      yields '0.952847864655'.
+    """
+    X{Newton-Raphson} algorithm for X{root} finding.
+    The algorithm used is a safe version of Newton-Raphson
+    (see page 366 of Numerical Recipes in C, 2ed).
+    
+    @param function: function of one numerical variable that
+        uses only those operations that are defined for  DerivVar
+        objects in the module L{Scientific.Functions.FirstDerivatives}
+    @type function: callable
+    @param lox: lower limit of the search interval
+    @type lox: C{float}
+    @param hix: upper limit of the search interval
+    @type hix: C[{loat}
+    @param xacc: requested absolute precision of the root
+    @type xacc: C{float}
+    @returns: a root of function between lox and hix
+    @rtype:  C{float}
+    @raises ValueError: if C{function(lox)} and C{function(hix)} have
+        the same sign, or if there is no convergence after 500 iterations
     """
 
     maxit = 500
@@ -35,8 +50,7 @@ def newtonRaphson(function, lox, hix, xacc):
     tmp = function(DerivVar(hix))
     fh = tmp[0]
     if ((fl > 0.0 and fh > 0.0) or (fl < 0.0 and fh < 0.0)):
-        print "Root must be bracketed in newtonRaphson()"
-        return None
+        raise ValueError("Root must be bracketed")
     if (fl == 0.0): return lox
     if (fh == 0.0): return hix
     if (fl < 0.0):
@@ -72,8 +86,7 @@ def newtonRaphson(function, lox, hix, xacc):
             xl=rts
         else:
             xh=rts
-    print "Maximum number of iterations exceeded in newtonRaphson()"
-    return 0.0
+    raise ValueError("Maximum number of iterations exceeded")
 
 # Test code
 
@@ -81,15 +94,15 @@ if __name__ == '__main__':
 
     from Scientific.Numeric import pi, sin, cos
 
-    def func(x):
+    def _func(x):
         return ((2*x*cos(x) - sin(x))*cos(x) - x + pi/4.0)
     
-    r = newtonRaphson(func, 0.0, 1.0, 1.0e-12)
-    theo =  0.9528478646549419474413332
+    _r = newtonRaphson(_func, 0.0, 1.0, 1.0e-12)
+    _theo =  0.9528478646549419474413332
     print ''
     print 'Finding the root (between 0.0 and 1.0) of:'
     print '    (2*x*cos(x) - sin(x))*cos(x) - x + pi/4 = 0'
     print ''
-    print 'Safe-style Newton-Raphson gives (xacc = 1.0e-12) =', r
-    print 'Theoretical result (correct to all shown digits) = %15.14f' % theo
+    print 'Safe-style Newton-Raphson gives (xacc = 1.0e-12) =', _r
+    print 'Theoretical result (correct to all shown digits) = %15.14f' % _theo
     print ''
