@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# last revision: 2005-9-5
+# last revision: 2006-4-27
 #
 
 from Scientific import N; Numeric = N
@@ -14,37 +14,34 @@ import operator
 #
 class InterpolatingFunction:
 
-    """Function defined by values on a grid using interpolation
+    """X{Function} defined by values on a X{grid} using X{interpolation}
 
-    An interpolating function of n variables with m-dimensional values
-    is defined by an (n+m)-dimensional array of values and n
+    An interpolating function of M{n} variables with M{m}-dimensional values
+    is defined by an M{(n+m)}-dimensional array of values and M{n}
     one-dimensional arrays that define the variables values
     corresponding to the grid points. The grid does not have to be
     equidistant.
 
-    Constructor: InterpolatingFunction(|axes|, |values|, |default|=None)
-
-    Arguments:
-
-    |axes| -- a sequence of one-dimensional arrays, one for each
-              variable, specifying the values of the variables at
-              the grid points
-
-    |values| -- an array containing the function values on the grid
-
-    |default| -- the value of the function outside the grid. A value
-                 of 'None' means that the function is undefined outside
-                 the grid and that any attempt to evaluate it there
-                 yields an exception.
-
-    Evaluation: 'function(x1, x2, ...)' yields the function value
-                obtained by linear interpolation.
-
-    Indexing: all array indexing operations except for the
-              NexAxis operator are supported.
+    An InterpolatingFunction object has attributes C{real} and C{imag}
+    like a complex function (even if its values are real).
     """
 
     def __init__(self, axes, values, default = None):
+        """
+        @param axes: a sequence of one-dimensional arrays, one for each
+            variable, specifying the values of the variables at
+            the grid points
+        @type axes: sequence of Numeric.array
+
+        @param values: the function values on the grid
+        @type values: Numeric.array
+
+        @param default: the value of the function outside the grid. A value
+            of C{None} means that the function is undefined outside
+            the grid and that any attempt to evaluate it there
+            raises an exception.
+        @type default: number or C{None}
+        """
         if len(axes) > len(values.shape):
             raise ValueError('Inconsistent arguments')
         self.axes = list(axes)
@@ -55,6 +52,14 @@ class InterpolatingFunction:
             self.shape = self.shape + axis.shape
 
     def __call__(self, *points):
+        """
+        @returns: the function value obtained by linear interpolation
+        @rtype: number
+        @raise TypeError: if the number of arguments (C{len(points)})
+            does not match the number of variables of the function
+        @raise ValueError: if the evaluation point is outside of the
+            domain of definition and no default value is defined
+        """
         if len(points) != len(self.axes):
             raise TypeError('Wrong number of arguments')
         try:
@@ -73,9 +78,22 @@ class InterpolatingFunction:
         return values
 
     def __len__(self):
+        """
+        @returns: number of variables
+        @rtype: C{int}
+        """
         return len(self.axes[0])
 
     def __getitem__(self, i):
+        """
+        @param i: any indexing expression possible for C{Numeric.array}
+            that does not use C{Numeric.NewAxis}
+        @type i: indexing expression
+        @returns: an InterpolatingFunction whose number of variables
+            is reduced, or a number if no variable is left
+        @rtype: L{InterpolatingFunction} or number
+        @raise TypeError: if i is not an allowed index expression
+        """
         ti = type(i)
         if ti == type(0):
             if len(self.axes) == 1:
@@ -98,6 +116,15 @@ class InterpolatingFunction:
             raise TypeError("illegal index type")
 
     def __getslice__(self, i, j):
+        """
+        @param i: lower slice index
+        @type i: C{int}
+        @param j: upper slice index
+        @type j: C{int}
+        @returns: an InterpolatingFunction whose number of variables
+            is reduced by one, or a number if no variable is left
+        @rtype: L{InterpolatingFunction} or number
+        """
         axes = [self.axes[0][i:j]] + self.axes[1:]
         return self._constructor(axes, self.values[i:j])
 
@@ -132,9 +159,16 @@ class InterpolatingFunction:
             raise AttributeError(attr)
 
     def selectInterval(self, first, last, variable=0):
-        """Returns a new InterpolatingFunction whose grid is restricted
-        to the interval from |first| to |last| along the variable
-        whose number is |variable|.
+        """
+        @param first: lower limit of an axis interval
+        @type first: C{float}
+        @param last: upper limit of an axis interval
+        @type last: C{float}
+        @param variable: the index of the variable of the function
+            along which the interval restriction is applied
+        @type variable: C{int}
+        @returns: a new InterpolatingFunction whose grid is restricted
+        @rtype: L{InterpolatingFunction}
         """
         x = self.axes[variable]
         c = Numeric.logical_and(Numeric.greater_equal(x, first),
@@ -145,8 +179,13 @@ class InterpolatingFunction:
         return self._constructor(i_axes, i_values, None)
         
     def derivative(self, variable = 0):
-        """Returns a new InterpolatingFunction describing the derivative
-        with respect to |variable| (an integer).
+        """
+        @param variable: the index of the variable of the function
+            with respect to which the X{derivative} is taken
+        @type variable: C{int}
+        @returns: a new InterpolatingFunction containing the numerical
+            derivative
+        @rtype: L{InterpolatingFunction}
         """
         diffaxis = self.axes[variable]
         ui = variable*index_expression[::] + \
@@ -165,10 +204,15 @@ class InterpolatingFunction:
         return self._constructor(d_axes, d_values, d_default)
 
     def integral(self, variable = 0):
-        """Returns a new InterpolatingFunction describing the integral
-        with respect to |variable| (an integer). The integration constant
-        is defined in such a way that the value of the integral at the
-        first grid point along |variable| is zero."""
+        """
+        @param variable: the index of the variable of the function
+            with respect to which the X{integration} is performed
+        @type variable: C{int}
+        @returns: a new InterpolatingFunction containing the numerical
+            X{integral}. The integration constant is defined such that
+            the integral at the first grid point is zero.
+        @rtype: L{InterpolatingFunction}
+        """
         intaxis = self.axes[variable]
         ui = variable*index_expression[::] + \
              index_expression[1::] + index_expression[...]
@@ -190,11 +234,17 @@ class InterpolatingFunction:
                                  None)
 
     def definiteIntegral(self, variable = 0):
-        """Returns a new InterpolatingFunction describing the definite integral
-        with respect to |variable| (an integer). The integration constant
-        is defined in such a way that the value of the integral at the
-        first grid point along |variable| is zero. In the case of a
-        function of one variable, the definite integral is a number."""
+        """
+        @param variable: the index of the variable of the function
+            with respect to which the X{integration} is performed
+        @type variable: C{int}
+        @returns: a new InterpolatingFunction containing the numerical
+            X{integral}. The integration constant is defined such that
+            the integral at the first grid point is zero. If the original
+            function has only one free variable, the definite integral
+            is a number
+        @rtype: L{InterpolatingFunction} or number
+        """
         intaxis = self.axes[variable]
         ui = variable*index_expression[::] + \
              index_expression[1::] + index_expression[...]
@@ -213,11 +263,16 @@ class InterpolatingFunction:
             return self._constructor(i_axes, i_values, None)
 
     def fitPolynomial(self, order):
-        """Returns a polynomial of |order| with parameters obtained from
-        a least-squares fit to the grid values."""
+        """
+        @param order: the order of the X{polynomial} to be fitted
+        @type order: C{int}
+        @returns: a polynomial whose coefficients have been obtained
+            by a X{least-squares} fit to the grid values
+        @rtype: L{Scientific.Functions.Polynomial}
+        """
         points = _combinations(self.axes)
-        return Polynomial.fitPolynomial(order, points,
-                                        Numeric.ravel(self.values))
+        return Polynomial._fitPolynomial(order, points,
+                                         Numeric.ravel(self.values))
 
     def __abs__(self):
         values = abs(self.values)
@@ -277,34 +332,30 @@ InterpolatingFunction._constructor = InterpolatingFunction
 #
 class NetCDFInterpolatingFunction(InterpolatingFunction):
 
-    """Function defined by values on a grid in a netCDF file
+    """Function defined by values on a grid in a X{netCDF} file
 
-    A subclass of InterpolatingFunction.
-
-    Constructor: NetCDFInterpolatingFunction(|filename|, |axesnames|,
-                                             |variablename|,
-                                             |default|=None)
-
-    Arguments:
-
-    |filename| -- the name of the netCDF file
-
-    |axesnames| -- the names of the netCDF variables that contain the
-                   axes information
-
-    |variablename| -- the name of the netCDF variable that contains
-                      the data values
-
-    |default| -- the value of the function outside the grid. A value
-                 of 'None' means that the function is undefined outside
-                 the grid and that any attempt to evaluate it there
-                 yields an exception.
-
-    Evaluation: 'function(x1, x2, ...)' yields the function value
-                obtained by linear interpolation.
+    A subclass of L{InterpolatingFunction}.
     """
 
     def __init__(self, filename, axesnames, variablename, default = None):
+        """
+        @param filename: the name of the netCDF file
+        @type filename: C{string}
+
+        @param axesnames: the names of the netCDF variables that contain the
+            axes information
+        @type axes: sequence of C{string}
+
+        @param variablename: the name of the netCDF variable that contains
+            the data values
+        @type variablename: C{string}
+
+        @param default: the value of the function outside the grid. A value
+            of C{None} means that the function is undefined outside
+            the grid and that any attempt to evaluate it there
+            raises an exception.
+        @type default: number or C{None}
+        """
         from Scientific.IO.NetCDF import NetCDFFile
         self.file = NetCDFFile(filename, 'r')
         self.axes = map(lambda n, f=self.file: f.variables[n], axesnames)
@@ -343,6 +394,10 @@ def _combinations(axes):
                 l.append((x,)+y)
         return l
 
+
+# Clean up module (mostly for epydoc)
+
+del index_expression
 
 # Test code
 
