@@ -1,6 +1,10 @@
 # The netCDF interface is mostly written in C; this module only
 # adds some luxury and puts everything in its proper place in the
 # package hierarchy.
+#
+# Written by Konrad Hinsen <khinsen@cea.fr>
+# Last revision: 2006-5-26
+# 
 
 import sys
 
