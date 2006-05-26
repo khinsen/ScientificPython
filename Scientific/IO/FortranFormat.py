@@ -17,39 +17,40 @@
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
 # Changed by Andreas Prlic <andreas@came.sbg.ac.at> (small change)
-# last revision: 2005-9-5
+# last revision: 2006-5-26
 #
 
-"""Fortran-compatible input/output
+"""
+Fortran-compatible input/output
 
 This module provides two classes that aid in reading and writing
 Fortran-formatted text files.
 
-Examples:
+Examples::
 
-  Input:
+  Input::
 
-  >>>s = '   59999'
-  >>>format = FortranFormat('2I4')
-  >>>line = FortranLine(s, format)
-  >>>print line[0]
-  >>>print line[1]
+    >>>s = '   59999'
+    >>>format = FortranFormat('2I4')
+    >>>line = FortranLine(s, format)
+    >>>print line[0]
+    >>>print line[1]
 
-  prints
+  prints::
 
-  >>>5
-  >>>9999
+    >>>5
+    >>>9999
 
 
-  Output:
+  Output::
 
-  >>>format = FortranFormat('2D15.5')
-  >>>line = FortranLine([3.1415926, 2.71828], format)
-  >>>print str(line)
+    >>>format = FortranFormat('2D15.5')
+    >>>line = FortranLine([3.1415926, 2.71828], format)
+    >>>print str(line)
 
-  prints
+  prints::
 
-  '3.14159D+00    2.71828D+00'
+    '3.14159D+00    2.71828D+00'
 """
 
 import string
@@ -67,38 +68,35 @@ class FortranLine:
     Python objects, whereas transformation to a string (using the
     built-in function 'str') yields the text representation.
 
-    Constructor: FortranLine(|data|, |format|, |length|='80')
+    Restrictions::
 
-    Arguments:
+      1) Only A, D, E, F, G, I, and X formats are supported (plus string
+         constants for output).
 
-    |data| -- either a sequence of Python objects, or a string
-              formatted according to Fortran rules
+      2) No direct support for complex numbers; they must be split into
+         real and imaginary parts before output.
 
-    |format| -- either a Fortran-style format string, or a
-                FortranFormat object. A FortranFormat should
-                be used when the same format string is used repeatedly,
-                because then the rather slow parsing of the string
-                is performed only once.
-
-    |length| -- the length of the Fortran record. This is relevant
-                only when |data| is a string; this string is then
-                extended by spaces to have the indicated length.
-                The default value of 80 is almost always correct.
-
-    Restrictions:
-
-    1) Only A, D, E, F, G, I, and X formats are supported (plus string
-       constants for output).
-
-    2) No direct support for complex numbers; they must be split into
-       real and imaginary parts before output.
-
-    3) No overflow check. If an output field gets too large, it will
-       take more space, instead of being replaced by stars according
-       to Fortran conventions.
+      3) No overflow check. If an output field gets too large, it will
+         take more space, instead of being replaced by stars according
+         to Fortran conventions.
     """
     
     def __init__(self, line, format, length = 80):
+        """
+        @param data: either a sequence of Python objects, or a string
+                     formatted according to Fortran rules
+
+        @param format: either a Fortran-style format string, or a
+                       L{FortranFormat} object. A FortranFormat should
+                       be used when the same format string is used repeatedly,
+                       because then the rather slow parsing of the string
+                       is performed only once.
+
+        @param length: the length of the Fortran record. This is relevant
+                       only when data is a string; this string is then
+                       extended by spaces to have the indicated length.
+                       The default value of 80 is almost always correct.
+        """
         if type(line) == type(''):
             self.text = line
             self.data = None
@@ -116,18 +114,42 @@ class FortranLine:
             self._input()
 
     def __len__(self):
+        """
+        @returns: the number of data elements in the record
+        @rtype: C{int}
+        """
         return len(self.data)
 
     def __getitem__(self, i):
+        """
+        @param i: index
+        @type i: C{int}
+        @returns: the ith data element
+        """
         return self.data[i]
 
     def __getslice__(self, i, j):
+        """
+        @param i: start index
+        @type i: C{int}
+        @param j: end index
+        @type j: C{int}
+        @returns: a list containing the ith to jth data elements
+        """
         return self.data[i:j]
 
     def __str__(self):
+        """
+        @returns a Fortran-formatted text representation of the data record
+        @rtype: C{string}
+        """
         return self.text
 
     def isBlank(self):
+        """
+        @returns: C{True} if the line contains only whitespace
+        @rtype: C{bool}
+        """
         return len(string.strip(self.text)) == 0
 
     def _input(self):
@@ -214,13 +236,21 @@ class FortranLine:
 #
 class FortranFormat:
 
-    """Parsed fortran-style format string
+    """
+    Parsed Fortran-style format string
 
-    Constructor: FortranFormat(|format|), where |format| is a
-    format specification according to Fortran rules.
+    FortranFormat objects can be used as arguments when constructing
+    FortranLine objects instead of the plain format string. If a
+    format string is used more than once, embedding it into a FortranFormat
+    object has the advantage that the format string is parsed only once.
     """
 
-    def __init__(self, format, nested = 0):
+    def __init__(self, format, nested = False):
+        """
+        @param format: a Fortran format specification
+        @type format: C{string}
+        @param nested: I{for internal use}
+        """
         fields = []
         format = string.strip(format)
         while format and format[0] != ')':
