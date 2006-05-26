@@ -1,16 +1,20 @@
 # Subpackage Scientific.Geometry
 #
 # Written by: Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2004-4-11
+# Last revision: 2006-5-26
 #
 
-"""This subpackage contains classes that deal with geometrical
+"""
+This subpackage contains classes that deal with geometrical
 quantities and objects. The geometrical quantities are vectors and
 tensors, transformations, and quaternions as descriptions of
 rotations.  There are also tensor fields, which were included here
 (rather than in the subpackage Scientific.Functions) because they are
 most often used in a geometric context. Finally, there are classes for
 elementary geometrical objects such as spheres and planes.
+
+@undocumented: VectorModule*
+@undocumented: TensorModule*
 """
 
 # Pretend that Vector and Tensor are defined directly
@@ -52,9 +56,20 @@ epsilon = Tensor([[[ 0,  0,  0],
 
 
 import sys
-if sys.modules.has_key('pythondoc'):
+if sys.modules.has_key('epydoc'):
+    import VectorModule, TensorModule
+    Vector = VectorModule.Vector
+    isVector = VectorModule.isVector
+    vm_name = VectorModule.__name__
+    tm_name = TensorModule.__name__
     Vector.__module__ = 'Scientific.Geometry'
     Tensor.__module__ = 'Scientific.Geometry'
     isVector.func_globals['__name__'] = 'Scientific.Geometry'
     isTensor.func_globals['__name__'] = 'Scientific.Geometry'
+    VectorModule.__name__ = vm_name
+    TensorModule.__name__ = tm_name
+    del VectorModule
+    del TensorModule
+    del vm_name
+    del tm_name
 del sys

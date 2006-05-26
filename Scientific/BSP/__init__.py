@@ -14,6 +14,7 @@ being different from sent objects.
 
 @undocumented: RemoteObjects
 @undocumented: Tasks
+@undocumented: core
 """
 
 from core import numberOfProcessors, processorID, ParValue, ParConstant, \
@@ -22,13 +23,20 @@ from core import numberOfProcessors, processorID, ParValue, ParConstant, \
      ParIndexIterator, ParClass, ParBase, ParInvalid, is_invalid
 
 import sys
-if False and sys.modules.has_key('epydoc'):
+if sys.modules.has_key('epydoc'):
     import core, types
+    imported_names = dir()
+    core_name = core.__name__
     for name in dir(core):
+        if name not in imported_names:
+            continue
         object = getattr(core, name)
-        if type(object) == types.ClassType:
+        if isinstance(object, type) or type(object) == types.ClassType:
             setattr(object, '__module__', 'Scientific.BSP')
         elif type(object) == types.FunctionType:
             object.func_globals['__name__'] = 'Scientific.BSP'
+    core.__name__ = core_name
     del types
+    del core_name
+    del imported_names
 del sys
