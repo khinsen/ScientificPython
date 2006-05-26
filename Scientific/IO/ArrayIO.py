@@ -1,19 +1,20 @@
 # Array I/O to text files
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2004-12-13
+# last revision: 2006-5-26
 #
 
-"""This module contains elementary support for I/O of one- and
+"""
+This module contains elementary support for I/O of one- and
 two-dimensional numerical arrays to and from plain text files. The
 text file format is very simple and used by many other programs as
-well:
+well::
 
-- each line corresponds to one row of the array
+  - each line corresponds to one row of the array
 
-- the numbers within a line are separated by white space
+  - the numbers within a line are separated by white space
 
-- lines starting with # are ignored (comment lines)
+  - lines starting with # are ignored (comment lines)
 
 An array containing only one line or one column is returned as a
 one-dimensional array on reading. One-dimensional arrays are written
@@ -21,7 +22,7 @@ as one item per line.
 
 Numbers in files to be read must conform to Python/C syntax.  For
 reading files containing Fortran-style double-precision numbers
-(exponent prefixed by D), use the module Scientific.IO.FortranFormat.
+(exponent prefixed by D), use the module L{Scientific.IO.FortranFormat}.
 """
 
 from Scientific.IO.TextFile import TextFile
@@ -29,11 +30,20 @@ from Scientific import N; Numeric = N
 import string
 
 def readArray(filename):
-    """Return an array containing the data from file |filename|. This
-    function works for arbitrary data types (every array element can be
+    """
+    Read array data from a file
+    
+    This function works for arbitrary data types (every array element can be
     given by an arbitrary Python expression), but at the price of being
-    slow. For large arrays, use readFloatArray or readIntegerArray
-    if possible."""
+    slow. For large arrays, use L{readFloatArray} or L{readIntegerArray}
+    if possible.
+
+    @param filename: the name of the file to read
+    @type filename: C{string}
+
+    @returns: an array containing the data from the file
+    @rtype: C{Numeric.array}
+    """
     data = []
     for line in TextFile(filename):
         if len(line) == 0 and len(data) > 0:
@@ -46,7 +56,15 @@ def readArray(filename):
     return a
 
 def readFloatArray(filename):
-    "Return a floating-point array containing the data from file |filename|."
+    """
+    Read array data from a file into an array of floats
+    
+    @param filename: the name of the file to read
+    @type filename: C{string}
+
+    @returns: an array containing the data from the file
+    @rtype: C{Numeric.array} of C{float}
+    """
     data = []
     for line in TextFile(filename):
         if line[0] != '#':
@@ -57,7 +75,15 @@ def readFloatArray(filename):
     return a
 
 def readIntegerArray(filename):
-    "Return an integer array containing the data from file |filename|."
+    """
+    Read array data from a file into an array of integers
+    
+    @param filename: the name of the file to read
+    @type filename: C{string}
+
+    @returns: an array containing the data from the file
+    @rtype: C{Numeric.array} of C{int}
+    """
     data = []
     for line in TextFile(filename):
         if line[0] != '#':
@@ -68,8 +94,16 @@ def readIntegerArray(filename):
     return a
 
 def writeArray(array, filename, mode='w'):
-    """Write array |a| to file |filename|. |mode| can be 'w' (new file)
-       or 'a' (append)."""
+    """
+    Write a text representation of an array to a file.
+
+    @param array: the array to be written
+    @type array: C{Numeric.array}
+    @param filename: the name of the output file
+    @type filename: C{string}
+    @param mode: the file access mode, 'w' (new file) or 'a' (append)
+    @type mode: C{string}
+    """
     file = TextFile(filename, mode)
     if len(array.shape) == 1:
         array = array[:, Numeric.NewAxis]
@@ -85,11 +119,19 @@ def writeArray(array, filename, mode='w'):
 # to make input files for most plotting programs.
 #
 def writeDataSets(datasets, filename, separator = ''):
-    """Write each of the items in the sequence |datasets|
-    to the file |filename|, separating the datasets by a line
-    containing |separator|. The items in the data sets can be
-    one- or two-dimensional arrays or equivalent nested sequences.
-    The output file format is understood by many plot programs.
+    """
+    Write multiple datasets to a text file.
+
+    @param datasets: a sequence of datasets describing a curve to be
+                     plotted. Each dataset is either a 1d-array
+                     (list of values) or a 2d-array of shape N x 2
+                     (list of (x, y) pairs). Nested lists can be used
+                     instead of arrays.
+    @param filename: the name of the output file
+    @type filename: C{string}
+    @param separator: the contents of the line that is written between
+                      two datasets
+    @type separator: C{string}
     """
     file = TextFile(filename, 'w')
     nsets = len(datasets)
