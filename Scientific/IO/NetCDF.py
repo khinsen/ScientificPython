@@ -4,7 +4,7 @@
 
 import sys
 
-if sys.modules.has_key('pythondoc'):
+if sys.modules.has_key('epydoc'):
 
     # Fake code just for the docstrings!
 
@@ -12,28 +12,8 @@ if sys.modules.has_key('pythondoc'):
 
     class NetCDFFile:
 
-        """netCDF file
-
-        Constructor: NetCDFFile(|filename|, |mode|='"r"')
-
-        Arguments:
-
-        |filename| -- name of the netCDF file. By convention, netCDF files
-                      have the extension ".nc", but this is not enforced.
-                      The filename may contain a home directory indication
-                      starting with "~".
-
-        |mode| -- access mode. "r" means read-only; no data can be modified.
-                  "w" means write; a new file is created, an existing
-                  file with the same name is deleted. "a" means append
-                  (in analogy with serial files); an existing file is
-                  opened for reading and writing, and if the file does
-                  not exist it is created. "r+" is similar to "a",
-                  but the file must already exist. An "s" can be appended
-                  to any of the modes listed above; it indicates that the
-                  file will be opened or created in "share" mode, which
-                  reduces buffering in order to permit simultaneous read
-                  access by other processes to a file that is being written.
+        """
+        X{netCDF} file
 
         A NetCDFFile object has two standard attributes: 'dimensions' and
         'variables'. The values of both are dictionaries, mapping dimension
@@ -47,42 +27,77 @@ if sys.modules.has_key('pythondoc'):
         """
 
         def __init__(self, *args):
+            """
+            @param filename: name of the netCDF file. By convention,
+                             netCDF files have the extension ".nc", but
+                             this is not enforced. The filename may contain
+                             a home directory indication starting with "~".
+            @type filename: C{string}
+
+            @param mode: access mode. "r" means read-only; no data can be
+                         modified. "w" means write; a new file is created,
+                         an existing file with the same name is deleted.
+                         "a" means append (in analogy with serial files);
+                         an existing file is opened for reading and writing,
+                         if the file does not exist it is created. "r+" is
+                         similar to "a", but the file must already exist.
+                         An "s" can be appended to any of the modes listed
+                         above; it indicates that the file will be opened
+                         or created in "share" mode, which reduces buffering
+                         in order to permit simultaneous read access by other
+                         processes to a file that is being written.
+            @type mode: C{string}
+            """
             raise ImportError("this code should never be executed")
 
         def close(self):
-            """Closes the file. Any read or write access to the file
-            or one of its variables after closing raises an exception."""
+            """
+            Close the file. Any read or write access to the file
+            or one of its variables after closing raises an exception.
+            """
             pass
         
         def createDimension(self, name, length):
-            """Creates a new dimension with the given |name| and
-            |length|. |length| must be a positive integer or 'None',
-            which stands for the unlimited dimension. Note that there can
-            be only one unlimited dimension in a file."""
+            """
+            @param name: the name of the dimension
+            @type name: C{string}
+            @param length: the length of the new dimension. C{None} stands
+                           for the unlimited dimension. Note that there
+                           can be only one unlimited dimension per file.
+            @type length: C{int} or C{NoneType}
+            """
             pass
 
         def createVariable(self, name, type, dimensions):
-            """Creates a new variable with the given |name|, |type|, and
-            |dimensions|. The |type| is a one-letter string with the same
-            meaning as the typecodes for arrays in module Numeric; in
-            practice the predefined type constants from Numeric should
-            be used. |dimensions| must be a tuple containing dimension
-            names (strings) that have been defined previously.
-
-            The return value is the NetCDFVariable object describing the
-            new variable."""
+            """
+            @param name: the name of the new variable
+            @type name: C{string}
+            @param type: the data type of the elements; the same one-letter
+                         codes as in C{Numeric} are used and the use of the
+                         pre-defined constants (Numeric.Float etc.) is
+                         strongly recommended.
+            @type type: C{string}
+            @param dimensions: a tuple of dimension names that have been
+                               defined earlier
+            @type dimensions: C{tuple} of C{string}
+            @returns: the object corresponding to the new variable
+            @rtype: L{NetCDFVariable}
+            """
             pass
 
         def sync(self):
-            "Writes all buffered data to the disk file."
+            """
+            Write all buffered data to the disk file.
+            """
         flush = sync
 
     class NetCDFVariable:
 
-        """Variable in a netCDF file
+        """
+        Variable in a netCDF file
 
         NetCDFVariable objects are constructed by calling the method
-        'createVariable' on the NetCDFFile object.
+        'createVariable' on the L{NetCDFFile} object.
 
         NetCDFVariable objects behave much like array objects defined
         in module Numeric, except that their data resides in a file.
@@ -98,7 +113,7 @@ if sys.modules.has_key('pythondoc'):
         netCDF file. Variable attributes are created by assigning to
         an attribute of the NetCDFVariable object. 
 
-        Note:
+        B{Note:}
         If a file open for reading is simultaneously written by another program,
         the size of the unlimited dimension may change. Every time the shape
         of a variable is requested, the current size will be obtained from
@@ -112,17 +127,28 @@ if sys.modules.has_key('pythondoc'):
             raise ImportError("this code should never be executed")
 
         def assignValue(self, value):
-            """Assigns |value| to the variable. This method allows
-            assignment to scalar variables, which cannot be indexed."""
+            """
+            Assign a new value to the variable. This method allows
+            assignment to scalar variables, which cannot be indexed.
+            
+            @param value: the new value for the variable
+            """
             pass
 
         def getValue(self):
-            """Returns the value of the variable. This method allows
-            access to scalar variables, which cannot be indexed."""
+            """
+            Return the value of the variable. This method allows
+            access to scalar variables, which cannot be indexed.
+
+            @returns: the current value of the variable
+            """
             pass
 
         def typecode(self):
-            "Return the variable's type code (a string)."
+            """
+            @returns:  the variable's type code
+            @rtype: C{string}
+            """
             pass
 
 else:
