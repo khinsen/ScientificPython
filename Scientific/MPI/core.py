@@ -3,12 +3,13 @@
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
 #        and Jakob Schiotz <schiotz@fysik.dtu.dk>
-# last revision: 2005-9-5
+# last revision: 2006-5-28
 #
 
-_undocumented = 1
+"""
+Python interface to the Message Passing Interface (MPI)
 
-"""This module contains a Python interface to the Message Passing
+This module contains a Python interface to the Message Passing
 Interface (MPI), and standardized library for message-passing parallel
 computing. Please read an introduction to MPI before using this
 module; some terms in the documentation do not make much sense unless
@@ -19,25 +20,28 @@ default communicator in MPI. This communicator can be used directly
 for sending and receiving data, or other communicators can be
 derived from it.
 
-A number of global constants are also defined ( 'max', 'min', 'prod',
-'sum', 'land', 'lor', 'lxor', 'band', 'bor', 'bxor', 'maxloc' and
-'minloc' ).  They are used to specify the desired operator in calls to
+A number of global constants are also defined (L{max}, L{min}, L{prod},
+L{sum}, L{land}, L{lor}, L{lxor}, L{band}, L{bor}, L{bxor}, L{maxloc}),
+and L{minloc}). They are used to specify the desired operator in calls to
 the 'reduce' and 'allreduce' methods of the communicator objects.
 """
 
 class MPIError(EnvironmentError):
-    "MPI call failed"
+    """
+    MPI call failed
+    """
     pass
 
 import sys
 
-if sys.modules.has_key('pythondoc'):
+if sys.modules.has_key('epydoc'):
 
     # Fake code just for the docstrings!
 
     class MPICommunicator:
 
-        """MPI Communicator
+        """
+        MPI Communicator
 
         There is no constructor for MPI Communicator objects. The
         default communicator is given by Scientific.MPI.world, and
@@ -51,155 +55,240 @@ if sys.modules.has_key('pythondoc'):
         """
 
         def duplicate(self):
-            """Returns a new communicator object with the same properties
-            as the original one."""
+            """
+            @returns: a new communicator with the same properties
+                      as the original one
+            @rtype: L{MPICommunicator}
+            """
             pass
 
         def subset(self, ranks):
-            """Returns a new communicator object containing a subset
-            of the processes participating in the original
-            one. |ranks| is a list of ranks - one for each processor
-            that should belong to the new communicator.
-
-            The method should be called by all processors and the
+            """
+            Create a communicator for a subset of the processes
+            
+            The method should be called by all processes simultaneously. The
             return value will be the new communicator on those
-            processors listed in |ranks| and |None| for the rest."""
+            processes listed in C{ranks} and C{None} for the rest.
+
+            @param ranks: a list of ranks, one for each process that should
+                          belong to the new communicator
+            @type ranks: C{list} of C{int}
+            @returns: a new communicator containing a subset
+                      of the processes participating in the original one
+            """
             pass
 
         def send(self, data, destination, tag):
-            """Sends the contents of |data| (a string or any contiguous NumPy
-            array except for general object arrays) to the processor
-            whose rank is |destination|, using |tag| as an identifier.
+            """
+            Send data to another process (blocking)
+
+            @param data: the data to be sent
+            @type data: C{string} or C{Numeric.array}. Array arguments
+                        must have contiguous storage. General object arrays
+                        are not allowed.
+            @param destination: the rank of the destination process
+            @type destination: C{int}
+            @param tag: Identifier
+            @type tag: C{int}
             """
             pass
 
         def nonblockingSend(self, data, destination, tag):
-            """Sends the contents of |data| (a string or any contiguous NumPy
-            array except for general object arrays) to the processor
-            whose rank is |destination|, using |tag| as an identifier.
-            The send is nonblocking, i.e. the call returns immediately, even
-            if the destination process is not ready to receive.
+            """
+            Send data to another process (non-blocking)
 
-            The return value is an MPIRequest object.  It is used to
-            wait till the communication has actually happened.
+            @param data: the data to be sent
+            @type data: C{string} or C{Numeric.array}. Array arguments
+                        must have contiguous storage. General object arrays
+                        are not allowed.
+            @param destination: the rank of the destination process
+            @type destination: C{int}
+            @param tag: Identifier
+            @type tag: C{int}
+            @returns: MPI request object (used to wait for completion)
+            @rtype: L{MPIRequest}
             """
             pass
             
         def receive(self, data, source=None, tag=None):
-            """Receives an array from the process with rank |source|
-            with identifier |tag|. The default |source|=None means
-            that messages from any process are accepted. The value
-            of |data| can either be an array object, in which case it
-            must be contiguous and large enough to store the
-            incoming data; it must also have the correct shape.
-            Alternatively, |data| can be a string specifying
-            the data type (in practice, one would use Numeric.Int,
-            Numeric.Float, etc.). In the latter case, a new array
-            object is created to receive the data.
+            """
+            Receive data from another process (blocking)
 
-            The return value is a tuple containing four elements:
-            the array containing the data, the source process rank
-            (an integer), the message tag (an integer), and the
-            number of elements that were received (an integer).
+            @param data: either a contiguous array object, or a one-letter
+                         typecode (in practice, one would use Numeric.Int,
+                         Numeric.Float, etc.). If an array, the data is
+                         copied to the array, whic must have the right shape.
+                         If a typecode, an array of that type is created
+                         and used as the buffer for incoming data.
+            @type data: C{Numeric.array} or C{string}
+            @param source: the rank of the process from which data is
+                           accepted. C{None} means data is accepted from
+                           any process.
+            @type source: C{int} or C{NoneType}
+            @param tag: Identifier that acts as a filter; only messages
+                        with a matching tag are received. A value of C{None}
+                        means that any tag will match.
+            @type tag: C{int} or C{NoneType}
+            @returns: a tuple containing four elements:
+                      the array containing the data, the source process rank
+                      (an C{int}), the message tag (an C{int}), and the
+                      number of elements that were received (an C{int}).
+            @rtype: C{tuple}
             """
             pass
 
         def receiveString(self, source=None, tag=None):
-            """Receives a string from the process with rank |source|
-            with identifier |tag|. The default |source|=None means
-            that messages from any process are accepted.
+            """
+            Receive string data from another process (blocking)
 
-            The return value is a tuple containing three elements:
-            the string containing the data, the source process rank
-            (an integer), and the message tag (an integer).
+            @param source: the rank of the process from which data is
+                           accepted. C{None} means data is accepted from
+                           any process.
+            @type source: C{int} or C{NoneType}
+            @param tag: Identifier that acts as a filter; only messages
+                        with a matching tag are received. A value of C{None}
+                        means that any tag will match.
+            @type tag: C{int} or C{NoneType}
+            @returns: a tuple containing three elements:
+                      the string containing the data, the source process rank
+                      (an C{int}), the message tag (an C{int}).
+            @rtype: C{tuple}
             """
             pass
             
         def nonblockingReceive(self, data, source=None, tag=None):
-            """Receives an array from the process with rank |source|
-            with identifier |tag|. The default |source|=None means
-            that messages from any process are accepted. The value
-            of |data| must be a contiguous array object, large enough
-            to store the incoming data; it must also have the correct
-            shape.  Unlike the blocking receive, the size of the array
-            must be known when the call is made, as nonblocking receives
-            of unknown quantities of data is not implemented.  For the
-            same reason there is no nonblocking_receiveString.
+            """
+            Receive data from another process (non-blocking)
 
-            The return value is an MPIRequest object.  It is used to wait
-            until the data has arrived, and will give information about
-            the size, the source and the tag of the incoming message.
+            @param data: a contiguous array object to which the incoming
+                         data is copied. It must have the right shape.
+            @type data: C{Numeric.array}
+            @param source: the rank of the process from which data is
+                           accepted. C{None} means data is accepted from
+                           any process.
+            @type source: C{int} or C{NoneType}
+            @param tag: Identifier that acts as a filter; only messages
+                        with a matching tag are received. A value of C{None}
+                        means that any tag will match.
+            @type tag: C{int} or C{NoneType}
+            @returns: MPI request object (used to wait for completion and
+                      obtain the received data)
+            @rtype: L{MPIRequest}
             """
             pass
 
         def nonblockingProbe(self, source=None, tag=None):
-            """Checks if a message from the process with rank |source|
-            and with identifier |tag| is available for immediate
-            reception. The return value is 'None' if no message
-            is available, otherwise a '(source, tag)' tuple is
-            returned.
+            """
+            Check for incoming messages
+
+            @param source: the rank of the process from which messages are
+                           accepted. C{None} means data is accepted from
+                           any process.
+            @type source: C{int} or C{NoneType}
+            @param tag: Identifier that acts as a filter; only messages
+                        with a matching tag are considered. A value of C{None}
+                        means that any tag will match.
+            @type tag: C{int} or C{NoneType}
+            @returns: C{None} if no messages are available, otherwise
+                      a tuple containing the source rank and the tag
+            @rtype: C{NoneType} or C{tuple}
             """
             pass
 
         def broadcast(self, array, root):
-            """Sends data from the process with rank |root| to all
-            processes (including |root|). The parameter |array| can be
-            any contiguous NumPy array except for general object arrays.
-            On the process |root|, it holds the data to be sent. After
-            the call, the data in |array| is the same for all processors.
-            The shape and data type of |array| must be the same in
-            all processes.
+            """
+            Send data to all processes
+
+            @param array: an array containing the data to be sent on the
+                          sending process and serving as a buffer for the
+                          incoming data on all processes. The shape and type
+                          of the array must be the same on all processes.
+            @type array: Numeric.array
+            @param root: the rank of the sending process
+            @type root: C{int}
+            @note: The data is sent to all processes, including the sending
+                   one.
             """
             pass
 
         def share(self, send, receive):
-            """Distributes data from each process to all other processes
-            in the communicator. The array |send| (any contiguous NumPy
-            array except for general object arrays) contains the data
-            to be sent by each process, the shape and data type must be
-            identical in all processes. The array |receive| must have
-            the same data type as |send| and one additional dimension
-            (the first one), whose length must be the number of processes
-            in the communicator. After the call, the value
-            of |receive[i]| is equal to the contents of the array |send|
-            in process i.
+            """
+            Distribute data from each processpr to all other processesors
+
+            @param send: an array of identical shape and type on all processes.
+                         It contains on each process the data that is sent.
+            @type send: C{Numeric.array}
+            @param receive: an array whose type is the same as for the send
+                            array and which has an additional dimension
+                            (the first one) whose length is the number of
+                            processes. After the call, the value
+                            of receive[i] is equal to the contents of the
+                            array send in process i.
+            @type receive: C{Numeric.array}
             """
             pass
 
         def barrier(self):
-            """Waits until all processes in the communicator have
-            called the same method, then all processes continue."""
+            """
+            Wait until all processes in the communicator have
+            called the same method, then all processes continue.
+            """
             pass
 
         def abort(self, error_code):
-            """Aborts all processes associated with the communicator.
-            For emergency use only. The |error_code| is passed back
-            to the calling program (i.e. a shell) under most Unix
-            MPI implementations."""
+            """
+            Abort all processes associated with the communicator.
+            For emergency use only.
+
+            @param error_code: error code passed back to the calling
+                               program (usually a shell) under most
+                               Unix implementations of MPI
+            @type error_code: C{int}
+            """
             pass
 
         def reduce(self, sendbuffer, receivebuffer, operation, root):
-            """Combine data from all processes using |operation|, and
-            send the data to the process identified by |root|.
+            """
+            Combine data from all processes and send result to one
 
-            |operation| is one of the operation objects defined globally
-            in the module: 'max', 'min', 'prod', 'sum', 'land', 'lor',
-            'lxor', 'band', 'bor', bxor', 'maxloc' and 'minloc'.
+            @param sendbuffer: an array holding the data that each
+                               process contributes
+            @type sendbuffer: C{Numeric.array}
+            @param receivebuffer: an array acting as a buffer for the
+                                  result of the reduction. Used only
+                                  by the process whose rank is root
+            @type receivebuffer: C{Numeric.array}
+            @param operation: one of the operation objects: L{max},
+                              L{min}, L{prod}, L{sum}, L{land}, L{lor},
+                              L{lxor}, L{band}, L{bor}, L{bxor},
+                              L{maxloc} and L{minloc}
+            @type operation: MPIOperationObject
+            @param root: the rank of the process that received the result
+            @type root: C{int}
             """
             pass
 
         def allreduce(self, sendbuffer, receivebuffer, operation):
-            """Combine data from all processes using |operation|, and
-            send the data to all processes in the communicator.
+            """
+            Combine data from all processes and send result to all
 
-            |operation| is one of the operation objects defined globally
-            in the module: 'max', 'min', 'prod', 'sum', 'land', 'lor',
-            'lxor', 'band', 'bor', bxor', 'maxloc' and 'minloc'.
+            @param sendbuffer: an array holding the data that each
+                               process contributes
+            @type sendbuffer: C{Numeric.array}
+            @param receivebuffer: an array acting as a buffer for the
+                                  result of the reduction
+            @type receivebuffer: C{Numeric.array}
+            @param operation: one of the operation objects: L{max},
+                              L{min}, L{prod}, L{sum}, L{land}, L{lor},
+                              L{lxor}, L{band}, L{bor}, L{bxor},
+                              L{maxloc} and L{minloc}
+            @type operation: MPIOperationObject
             """
             pass
 
     class MPIRequest:
-        """MPI Request
+        """
+        MPI Request
 
         There is no constructor for MPI Request objects.  They are
         returned by nonblocking send and receives, and are used to
@@ -207,8 +296,10 @@ if sys.modules.has_key('pythondoc'):
         """
 
         def wait(self):
-            """Waits till the communication has completed.  If the
-            operation was a nonblocking send, there is no return value.
+            """
+            Wait till the communication has completed.
+
+            If the operation was a nonblocking send, there is no return value.
             If the operation was a nonblocking receive, the return
             value is a tuple containing four elements: the array
             containing the data, the source process rank (an integer),
@@ -218,7 +309,8 @@ if sys.modules.has_key('pythondoc'):
             pass
 
         def test(self):
-            """Test if communications have completed.
+            """
+            Test if communications have completed.
 
             If the operation was a nonblocking send, it returns 0 if
             the operation has not completed, and 1 if it has.
@@ -240,60 +332,65 @@ if sys.modules.has_key('pythondoc'):
     world.rank = 0
     world.size = 1
 
-    if 0:
+    if 1:
 
-        class max:
+        class MPIOperationObject:
+            pass
+        
+        class max(MPIOperationObject):
             """The 'maximum' operation in reduce/allreduce communications."""
             pass
 
-        class min:
+        class min(MPIOperationObject):
             """The 'minimum' operation in reduce/allreduce communications."""
             pass
 
-        class prod:
+        class prod(MPIOperationObject):
             """The 'product' operation in reduce/allreduce communications."""
             pass
 
-        class sum:
+        class sum(MPIOperationObject):
             """The 'sum' operation in reduce/allreduce communications."""
             pass
 
-        class land:
+        class land(MPIOperationObject):
             """The 'logical and' operation in reduce/allreduce communications."""
             pass
 
-        class lor:
+        class lor(MPIOperationObject):
             """The 'logical or' operation in reduce/allreduce communications."""
             pass
 
-        class lxor:
+        class lxor(MPIOperationObject):
             """The 'logical exclusive-or' operation."""
             pass
 
-        class band:
+        class band(MPIOperationObject):
             """The 'bitwise and' operation in reduce/allreduce communications."""
             pass
 
-        class bor:
+        class bor(MPIOperationObject):
             """The 'bitwise or' operation in reduce/allreduce communications."""
             pass
 
-        class bxor:
+        class bxor(MPIOperationObject):
             """The 'bitwise exclusive-or' operation."""
             pass
 
-        class maxloc:
+        class maxloc(MPIOperationObject):
             """The 'location of the maximum' operation."""
             pass
 
-        class minloc:
+        class minloc(MPIOperationObject):
             """The 'location of the minimum' operation."""
             pass
 
-        class replace:
+        class replace(MPIOperationObject):
             """The 'replace' operation. (MPI 2.0)"""
             pass
-        
+
+    _C_API = None
+
 else:
 
     try:

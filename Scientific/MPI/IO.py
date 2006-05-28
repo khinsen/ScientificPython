@@ -1,23 +1,13 @@
 # Coordinated I/O for parallel systems
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2000-7-31
+# last revision: 2006-5-28
 #
 
 class LogFile:
 
-    """File for logging events from all processes
-
-    Constructor: LogFile(|filename|, |communicator|=None)
-
-    Arguments:
-
-    |filename| -- the name of the file
-
-    |communicator| -- the communicator in which the file is accesible.
-                      The default value of 'None' means to use the
-                      global world communicator, i.e. all possible
-                      processes.
+    """
+    File for logging events from all processes
 
     The purpose of LogFile objects is to collect short text output from
     all processors into a single file. All processes can write whatever
@@ -33,6 +23,15 @@ class LogFile:
     """
 
     def __init__(self, filename, communicator = None):
+        """
+        @param filename: the name of the log file
+        @type filename: C{string}
+        @param communicator: the communicator in which the file is accessible.
+                             The default value of C{None} means to use the
+                             global world communicator, i.e. all possible
+                             processes.
+        @type communicator: L{Scientific.MPI.MPICommunicator}
+        """
         self.filename = filename
         if communicator is None:
             from Scientific.MPI import world
@@ -43,11 +42,18 @@ class LogFile:
         self.first_chunk = 1
 
     def write(self, string):
-        "Write |string| to the file."
+        """
+        Write a string to the file
+
+        @param string: the string data
+        @type string: C{string}
+        """
         self.data = self.data + string
 
     def flush(self):
-        "Write buffered data to the text file."
+        """
+        Write buffered data to the text file
+        """
         if self.communicator.rank == 0:
             if self.filename is None:
                 import sys
@@ -75,5 +81,7 @@ class LogFile:
         self.first_chunk = 0
 
     def close(self):
-        "Close the file, causing the real text file to be written."
+        """
+        Close the file, causing the real text file to be written
+        """
         self.flush()
