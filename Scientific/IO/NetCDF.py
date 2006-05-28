@@ -3,8 +3,12 @@
 # package hierarchy.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2006-5-26
+# Last revision: 2006-5-28
 # 
+
+"""
+Python interface to the netCDF library
+"""
 
 import sys
 

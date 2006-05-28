@@ -4,6 +4,10 @@
 # Last revision: 2006-5-28
 # 
 
+"""
+Text files with line iteration and transparent compression
+"""
+
 import os, string, sys
 
 # Use the gzip module for Python version 1.5.2 or higher

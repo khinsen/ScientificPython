@@ -1,10 +1,12 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2006-5-26
+# Last revision: 2006-5-28
 # 
 
 """
+Parsing and writing of Protein Data Bank (PDB) files
+
 This module provides classes that represent PDB (Protein Data Bank)
 files and configurations contained in PDB files. It provides access to
 PDB files on two levels: low-level (line by line) and high-level
@@ -47,6 +49,16 @@ Example::
   >>>for residue in conf.residues:
   >>>    for atom in residue:
   >>>        print atom
+
+@undocumented: atom_format
+@undocumented: anisou_format
+@undocumented: conect_format
+@undocumented: ter_format
+@undocumented: model_format
+@undocumented: header_format
+@undocumented: generic_format
+@undocumented: export_filters
+@undocumented: DummyChain
 """
 
 from Scientific.IO.TextFile import TextFile
@@ -88,9 +100,23 @@ nucleic_acids = [ 'A',  'C',  'G',  'I',  'T',  'U',
                   ]
 
 def defineAminoAcidResidue(symbol):
+    """
+    Make the parser recognize a particular residue type as an amino
+    acid residue
+    
+    @param symbol: the three-letter code for an amino acid
+    @type symbol: C{string}
+    """
     amino_acids.append(string.upper(symbol))
 
 def defineNucleicAcidResidue(symbol):
+    """
+    Make the parser recognize a particular residue type as an nucleic
+    acid residue
+    
+    @param symbol: the one-letter code for a nucleic acid
+    @type symbol: C{string}
+    """
     nucleic_acids.append(string.upper(symbol))
 
 
@@ -997,21 +1023,21 @@ class Structure:
     The components of a structure can be accessed in several ways
     ('s' is an instance of this class):
 
-    - 's.residues' is a list of all PDB residues, in the order in
-      which they occurred in the file.
+     - 's.residues' is a list of all PDB residues, in the order in
+       which they occurred in the file.
 
-    - 's.peptide_chains' is a list of PeptideChain objects, containing
-      all peptide chains in the file in their original order.
+     - 's.peptide_chains' is a list of PeptideChain objects, containing
+       all peptide chains in the file in their original order.
 
-    - 's.nucleotide_chains' is a list of NucleotideChain objects, containing
-      all nucleotide chains in the file in their original order.
+     - 's.nucleotide_chains' is a list of NucleotideChain objects, containing
+       all nucleotide chains in the file in their original order.
 
-    - 's.molecules' is a list of all PDB residues that are neither
-      amino acid residues nor nucleotide residues, in their original
-      order.
+     - 's.molecules' is a list of all PDB residues that are neither
+       amino acid residues nor nucleotide residues, in their original
+       order.
 
-    - 's.objects' is a list of all high-level objects (peptide chains,
-      nucleotide chains, and molecules) in their original order.
+     - 's.objects' is a list of all high-level objects (peptide chains,
+       nucleotide chains, and molecules) in their original order.
 
     An iteration over a Structure instance by a for-loop is equivalent
     to an iteration over the residue list.

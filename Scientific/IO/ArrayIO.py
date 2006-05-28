@@ -5,10 +5,10 @@
 #
 
 """
-This module contains elementary support for I/O of one- and
-two-dimensional numerical arrays to and from plain text files. The
-text file format is very simple and used by many other programs as
-well::
+Basic support for I/O of one- and two-dimensional numerical arrays to and from plain text files
+
+The text file format is very simple and used by many other programs as
+well:
 
   - each line corresponds to one row of the array
 

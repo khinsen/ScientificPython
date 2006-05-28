@@ -17,11 +17,11 @@
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
 # Changed by Andreas Prlic <andreas@came.sbg.ac.at> (small change)
-# last revision: 2006-5-26
+# last revision: 2006-5-28
 #
 
 """
-Fortran-compatible input/output
+Fortran-style formatted input/output
 
 This module provides two classes that aid in reading and writing
 Fortran-formatted text files.
@@ -68,15 +68,15 @@ class FortranLine:
     Python objects, whereas transformation to a string (using the
     built-in function 'str') yields the text representation.
 
-    Restrictions::
+    Restrictions:
 
-      1) Only A, D, E, F, G, I, and X formats are supported (plus string
+      1. Only A, D, E, F, G, I, and X formats are supported (plus string
          constants for output).
 
-      2) No direct support for complex numbers; they must be split into
+      2. No direct support for complex numbers; they must be split into
          real and imaginary parts before output.
 
-      3) No overflow check. If an output field gets too large, it will
+      3. No overflow check. If an output field gets too large, it will
          take more space, instead of being replaced by stars according
          to Fortran conventions.
     """
@@ -140,7 +140,7 @@ class FortranLine:
 
     def __str__(self):
         """
-        @returns a Fortran-formatted text representation of the data record
+        @returns: a Fortran-formatted text representation of the data record
         @rtype: C{string}
         """
         return self.text
