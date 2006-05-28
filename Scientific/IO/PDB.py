@@ -1,10 +1,11 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2006-4-23
+# Last revision: 2006-5-26
 # 
 
-"""This module provides classes that represent PDB (Protein Data Bank)
+"""
+This module provides classes that represent PDB (Protein Data Bank)
 files and configurations contained in PDB files. It provides access to
 PDB files on two levels: low-level (line by line) and high-level
 (chains, residues, and atoms).
@@ -23,7 +24,9 @@ name as an arbitrary left-justified four-character name. This makes it
 difficult to extract the chemical element accurately; most programs
 write the '"CA"' for C_alpha in such a way that it actually stands for
 a calcium atom. For this reason a special element field has been added
-later, but only few files use it.
+later, but only few files use it. In the absence of an element field,
+the code in this module attempts to guess the element using all information
+available.
 
 The low-level routines in this module do not try to deal with the atom
 name problem; they return and expect four-character atom names
@@ -37,7 +40,7 @@ field is found in the file.
 Except where indicated, numerical values use the same units and
 conventions as specified in the PDB format description.
 
-Example:
+Example::
 
   >>>conf = Structure('example.pdb')
   >>>print conf
@@ -98,16 +101,26 @@ def defineNucleicAcidResidue(symbol):
 #
 class PDBFile:
 
-    """PDB file with access at the record level
+    """
+    X{PDB} file with access at the record level
 
-    Constructor: PDBFile(|filename|, |mode|='"r"'), where |filename|
-    is the file name and |mode| is '"r"' for reading and '"w"' for writing,
     The low-level file access is handled by the module
-    Scientific.IO.TextFile, therefore compressed files and URLs
+    L{Scientific.IO.TextFile}, therefore compressed files and URLs
     (for reading) can be used as well.
     """
 
     def __init__(self, filename, mode = 'r', subformat = None):
+        """
+        @param filename: the name of the PDB file
+        @type filename: C{string}
+        @param mode: the file access mode, 'r' (read) or 'w' (write)
+        @type mode: C{string}
+        @param subformat: indicates a specific dialect of the PDB format.
+                          Subformats are defined in
+                          L{Scientific.IO.PDBExportFilters}; they are used
+                          only when writing.
+        @type subformat: C{string} or C{NoneType}
+        """
         self.file = TextFile(filename, mode)
         self.output = string.lower(mode[0]) == 'w'
         self.export_filter = None
@@ -125,7 +138,8 @@ class PDBFile:
             self.chain_number = -1
 
     def readLine(self):
-        """Returns the contents of the next non-blank line (= record).
+        """
+        Return the contents of the next non-blank line (= record)
         The return value is a tuple whose first element (a string)
         contains the record type. For supported record types (HEADER,
         ATOM, HETATM, ANISOU, TERM, MODEL, CONECT), the items from the
@@ -138,6 +152,9 @@ class PDBFile:
         interpretation can depend on an initial space. For unsupported
         record types, the second tuple element is a string containing
         the remaining part of the record.
+
+        @returns: the contents of one PDB record
+        @rtype: C{tuple}
         """
         while 1:
             line = self.file.readline()
@@ -208,10 +225,16 @@ class PDBFile:
             return type, line[6:]
 
     def writeLine(self, type, data):
-        """Writes a line using record type and data dictionary in the
+        """
+        Write a line using record type and data dictionary in the
         same format as returned by readLine(). Default values are
         provided for non-essential information, so the data dictionary
         need not contain all entries.
+
+        @param type: PDB record type
+        @type type: C{string}
+        @param data: PDB record data
+        @type data: C{tuple}
         """
         if self.export_filter is not None:
             type, data = self.export_filter.processLine(type, data)
@@ -276,9 +299,13 @@ class PDBFile:
         self.file.write(str(FortranLine(line, format)) + '\n')
 
     def writeComment(self, text):
-        """Writes |text| into one or several comment lines.
+        """
+        Write text into one or several comment lines.
         Each line of the text is prefixed with 'REMARK' and written
         to the file.
+
+        @param text: the comment contents
+        @type text: C{string}
         """
         while text:
             eol = string.find(text,'\n')
@@ -289,10 +316,21 @@ class PDBFile:
 
     def writeAtom(self, name, position, occupancy=0.0, temperature_factor=0.0,
                   element=''):
-        """Writes an ATOM or HETATM record using the |name|, |occupancy|,
-        |temperature| and |element| information supplied. The residue and
-        chain information is taken from the last calls to the methods
-        nextResidue() and nextChain().
+        """
+        Write an ATOM or HETATM record using the information supplied.
+        The residue and chain information is taken from the last calls to
+        the methods L{nextResidue} and L{nextChain}.
+
+        @param name: the atom name
+        @type name: C{string}
+        @param position: the atom position
+        @type position: L{Scientific.Geometry.Vector}
+        @param occupancy: the occupancy
+        @type occupancy: C{float}
+        @param temperature_factor: the temperature factor (B-factor)
+        @type temperature_factor: C{float}
+        @param element: the chemical element
+        @type element: C{string}
         """
         if self.het_flag:
             type = 'HETATM'
@@ -310,13 +348,19 @@ class PDBFile:
         self.writeLine(type, self.data)
 
     def nextResidue(self, name, number = None, terminus = None):
-        """Signals the beginning of a new residue, starting with the
-        next call to writeAtom(). The residue name is |name|, and a
-        |number| can be supplied optionally; by default residues in a
-        chain will be numbered sequentially starting from 1. The
-        value of |terminus| can be 'None', '"C"', or '"N"'; it is passed
-        to export filters that can use this information in order to
-        use different atom or residue names in terminal residues.
+        """
+        Signal the beginning of a new residue, starting with the
+        next call to L{writeAtom}.
+
+        @param name: the residue name
+        @type name: C{string}
+        @param number: the residue number. If C{None}, the residues
+                       will be numbered sequentially, starting from 1.
+        @type number: C{int} or C{NoneType}
+        @param terminus: C{None}, "C", or "N". This information
+                         is passed to export filters that can use this
+                         information in order to use different atom or
+                         residue names in terminal residues.
         """
         name  = string.upper(name)
         if self.export_filter is not None:
@@ -334,10 +378,14 @@ class PDBFile:
                 self.data['insertion_code'] = number.insertion_code
 
     def nextChain(self, chain_id = None, segment_id = ''):
-        """Signals the beginning of a new chain. A chain identifier
-        (string of length one) can be supplied as |chain_id|, by
-        default consecutive letters from the alphabet are used.
-        The equally optional |segment_id| defaults to an empty string.
+        """
+        Signal the beginning of a new chain.
+
+        @param chain_id: a chain identifier. If C{None}, consecutive letters
+                         from the alphabet are used.
+        @type chain_id: C{string} or C{NoneType}
+        @param segment_id: a chain identifier
+        @type segment_id: C{string}
         """
         if chain_id is None:
             self.chain_number = (self.chain_number + 1) % len(self._chain_ids)
@@ -352,7 +400,9 @@ class PDBFile:
     _chain_ids = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     def terminateChain(self):
-        "Signals the end of a chain."
+        """
+        Signal the end of a chain.
+        """
         if self.export_filter is not None:
             self.export_filter.terminateChain()
         self.data['serial_number'] = (self.data['serial_number'] + 1) % 100000
@@ -361,7 +411,8 @@ class PDBFile:
         self.data['segment_id'] = ''
         
     def close(self):
-        """Closes the file. This method *must* be called for write mode
+        """
+        Close the file. This method B{must} be called for write mode
         because otherwise the file will be incomplete.
         """
         if self.open:
@@ -383,19 +434,21 @@ class PDBFile:
 #
 class Atom:
 
-    """Atom in a PDB structure
-
-    Constructor: Atom(|name|, |position|, |**properties|),
-    where |name| is the PDB atom name (a string),
-    |position| is a atom position (a vector), and
-    |properties| can include any of the other items that
-    can be stored in an atom record.
-
-    The properties can be obtained or modified using
-    indexing, as for Python dictionaries.
+    """
+    Atom in a PDB structure
     """
     
     def __init__(self, name, position, **properties):
+        """
+        @param name: the atom name
+        @type name: C{string}
+        @param position: the atom position
+        @type position: L{Scientific.Geometry.Vector}
+        @param properties: any other atom properties as keyword parameters.
+                           These properties are stored in the atom object
+                           and can be accessed by indexing, as for
+                           dictionaries.
+        """
         self.position = position
         self.properties = properties
         if self.properties.get('element', '') == '':
@@ -408,6 +461,11 @@ class Atom:
         self.name = string.strip(name)
 
     def __getitem__(self, item):
+        """
+        @param item: the name of a property, including "name" or "position"
+        @type item: C{string}
+        @returns: the property value
+        """
         try:
             return self.properties[item]
         except KeyError:
@@ -419,6 +477,11 @@ class Atom:
                 raise KeyError("Undefined atom property: " + repr(item))
 
     def __setitem__(self, item, value):
+        """
+        @param item: the name of an existing or to be defined property
+        @type item: C{string}
+        @param value: the new value for the property
+        """
         self.properties[item] = value
 
     def __str__(self):
@@ -427,12 +490,19 @@ class Atom:
     __repr__ = __str__
 
     def type(self):
-        "Returns the six-letter record type, ATOM or HETATM."
+        """
+        @returns: the six-letter record type, ATOM or HETATM
+        @rtype: C{string}
+        """
         return 'ATOM  '
 
     def writeToFile(self, file):
-        """Writes an atom record to |file| (a PDBFile object or a
-        string containing a file name)."""
+        """
+        Write an atom record to a file
+
+        @param file: a PDB file object or a filename
+        @type file: L{PDBFile} or C{string}
+        """
         close = 0
         if type(file) == type(''):
             file = PDBFile(file, 'w')
@@ -447,12 +517,11 @@ class Atom:
 
 class HetAtom(Atom):
 
-    """HetAtom in a PDB structure
+    """
+    HetAtom in a PDB structure
 
     A subclass of Atom, which differs only in the return value
     of the method type().
-
-    Constructor: HetAtom(|name|, |position|, |**properties|).
     """
 
     def type(self):
@@ -461,10 +530,12 @@ class HetAtom(Atom):
 
 class Group:
 
-    """Atom group (residue or molecule) in a PDB file
+    """
+    Atom group (residue or molecule) in a PDB file
 
     This is an abstract base class. Instances can be created using
-    one of the subclasses (Molecule, AminoAcidResidue, NucleotideResidue).
+    one of the subclasses (L{Molecule}, L{AminoAcidResidue},
+    L{NucleotideResidue}).
 
     Group objects permit iteration over atoms with for-loops,
     as well as extraction of atoms by indexing with the
@@ -472,6 +543,14 @@ class Group:
     """
 
     def __init__(self, name, atoms = None, number = None):
+        """
+        @param name: the name of the group
+        @type name: C{string}
+        @param atoms: a list of atoms (or C{None} for no atoms)
+        @type atoms: C{list} or C{NoneType}
+        @param number: the PDB residue number (or C{None})
+        @type number: C{int} or C{NoneType}
+        """
         self.name = name
         self.number = number
         self.atom_list = []
@@ -485,6 +564,10 @@ class Group:
         return len(self.atom_list)
 
     def __getitem__(self, item):
+        """
+        @param item: an integer index or an atom name
+        @type item: C{int} or C{string}
+        """
         if type(item) == type(0):
             return self.atom_list[item]
         else:
@@ -502,19 +585,30 @@ class Group:
                and residue_data['residue_number'] == self.number
 
     def addAtom(self, atom):
-        "Adds |atom| (an Atom object) to the group."
+        """
+        Add an atom to the group
+        
+        @param atom: the atom
+        @type atom: L{Atom}
+        """
         self.atom_list.append(atom)
         self.atoms[atom.name] = atom
 
     def deleteAtom(self, atom):
-        """Removes |atom| (an Atom object) from the group. An exception
-        will be raised if |atom| is not part of the group.
+        """
+        Remove an atom from the group
+
+        @param atom: the atom to be removed
+        @type atom: L{atom}
+        @raises KeyError: if the atom is not part of the group
         """
         self.atom_list.remove(atom)
         del self.atoms[atom.name]
 
     def deleteHydrogens(self):
-        "Removes all hydrogen atoms."
+        """
+        Remove all hydrogen atoms of the group
+        """
         delete = []
         for a in self.atom_list:
             if a.name[0] == 'H' or (a.name[0] in string.digits
@@ -524,12 +618,20 @@ class Group:
             self.deleteAtom(a)
 
     def changeName(self, name):
-        "Sets the PDB residue name to |name|."
+        """
+        Set the PDB residue name
+
+        @param name: the new name
+        @type name: C{string}
+        """
         self.name = name
 
     def writeToFile(self, file):
-        """Writes the group to |file| (a PDBFile object or a
-        string containing a file name).
+        """
+        Write the group to a file
+
+        @param file: a PDBFile object or a file name
+        @type file: L{PDBFile} or C{string}
         """
         close = 0
         if type(file) == type(''):
@@ -543,17 +645,11 @@ class Group:
 
 class Molecule(Group):
 
-    """Molecule in a PDB file
+    """
+    Molecule in a PDB file
 
-    A subclass of Group.
-
-    Constructor: Molecule(|name|, |atoms|='None', |number|=None),
-    where |name| is the PDB residue name. An optional list
-    of |atoms| can be specified, otherwise the molecule is initially
-    empty. The optional |number| is the PDB residue number.
-
-    Note: In PDB files, non-chain molecules are treated as residues,
-    there is no separate molecule definition. This modules defines
+    B{Note:} In PDB files, non-chain molecules are treated as residues,
+    there is no separate molecule definition. This module defines
     every residue as a molecule that is not an amino acid residue or a
     nucleotide residue.
     """
@@ -566,29 +662,27 @@ class Residue(Group):
 
 class AminoAcidResidue(Residue):
 
-    """Amino acid residue in a PDB file
-
-    A subclass of Group.
-
-    Constructor: AminoAcidResidue(|name|, |atoms|='None', |number|=None),
-    where |name| is the PDB residue name. An optional list
-    of |atoms| can be specified, otherwise the residue is initially
-    empty. The optional |number| is the PDB residue number.
+    """
+    Amino acid residue in a PDB file
     """
 
     is_amino_acid = 1
 
     def isCTerminus(self):
-        """Returns 1 if the residue is in C-terminal configuration,
+        """
+        @returns: C{True} if the residue is in C-terminal configuration,
         i.e. if it has a second oxygen bound to the carbon atom of
-        the peptide group.
+        the peptide group. C{False} otherwise.
+        @rtype: C{bool}
         """
         return self.atoms.has_key('OXT') or self.atoms.has_key('OT2')
 
     def isNTerminus(self):
-        """Returns 1 if the residue is in N-terminal configuration,
+        """
+        @returns: C{True} if the residue is in N-terminal configuration,
         i.e. if it contains more than one hydrogen bound to be
-        nitrogen atom of the peptide group.
+        nitrogen atom of the peptide group. C{False} otherwise.
+        @rtype: C{bool}
         """
         return self.atoms.has_key('1HT') or self.atoms.has_key('2HT') \
                or self.atoms.has_key('3HT')
@@ -615,14 +709,8 @@ class AminoAcidResidue(Residue):
 
 class NucleotideResidue(Residue):
 
-    """Nucleotide residue in a PDB file
-
-    A subclass of Group.
-
-    Constructor: NucleotideResidue(|name|, |atoms|='None', |number|=None),
-    where |name| is the PDB residue name. An optional list
-    of |atoms| can be specified, otherwise the residue is initially
-    empty. The optional |number| is the PDB residue number.
+    """
+    Nucleotide residue in a PDB file
     """
 
     is_nucleotide = 1
@@ -648,19 +736,31 @@ class NucleotideResidue(Residue):
             self.name = 'R' + self.name[1:]
 
     def hasRibose(self):
-        "Returns 1 if the residue has an atom named O2*."
+        """
+        @returns: C{True} if the residue has an atom named O2*
+        @rtype: C{bool}
+        """
         return self.atoms.has_key('O2*') or self.atoms.has_key("O2'")
 
     def hasDesoxyribose(self):
-        "Returns 1 if the residue has no atom named O2*."
+        """
+        @returns: C{True} if the residue has no atom named O2*
+        @rtype: C{bool}
+        """
         return not self.hasRibose()
 
     def hasPhosphate(self):
-        "Returns 1 if the residue has a phosphate group."
+        """
+        @returns: C{True} if the residue has a phosphate group
+        @rtype: C{bool}
+        """
         return self.atoms.has_key('P')
 
     def hasTerminalH(self):
-        "Returns 1 if the residue has a 3-terminal H atom."
+        """
+        @returns: C{True} if the residue has a 3-terminal H atom
+        @rtype: C{bool}
+        """
         return self.atoms.has_key('H3T')
 
     def writeToFile(self, file):
@@ -681,13 +781,22 @@ class Chain:
     """Chain of PDB residues
 
     This is an abstract base class. Instances can be created using
-    one of the subclasses (PeptideChain, NucleotideChain).
+    one of the subclasses (L{PeptideChain}, L{NucleotideChain}).
 
     Chain objects respond to len() and return their residues
     by indexing with integers.
     """
 
     def __init__(self, residues = None, chain_id = None, segment_id = None):
+        """
+        @param residues: a list of residue objects, or C{None} meaning
+                         that the chain is initially empty
+        @type residues: C{list} or C{NoneType}
+        @param chain_id: a one-letter chain identifier or C{None}
+        @type chain_id: C{string} or C{NoneType}
+        @param segment_id: a multi-character segment identifier or C{None}
+        @type segment_id: C{string} or C{NoneType}
+        """
         if residues is None:
             self.residues = []
         else:
@@ -696,23 +805,58 @@ class Chain:
         self.segment_id = segment_id
 
     def __len__(self):
+        """
+        @returns: the number of residues in the chain
+        @rtype: C{int}
+        """
         return len(self.residues)
 
     def sequence(self):
-        "Returns the list of residue names."
+        """
+        @returns: the list of residue names
+        @rtype: C{list} of C{string}
+        """
         return [r.name for r in self.residues]
 
     def __getitem__(self, index):
+        """
+        @param index: an index into the chain
+        @type index: C{int}
+        @returns: the residue corresponding to the index
+        @rtype: L{AminoAcidResidue} or L{NucleotideResidue}
+        @raises IndexError: if index exceeds the chain length
+        """
         return self.residues[index]
 
+    def __getslice__(self, i1, i2):
+        """
+        @param i1: in index into the chain
+        @type i1: C{int}
+        @param i2: in index into the chain
+        @type i12 C{int}
+        @returns: the subchain from i1 to i2
+        @rtype: L{PeptideChain} or L{NucleotideChain}
+        """
+        return self.__class__(self.residues[i1:i2])
+
     def addResidue(self, residue):
-        "Add |residue| at the end of the chain."
+        """
+        Add a residue at the end of the chain
+
+        @param residue: the residue to be added
+        @type residue: L{AminoAcidResidue} or L{NucleotideResidue}
+        """
         self.residues.append(residue)
 
     def removeResidues(self, first, last):
-        """Remove residues starting from |first| up to (but not
-        including) |last|. If |last| is 'None', remove everything
-        starting from |first|.
+        """
+        Remove residues in a given index range.
+
+        @param first: the index of the first residue to be removed
+        @type first: C{int}
+        @param last: the index of the first residue to be kept, or C{None}
+                     meaning remove everything to the end of the chain.
+        @type last: C{int} or C{NoneType}
         """
         if last is None:
             del self.residues[first:]
@@ -720,13 +864,18 @@ class Chain:
             del self.residues[first:last]
 
     def deleteHydrogens(self):
-        "Removes all hydrogen atoms."
+        """
+        Remove all hydrogen atoms in the chain
+        """
         for r in self.residues:
             r.deleteHydrogens()
 
     def writeToFile(self, file):
-        """Writes the chain to |file| (a PDBFile object or a
-        string containing a file name).
+        """
+        Write the chain to a file
+
+        @param file: a PDBFile object or a file name
+        @type file: L{PDBFile} or C{string}
         """
         close = 0
         if type(file) == type(''):
@@ -741,23 +890,15 @@ class Chain:
 
 class PeptideChain(Chain):
 
-    """Peptide chain in a PDB file
-
-    A subclass of Chain.
-    
-    Constructor: PeptideChain(|residues|='None', |chain_id|='None',
-                              |segment_id|='None'), where |chain_id|
-    is a one-letter chain identifier and |segment_id| is
-    a multi-character chain identifier, both are optional. A list
-    of AminoAcidResidue objects can be passed as |residues|; by
-    default a peptide chain is initially empty.
+    """
+    Peptide chain in a PDB file
     """
 
-    def __getslice__(self, i1, i2):
-        return self.__class__(self.residues[i1:i2])
-
     def isTerminated(self):
-        "Returns 1 if the last residue is in C-terminal configuration."
+        """
+        @returns: C{True} if the last residue is in C-terminal configuration
+        @rtype: C{bool}
+        """
         return self.residues and self.residues[-1].isCTerminus()
 
     def isCompatible(self, chain_data, residue_data):
@@ -768,24 +909,17 @@ class PeptideChain(Chain):
 
 class NucleotideChain(Chain):
 
-    """Nucleotide chain in a PDB file
-
-    A subclass of Chain.
-    
-    Constructor: NucleotideChain(|residues|='None', |chain_id|='None',
-                                 |segment_id|='None'), where |chain_id|
-    is a one-letter chain identifier and |segment_id| is
-    a multi-character chain identifier, both are optional. A list
-    of NucleotideResidue objects can be passed as |residues|; by
-    default a nucleotide chain is initially empty.
+    """
+    Nucleotide chain in a PDB file
     """
 
-    def __getslice__(self, i1, i2):
-        return self.__class__(self.residues[i1:i2])
-
     def isTerminated(self):
-        # impossible to detect for standard PDB files, but we can still
-        # do something useful for certain non-standard files
+        """
+        @returns: C{True} if the last residue is in 3-terminal configuration
+        @rtype: C{bool}
+        @note: There is no way to perform this test with standard PDB files.
+               The algorithm used works for certain non-standard files only.
+        """
         return self.residues and \
                (self.residues[-1].name[-1] == '3'
                 or self.residues[-1].hasTerminalH())
@@ -819,16 +953,21 @@ class DummyChain(Chain):
 #
 class ResidueNumber:
 
-    """PDB residue number
+    """
+    PDB residue number
 
     Most PDB residue numbers are simple integers, but when insertion
     codes are used a number can consist of an integer plus a letter.
     Such compound residue numbers are represented by this class.
-
-    Constructor: ResidueNumber(|number|, |insertion_code|)
     """
 
     def __init__(self, number, insertion_code):
+        """
+        @param number: the numeric part of the residue number
+        @type number: C{int}
+        @param insertion_code: the letter part of the residue number
+        @type insertion_code: C{string}
+        """
         self.number = number
         self.insertion_code = insertion_code
 
@@ -852,16 +991,10 @@ class ResidueNumber:
 #
 class Structure:
 
-    """A high-level representation of the contents of a PDB file
+    """
+    A high-level representation of the contents of a PDB file
 
-    Constructor: Structure(|filename|, |model|='0', |alternate_code|='"A"'),
-    where |filename| is the name of the PDB file. Compressed files
-    and URLs are accepted, as for class PDBFile. The two optional
-    arguments specify which data should be read in case of a
-    multiple-model file or in case of a file that contains alternative
-    positions for some atoms.
-
-    The components of a system can be accessed in several ways
+    The components of a structure can be accessed in several ways
     ('s' is an instance of this class):
 
     - 's.residues' is a list of all PDB residues, in the order in
@@ -885,6 +1018,19 @@ class Structure:
     """
 
     def __init__(self, filename, model = 0, alternate_code = 'A'):
+        """
+        Constructor: Structure(|filename|, |model|='0', |alternate_code|='"A"'),
+
+        @param filename: the name of the PDB file. Compressed files
+                         and URLs are accepted, as for class L{PDBFile}.
+        @type filename: C{string}
+        @param model: the number of the model to read from a multiple-model
+                      file. Only one model can be treated at a time.
+        @type model: C{int}
+        @param alternate_code: the version of the positions to be read
+                               from a file with alternate positions.
+        @type alternate_code: single-letter C{string}
+        """
         self.filename = filename
         self.model = model
         self.alternate = alternate_code
@@ -907,28 +1053,40 @@ class Structure:
         return self.residues[item]
 
     def deleteHydrogens(self):
-        "Removes all hydrogen atoms."
+        """
+        Remove all hydrogen atoms
+        """
         for r in self.residues:
             r.deleteHydrogens()
 
     def splitPeptideChain(self, number, position):
-        """Splits the peptide chain indicated by |number| (0 being
-        the first peptide chain in the PDB file) after the residue indicated
-        by |position| (0 being the first residue of the chain).
+        """
+        Split a peptide chain into two chains
+
         The two chain fragments remain adjacent in the peptide chain
-        list, i.e. the numbers of all following nucleotide chains increase
+        list, i.e. the numbers of all following chains increase
         by one.
+
+        @param number: the number of the peptide chain to be split
+        @type number: C{int}
+        @param position: the residue index at which the chain is split.
+        @type position: C{int}
         """
         self._splitChain(self.peptide_chain_constructor,
                          self.peptide_chains, number, position)
         
     def splitNucleotideChain(self, number, position):
-        """Splits the nucleotide chain indicated by |number| (0 being
-        the first nucleotide chain in the PDB file) after the residue indicated
-        by |position| (0 being the first residue of the chain).
+        """
+        Split a nucleotide chain into two chains
+
         The two chain fragments remain adjacent in the nucleotide chain
-        list, i.e. the numbers of all following nucleotide chains increase
+        list, i.e. the numbers of all following chains increase
         by one.
+
+        @param number: the number of the nucleotide chain to be split
+        @type number: C{int}
+        @param position: the residue index at which the chain is split.
+        @type position: C{int}
         """
         self._splitChain(self.nucleotide_chain_constructor,
                          self.nucleotide_chains, number, position)
@@ -943,19 +1101,29 @@ class Structure:
         self.objects[index:index+1] = [part1, part2]
 
     def joinPeptideChains(self, first, second):
-        """Join the two peptide chains indicated by |first| and |second|
-        into one peptide chain. The new chain occupies the position
-        |first|; the chain at |second| is removed from the peptide
-        chain list.
+        """
+        Join two peptide chains into a single one. The new chain occupies
+        the position of the first chain, the second one is removed from
+        the peptide chain list.
+
+        @param first: the number of the first chain
+        @type first: C{int}
+        @param second: the number of the second chain
+        @type second: C{int}
         """
         self._joinChains(self.peptide_chain_constructor,
                          self.peptide_chains, first, second)
         
     def joinNucleotideChains(self, first, second):
-        """Join the two nucleotide chains indicated by |first| and |second|
-        into one nucleotide chain. The new chain occupies the position
-        |first|; the chain at |second| is removed from the nucleotide
-        chain list.
+        """
+        Join two nucleotide chains into a single one. The new chain occupies
+        the position of the first chain, the second one is removed from
+        the nucleotide chain list.
+
+        @param first: the number of the first chain
+        @type first: C{int}
+        @param second: the number of the second chain
+        @type second: C{int}
         """
         self._joinChains(self.nucleotide_chain_constructor,
                          self.nucleotide_chains, first, second)
@@ -1092,7 +1260,9 @@ class Structure:
                     chain = None
 
     def renumberAtoms(self):
-        "Renumber all atoms sequentially starting with 1."
+        """
+        Renumber all atoms sequentially starting with 1
+        """
         n = 0
         for residue in self.residues:
             for atom in residue:
@@ -1124,8 +1294,11 @@ class Structure:
         return s
 
     def writeToFile(self, file):
-        """Writes all objects to |file| (a PDBFile object or a
-        string containing a file name).
+        """
+        Write everything to a file
+
+        @param file: a PDB file object or a filename
+        @type file: L{PDBFile} or C{string}
         """
         close = 0
         if type(file) == type(''):
