@@ -1,7 +1,7 @@
 # Text files with automatic (un)compression and URL access.
 #
 # Written by: Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2006-5-4
+# Last revision: 2006-5-28
 # 
 
 import os, string, sys
@@ -21,11 +21,12 @@ except:
 
 class TextFile:
 
-    """Text files with line iteration and transparent compression
+    """
+    Text files with line iteration and transparent compression
 
     TextFile instances can be used like normal file objects
-    (i.e. by calling readline(), readlines(), and write()), but can
-    also be used as sequences of lines in for-loops.
+    (i.e. by calling read(), readline(), readlines(), and write()), but
+    can also be used as sequences of lines in for-loops.
 
     TextFile objects also handle compression transparently. i.e. it is
     possible to read lines from a compressed text file as if it were not
@@ -34,13 +35,15 @@ class TextFile:
 
     Finally, TextFile objects accept file names that start with '~' or
     '~user' to indicate a home directory, as well as URLs (for reading only).
-
-    Constructor: TextFile(|filename|, |mode|='"r"'), where |filename| is
-    the name of the file (or a URL) and |mode| is one of '"r"' (read),
-    '"w"' (write) or '"a"' (append, not supported for .Z files).
     """
 
     def __init__(self, filename, mode = 'r'):
+        """
+        @param filename: file name or URL
+        @type filename: C{string}
+        @param mode: file access mode: 'r' (read), 'w' (write), or 'a' (append)
+        @type mode: C{string}
+        """
         if string.find(filename, ':/') > 1: # URL
             if mode != 'r':
                 raise IOError("can't write to a URL")
