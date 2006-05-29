@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2006-5-10
+ * last revision: 2006-5-29
  */
 
 #ifdef _WIN32
@@ -10,10 +10,14 @@
 #endif
 
 #include "Python.h"
+#if defined(NUMPY)
+#include "numpy/arrayobject.h"
+#else
 #if defined(NUMARRAY)
 #include "numarray/arrayobject.h"
 #else
 #include "Numeric/arrayobject.h"
+#endif
 #endif
 #include "netcdf.h"
 
@@ -310,6 +314,17 @@ typecode(int type)
     t = 'c';
     break;
 #endif
+#if defined(NUMPY)
+  case PyArray_UBYTE:
+    t = 'B';
+    break;
+  case PyArray_SBYTE:
+    t = 'b';
+    break;
+  case PyArray_SHORT:
+    t = 'h';
+    break;
+#else
   case PyArray_UBYTE:
     t = 'b';
     break;
@@ -319,13 +334,12 @@ typecode(int type)
   case PyArray_SHORT:
     t = 's';
     break;
-#if PyArray_INT != PyArray_LONG
-  case PyArray_INT:
-    t = 'i';
-    break;
 #endif
   case PyArray_LONG:
     t = 'l';
+    break;
+  case PyArray_INT:
+    t = 'i';
     break;
   case PyArray_FLOAT:
     t = 'f';
@@ -375,12 +389,18 @@ netcdf_type_from_type(char array_type)
   int type;
   switch(array_type) {
 #if !defined(NUMARRAY)
+#if !defined(NUMPY)
   case PyArray_CHAR:
     type = NC_CHAR;
     break;
 #endif
+#endif
   case PyArray_UBYTE:
+#if defined(NUMPY)
+  case PyArray_BYTE:
+#else
   case PyArray_SBYTE:
+#endif
     type = NC_BYTE;
     break;
   case PyArray_SHORT:
@@ -411,6 +431,9 @@ collect_attributes(int fileid, int varid, PyObject *attributes, int nattrs)
   char name[MAX_NC_NAME];
   nc_type type;
   int length;
+#if defined(NUMPY)
+  intp lengthp;
+#endif
   int py_type;
   int i;
   for (i = 0; i < nattrs; i++) {
@@ -418,6 +441,9 @@ collect_attributes(int fileid, int varid, PyObject *attributes, int nattrs)
     acquire_netCDF_lock();
     ncattname(fileid, varid, i, name);
     ncattinq(fileid, varid, name, &type, &length);
+#if defined(NUMPY)
+    lengthp = length;
+#endif
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
     py_type = data_types[type];
@@ -440,7 +466,11 @@ collect_attributes(int fileid, int varid, PyObject *attributes, int nattrs)
       }
     }
     else {
+#if defined(NUMPY)
+      PyObject *array = PyArray_SimpleNew(1, &lengthp, py_type);
+#else
       PyObject *array = PyArray_FromDims(1, &length, py_type);
+#endif
       if (array != NULL) {
 	Py_BEGIN_ALLOW_THREADS;
 	acquire_netCDF_lock();
@@ -1402,7 +1432,11 @@ static PyArrayObject *
 PyNetCDFVariable_ReadAsArray(PyNetCDFVariableObject *self,
 			     PyNetCDFIndex *indices)
 {
+#if defined(NUMPY)
+  intp *dims;
+#else
   int *dims;
+#endif
   PyArrayObject *array;
   int i, d;
   int nitems;
@@ -1417,7 +1451,11 @@ PyNetCDFVariable_ReadAsArray(PyNetCDFVariableObject *self,
   if (self->nd == 0)
     dims = NULL;
   else {
+#if defined(NUMPY)
+    dims = (intp *)malloc(self->nd*sizeof(intp));
+#else
     dims = (int *)malloc(self->nd*sizeof(int));
+#endif
     if (dims == NULL) {
       free(indices);
       return (PyArrayObject *)PyErr_NoMemory();
@@ -1455,7 +1493,11 @@ PyNetCDFVariable_ReadAsArray(PyNetCDFVariableObject *self,
       free(indices);
     return NULL;
   }
+#if defined(NUMPY)
+  array = (PyArrayObject *)PyArray_SimpleNew (d, dims, self->type);
+#else
   array = (PyArrayObject *)PyArray_FromDims(d, dims, self->type);
+#endif
   if (array != NULL && nitems > 0) {
     if (self->nd == 0) {
       long zero = 0;
@@ -2117,9 +2159,7 @@ initScientific_netcdf(void)
   m = Py_InitModule("Scientific_netcdf", netcdf_methods);
 
   /* Import the array module */
-#ifdef import_array
   import_array();
-#endif
 
   /* Initialize C API pointer array and store in module */
   PyNetCDF_API[PyNetCDFFile_Type_NUM] = (void *)&PyNetCDFFile_Type;

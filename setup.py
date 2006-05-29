@@ -16,6 +16,16 @@ pkginfo = Dummy()
 execfile('Scientific/__pkginfo__.py', pkginfo.__dict__)
 
 extra_compile_args = []
+arrayobject_h_include = []
+if "--numpy" in sys.argv:
+    use_numpy = 1
+    extra_compile_args.append("-DNUMPY=1")
+    sys.argv.remove("--numpy")
+    arrayobject_h_include = [os.path.join(sys.prefix,
+                            "lib/python%s.%s/site-packages/numpy/core/include"
+                                          % sys.version_info [:2])]
+else:
+    use_numpy = 0
 if "--numarray" in sys.argv:
     use_numarray = 1
     extra_compile_args.append("-DNUMARRAY=1")
@@ -48,7 +58,8 @@ else:
     netcdf_lib = os.path.join(netcdf_prefix, 'lib')
     ext_modules = [Extension('Scientific_netcdf',
                              ['Src/Scientific_netcdf.c'],
-                             include_dirs=['Include', netcdf_include],
+                             include_dirs=['Include', netcdf_include]
+                                          + arrayobject_h_include,
                              library_dirs=[netcdf_lib],
                              libraries = ['netcdf'],
                              extra_compile_args=extra_compile_args)]
@@ -68,6 +79,9 @@ ext_modules.append(Extension('Scientific_vector',
 if 'sdist' in sys.argv:
     packages.append('Scientific.use_numarray')
     packages.append('Scientific.use_numeric')
+    packages.append('Scientific.use_numpy')
+elif use_numpy:
+    packages.append('Scientific.use_numpy')
 elif use_numarray:
     packages.append('Scientific.use_numarray')
 else:

@@ -1,6 +1,17 @@
 _undocumented = 1
 
 try:
+    from Scientific import use_numpy
+    from numpy import *
+    del use_numpy
+
+    def int_sum(a, axis=0):
+        return add.reduce(a, axis)
+
+except ImportError:
+    pass
+
+try:
     from Scientific import use_numarray
     from numarray import *
     del use_numarray
@@ -21,10 +32,3 @@ try:
 
 except ImportError:
     pass
-
-## import Scientific, os
-## if os.path.exists(os.path.join(Scientific.__path__[0], 'use_numarray')):
-##     from numarray import *
-## else:
-## del Scientific
-## del os
