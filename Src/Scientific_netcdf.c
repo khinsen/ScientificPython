@@ -589,24 +589,33 @@ PyNetCDFFileObject_dealloc(PyNetCDFFileObject *self)
   Py_XDECREF(self->attributes);
   Py_XDECREF(self->name);
   Py_XDECREF(self->mode);
-  PyMem_DEL(self);
+  self->ob_type->tp_free((PyObject*)self);
 }
 
 /* Create file object */
 
-static PyNetCDFFileObject *
-PyNetCDFFile_Open(char *filename, char *mode)
+static PyObject *
+PyNetCDFFileObject_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 {
-  PyNetCDFFileObject *self = PyObject_NEW(PyNetCDFFileObject,
-					  &PyNetCDFFile_Type);
+  PyNetCDFFileObject *self;
+  self = (PyNetCDFFileObject *)type->tp_alloc(type, 0);
+  if (self != NULL) {
+    self->dimensions = NULL;
+    self->variables = NULL;
+    self->attributes = NULL;
+    self->name = NULL;
+    self->mode = NULL;
+  }
+  return (PyObject *)self;
+}
+
+
+/* Open file */
+
+static int
+open_netcdf_file(PyNetCDFFileObject *self, char *filename, char *mode)
+{
   int rw, share, ret;
-  if (self == NULL)
-    return NULL;
-  self->dimensions = NULL;
-  self->variables = NULL;
-  self->attributes = NULL;
-  self->name = NULL;
-  self->mode = NULL;
   rw = share = ret = 0;
   if (strlen(mode) > 1) {
     if (mode[1] == '+') rw = 1;
@@ -622,7 +631,7 @@ PyNetCDFFile_Open(char *filename, char *mode)
       (mode[0] != 'r' && mode[0] != 'w' && mode[0] != 'a')) {
     PyErr_SetString(PyExc_IOError, "illegal mode specification");
     PyNetCDFFileObject_dealloc(self);
-    return NULL;
+    return -1;
   }
   self->open = 0;
   if (mode[0] == 'w') {
@@ -671,15 +680,50 @@ PyNetCDFFile_Open(char *filename, char *mode)
   }
   else {
     PyNetCDFFileObject_dealloc(self);
-    return NULL;
+    return -1;
   }
   if (ret != NC_NOERR) {
     netcdf_signalerror(ret);
     PyNetCDFFileObject_dealloc(self);
-    return NULL;
+    return -1;
   }
   self->name = PyString_FromString(filename);
   self->mode = PyString_FromString(mode);
+  return 0;
+}
+
+static int
+PyNetCDFFileObject_init(PyNetCDFFileObject *self,
+			PyObject *args, PyObject *kwds)
+{
+  char *filename;
+  char *mode = NULL;
+  char *history = NULL;
+
+  if (!PyArg_ParseTuple(args, "s|ss:NetCDFFile", &filename, &mode, &history))
+    return -1;
+  if (mode == NULL)
+    mode = "r";
+  if (open_netcdf_file(self, filename, mode) < 0) {
+    netcdf_seterror();
+    return -1;
+  }
+  if (history != NULL)
+    PyNetCDFFile_AddHistoryLine(self, history);
+  return 0;
+}
+
+static PyNetCDFFileObject *
+PyNetCDFFile_Open(char *filename, char *mode)
+{
+  PyNetCDFFileObject *self = (PyNetCDFFileObject *)
+                      PyNetCDFFileObject_new(&PyNetCDFFile_Type, NULL, NULL);
+  if (self == NULL)
+    return NULL;
+  if (open_netcdf_file(self, filename, mode) < 0) {
+    PyNetCDFFileObject_dealloc(self);
+    return NULL;
+  }
   return self;
 }
 
@@ -1171,6 +1215,31 @@ statichere PyTypeObject PyNetCDFFile_Type = {
   0,			/*tp_as_sequence*/
   0,			/*tp_as_mapping*/
   0,			/*tp_hash*/
+  0,                    /*tp_call*/
+  0,                    /*tp_str*/
+  0,                    /*tp_getattro*/
+  0,                    /*tp_setattro*/
+  0,                    /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT,   /*tp_flags*/
+  "NetCDFFile(filename, mode, history_line)\n\nopens a netCDF file\n", 
+  /* tp_doc */
+  0,		             /* tp_traverse */
+  0,		             /* tp_clear */
+  0,		             /* tp_richcompare */
+  0,		             /* tp_weaklistoffset */
+  0,		             /* tp_iter */
+  0,		             /* tp_iternext */
+  PyNetCDFFileObject_methods,   /* tp_methods */
+  0,                         /* tp_members */
+  0,                         /* tp_getset */
+  0,                         /* tp_base */
+  0,                         /* tp_dict */
+  0,                         /* tp_descr_get */
+  0,                         /* tp_descr_set */
+  0,                         /* tp_dictoffset */
+  (initproc)PyNetCDFFileObject_init, /* tp_init */
+  0,                         /* tp_alloc */
+  PyNetCDFFileObject_new,    /* tp_new */
 };
 
 /*
@@ -1191,7 +1260,7 @@ PyNetCDFVariableObject_dealloc(PyNetCDFVariableObject *self)
     free(self->name);
   Py_XDECREF(self->file);
   Py_XDECREF(self->attributes);
-  PyMem_DEL(self);
+  self->ob_type->tp_free((PyObject*)self);
 }
 
 /* Create variable object */
@@ -2099,40 +2168,20 @@ statichere PyTypeObject PyNetCDFVariable_Type = {
   &PyNetCDFVariableObject_as_sequence,	/*tp_as_sequence*/
   &PyNetCDFVariableObject_as_mapping,	/*tp_as_mapping*/
   0,			/*tp_hash*/
+  0,                    /*tp_call*/
+  0,                    /*tp_str*/
+  0,                    /*tp_getattro*/
+  0,                    /*tp_setattro*/
+  0,                    /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT,   /*tp_flags*/
+  "NetCDF Variable",    /* tp_doc */
 };
 
-
-/* Creator for NetCDFFile objects */
-
-static PyObject *
-NetCDFFile(PyObject *self, PyObject *args)
-{
-  char *filename;
-  char *mode = NULL;
-  char *history = NULL;
-  PyNetCDFFileObject *file;
-
-  if (!PyArg_ParseTuple(args, "s|ss:NetCDFFile", &filename, &mode, &history))
-    return NULL;
-  if (mode == NULL)
-    mode = "r";
-  file = PyNetCDFFile_Open(filename, mode);
-  if (file == NULL) {
-    netcdf_seterror();
-    return NULL;
-  }
-  if (history != NULL)
-    PyNetCDFFile_AddHistoryLine(file, history);
-  return (PyObject *)file;
-}
-static char netcdf_doc[] =
-"NetCDFFile(filename, mode, history_line)\n\nopens a netCDF file";
 
 /* Table of functions defined in the module */
 
 static PyMethodDef netcdf_methods[] = {
-  {"NetCDFFile",	NetCDFFile, 1, netcdf_doc},
-  {NULL,		NULL}		/* sentinel */
+  {NULL, NULL}		/* sentinel */
 };
 
 /* Module initialization */
@@ -2140,15 +2189,19 @@ static PyMethodDef netcdf_methods[] = {
 DL_EXPORT(void)
 initScientific_netcdf(void)
 {
-  PyObject *m, *d;
+  PyObject *m;
   static void *PyNetCDF_API[PyNetCDF_API_pointers];
 
   /* Initialize netcdf variables */
   ncopts = 0;
 
-  /* Initialize type object headers */
-  PyNetCDFFile_Type.ob_type = &PyType_Type;
-  PyNetCDFVariable_Type.ob_type = &PyType_Type;
+  /* Initialize type objects */
+  PyNetCDFFile_Type.tp_new = PyType_GenericNew;
+  if (PyType_Ready(&PyNetCDFFile_Type) < 0)
+    return;
+  PyNetCDFVariable_Type.tp_new = PyType_GenericNew;
+  if (PyType_Ready(&PyNetCDFVariable_Type) < 0)
+    return;
 
   /* Create netCDF lock */
 #ifdef WITH_THREAD
@@ -2201,9 +2254,12 @@ initScientific_netcdf(void)
     (void *)&PyNetCDFVariable_SetAttributeString;
   PyNetCDF_API[PyNetCDFFile_AddHistoryLine_NUM] =
     (void *)&PyNetCDFFile_AddHistoryLine;
-  d = PyModule_GetDict(m);
-  PyDict_SetItemString(d, "_C_API",
-		       PyCObject_FromVoidPtr((void *)PyNetCDF_API, NULL));
+  PyModule_AddObject(m, "_C_API",
+		     PyCObject_FromVoidPtr((void *)PyNetCDF_API, NULL));
+
+  /* Add the netCDF file type object */
+  Py_INCREF(&PyNetCDFFile_Type);
+  PyModule_AddObject(m, "NetCDFFile", (PyObject *)&PyNetCDFFile_Type);
 
   /* Check for errors */
   if (PyErr_Occurred())
