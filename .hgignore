@@ -5,3 +5,5 @@ syntax: glob
 **.pyo
 build
 dist
+Test
+MANIFEST
