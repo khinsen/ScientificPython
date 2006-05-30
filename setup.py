@@ -56,10 +56,10 @@ else:
 
 packages = ['Scientific', 'Scientific.Functions',
             'Scientific.Geometry', 'Scientific.IO',
-            'Scientific.Physics', 'Scientific.Statistics',
-            'Scientific.Signals', 'Scientific.Threading',
-            'Scientific.TkWidgets', 'Scientific.Visualization',
-            'Scientific.MPI']
+            'Scientific.Physics', 'Scientific.QtWidgets',
+            'Scientific.Statistics', 'Scientific.Signals',
+            'Scientific.Threading', 'Scientific.TkWidgets',
+            'Scientific.Visualization', 'Scientific.MPI']
 
 ext_modules.append(Extension('Scientific_vector',
                              ['Src/Scientific_vector.c'],
