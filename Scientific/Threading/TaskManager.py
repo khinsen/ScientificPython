@@ -1,15 +1,20 @@
 # This module provides a simple task manager for running parallel
 # calculations on shared-memory machines.
 #
-# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2000-10-12
+# Written by Konrad Hinsen <konrad.hinsen@cea.fr>
+# last revision: 2006-5-30
 #
+
+"""
+@undocumented: Task
+"""
 
 import threading
 
 class TaskManager:
 
-    """Parallel task manager for shared-memory multiprocessor machines
+    """
+    Parallel task manager for shared-memory multiprocessor machines
 
     This class provides a rather simple way to profit from
     shared-memory multiprocessor machines by running several tasks
@@ -24,18 +29,16 @@ class TaskManager:
     can only be achieved if the tasks to be parallelized spend
     significant time in C extension modules that release the Global
     Interpreter Lock.
-
-    Constructor: TaskManager(|nthreads|)
-
-    Arguments:
-
-    |nthreads| -- the maximum number of compute threads that should
-                  run in parallel. Note: This does not include the
-                  main thread which generated and feeds the task
-                  manager!
     """
 
     def __init__(self, nthreads):
+        """
+        @param nthreads: the maximum number of compute threads that should
+                         run in parallel. Note: This does not include the
+                         main thread which generated and feeds the task
+                         manager!
+        @type nthreads: C{int}
+        """
         self.nthreads = nthreads
         self.waiting_tasks = []
         self.running_tasks = []
@@ -48,13 +51,19 @@ class TaskManager:
         self.scheduler.start()
 
     def runTask(self, function, args):
-        """Add a task defined by |function|. This must be a callable
-        object, which will be called exactly once. The arguments of the
-        call are the elements of the tuple |args| plus one additional
-        argument which is a lock object. The task can use this lock
-        object in order to get temporary exclusive acces to data
-        shared with other tasks, e.g. a list in which to accumulate
-        results."""
+        """
+        Run a task as soon as processing capacity becomes available
+
+        @param function: the function that will be executed as the body of
+                         the task
+        @type function: callable
+        @param args: the arguments that will be passed to function when it
+                     is called. An additional argument will be added at the
+                     end: a lock object that the task can use to get
+                     temporarily exclusive access to data shared with other
+                     tasks.
+        @type args: C{tuple}
+        """
         self.can_submit.acquire()
         if len(self.waiting_tasks) >= self.nthreads:
             self.can_submit.wait()
@@ -68,7 +77,9 @@ class TaskManager:
         self.task_available.release()
 
     def terminate(self):
-        "Wait until all tasks have finished."
+        """
+        Wait until all tasks have finished
+        """
         self.task_available.acquire()
         self.waiting_tasks.append(None)
         self.task_available.notify()
@@ -82,7 +93,7 @@ class TaskManager:
             done = len(self.running_tasks) == 0
             self.can_run.release()
 
-    def removeTask(self, task):
+    def _removeTask(self, task):
         self.can_run.acquire()
         self.running_tasks.remove(task)
         self.can_run.notifyAll()
@@ -118,7 +129,7 @@ class Task(threading.Thread):
 
     def run(self):
         apply(self.__function, self.__args)
-        self.__task_manager.removeTask(self)
+        self.__task_manager._removeTask(self)
 
 
 # Test code
@@ -126,7 +137,7 @@ class Task(threading.Thread):
 if __name__ == '__main__':
 
     import time
-    from whrandom import randint
+    from random import randint
 
     def dummy(n, results, lock):
         print n, "running"
