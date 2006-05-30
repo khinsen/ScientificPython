@@ -1,3 +1,3 @@
 # Data used both in the package and by setup.py
 
-__version__ = '2.5.9hg'
+__version__ = '2.5.9-hg-numpy'
