@@ -4,8 +4,6 @@
 # Last revision: 2005-3-11
 #
 
-_undocumented = 1
-
 import Tkinter, Dialog, FileDialog
 import copy, os, string
 

@@ -1,5 +1,9 @@
 # Package Scientific.TkWidgets
 
+"""
+@undocumented: Utility
+"""
+
 from Utility import FilenameEntry, FloatEntry, IntEntry, ButtonBar, StatusBar
 from Utility import ModalDialog
 

@@ -4,8 +4,6 @@
 # last revision: 2006-4-28
 #
 
-_undocumented = 1
-
 import RemoteObjects
 from Scientific import N
 import cPickle, operator, sys, types

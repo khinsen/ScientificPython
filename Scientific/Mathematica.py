@@ -3,8 +3,6 @@
 # Written by Konrad Hinsen <khinsen@cea.fr>
 # last revision: 2005-9-5
 
-_undocumented = 1
-
 import Numeric, os, string, tempfile
 
 # Class representing a Mathematica process

@@ -1,5 +1,3 @@
-_undocumented = 1
-
 try:
     from Scientific import use_numarray
     from numarray.linear_algebra import *

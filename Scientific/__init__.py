@@ -3,7 +3,8 @@
 #
 
 
-"""ScientificPython is a collection of Python modules that are useful
+"""
+ScientificPython is a collection of Python modules that are useful
 for scientific computing. In this collection you will find modules
 that cover basic geometry (vectors, tensors, transformations, vector
 and tensor fields), quaternions, automatic derivatives, (linear)
@@ -15,6 +16,10 @@ netCDF library (portable structured binary files), to MPI (Message
 Passing Interface, message-based parallel programming), and to BSPlib
 (Bulk Synchronous Parallel programming). For details consult the
 manual.
+
+@undocumented: LA
+@undocumented: N
+@undocumented: Mathematica
 """
 
 #

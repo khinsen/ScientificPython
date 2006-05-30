@@ -1,8 +1,6 @@
 # Export filters for PDB output.
 #
 
-_undocumented = 1
-
 #
 # A convenient base class...
 #
