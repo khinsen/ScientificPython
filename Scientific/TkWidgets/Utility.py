@@ -1,7 +1,7 @@
 # Various useful small widgets
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2005-3-11
+# Last revision: 2006-5-30
 #
 
 import Tkinter, Dialog, FileDialog
@@ -10,21 +10,8 @@ import copy, os, string
 
 class FilenameEntry(Tkinter.Frame):
 
-    """Filename entry widget
-
-    Constructor: FilenameEntry(|master|, |text|, |pattern|,
-                               |must_exist_flag|=1)
-
-    Arguments:
-
-    |master| -- the master widget
-
-    |text| -- the label in front of the filename box
-
-    |pattern| -- the filename matching pattern that determines the
-                 file list in the file selection dialog
-
-    |must_exists_flag| -- allow only names of existing files
+    """
+    Filename entry widget
 
     A FilenameEntry widget consists of three parts: an identifying
     label, a text entry field for the filename, and a button labelled
@@ -32,8 +19,18 @@ class FilenameEntry(Tkinter.Frame):
     name.
     """
 
-    def __init__(self, master, text, browse_pattern = '*', must_exist = 1,
+    def __init__(self, master, text, browse_pattern = '*', must_exist = True,
                  **attr):
+        """
+        @param master: the parent widget
+        @param text: the label in front of the filename box
+        @type text: C{str}
+        @param pattern: the filename matching pattern that determines the
+                        file list in the file selection dialog
+        @type pattern: C{str}
+        @param must_exist: if C{True}, allow only names of existing files
+        @type must_exit: C{bool}
+        """
         self.pattern = browse_pattern
         self.must_exist = must_exist
         newattr = copy.copy(attr)
@@ -58,9 +55,11 @@ class FilenameEntry(Tkinter.Frame):
             self.filename.set(file)
 
     def get(self):
-        """Return the current filename. If |must_exist_flag| is true,
-        verify that the name refers to an existing file.
-        Otherwise an error message is displayed and a ValueError is raised.
+        """
+        @returns: the current filename
+        @rtype: C{str}
+        @raises ValueError: if must_exist is C{True} and the name does not
+                            refer to an existing file
         """
         filename =  self.filename.get()
         if self.must_exist and not os.path.exists(filename):
@@ -74,22 +73,8 @@ class FilenameEntry(Tkinter.Frame):
 
 class FloatEntry(Tkinter.Frame):
 
-    """An entry field for float numbers
-
-    Constructor: FloatEntry(|master|, |text|, |initial|=None,
-                            |lower|=None, |upper|=None)
-
-    Arguments:
-
-    |master| -- the master widget
-
-    |text| -- the label in front of the entry field
-
-    |initial| -- an optional initial value (default: blank field)
-
-    |upper| -- an optional upper limit for the value
-
-    |lower| -- an optional lower limit for the value
+    """
+    Entry field for float numbers
 
     A FloatEntry widget consists of a label followed by a text entry
     field. 
@@ -97,6 +82,17 @@ class FloatEntry(Tkinter.Frame):
     
     def __init__(self, master, text, init = None, lower=None, upper=None,
                  name = None, **attr):
+        """
+        @param master: the parent widget
+        @param text: the label in front of the entry field
+        @type text: C{str}
+        @param init: an optional initial value (default: blank field)
+        @type init: number
+        @param upper: an optional upper limit for the value
+        @type upper: number
+        @param lower: an optional lower limit for the value
+        @type lower: number
+        """
         self.text = text
         self.lower = lower
         self.upper = upper
@@ -121,13 +117,21 @@ class FloatEntry(Tkinter.Frame):
         self.entry.bind(sequence, func, add)
 
     def set(self, value):
-        "Set the value to |value|."
+        """
+        Set the value displayed in the field
+
+        @param value: the new value
+        @type value: C{float}
+        """
         return self.value.set(value)
 
     def get(self):
-        """Return the current value, verifying that it is a number
-        and between the specified limits. Otherwise an error message
-        is displayed and a ValueError is raised."""
+        """
+        @returns: the current value displayed in the field
+        @rtype: C{float}
+        @raises ValueError: if the current value is not a valid
+                            number or is not within the specified limits
+        """
         try:
             value = self.value.get()
         except (Tkinter.TclError, ValueError):
@@ -157,31 +161,20 @@ class FloatEntry(Tkinter.Frame):
 
 class IntEntry(FloatEntry):
 
-    """An entry field for integer numbers
-
-    Constructor: IntEntry(|master|, |text|, |initial|=None,
-                          |lower|=None, |upper|=None)
-
-    Arguments:
-
-    |master| -- the master widget
-
-    |text| -- the label in front of the entry field
-
-    |initial| -- an optional initial value (default: blank field)
-
-    |upper| -- an optional upper limit for the value
-
-    |lower| -- an optional lower limit for the value
+    """
+    Entry field for integer numbers
 
     A IntEntry widget consists of a label followed by a text entry
     field. 
     """
     
     def get(self):
-        """Return the current value, verifying that it is an integer
-        and between the specified limits. Otherwise an error message
-        is displayed and a ValueError is raised."""
+        """
+        @returns: the current value displayed in the field
+        @rtype: C{int}
+        @raises ValueError: if the current value is not a valid
+                            number or is not within the specified limits
+        """
         value = FloatEntry.get(self)
         ivalue = int(value)
         if ivalue != value:
@@ -195,22 +188,19 @@ class IntEntry(FloatEntry):
 
 class ButtonBar(Tkinter.Frame):
 
-    """A horizontal array of buttons
-
-    Constructor: ButtonBar(|master|, |left_button_list|, |right_button_list|)
-
-    Arguments:
-
-    |master| -- the master widget
-
-    |left_button_list| -- a list of (text, action) tuples specifying the
-                          buttons on the left-hand side of the button bar
-
-    |right_button_list| -- a list of (text, action) tuples specifying the
-                           buttons on the right-hand side of the button bar
+    """
+    Horizontal array of buttons
     """
 
     def __init__(self, master, left_button_list, right_button_list):
+        """
+        @param master: the parent widget
+        @param left_button_list: a list of (text, action) tuples specifying the
+                                 buttons on the left-hand side of the button bar
+        @param right_button_list: a list of (text, action) tuples specifying the
+                                  buttons on the right-hand side of the button
+                                  bar
+        """
         Tkinter.Frame.__init__(self, master, bd=2, relief=Tkinter.SUNKEN)
         for button, action in left_button_list:
             Tkinter.Button(self, text=button,
@@ -222,13 +212,8 @@ class ButtonBar(Tkinter.Frame):
 
 class StatusBar(Tkinter.Frame):
 
-    """A status bar
-
-    Constructor: StatusBar(|master|)
-
-    Arguments:
-
-    |master| -- the master widget
+    """
+    Status bar
 
     A status bar can be used to inform the user about the status of an
     ongoing calculation. A message can be displayed with set() and
@@ -238,11 +223,19 @@ class StatusBar(Tkinter.Frame):
     """
 
     def __init__(self, master):
+        """
+        @param master: the parent widget
+        """
         Tkinter.Frame.__init__(self, master, bd=2, relief=Tkinter.RAISED)
         self.text = Tkinter.Label(self, text='')
         self.text.pack(side=Tkinter.LEFT, expand=Tkinter.YES)
 
     def set(self, text):
+        """
+        Set a message to be displayed in the status bar
+        
+        @param text: the text of the message
+        """
         self.text.configure(text = text)
         self.text.update_idletasks()
         self.master.configure(cursor='watch')
@@ -250,6 +243,9 @@ class StatusBar(Tkinter.Frame):
         self.update_idletasks()
 
     def clear(self):
+        """
+        Clear any message displayed in the status bar
+        """
         self.text.configure(text = '')
         self.text.update_idletasks()
         self.master.configure(cursor='top_left_arrow')

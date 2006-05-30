@@ -5,7 +5,7 @@
 # Last revision: 2006-5-30
 #
 
-from Tkinter import *
+import Tkinter
 from Canvas import Line
 import string
 from Scientific import N as Numeric
@@ -149,7 +149,7 @@ class VisualizationGraphics:
         return self.objects[item]
 
 
-class VisualizationCanvas(Frame):
+class VisualizationCanvas(Tkinter.Frame):
 
     """
     Tk visualization widget
@@ -173,10 +173,10 @@ class VisualizationCanvas(Frame):
         @type background: C{str}
         @param attr: widget attributes
         """
-        apply(Frame.__init__, (self, master), attr)
-        self.canvas = Canvas(self, width=width, height=height,
-                             background=background)
-        self.canvas.pack(fill=BOTH, expand=YES)
+        apply(Tkinter.Frame.__init__, (self, master), attr)
+        self.canvas = Tkinter.Canvas(self, width=width, height=height,
+                                     background=background)
+        self.canvas.pack(fill=Tkinter.BOTH, expand=Tkinter.YES)
         border_w = self.canvas.winfo_reqwidth() - \
                    string.atoi(self.canvas.cget('width'))
         border_h = self.canvas.winfo_reqheight() - \
@@ -366,7 +366,7 @@ if __name__ == '__main__':
             del chains[-1]
         return chains
 
-    conf = readCAlphaPositions('myoglobin.pdb')
+    conf = readCAlphaPositions('/Users/hinsen/Desktop/5CYT.pdb')
     colors = ['black', 'red', 'green', 'blue', 'yellow']
     colors = (len(conf)*colors)[:len(conf)]
     objects = []
@@ -374,17 +374,21 @@ if __name__ == '__main__':
         objects.append(PolyLine3D(chain, color=color))
     graphics = VisualizationGraphics(objects)
 
-    window = Frame()
-    window.pack(fill=BOTH, expand=YES)
+    window = Tkinter.Frame()
+    window.pack(fill=Tkinter.BOTH, expand=Tkinter.YES)
 
-    c = VisualizationCanvas(window, "100m", "100m", relief=SUNKEN, border=2)
-    c.pack(side=TOP, fill=BOTH, expand=YES)
+    c = VisualizationCanvas(window, "100m", "100m", relief=Tkinter.SUNKEN,
+                            border=2)
+    c.pack(side=Tkinter.TOP, fill=Tkinter.BOTH, expand=Tkinter.YES)
     c.draw(graphics)
 
-    Button(window, text='Draw',
-           command=lambda o=graphics: c.draw(o)).pack(side=LEFT)
-    Button(window, text='Clear', command=c.clear).pack(side=LEFT)
-    Button(window, text='Redraw', command=c.redraw).pack(side=LEFT)
-    Button(window, text='Quit', command=window.quit).pack(side=RIGHT)
+    Tkinter.Button(window, text='Draw',
+                   command=lambda o=graphics: c.draw(o)).pack(side=Tkinter.LEFT)
+    Tkinter.Button(window, text='Clear',
+                   command=c.clear).pack(side=Tkinter.LEFT)
+    Tkinter.Button(window, text='Redraw',
+                   command=c.redraw).pack(side=Tkinter.LEFT)
+    Tkinter.Button(window, text='Quit',
+                   command=window.quit).pack(side=Tkinter.RIGHT)
 
     window.mainloop()

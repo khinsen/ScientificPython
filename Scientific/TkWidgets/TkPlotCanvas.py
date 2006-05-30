@@ -7,7 +7,7 @@
 # Last revision: 2006-5-30
 #
 
-from Tkinter import *
+import Tkinter
 from Scientific import N as Numeric
 from Canvas import Line, CanvasText
 import string
@@ -311,7 +311,7 @@ class PlotGraphics:
                 file.write(separator)
             data = o.writeToFile(file, separator)
 
-class PlotCanvas(Frame):
+class PlotCanvas(Tkinter.Frame):
 
     """
     Tk plot widget
@@ -356,10 +356,10 @@ class PlotCanvas(Frame):
         if attr.has_key('select'):
             self.selectfn = attr['select']
             del attr['select']
-        apply(Frame.__init__, (self, master), attr)
-        self.canvas = Canvas(self, width=width, height=height,
-                             background=background)
-        self.canvas.pack(fill=BOTH, expand=YES)
+        apply(Tkinter.Frame.__init__, (self, master), attr)
+        self.canvas = Tkinter.Canvas(self, width=width, height=height,
+                                     background=background)
+        self.canvas.pack(fill=Tkinter.BOTH, expand=Tkinter.YES)
         border_w = self.canvas.winfo_reqwidth() - \
                    string.atoi(self.canvas.cget('width'))
         border_h = self.canvas.winfo_reqheight() - \
@@ -371,7 +371,7 @@ class PlotCanvas(Frame):
             self.canvas.bind('<Button-1>', self._mousePressed)
             self.canvas.bind('<B1-Motion>', self._mouseMotion)
             self.canvas.bind('<ButtonRelease-1>', self._mouseRelease)
-        self.popup_menu = Menu(self.canvas, tearoff=0)
+        self.popup_menu = Tkinter.Menu(self.canvas, tearoff=0)
         self.label = None
         self.canvas.bind('<Button-2>', self._showValue)
         self.canvas.bind('<ButtonRelease-2>', self._hideValue)
@@ -406,10 +406,10 @@ class PlotCanvas(Frame):
         if font is not None:
             bg = self.canvas.cget('background')
             try:
-                item = CanvasText(self.canvas, 0, 0, anchor=NW,
+                item = CanvasText(self.canvas, 0, 0, anchor=Tkinter.NW,
                                   text='0', fill=bg, font=font)
                 self.canvas.delete(item)
-            except TclError:
+            except Tkinter.TclError:
                 font = None
         return font
 
@@ -504,7 +504,7 @@ class PlotCanvas(Frame):
 
     def _drawAxes(self, canvas, xaxis, yaxis,
                   bb1, bb2, scale, shift, xticks, yticks):
-        dict = {'anchor': N, 'fill': 'black'}
+        dict = {'anchor': Tkinter.N, 'fill': 'black'}
         if self.font is not None:
             dict['font'] = self.font
         if xaxis is not None:
@@ -524,7 +524,7 @@ class PlotCanvas(Frame):
                         apply(CanvasText, (self.canvas, p[0], p[1]), dict)
                 text = 0
 
-        dict['anchor'] = E
+        dict['anchor'] = Tkinter.E
         if yaxis is not None:
             lower, upper = yaxis
             text = 1
@@ -576,7 +576,7 @@ class PlotCanvas(Frame):
 
     def _textBoundingBox(self, text):
         bg = self.canvas.cget('background')
-        dict = {'anchor': NW, 'text': text, 'fill': bg}
+        dict = {'anchor': Tkinter.NW, 'text': text, 'fill': bg}
         if self.font is not None:
             dict['font'] = self.font
         item = apply(CanvasText, (self.canvas, 0., 0.), dict)
@@ -740,8 +740,8 @@ class PlotCanvas(Frame):
 
 if __name__ == '__main__':
 
-    window = Frame()
-    window.pack(fill=BOTH, expand=YES)
+    window = Tkinter.Frame()
+    window.pack(fill=Tkinter.BOTH, expand=Tkinter.YES)
 
     data1 = 2.*Numeric.pi*Numeric.arange(200)/200.
     data1.shape = (100, 2)
@@ -762,17 +762,20 @@ if __name__ == '__main__':
         select(value)
         print value
 
-    c = PlotCanvas(window, "300", "200", relief=SUNKEN, border=2,
+    c = PlotCanvas(window, "300", "200", relief=Tkinter.SUNKEN, border=2,
                    zoom = 1, select = display)
-    c.pack(side=TOP, fill=BOTH, expand=YES)
+    c.pack(side=Tkinter.TOP, fill=Tkinter.BOTH, expand=Tkinter.YES)
 
     def select(value):
         c.select(value)
 
-    Button(window, text='Draw', command=lambda o=object:
-           c.draw(o, 'automatic', 'automatic')).pack(side=LEFT)
-    Button(window, text='Clear', command=c.clear).pack(side=LEFT)
-    Button(window, text='Redraw', command=c.redraw).pack(side=LEFT)
-    Button(window, text='Quit', command=window.quit).pack(side=RIGHT)
+    Tkinter.Button(window, text='Draw', command=lambda o=object:
+                   c.draw(o, 'automatic', 'automatic')).pack(side=Tkinter.LEFT)
+    Tkinter.Button(window, text='Clear',
+                   command=c.clear).pack(side=Tkinter.LEFT)
+    Tkinter.Button(window, text='Redraw',
+                   command=c.redraw).pack(side=Tkinter.LEFT)
+    Tkinter.Button(window, text='Quit',
+                   command=window.quit).pack(side=Tkinter.RIGHT)
 
     window.mainloop()
