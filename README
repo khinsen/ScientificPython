@@ -25,7 +25,7 @@ CEA Saclay
 91191 Gif sur Yvette Cedex
 France
 
-E-Mail: hinsen@llb.saclay.cea.fr
+E-Mail: konrad.hinsen@cea.fr
 
 ---------------------------------------------------------------------------
 
@@ -54,19 +54,22 @@ fink project. However, you can also use the standard Unix installation
 procedure if you prefer.
 
 
-Using numarray:
----------------
+Using numpy or numarray:
+------------------------
 
-There are two nearly compatible implementations of numeric arrays for
+There are three nearly compatible implementations of numeric arrays for
 Python: the original one, Numerical Python (module name "Numeric"),
-and a later rewrite called numarray. numarray is an improvement in
-many respects (in particular the efficiency at handling large arrays),
-but at the time of this writing slower for small arrays. Moreover,
-numarray does not (yet) implement all the features of Numeric.
+a later rewrite called numarray, and an evolution of Numeric that integrates
+features from numarray, called numpy.
 
 Scientific Python was written for Numeric and still uses Numeric by
-default. However, it is possible to use numarray instead of Numeric
+default. However, it is possible to use numpy or numarray instead of Numeric
 for all array operations. To do this, use
+
+    python setup.py build --numpy
+    python setup.py install
+
+or
 
     python setup.py build --numarray
     python setup.py install
@@ -81,14 +84,16 @@ Note also that the modules
   Scientific.Functions.LeastSquares
 
 do not work correctly with numarray because they rely on a feature of
-Numeric that is missing in current numarray releases. For the same reason,
-the modules
+Numeric/numpy that is missing in numarray. For the same reason, the modules
 
   Scientific.Functions.Interpolation
   Scientific.Physics.PhysicalQuantities
 
 can be used only partially with numarray, the application of mathematical
 functions to the defined objects does not work.
+
+In the long run, numpy is likely to replace both Numeric and numarray.
+At some point, ScientificPython will thus use numpy by default.
 
 ---------------------------------------------------------------------------
 
