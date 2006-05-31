@@ -429,6 +429,8 @@ class PlotCanvas(Tkinter.Frame):
                          or L{PlotGraphics}) to be drawn
         @param xaxis: C{None} (no x-axis), C{"automatic"} (automatic scaling),
                       or a pair (x1, x2) defining the range of the x-axis
+        @param yaxis: C{None} (no y-axis), C{"automatic"} (automatic scaling),
+                      or a pair (y1, y2) defining the range of the y-axis
         """
         self.last_draw = (graphics, xaxis, yaxis)
         p1, p2 = graphics.boundingBox()
