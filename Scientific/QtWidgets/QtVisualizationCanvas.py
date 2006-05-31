@@ -5,7 +5,11 @@
 # Last revision: 2006-5-31
 #
 
-from qt import *
+try:
+    from qt import *
+except ImportError:
+    from qt_fake import *
+
 import string, os
 from Scientific import N
 from Scientific.Geometry import Vector

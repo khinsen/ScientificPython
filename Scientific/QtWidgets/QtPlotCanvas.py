@@ -6,7 +6,11 @@
 # Last revision: 2006-5-31
 #
 
-from qt import *
+try:
+    from qt import *
+except ImportError:
+    from qt_fake import *
+
 from Scientific import N
 import string, os
 
