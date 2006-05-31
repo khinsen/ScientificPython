@@ -3,14 +3,16 @@
 # See the example at the end for documentation...
 #
 # Written by Konrad Hinsen <khinsen@cea.fr>
-# Last revision: 2005-9-5
+# Last revision: 2006-5-31
 #
 
 from qt import *
 from Scientific import N
 import string, os
 
-"""This module provides a plot widget for Qt user interfaces.
+"""
+Plot widget for Qt user interfaces
+
 A plot widget acts like a canvas for special graphics objects
 that represent curves shown by lines or markers.
 
@@ -52,23 +54,22 @@ class PolyPoints:
 
 class PolyLine(PolyPoints):
 
-    """Multiple connected lines
+    """
+    Multiple connected lines
 
-    Constructor: PolyLine(|points|, **|attr|)
-
-    Arguments:
-
-    |points| -- any sequence of (x, y) number pairs
-
-    |attr| -- line attributes specified by keyword arguments:
-
-      * 'width': the line width (default: 1)
-      * 'color': a string whose value is one of the color names defined by
-                 X-Windows (default: "black")
-      * 'style': a Qt pen style object (default: Qt.SolidLine)
+    @undocumented: draw
     """
 
     def __init__(self, points, **attr):
+        """
+        @param points: any sequence of (x, y) number pairs
+        @param attr: line attributes
+
+        @keyword width: the line width (default: 1)
+        @keyword color: a string whose value is one of the
+                        color names defined by X-Windows (default: C{"black"})
+        @keyword style: a Qt pen style object (default: Qt.SolidLine)
+        """
         PolyPoints.__init__(self, points, attr)
 
     _attributes = {'color': 'black',
@@ -92,23 +93,21 @@ class PolyLine(PolyPoints):
 
 class VerticalLine(PolyLine):
 
-    """A vertical line
-
-    Constructor: VerticalLine(|xpos|, **|attr|)
-
-    Arguments:
-
-    |xpos| -- the x coordinate of the line
-
-    |attr| -- line attributes specified by keyword arguments:
-
-      * 'width': the line width (default: 1)
-      * 'color': a string whose value is one of the color names defined by
-                 X-Windows (default: "black")
-      * 'style': a Qt pen style object (default: Qt.SolidLine)
+    """
+    A vertical line
     """
 
     def __init__(self, xpos, **attr):
+        """
+        @param xpos: the x coordinate of the line
+        @type xpos: C{float}
+        @param attr: line attributes
+
+        @keyword width: the line width (default: 1)
+        @keyword color: a string whose value is one of the
+                        color names defined by X-Windows (default: C{"black"})
+        @keyword style: a Qt pen style object (default: Qt.SolidLine)
+        """
         apply(PolyLine.__init__, (self, 2*[(xpos, 0.)]), attr)
 
     def draw(self, canvas, bbox):
@@ -121,23 +120,21 @@ class VerticalLine(PolyLine):
 
 class HorizontalLine(PolyLine):
 
-    """A horizontal line
-
-    Constructor: HorizontalLine(|ypos|, **|attr|)
-
-    Arguments:
-
-    |ypos| -- the y coordinate of the line
-
-    |attr| -- line attributes specified by keyword arguments:
-
-      * 'width': the line width (default: 1)
-      * 'color': a string whose value is one of the color names defined by
-                 X-Windows (default: "black")
-      * 'style': a Qt pen style object (default: Qt.SolidLine)
+    """
+    A horizontal line
     """
 
     def __init__(self, ypos, **attr):
+        """
+        @param ypos: the y coordinate of the line
+        @type ypos: C{float}
+        @param attr: line attributes
+
+        @keyword width: the line width (default: 1)
+        @keyword color: a string whose value is one of the
+                        color names defined by X-Windows (default: C{"black"})
+        @keyword style: a Qt pen style object (default: Qt.SolidLine)
+        """
         print ypos
         apply(PolyLine.__init__, (self, 2*[(0., ypos)]), attr)
 
@@ -151,30 +148,26 @@ class HorizontalLine(PolyLine):
 
 class PolyMarker(PolyPoints):
 
-    """Series of markers
-
-    Constructor: PolyPoints(|points|, **|attr|)
-
-    Arguments:
-
-    |points| -- any sequence of (x, y) number pairs
-
-    |attr| marker attributes specified by keyword arguments:
-
-    * 'width': the line width for drawing the marker (default: 1)
-    * 'color': a string whose value is one of the color names defined by
-               X-Windows, defines the color of the line forming the marker
-               (default: black)
-    * 'fillcolor': a string whose value is one of the color names defined
-                   by X-Windows, defines the color of the interior of the
-                   marker (default: black)
-    * 'fillstyle': a Qt BrushStyle object (default: Qt.SolidPattern)
-    * 'marker': one of 'circle' (default), 'dot', 'square', 'triangle',
-                'triangle_down', 'cross', 'plus'
+    """
+    Series of markers
     """
 
     def __init__(self, points, **attr):
+        """
+        @param points: any sequence of (x, y) number pairs
+        @param attr: marker attributes
 
+        @keyword width: the line width for drawing the marker (default: 1)
+        @keyword color: a string whose value is one of the
+                        color names defined by X-Windows (default: C{"black"})
+        @keyword fillcolor: a string whose value is one of the color names
+                            defined in X-Windows, defines the color of the
+                            interior of the marker (default: C{"black"})
+        @keyword fillstyle: a Qt BrushStyle object (default: Qt.SolidPattern)
+        @keyword marker: one of C{'circle'} (default), C{'dot'}, C{'square'},
+                         C{'triangle'}, C{'triangle_down'}, C{'cross'},
+                         C{'plus'}
+        """
         PolyPoints.__init__(self, points, attr)
 
     _attributes = {'color': 'black',
@@ -239,17 +232,21 @@ class PolyMarker(PolyPoints):
 
 class PlotGraphics:
 
-    """Compound graphics object
+    """
+    Compound graphics object
 
-    Constructor: PlotGraphics(|objects|)
-
-    Arguments:
-
-    |objects| -- a list whose elements can be instances of the classes
-                 PolyLine, PolyMarker, and PlotGraphics.
+    @undocumented: boundingBox
+    @undocumented: scaleAndShift
+    @undocumented: draw
+    @undocumented: writeToFile
     """
     
     def __init__(self, objects):
+        """
+        @param objects: a list of graphics objects (L{PolyLine},
+                        L{PolyMarker}, L{PlotGraphics})
+        @type objects: C{list}
+        """
         self.objects = objects
 
     def boundingBox(self):
@@ -284,38 +281,40 @@ class PlotGraphics:
 
 class PlotCanvas(QWidget):
 
-    """Qt plot widget
+    """
+    Qt plot widget
 
-    Constructor: PlotCanvas(|parent|=None, |background|='white',
-                            |font|=None, |zoom|=0, |select|=None).
-
-    The default background color is white and the default font is
-    Helvetica at 10 points.
-
-    Arguments:
-
-    |parent| -- the parent widget, default: None
-
-    |background| -- the background color, default: 'white'
-
-    |font| -- a QFont object defining the font for axis labels,
-              default: 10 point Helevetica
-
-    |zoom| -- a logical variable that indicates whether interactive
-              zooming (using the left mouse button) is enabled; the
-              default is 0 (no zoom)
-
-    |select| -- enables the user to select a range along the x axis
-                by dragging the mouse (with the left button pressed)
-                in the area *under* the x axis. If |select| is 0,
-                no selection is possible. Otherwise the value of |select|
-                must be a callable object that is called whenever the
-                selection changes, with a single argument that can be
-                None (no selection) or a tuple containing two x values.
+    PlotCanvas objects support all operations of Qt widgets.
     """
     
     def __init__(self, parent=None, background='white',
-                 font=None, zoom=0, select=None):
+                 font=None, zoom=False, select=None):
+        """
+        @param master: the parent widget
+        @param width: the initial width of the canvas
+        @type width: C{int}
+        @param height: the initial height of the canvas
+        @type height: C{int}
+        @param background: the background color
+        @type background: C{str}
+        @param font: the font for axis labels, default: 10 point Helevetica
+        @type font: QFont
+        @param attr: widget attributes
+        
+        @keyword zoom: a flag that indicates whether interactive
+                       zooming (using the left mouse button) is enabled; the
+                       default is C{False} (no zoom)
+        @type zoom: C{bool}
+        
+        @keyword select: enables the user to select a range along the x axis
+                         by dragging the mouse (with the left button pressed)
+                         in the area B{under} the x axis. If select is 0,
+                         no selection is possible. Otherwise the value of
+                         select must be a callable object that is called
+                         whenever the selection changes, with a single
+                         argument that can be C{None} (no selection) or
+                         a tuple containing two x values.
+        """
         self.zoom = zoom
         self.selectfn = select
         if font is None:
@@ -348,15 +347,15 @@ class PlotCanvas(QWidget):
         self.plotbox_origin = N.array([xo, yo])
 
     def draw(self, graphics, xaxis = None, yaxis = None):
-        """Draws the graphics object |graphics|, which can be
-        a PolyLine, PolyMarker, or PlotGraphics object. The
-        arguments |xaxis| and |yaxis| specify how axes are
-        drawn: 'None' means that no axis is drawn and the graphics
-        objects are scaled to fill the canvas optimally. '"automatic"'
-        means that the axis is drawn and a suitable value range is
-        determined automatically. A sequence of two numbers means
-        that the axis is drawn and the value range is the interval
-        specified by the two numbers.
+        """
+        Draw something on the canvas
+
+        @param graphics: the graphics object (L{PolyLine}, L{PolyMarker},
+                         or L{PlotGraphics}) to be drawn
+        @param xaxis: C{None} (no x-axis), C{"automatic"} (automatic scaling),
+                      or a pair (x1, x2) defining the range of the x-axis
+        @param yaxis: C{None} (no y-axis), C{"automatic"} (automatic scaling),
+                      or a pair (y1, y2) defining the range of the y-axis
         """
         self.current_plot = (graphics, xaxis, yaxis)
         self.update()
@@ -525,13 +524,17 @@ class PlotCanvas(QWidget):
         return rect.width(), rect.height()
 
     def clear(self):
-        "Clears the canvas."
+        """
+        Clear the canvas
+        """
         self.current_plot = None
         self.selected_range = None
         self.update()
 
     def redraw(self):
-        "Redraws the last canvas contents."
+        """
+        Redraw the most recent canvas contents
+        """
         self.update()
 
     def mousePressEvent(self, event):
@@ -623,9 +626,13 @@ class PlotCanvas(QWidget):
             pass
 
     def select(self, range):
-        """Shows the given |range| as highlighted. |range| can be
-        None (no selection) or a sequence of two values on the
-        x-axis."""
+        """
+        Highlight a range on the x-axis
+
+        @param range: the range on the x-axis to be highlighted. It can be
+                      C{None} (no selection) or a sequence of two values on the
+                      x-axis.
+        """
         if range is None:
             self.selected_range = None
         else:
