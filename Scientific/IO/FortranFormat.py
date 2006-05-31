@@ -15,8 +15,8 @@
 #    take more space, instead of being replaced by stars.
 #
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
-# Changed by Andreas Prlic <andreas@came.sbg.ac.at> (small change)
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
+# With contributions from Andreas Prlic <andreas@came.sbg.ac.at>
 # last revision: 2006-5-28
 #
 

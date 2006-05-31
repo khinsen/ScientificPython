@@ -1,6 +1,6 @@
 # Subpackage Scientific.Geometry
 #
-# Written by: Konrad Hinsen <khinsen@cea.fr>
+# Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Last revision: 2006-5-26
 #
 

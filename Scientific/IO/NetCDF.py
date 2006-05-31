@@ -2,7 +2,7 @@
 # adds some luxury and puts everything in its proper place in the
 # package hierarchy.
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Last revision: 2006-5-28
 # 
 

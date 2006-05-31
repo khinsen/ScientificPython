@@ -1,7 +1,7 @@
 # This module provides classes that represent VRML objects for use
 # in data visualization applications.
 #
-# Written by: Konrad Hinsen <khinsen@cea.fr>
+# Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Last revision: 2005-9-5
 #
 

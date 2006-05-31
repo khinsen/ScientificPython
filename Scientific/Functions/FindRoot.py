@@ -3,7 +3,7 @@
 # Written by Scott M. Ransom <ransom@cfa.harvard.edu>
 # last revision: 14 Nov 98
 #
-# Cosmetic changes by Konrad Hinsen <khinsen@cea.fr>
+# Cosmetic changes by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2006-4-21
 #
 

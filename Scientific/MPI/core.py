@@ -1,7 +1,7 @@
 # The MPI Interface is written in C; this module only contains documentation
 # and imports objects from the C module.
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 #        and Jakob Schiotz <schiotz@fysik.dtu.dk>
 # last revision: 2006-5-28
 #

@@ -1,6 +1,6 @@
 # Interface to Mathematica for plotting
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2005-9-5
 
 import Numeric, os, string, tempfile

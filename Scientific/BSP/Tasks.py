@@ -1,6 +1,6 @@
 # Task lists with automatic load balancing
 #
-# Written by Konrad Hinsen <hinsen@llb.saclay.cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2004-12-13
 #
 

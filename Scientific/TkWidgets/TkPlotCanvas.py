@@ -2,7 +2,7 @@
 # It supports only elementary line plots at the moment.
 # See the example at the end for documentation...
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # With contributions from RajGopal Srinivasan <raj@cherubino.med.jhmi.edu>
 # Last revision: 2006-5-30
 #

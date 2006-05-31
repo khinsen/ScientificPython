@@ -1,6 +1,6 @@
 # Parallel console for interactive use of Python/BSP
 #
-# Written by Konrad Hinsen <hinsen@llb.saclay.cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2004-11-22
 #
 

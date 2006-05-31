@@ -1,7 +1,7 @@
 # This module defines 3d geometrical tensors with the standard
 # operations on them. The elements are stored in an array.
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2006-4-28
 #
 

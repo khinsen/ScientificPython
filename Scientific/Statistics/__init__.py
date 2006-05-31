@@ -1,6 +1,6 @@
 # Basic statistics functions.
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # With contributions from Moshe Zadka <mzadka@geocities.com>
 # last revision: 2006-5-28
 #

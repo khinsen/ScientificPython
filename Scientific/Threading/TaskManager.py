@@ -1,7 +1,7 @@
 # This module provides a simple task manager for running parallel
 # calculations on shared-memory machines.
 #
-# Written by Konrad Hinsen <konrad.hinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2006-5-30
 #
 

@@ -1,7 +1,7 @@
 # Definitions to help evaluating potentials and their
 # gradients using DerivVars and DerivVectors.
 #
-# Written by: Konrad Hinsen <khinsen@cea.fr>
+# Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Last revision: 2006-4-24
 # 
 

@@ -1,6 +1,6 @@
 # Physical quantities with units
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # with contributions from Greg Ward
 # last revision: 2006-4-28
 #

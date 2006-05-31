@@ -1,7 +1,7 @@
 # This module defines a 3D wireframe visualization widget
 # for Tk user interfaces.
 #
-# Written by Konrad Hinsen <konrad.hinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Last revision: 2006-5-30
 #
 

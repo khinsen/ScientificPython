@@ -1,7 +1,7 @@
 # This module defines classes that represent coordinate translations,
 # rotations, and combinations of translation and rotation.
 #
-# Written by: Konrad Hinsen <khinsen@cea.fr>
+# Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
 # last revision: 2006-4-28
 # 

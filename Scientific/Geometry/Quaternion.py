@@ -1,8 +1,8 @@
 # This module defines a class representing quaternions.
 # It contains just what is needed for using quaternions as representations
-# of rotations in 3d space. To be completed later...
+# of rotations in 3d space.
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2006-4-28
 #
 

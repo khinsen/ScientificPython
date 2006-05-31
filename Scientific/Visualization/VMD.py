@@ -6,7 +6,7 @@
 # Warning: loading cubes into VMD is very slow, as each cube is represented
 # by 12 individual triangles.
 #
-# Written by: Konrad Hinsen <khinsen@cea.fr>
+# Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Last revision: 2005-9-5
 #
 

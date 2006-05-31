@@ -1,6 +1,6 @@
 # This module provides color definitions for use in Visualization.
 #
-# Written by: Konrad Hinsen <khinsen@cea.fr>
+# Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Last revision: 2005-9-5
 #
 

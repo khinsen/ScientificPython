@@ -4,7 +4,7 @@
 # indices. Non-existent elements default to zero. Global operations
 # are addition, subtraction, and multiplication/division by a scalar.
 #
-# Written by Konrad Hinsen <hinsen@llb.saclay.cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2004-11-22
 #
 

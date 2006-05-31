@@ -1,6 +1,6 @@
 # Parallel IO
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2006-4-28
 #
 

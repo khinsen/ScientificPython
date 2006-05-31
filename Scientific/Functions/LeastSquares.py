@@ -1,7 +1,7 @@
 # This module contains functions to do general non-linear
 # least squares fits.
 #
-# Written by Konrad Hinsen <khinsen@cea.fr>
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # last revision: 2006-4-21
 #
 

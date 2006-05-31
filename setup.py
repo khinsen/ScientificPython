@@ -101,9 +101,9 @@ least-squares fits, unit calculations, Fortran-compatible text
 formatting, 3D visualization via VRML, and two Tk widgets for simple
 line plots and 3D wireframe models.""",
        author = "Konrad Hinsen",
-       author_email = "hinsen@llb.saclay.cea.fr",
+       author_email = "hinsen@cnrs-orleans.fr",
        url = "http://dirac.cnrs-orleans.fr/ScientificPython/",
-       license = "BSD-like",
+       license = "CeCILL",
 
        packages = packages,
        headers = headers,
