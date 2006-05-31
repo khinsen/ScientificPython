@@ -290,11 +290,7 @@ class PlotCanvas(QWidget):
     def __init__(self, parent=None, background='white',
                  font=None, zoom=False, select=None):
         """
-        @param master: the parent widget
-        @param width: the initial width of the canvas
-        @type width: C{int}
-        @param height: the initial height of the canvas
-        @type height: C{int}
+        @param parent: the parent widget
         @param background: the background color
         @type background: C{str}
         @param font: the font for axis labels, default: 10 point Helevetica

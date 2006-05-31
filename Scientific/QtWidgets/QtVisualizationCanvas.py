@@ -1,8 +1,8 @@
 # This module defines a 3D wireframe visualization widget
 # for Qt user interfaces.
 #
-# Written by Konrad Hinsen <hinsen@llb.saclay.cea.fr>
-# Last revision: 2004-12-13
+# Written by Konrad Hinsen <konrad.hinsen@cea.fr>
+# Last revision: 2006-5-31
 #
 
 from qt import *
@@ -11,14 +11,19 @@ from Scientific import N
 from Scientific.Geometry import Vector
 from Scientific.Geometry.Transformation import Rotation
 
-"""This module provides a special widget for Qt user interfaces
+"""
+3D wireframe canvas widget for Qt
+
+This module provides a special widget for Qt user interfaces
 which permits the display of 3D wireframe structures with interactive
 manipulation.
 
-Note that this module can become sluggish if very many lines are being
-displayed. An OpenGL based widget should be used for serious
-visualization needs. The advantage of this module is that it requires
-no special graphics libraries in addition to Qt.
+Note that this widget can become sluggish if two many lines are to
+be displayed. An OpenGL widget should be used for serious visualization
+needs. The advantage of this module is that it requires no special
+graphics libraries in addition to Qt.
+
+@undocumented: PolyPoints3D
 """
 
 # This must be 0 on the Zaurus
@@ -55,17 +60,20 @@ class PolyPoints3D:
 
 class PolyLine3D(PolyPoints3D):
 
-    """Multiple connected lines
-
-    Constructor: PolyLine(|points|, **|attr|), where |points| is
-    any sequence of (x, y, z) number triples and |attr| stands for line
-    attributes specified by keyword arguments, which are
-    'width' (an integer) and 'color' (a string whose value is one of
-    the color names defined by X-Windows). The default is a black line
-    of width 1.
+    """
+    Multiple connected lines
     """
 
     def __init__(self, points, **attr):
+        """
+        @param points: any sequence of (x, y, z) coordinate triples
+        @param attr: line attributes
+
+        @keyword width: line width (default: 1)
+        @type width: C{int}
+        @keyword color: a Qt color name (default: C{"black"})
+        @type color: C{str}
+        """
         PolyPoints3D.__init__(self, points, attr)
 
     _attributes = {'color': 'black',
@@ -87,14 +95,21 @@ class PolyLine3D(PolyPoints3D):
 
 class VisualizationGraphics:
 
-    """Compound graphics object
+    """
+    Compound graphics object
 
-    Constructor: VisualizationGraphics(|objects|), where |objects| is a list
-    whose elements can be instances of the classes PolyLine3D and
-    VisualizationGraphics.
+    @undocumented: boundingBox
+    @undocumented: boundingBoxPlane
+    @undocumented: project
+    @undocumented: scaleAndShift
+    @undocumented: lines
     """
     
     def __init__(self, objects):
+        """
+        @param objects: a list of graphics objects (L{PolyLine3D},
+                        L{VisualizationGraphics})
+        """
         self.objects = objects
 
     def boundingBox(self):
@@ -139,15 +154,10 @@ class VisualizationGraphics:
 
 class VisualizationCanvas(QWidget):
 
-    """Qt visualization widget
+    """
+    Qt visualization widget
 
-    Constructor: VisualizationCanvas(|parent|=None, |background|='white')
-
-    Arguments:
-
-    |parent| -- the parent widget, default: None
-
-    |background| -- the background color, default: 'white'
+    VisualizationCanvas objects support all operations of Qt widgets.
 
     Interactive manipulation of the display is possible with
     click-and-drag operations. The left mouse button rotates the
@@ -156,6 +166,11 @@ class VisualizationCanvas(QWidget):
     """
     
     def __init__(self, parent=None, background='white'):
+        """
+        @param parent: the parent widget
+        @param background: the background color
+        @type background: C{str}
+        """
         QWidget.__init__(self, parent)
         if colors_by_name:
             self.background_color = QColor(background)
@@ -196,8 +211,12 @@ class VisualizationCanvas(QWidget):
             self.translate = translate
 
     def draw(self, graphics):
-        """Draws the graphics object |graphics|, which can be
-        a PolyLine3D or a VisualizationGraphics object."""
+        """
+        Draw something on the canvas
+
+        @param graphics: the graphics object (L{PolyLine3D},
+                         or L{VisualizationGraphics}) to be drawn
+        """
         self.last_draw = (graphics, )
         self.update()
 
@@ -238,7 +257,9 @@ class VisualizationCanvas(QWidget):
         self.update()
 
     def clear(self, keepscale = 0):
-        "Clears the canvas."
+        """
+        Clear the canvas
+        """
         self.last_draw = None
         if not keepscale:
             self.scale = None
