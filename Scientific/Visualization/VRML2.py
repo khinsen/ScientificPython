@@ -4,48 +4,35 @@
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # With contributions from Frank Horowitz
 #                     and Matteo Bertini
-# Last revision: 2006-1-31
+# Last revision: 2006-6-9
 #
 
-"""This module provides definitions of simple 3D graphics objects and
-VRML scenes containing them. The objects are appropriate for data
-visualization, not for virtual reality modelling. Scenes can be written
-to VRML files or visualized immediately using a VRML browser, whose
-name is taken from the environment variable VRML2VIEWER (under Unix).
+"""
+Definitions of simple 3D graphics objects and VRML scenes containing them
 
-There are a few attributes that are common to all graphics objects:
-
-  material -- a Material object defining color and surface properties
-
-  comment -- a comment string that will be written to the VRML file
-
-  reuse -- a boolean flag (defaulting to false). If set to one,
-           the object may share its VRML definition with other
-           objects. This reduces the size of the VRML file, but
-           can yield surprising side effects in some cases.
-
+The objects are appropriate for data visualization, not for virtual
+reality modelling. Scenes can be written to VRML files or visualized
+immediately using a VRML browser, whose name is taken from the
+environment variable VRML2VIEWER (under Unix).
 
 This module uses the VRML 2.0 definition, also known as VRML97. For
 the original VRML 1, use the module VRML, which uses exactly the same
-interface. There is another almost perfectly compatible module VMD,
-which produces input files for the molecular visualization program
-VMD.
+interface.
 
-Example:
+Example::
 
->>> from Scientific.Visualization.VRML2 import *
->>> scene = Scene([])
->>> scale = ColorScale(10.)
->>> for x in range(11):
->>>     color = scale(x)
->>>     scene.addObject(Cube(Vector(x, 0., 0.), 0.2,
->>>                          material=Material(diffuse_color = color)))
->>> scene.view()
+  >>> from Scientific.Visualization.VRML import *    
+  >>> scene = Scene([])
+  >>> scale = ColorScale(10.)
+  >>> for x in range(11):
+  >>>     color = scale(x)
+  >>>     scene.addObject(Cube(Vector(x, 0., 0.), 0.2,
+  >>>                          material=Material(diffuse_color = color)))
+  >>> scene.view()
 """
 
-
 from Scientific.IO.TextFile import TextFile
-from Scientific.Geometry import Transformation, Vector, ex, ey, ez, nullVector
+from Scientific.Geometry import Transformation, Vector, ex, ey, ez
 from Scientific import N
 import os, string, tempfile
 
@@ -91,25 +78,21 @@ VRMLFile = SceneFile
 #
 class Scene:
 
-    """VRML scene
+    """
+    VRML scene
 
     A VRML scene is a collection of graphics objects that can be
     written to a VRML file or fed directly to a VRML browser.
-
-    Constructor: Scene(|objects|=None, |cameras|=None, **|options|)
-
-    Arguments:
-
-    |objects| -- a list of graphics objects or 'None' for an empty scene
-
-    |cameras| -- a list of cameras
-
-    |options| -- options as keyword arguments (none defined at the moment;
-                 this argument is provided for compatibility with
-                 other modules)
     """
 
     def __init__(self, objects = None, cameras = None, **options):
+        """
+        @param objects: a list of graphics objects, or C{None} for
+                        an empty scene
+        @type objects: C{list} or C{NoneType}
+        @param cameras: a list of cameras, or C{None} for no cameras
+        @param options: options as keyword arguments (none defined)
+        """
         if objects is None:
             self.objects = []
         elif type(objects) == type([]):
@@ -122,21 +105,42 @@ class Scene:
             self.cameras = cameras
 
     def __len__(self):
+        """
+        @returns: the number of graphics objects in the scene
+        @rtype: C{int}
+        """
         return len(self.objects)
 
     def __getitem__(self, item):
+        """
+        @param item: an index
+        @type item: C{int}
+        @returns: the graphics object at the index position
+        @rtype: L{VRMLObject}
+        """
         return self.object[item]
 
     def addObject(self, object):
-        "Adds |object| to the list of graphics objects."
+        """
+        @param object: a graphics object to be added to the scene
+        @type object: L{VRMLObject}
+        """
         self.objects.append(object)
 
     def addCamera(self, camera):
-        "Adds |camera| to the list of cameras."
+        """
+        Add a camera to the list of cameras
+        @param camera: the camera to be adde
+        """
         self.cameras.append(camera)
 
     def writeToFile(self, filename):
-        "Writes the scene to a VRML file with name |filename|."
+        """
+        Write the scene to a VRML file
+
+        @param filename: the name of the script
+        @type filename: C{str}
+        """
         file = VRMLFile(filename, 'w')
         if self.cameras:
             for camera in self.cameras:
@@ -146,7 +150,11 @@ class Scene:
         file.close()
 
     def view(self, *args):
-        "Start a VRML browser for the scene."
+        """
+        Start a VRML browser and load the scene
+
+        @param args: not used, for compatibility only
+        """
         import sys
         filename = tempfile.mktemp()+'.wrl'
         if sys.platform == 'win32':
@@ -168,27 +176,25 @@ class Scene:
 #
 class Camera:
 
-    """Camera/viewpoint for a scene
-
-    Constructor: Camera(|position|, |orientation|, |description|,
-                        |field_of_view|)
-
-    Arguments:
-
-    |position| -- the location of the camera (a vector)
-
-    |orientation| -- an (axis, angle) tuple in which the axis is
-                     a vector and angle a number (in radians);
-                     axis and angle specify a rotation with respect
-                     to the standard orientation along the negative z axis
-
-    |description| -- a label for the viewpoint (a string)
-
-    |field_of_view| -- the field of view (a positive number)
+    """
+    Camera/viewpoint for a scene
     """
 
     def __init__(self, position=None, orientation=None,
                  description=None, field_of_view=None):
+        """
+        @param position: the location of the camera
+        @type position: L{Scientific.Geometry.Vector}
+        @param orientation: an (axis, angle) tuple in which the axis is
+                            a vector and the angle a number in radians;
+                            axis and angle specify a rotation with respect
+                            to the standard orientation along the negative
+                            z axis
+        @param description: a label for the viewpoint
+        @type description: C{str}
+        @param field_of_view: the field of view
+        @type field_of_view: positive number
+        """
         self.field_of_view = field_of_view
         self.orientation = orientation
         self.position = position
@@ -218,18 +224,16 @@ class Camera:
 #
 class NavigationInfo:
 
-    """Navigation Information
-
-    Constructor: NavigationInfo(|speed|, |type|)
-
-    Arguments:
-
-    |speed| -- walking speed in length units per second
-
-    |type| --  one of 'WALK', 'EXAMINE', 'FLY', 'NONE', 'ANY'
+    """
+    Navigation information
     """
 
     def __init__(self, speed=100.0, type="EXAMINE"):
+        """
+        @param speed: walking speed in length units per second
+        @type speed: number
+        @param type: one of 'WALK', 'EXAMINE', 'FLY', 'NONE', 'ANY'
+        """
         self.speed = speed
         self.type = type
 
@@ -247,7 +251,26 @@ class NavigationInfo:
 #
 class VRMLObject:
 
+    """
+    Graphics object for VRML
+
+    This is an abstract base class. Use one of the subclasses to generate
+    graphics.
+    """
+
     def __init__(self, attr):
+        """
+        @param attr: graphics attributes specified by keywords
+        @keyword material: color and surface properties
+        @type material: L{Material}
+        @keyword comment: a comment that is written to the script file
+        @type comment: C{str}
+        @keyword reuse: a flag defaulting to C{False}. If set to C{True},
+                        the object may share its VRML definition with other
+                        objects. This reduces the size of the VRML file, but
+                        can yield surprising side effects in some cases.
+        @type reuse: C{bool}
+        """
         self.attr = {}
         for key, value in attr.items():
             if key in self.attribute_names:
@@ -258,12 +281,23 @@ class VRMLObject:
     attribute_names = ['comment']
 
     def __getitem__(self, attr):
+        """
+        @param attr: the name of a graphics attribute
+        @type attr: C{str}
+        @returns: the value of the attribute, or C{None} if the attribute
+                  is undefined
+        """
         try:
             return self.attr[attr]
         except KeyError:
             return None
 
     def __setitem__(self, attr, value):
+        """
+        @param attr: the name of a graphics attribute
+        @type attr: C{str}
+        @param value: a new value for the attribute
+        """
         self.attr[attr] = value
 
     def __copy__(self):
@@ -277,6 +311,13 @@ class VRMLObject:
 # Shapes
 #
 class ShapeObject(VRMLObject):
+
+    """
+    Graphics objects representing geometrical shapes
+
+    This is an abstract base class. Use one of the subclasses to generate
+    graphics.
+    """
 
     def __init__(self, attr, rotation, translation, reference_point):
         VRMLObject.__init__(self, attr)
@@ -346,20 +387,18 @@ class ShapeObject(VRMLObject):
 
 class Sphere(ShapeObject):
 
-    """Sphere
-
-    Constructor: Sphere(|center|, |radius|, **|attributes|)
-
-    Arguments:
-
-    |center| -- the center of the sphere (a vector)
-
-    |radius| -- the sphere radius (a positive number)
-
-    |attributes| -- any graphics object attribute
     """
-
+    Sphere
+    """
+    
     def __init__(self, center, radius, **attr):
+        """
+        @param center: the center of the sphere
+        @type center: L{Scientific.Geometry.Vector}
+        @param radius: the sphere radius
+        @type radius: positive number
+        @param attr: graphics attributes as keyword parameters
+        """
         self.radius = radius
         ShapeObject.__init__(self, attr, None, center, center)
 
@@ -371,22 +410,20 @@ class Sphere(ShapeObject):
 
 class Cube(ShapeObject):
 
-    """Cube
-
-    Constructor: Cube(|center|, |edge|, **|attributes|)
-
-    Arguments:
-
-    |center| -- the center of the cube (a vector)
-
-    |edge| -- the length of an edge  (a positive number)
-
-    |attributes| -- any graphics object attribute
+    """
+    Cube
 
     The edges of a cube are always parallel to the coordinate axes.
     """
-
+    
     def __init__(self, center, edge, **attr):
+        """
+        @param center: the center of the sphere
+        @type center: L{Scientific.Geometry.Vector}
+        @param edge: the length of an edge
+        @type edge: positive number
+        @param attr: graphics attributes as keyword parameters
+        """
         self.edge = edge
         ShapeObject.__init__(self, attr, None, center, center)
 
@@ -420,26 +457,25 @@ class LinearOrientedObject(ShapeObject):
 
 class Cylinder(LinearOrientedObject):
 
-    """Cylinder
-
-    Constructor: Cylinder(|point1|, |point2|, |radius|,
-                          |faces|='(1, 1, 1)', **|attributes|)
-
-    Arguments:
-
-    |point1|, |point2| -- the end points of the cylinder axis (vectors)
-
-    |radius| -- the radius  (a positive number)
-
-    |attributes| -- any graphics object attribute
-
-    |faces| -- a sequence of three boolean flags, corresponding to
-               the cylinder hull and the two circular end pieces,
-               specifying for each of these parts whether it is visible
-               or not.
+    """
+    Cylinder
     """
 
-    def __init__(self, point1, point2, radius, faces = (1, 1, 1), **attr):
+    def __init__(self, point1, point2, radius, faces = (True, True, True),
+                 **attr):
+        """
+        @param point1: first end point of the cylinder axis
+        @type point1: L{Scientific.Geometry.Vector}
+        @param point2: second end point of the cylinder axis
+        @type point2: L{Scientific.Geometry.Vector}
+        @param radius: the cylinder radius
+        @type radius: positive number
+        @param faces: a sequence of three boolean flags, corresponding to
+                      the cylinder hull and the two circular end pieces,
+                      specifying for each of these parts whether it is visible
+                      or not
+        @param attr: graphics attributes as keyword parameters
+        """
         self.faces = faces
         self.radius = radius
         LinearOrientedObject.__init__(self, attr, point1, point2)
@@ -461,23 +497,23 @@ class Cylinder(LinearOrientedObject):
 
 class Cone(LinearOrientedObject):
 
-    """Cone
-
-    Constructor: Cone(|point1|, |point2|, |radius|, |face|='1', **|attributes|)
-
-    Arguments:
-
-    |point1|, |point2| -- the end points of the cylinder axis (vectors).
-                          |point1| is the tip of the cone.
-
-    |radius| -- the radius  (a positive number)
-
-    |attributes| -- any graphics object attribute
-
-    |face| -- a boolean flag, specifying if the circular bottom is visible
+    """
+    Cone
     """
 
-    def __init__(self, point1, point2, radius, face = 1, **attr):
+    def __init__(self, point1, point2, radius, face = True, **attr):
+        """
+        @param point1: the tip of the cone
+        @type point1: L{Scientific.Geometry.Vector}
+        @param point2: end point of the cone axis
+        @type point2: L{Scientific.Geometry.Vector}
+        @param radius: the radius at the base
+        @type radius: positive number
+        @param face: a boolean flag, specifying if the circular
+                      bottom is visible
+        @type face: C{bool}
+        @param attr: graphics attributes as keyword parameters
+        """
         self.face = face
         self.radius = radius
         LinearOrientedObject.__init__(self, attr, point2, point1)
@@ -494,18 +530,18 @@ class Cone(LinearOrientedObject):
 
 class Line(ShapeObject):
 
-    """Line
-
-    Constructor: Line(|point1|, |point2|, **|attributes|)
-
-    Arguments:
-
-    |point1|, |point2| -- the end points of the line (vectors)
-
-    |attributes| -- any graphics object attribute
     """
-
+    Line
+    """
+    
     def __init__(self, point1, point2, **attr):
+        """
+        @param point1: first end point
+        @type point1: L{Scientific.Geometry.Vector}
+        @param point2: second end point
+        @type point2: L{Scientific.Geometry.Vector}
+        @param attr: graphics attributes as keyword parameters
+        """
         self.points = (point1, point2)
         center = 0.5*(point1+point2)
         ShapeObject.__init__(self, attr, None, None, center)
@@ -521,18 +557,16 @@ class Line(ShapeObject):
 
 class PolyLines(ShapeObject):
 
-    """Multiple connected lines
-
-    Constructor: PolyLines(|points|, **|attributes|)
-
-    Arguments:
-
-    |points| -- a sequence of points to be connected by lines
-
-    |attributes| -- any graphics object attribute
     """
-
+    Multiple connected lines
+    """
+    
     def __init__(self, points, **attr):
+        """
+        @param points: a sequence of points to be connected by lines
+        @type points: sequence of L{Scientific.Geometry.Vector}
+        @param attr: graphics attributes as keyword parameters
+        """
         self.points = points
         ShapeObject.__init__(self, attr, None, None, Vector(0., 0., 0.))
 
@@ -550,22 +584,20 @@ class PolyLines(ShapeObject):
 
 class Polygons(ShapeObject):
 
-    """Polygons
-
-    Constructor: Polygons(|points|, |index_lists|, **|attributes|)
-
-    Arguments:
-
-    |points| -- a sequence of points
-
-    |index_lists| -- a sequence of index lists, one for each polygon.
-                     The index list for a polygon defines which points
-                     in |points| are vertices of the polygon.
-
-    |attributes| -- any graphics object attribute
     """
-
+    Polygons
+    """
+    
     def __init__(self, points, index_lists, **attr):
+        """
+        @param points: a sequence of points
+        @type points: sequence of L{Scientific.Geometry.Vector}
+        @param index_lists: a sequence of index lists, one for each polygon.
+                            The index list for a polygon defines which points
+                            are vertices of the polygon.
+        @type index_lists: sequence of C{list}
+        @param attr: graphics attributes as keyword parameters
+        """
         self.points = points
         self.index_lists = index_lists
         ShapeObject.__init__(self, attr, None, None, Vector(0.,0.,0.))
@@ -589,6 +621,10 @@ class Polygons(ShapeObject):
 # Groups
 #
 class Group:
+
+    """
+    Base class for composite objects
+    """
 
     def __init__(self, objects, **attr):
         self.objects = []
@@ -629,23 +665,22 @@ def isGroup(x):
 #
 class Arrow(Group):
 
-    """Arrow
+    """
+    Arrow
 
     An arrow consists of a cylinder and a cone.
-
-    Constructor: Arrow(|point1|, |point2|, |radius|, **|attributes|)
-
-    Arguments:
-
-    |point1|, |point2| -- the end points of the arrow (vectors).
-                          |point2| defines the tip of the arrow.
-
-    |radius| -- the radius of the arrow shaft (a positive number)
-
-    |attributes| -- any graphics object attribute
     """
 
     def __init__(self, point1, point2, radius, **attr):
+        """
+        @param point1: starting point of the arrow
+        @type point1: L{Scientific.Geometry.Vector}
+        @param point2: the tip of the arrow
+        @type point2: L{Scientific.Geometry.Vector}
+        @param radius: the radius of the shaft
+        @type radius: positive number
+        @param attr: graphics attributes as keyword parameters
+        """
         axis = point2-point1
         height = axis.length()
         axis = axis/height
@@ -664,17 +699,28 @@ class Arrow(Group):
 #
 class Material(VRMLObject):
 
-    """Material for graphics objects
+    """
+    Material specification for graphics objects
 
     A material defines the color and surface properties of an object.
-
-    Constructor: Material(**|attributes|)
-
-    The attributes are "ambient_color", "diffuse_color", "specular_color",
-    "emissive_color", "shininess", and "transparency".
     """
 
     def __init__(self, **attr):
+        """
+        @param attr: material attributes as keyword arguments
+        @keyword diffuse_color: the color of a diffusely reflecting surface
+        @type diffuse_color: L{Color}
+        @keyword emissive_color: the color of emitted light
+        @type emissive_color: L{Color}
+        @keyword ambient_color: 
+        @type ambient_color: L{Color}
+        @keyword specular_color: 
+        @type specular_color: L{Color}
+        @keyword shininess:
+        @type shininess: C{float}
+        @keyword transparency: 
+        @type transparency: C{float}
+        """
         VRMLObject.__init__(self, attr)
 
     attribute_names = VRMLObject.attribute_names + \
@@ -707,30 +753,44 @@ class Material(VRMLObject):
 # Predefined materials
 #
 def DiffuseMaterial(color):
-    "Returns a material with the 'diffuse color' attribute set to |color|."
+    """
+    @param color: a color object or a predefined color name
+    @type color: L{Color} or C{str}
+    @returns: a material with the 'diffuse color' attribute set to color
+    @rtype: L{Material}
+    """
     if type(color) is type(''):
         color = ColorByName(color)
     try:
-        return diffuse_material_dict[color]
+        return _diffuse_material_dict[color]
     except KeyError:
         m = Material(diffuse_color = color)
-        diffuse_material_dict[color] = m
+        _diffuse_material_dict[color] = m
         return m
 
-diffuse_material_dict = {}
+_diffuse_material_dict = {}
 
 def EmissiveMaterial(color):
-    "Returns a material with the 'emissive color' attribute set to |color|."
+    """
+    @param color: a color object or a predefined color name
+    @type color: L{Color} or C{str}
+    @returns: a material with the 'emissive color' attribute set to color
+    @rtype: L{Material}
+    """
     if type(color) is type(''):
         color = ColorByName(color)
     try:
-        return emissive_material_dict[color]
+        return _emissive_material_dict[color]
     except KeyError:
         m = Material(emissive_color = color)
-        emissive_material_dict[color] = m
+        _emissive_material_dict[color] = m
         return m
 
-emissive_material_dict = {}
+_emissive_material_dict = {}
+
+del ex
+del ey
+del ez
 
 #
 # Test code
@@ -738,15 +798,16 @@ emissive_material_dict = {}
 if __name__ == '__main__':
 
     if 1:
+        from Scientific.Geometry import null, ex, ey, ez
         spheres = DiffuseMaterial('green')
         links = DiffuseMaterial('red')
-        s1 = Sphere(nullVector, 0.05, material = spheres, reuse = 1)
+        s1 = Sphere(null, 0.05, material = spheres, reuse = 1)
         s2 = Sphere(ex, 0.05, material = spheres, reuse = 1)
         s3 = Sphere(ey, 0.05, material = spheres, reuse = 1)
         s4 = Sphere(ez, 0.05, material = spheres, reuse = 1)
-        a1 = Arrow(nullVector, ex, 0.01, material = links)
-        a2 = Arrow(nullVector, ey, 0.01, material = links)
-        a3 = Arrow(nullVector, ez, 0.01, material = links)
+        a1 = Arrow(null, ex, 0.01, material = links)
+        a2 = Arrow(null, ey, 0.01, material = links)
+        a3 = Arrow(null, ez, 0.01, material = links)
         scene = Scene([a1, a2, a3, s1, s2, s3, s4])
         scene.view()
 

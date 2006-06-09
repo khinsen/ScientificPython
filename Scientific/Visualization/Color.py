@@ -1,11 +1,11 @@
 # This module provides color definitions for use in Visualization.
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2005-9-5
+# Last revision: 2006-6-9
 #
 
-"""This module provides color definitions that are used in the modules
-VRML, VRML2, and VMD.
+"""
+Color definitions for use in the modules VRML, VRML2, VMD, and PyMOL.
 """
 
 from Scientific import N
@@ -16,15 +16,18 @@ import string
 #
 class Color:
 
-    """RGB Color specification
-
-    Constructor: Color(|rgb|), where |rgb| is a sequence of three numbers
-    between zero and one, specifying the red, green, and blue intensities.
+    """
+    RGB Color specification
 
     Color objects can be added and multiplied with scalars.
     """
     
     def __init__(self, rgb):
+        """
+        @param rgb: a sequence of three numbers between zero and one,
+                    specifying the intensities of red, green, and blue.
+        @type rgb: C{int} or C{float}
+        """
         self.rgb = (min(1.,max(0.,rgb[0])),
                     min(1.,max(0.,rgb[1])),
                     min(1.,max(0.,rgb[2])))
@@ -37,6 +40,8 @@ class Color:
         return Color(map(lambda a, b: a+b, self.rgb, other.rgb))
 
     def __cmp__(self, other):
+        if not isinstance(other, Color):
+            return NotImplemented
         return cmp(self.rgb, other.rgb)
 
     def __hash__(self):
@@ -53,21 +58,19 @@ class Color:
 #
 class ColorScale:
 
-    """Mapping of a number interval to a color range
-
-    Constructor: ColorScale(|range|), where |range| can be a tuple of
-    two numbers (the center of the interval and its width), or a
-    single number specifying the widths for a default center of zero.
-
-    Evaluation: colorscale(|number|) returns the Color object
-    corresponding to |number|. If |number| is outside the
-    predefined interval, the closest extreme value of the interval
-    is used.
+    """
+    Mapping from a number interval to a color range
 
     The color scale is blue - green - yellow - orange - red.
     """
 
     def __init__(self, range):
+        """
+        @param range: a tuple of two numbers (the center of the interval
+                      and its width), or a single number specifying the
+                      width for a default center of zero
+        @type range: C{float} or C{tuple}
+        """
         if type(range) == type(()):
             self.zero, self.range = range
             self.range = self.range-self.zero
@@ -76,6 +79,14 @@ class ColorScale:
             self.zero = 0.
 
     def __call__(self, value):
+        """
+        @param value: the value within the range for which the color
+                      is requested. If the value is outside of the
+                      specified range, the edge of the range is used instead.
+        @type value: C{float}
+        @returns: the color corresponding to value
+        @rtype: L{Color}
+        """
         value = (value-self.zero)/self.range
         value = max(min(value, 1.), 0.)
         if value <= 0.25:
@@ -98,27 +109,33 @@ class ColorScale:
 
 class SymmetricColorScale:
 
-    """Mapping of a symmetric number interval to a color range
-
-    Constructor: SymmetricColorScale(|range|), where |range| is a
-    single number defining the interval, which is -|range| to |range|.
-
-    Evaluation: colorscale(|number|) returns the Color object
-    corresponding to |number|. If |number| is outside the
-    predefined interval, the closest extreme value of the interval
-    is used.
+    """
+    Mapping of a symmetric number interval to a color range
 
     The colors are red for negative numbers and green for positive
     numbers, with a color intensity proportional to the absolute
-    value of the argument.
+    value of the argument. Zero is mapped to white.
     """
 
     def __init__(self, max, n = 20):
+        """
+        @param range: a positive number defining the range, which is from
+                      -number to +number.
+        @type range: C{float}
+        """
         self.range = max
         self.n = n
         self.colors = {}
 
     def __call__(self, value):
+        """
+        @param value: the value within the range for which the color
+                      is requested. If the value is outside of the
+                      specified range, the edge of the range is used instead.
+        @type value: C{float}
+        @returns: the color corresponding to value
+        @rtype: L{Color}
+        """
         negative = value < 0.
         index = N.floor(abs(value)*self.n/self.range)
         if index > self.n:
@@ -137,7 +154,7 @@ class SymmetricColorScale:
 #
 # Predefined colors
 #
-full_colors = {
+_full_colors = {
     'black': Color((0.,0.,0.)),
     'white': Color((1.,1.,1.)),
     'grey': Color((0.5,0.5,0.5)),
@@ -153,27 +170,36 @@ full_colors = {
     'brown': Color((0.6,0.4,0.)),
     }
 
-dark_colors = {}
-for name, value in full_colors.items():
-    dark_colors[name] = 0.3*value
+_dark_colors = {}
+for name, value in _full_colors.items():
+    _dark_colors[name] = 0.3*value
 
-light_colors = {}
-for name, value in full_colors.items():
-    light_colors[name] = 0.7*value + 0.3*full_colors['white']
+_light_colors = {}
+for name, value in _full_colors.items():
+    _light_colors[name] = 0.7*value + 0.3*_full_colors['white']
+
+del name
+del value
 
 def ColorByName(name):
-    """Returns a Color object corresponding to |name|. The known names
-    are black, white, grey, red, green, blue, yellow, magenta, cyan,
-    orange, violet, olive, and brown. Any color can be prefixed by
-    "light " or "dark " to yield a variant.
+    """
+    @param name: one of the predefined color names: black, white, grey,
+    red, green, blue, yellow, magenta, cyan, orange, violet, olive,
+    and brown. Any color can be prefixed by "light " or "dark " to yield
+    a variant. The prefix must be separated from the color name by white
+    space, e.g. "light green".
+    @type name: C{str}
+    @returns: the color associated with name
+    @rtype: L{Color}
+    @raises KeyError: if the color name is not defined
     """
     name = string.split(string.lower(name))
-    dict = full_colors
+    dict = _full_colors
     if len(name) == 2:
         if name[0] == 'light':
-            dict = light_colors
+            dict = _light_colors
         elif name[0] == 'dark':
-            dict = dark_colors
+            dict = _dark_colors
     return dict[name[-1]]
 
 

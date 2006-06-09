@@ -1,41 +1,50 @@
 # VPython interface
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2005-9-5
+# Last revision: 2006-6-9
 #
 
-from Scientific.Geometry import Transformation, Vector, VectorModule
+from Scientific.Geometry import Transformation, Vector
 import os, string, sys, tempfile
-if not sys.modules.has_key('pythondoc'):
+if not sys.modules.has_key('epydoc'):
     import visual
 
 from Color import *
+
+"""
+Definitions of simple 3D graphics objects and scenes containing them,
+to be rendered using VPython
+"""
 
 #
 # Scene
 #
 class Scene:
 
-    """VPython scene
+    """
+    VPython scene
 
     A VPython scene is a collection of graphics objects that can be
     shown in a VPython window. When the "view" method is called,
     a new window is created and the graphics objects are displayed
     in it.
-
-    Constructor: Scene(|objects|=None, **|options|)
-
-    Arguments:
-
-    |objects| -- a list of graphics objects or 'None' for an empty scene
-
-    |options| -- options as keyword arguments: "title" (the window title,
-                 default: "VPython scene"),  "width" (the window width,
-                 default: 300), "height" (the window height, default: 300),
-                 "background" (the background color, default: 'black')
     """
 
     def __init__(self, objects = None, **options):
+        """
+        @param objects: a list of graphics objects, or C{None} for
+                        an empty scene
+        @type objects: C{list} or C{NoneType}
+        @param options: options as keyword arguments
+        @keyword title: the window title (default: "VPython scene")
+        @type title: C{str}
+        @keyword width: the window width in pixels (default: 300)
+        @type width: C{int}
+        @keyword height: the window height in pixels (default: 300)
+        @type height: C{int}
+        @keyword background: the background color (default: "black")
+        @type background: C{str}
+        """
         if objects is None:
             self.objects = []
         elif type(objects) == type([]):
@@ -53,17 +62,32 @@ class Scene:
                 raise ValueError("undefined option: " + repr(key))
 
     def __len__(self):
+        """
+        @returns: the number of graphics objects in the scene
+        @rtype: C{int}
+        """
         return len(self.objects)
 
     def __getitem__(self, item):
+        """
+        @param item: an index
+        @type item: C{int}
+        @returns: the graphics object at the index position
+        @rtype: L{GraphicsObject}
+        """
         return self.object[item]
 
     def addObject(self, object):
-        "Adds |object| to the list of graphics objects."
+        """
+        @param object: a graphics object to be added to the scene
+        @type object: L{GraphicsObject}
+        """
         self.objects.append(object)
 
     def view(self):
-        "Open a VPython window for the scene."
+        """
+        Open a VPython window for the scene
+        """
         color = self.options["background"]
         if type(color) == type(''):
             color = ColorByName(color)
@@ -80,7 +104,19 @@ class Scene:
 #
 class GraphicsObject:
 
+    """
+    Graphics object for VPython
+
+    This is an abstract base class. Use one of the subclasses to generate
+    graphics.
+    """
+
     def __init__(self, attr):
+        """
+        @param attr: graphics attributes specified by keywords
+        @keyword material: color and surface properties
+        @type material: L{Material}
+        """
         self.attr = {}
         for key, value in attr.items():
             if key in self.attribute_names:
@@ -91,12 +127,23 @@ class GraphicsObject:
     attribute_names = ['comment']
 
     def __getitem__(self, attr):
+        """
+        @param attr: the name of a graphics attribute
+        @type attr: C{str}
+        @returns: the value of the attribute, or C{None} if the attribute
+                  is undefined
+        """
         try:
             return self.attr[attr]
         except KeyError:
             return None
 
     def __setitem__(self, attr, value):
+        """
+        @param attr: the name of a graphics attribute
+        @type attr: C{str}
+        @param value: a new value for the attribute
+        """
         self.attr[attr] = value
 
     def __copy__(self):
@@ -105,7 +152,14 @@ class GraphicsObject:
 
 class ShapeObject(GraphicsObject):
 
-    attribute_names = ['comment', 'material', 'reuse']
+    """
+    Graphics objects representing geometrical shapes
+
+    This is an abstract base class. Use one of the subclasses to generate
+    graphics.
+    """
+
+    attribute_names = ['comment', 'material']
 
     def __add__(self, other):
         return Group([self]) + Group([other])
@@ -128,20 +182,18 @@ class ShapeObject(GraphicsObject):
 #
 class Sphere(ShapeObject):
 
-    """Sphere
-
-    Constructor: Sphere(|center|, |radius|, **|attributes|)
-
-    Arguments:
-
-    |center| -- the center of the sphere (a vector)
-
-    |radius| -- the sphere radius (a positive number)
-
-    |attributes| -- any graphics object attribute
+    """
+    Sphere
     """
     
     def __init__(self, center, radius, **attr):
+        """
+        @param center: the center of the sphere
+        @type center: L{Scientific.Geometry.Vector}
+        @param radius: the sphere radius
+        @type radius: positive number
+        @param attr: graphics attributes as keyword parameters
+        """
         self.center = center
         self.radius = radius
         ShapeObject.__init__(self, attr)
@@ -152,22 +204,20 @@ class Sphere(ShapeObject):
 
 class Cube(ShapeObject):
 
-    """Cube
-
-    Constructor: Cube(|center|, |edge|, **|attributes|)
-
-    Arguments:
-
-    |center| -- the center of the cube (a vector)
-
-    |edge| -- the length of an edge  (a positive number)
-
-    |attributes| -- any graphics object attribute
+    """
+    Cube
 
     The edges of a cube are always parallel to the coordinate axes.
     """
     
     def __init__(self, center, edge, **attr):
+        """
+        @param center: the center of the sphere
+        @type center: L{Scientific.Geometry.Vector}
+        @param edge: the length of an edge
+        @type edge: positive number
+        @param attr: graphics attributes as keyword parameters
+        """
         self.center = center
         self.edge = edge
         ShapeObject.__init__(self, attr)
@@ -181,20 +231,20 @@ class Cube(ShapeObject):
 
 class Cylinder(ShapeObject):
 
-    """Cylinder
-
-    Constructor: Cylinder(|point1|, |point2|, |radius|, **|attributes|)
-
-    Arguments:
-
-    |point1|, |point2| -- the end points of the cylinder axis (vectors)
-
-    |radius| -- the radius  (a positive number)
-
-    |attributes| -- any graphics object attribute
+    """
+    Cylinder
     """
 
     def __init__(self, point1, point2, radius, **attr):
+        """
+        @param point1: first end point of the cylinder axis
+        @type point1: L{Scientific.Geometry.Vector}
+        @param point2: second end point of the cylinder axis
+        @type point2: L{Scientific.Geometry.Vector}
+        @param radius: the cylinder radius
+        @type radius: positive number
+        @param attr: graphics attributes as keyword parameters
+        """
         self.point1 = point1
         self.point2 = point2
         self.radius = radius
@@ -210,20 +260,20 @@ class Cylinder(ShapeObject):
 
 class Arrow(ShapeObject):
 
-    """Arrow
-
-    Constructor: Arrow(|point1|, |point2|, |radius|, **|attributes|)
-
-    Arguments:
-
-    |point1|, |point2| -- the end points of the cylinder axis (vectors)
-
-    |radius| -- the radius  (a positive number)
-
-    |attributes| -- any graphics object attribute
+    """
+    Arrow
     """
 
     def __init__(self, point1, point2, radius, **attr):
+        """
+        @param point1: starting point of the arrow
+        @type point1: L{Scientific.Geometry.Vector}
+        @param point2: the tip of the arrow
+        @type point2: L{Scientific.Geometry.Vector}
+        @param radius: the radius of the shaft
+        @type radius: positive number
+        @param attr: graphics attributes as keyword parameters
+        """
         self.point1 = point1
         self.point2 = point2
         self.radius = radius
@@ -237,21 +287,23 @@ class Arrow(ShapeObject):
 
 class Cone(ShapeObject):
 
-    """Cone
-
-    Constructor: Cone(|point1|, |point2|, |radius|, **|attributes|)
-
-    Arguments:
-
-    |point1|, |point2| -- the end points of the cylinder axis (vectors).
-                          |point1| is the tip of the cone.
-
-    |radius| -- the radius  (a positive number)
-
-    |attributes| -- any graphics object attribute
+    """
+    Cone
     """
 
     def __init__(self, point1, point2, radius, face = 1, **attr):
+        """
+        @param point1: the tip of the cone
+        @type point1: L{Scientific.Geometry.Vector}
+        @param point2: end point of the cone axis
+        @type point2: L{Scientific.Geometry.Vector}
+        @param radius: the radius at the base
+        @type radius: positive number
+        @param face: a boolean flag, specifying if the circular
+                      bottom is visible
+        @type face: C{bool}
+        @param attr: graphics attributes as keyword parameters
+        """
         self.point1 = point1
         self.point2 = point2
         self.radius = radius
@@ -267,18 +319,16 @@ class Cone(ShapeObject):
 
 class PolyLines(ShapeObject):
 
-    """Multiple connected lines
-
-    Constructor: PolyLines(|points|, **|attributes|)
-
-    Arguments:
-
-    |points| -- a sequence of points to be connected by lines
-
-    |attributes| -- any graphics object attribute
+    """
+    Multiple connected lines
     """
 
     def __init__(self, points, **attr):
+        """
+        @param points: a sequence of points to be connected by lines
+        @type points: sequence of L{Scientific.Geometry.Vector}
+        @param attr: graphics attributes as keyword parameters
+        """
         self.points = points
         ShapeObject.__init__(self, attr)
 
@@ -289,39 +339,37 @@ class PolyLines(ShapeObject):
 
 class Line(PolyLines):
 
-    """Line
-
-    Constructor: Line(|point1|, |point2|, **|attributes|)
-
-    Arguments:
-
-    |point1|, |point2| -- the end points of the line (vectors)
-
-    |attributes| -- any graphics object attribute
+    """
+    Line
     """
 
     def __init__(self, point1, point2, **attr):
+        """
+        @param point1: first end point
+        @type point1: L{Scientific.Geometry.Vector}
+        @param point2: second end point
+        @type point2: L{Scientific.Geometry.Vector}
+        @param attr: graphics attributes as keyword parameters
+        """
         apply(PolyLines.__init__, (self, [point1, point2]), attr)
 
 
 class Polygons(ShapeObject):
 
-    """Polygons
-
-    Constructor: Polygons(|points|, |index_lists|, **|attributes|)
-
-    Arguments:
-
-    |points| -- a sequence of points
-
-    |index_lists| -- a sequence of index lists, one for each polygon.
-                     The index list for a polygon defines which points
-                     in |points| are vertices of the polygon.
-
-    |attributes| -- any graphics object attribute
+    """
+    Polygons
     """
 
     def __init__(self, points, index_lists, **attr):
+        """
+        @param points: a sequence of points
+        @type points: sequence of L{Scientific.Geometry.Vector}
+        @param index_lists: a sequence of index lists, one for each polygon.
+                            The index list for a polygon defines which points
+                            are vertices of the polygon.
+        @type index_lists: sequence of C{list}
+        @param attr: graphics attributes as keyword parameters
+        """
         self.points = points
         self.index_lists = index_lists
         ShapeObject.__init__(self, attr)
@@ -337,6 +385,10 @@ class Polygons(ShapeObject):
 # Groups
 #
 class Group:
+
+    """
+    Base class for composite objects
+    """
 
     def __init__(self, objects, **attr):
         self.objects = []
@@ -379,17 +431,20 @@ def isGroup(x):
 #
 class Material(GraphicsObject):
 
-    """Material for graphics objects
+    """
+    Material specification for graphics objects
 
     A material defines the color and surface properties of an object.
-
-    Constructor: Material(**|attributes|)
-
-    The attributes are "ambient_color", "diffuse_color", "specular_color",
-    "emissive_color", "shininess", and "transparency".
     """
 
     def __init__(self, **attr):
+        """
+        @param attr: material attributes as keyword arguments
+        @keyword diffuse_color: the color of a diffusely reflecting surface
+        @type diffuse_color: L{Color}
+        @keyword emissive_color: the color of emitted light
+        @type emissive_color: L{Color}
+        """
         GraphicsObject.__init__(self, attr)
 
     attribute_names = GraphicsObject.attribute_names + \
@@ -400,30 +455,40 @@ class Material(GraphicsObject):
 # Predefined materials
 #
 def DiffuseMaterial(color):
-    "Returns a material with the 'diffuse color' attribute set to |color|."
+    """
+    @param color: a color object or a predefined color name
+    @type color: L{Color} or C{str}
+    @returns: a material with the 'diffuse color' attribute set to color
+    @rtype: L{Material}
+    """
     if type(color) is type(''):
         color = ColorByName(color)
     try:
-        return diffuse_material_dict[color]
+        return _diffuse_material_dict[color]
     except KeyError:
         m = Material(diffuse_color = color)
-        diffuse_material_dict[color] = m
+        _diffuse_material_dict[color] = m
         return m
 
-diffuse_material_dict = {}
+_diffuse_material_dict = {}
 
 def EmissiveMaterial(color):
-    "Returns a material with the 'emissive color' attribute set to |color|."
+    """
+    @param color: a color object or a predefined color name
+    @type color: L{Color} or C{str}
+    @returns: a material with the 'emissive color' attribute set to color
+    @rtype: L{Material}
+    """
     if type(color) is type(''):
         color = ColorByName(color)
     try:
-        return emissive_material_dict[color]
+        return _emissive_material_dict[color]
     except KeyError:
         m = Material(emissive_color = color)
-        emissive_material_dict[color] = m
+        _emissive_material_dict[color] = m
         return m
 
-emissive_material_dict = {}
+_emissive_material_dict = {}
 
 #
 # Test code
@@ -431,15 +496,16 @@ emissive_material_dict = {}
 if __name__ == '__main__':
 
     if 0:
+        from Scientific.Geometry import null, ex, ey, ez
         spheres = EmissiveMaterial('blue')
         links = EmissiveMaterial('orange')
-        s1 = Sphere(VectorModule.null, 0.05, material = spheres)
-        s2 = Sphere(VectorModule.ex, 0.05, material = spheres)
-        s3 = Sphere(VectorModule.ey, 0.05, material = spheres)
-        s4 = Sphere(VectorModule.ez, 0.05, material = spheres)
-        a1 = Arrow(VectorModule.null, VectorModule.ex, 0.01, material = links)
-        a2 = Arrow(VectorModule.null, VectorModule.ey, 0.01, material = links)
-        a3 = Arrow(VectorModule.null, VectorModule.ez, 0.01, material = links)
+        s1 = Sphere(null, 0.05, material = spheres)
+        s2 = Sphere(ex, 0.05, material = spheres)
+        s3 = Sphere(ey, 0.05, material = spheres)
+        s4 = Sphere(ez, 0.05, material = spheres)
+        a1 = Arrow(null, ex, 0.01, material = links)
+        a2 = Arrow(null, ey, 0.01, material = links)
+        a3 = Arrow(null, ez, 0.01, material = links)
         scene = Scene([s1, s2, s3, s4, a1, a2, a3])
         scene.view()
 
