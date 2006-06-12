@@ -5,12 +5,10 @@
 # are addition, subtraction, and multiplication/division by a scalar.
 #
 # Written by Konrad Hinsen <hinsen@llb.saclay.cea.fr>
-# last revision: 2004-11-22
+# last revision: 2006-6-12
 #
 
-from Scientific import DictWithDefault
-
-class NumberDict(DictWithDefault.DictWithDefault):
+class NumberDict(dict):
 
     """Dictionary storing numerical values
 
@@ -23,20 +21,15 @@ class NumberDict(DictWithDefault.DictWithDefault):
     and division by scalars.
     """
     
-    def __init__(self):
-        DictWithDefault.DictWithDefault.__init__(self, 0)
-
-    def __str__(self):
-        return str(self.data)
-
-    def __repr__(self):
-        return repr(self.data)
+    def __getitem__(self, item):
+        try:
+            return dict.__getitem__(self, item)
+        except KeyError:
+            return 0
 
     def __coerce__(self, other):
         if type(other) == type({}):
-            new = NumberDict()
-            new.data = other
-            other = new
+            other = NumberDict(other)
         return self, other
 
     def __add__(self, other):
@@ -47,8 +40,6 @@ class NumberDict(DictWithDefault.DictWithDefault):
             sum_dict[key] = sum_dict[key] + other[key]
         return sum_dict
 
-    __radd__ = __add__
-
     def __sub__(self, other):
         sum_dict = NumberDict()
         for key in self.keys():
@@ -57,16 +48,11 @@ class NumberDict(DictWithDefault.DictWithDefault):
             sum_dict[key] = sum_dict[key] - other[key]
         return sum_dict
 
-    def __rsub__(self, other):
-        return other-self
-
     def __mul__(self, other):
         new = NumberDict()
         for key in self.keys():
             new[key] = other*self[key]
         return new
-
-    __rmul__ = __mul__
 
     def __div__(self, other):
         new = NumberDict()
