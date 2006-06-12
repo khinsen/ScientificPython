@@ -17,6 +17,10 @@ Passing Interface, message-based parallel programming), and to BSPlib
 (Bulk Synchronous Parallel programming). For details consult the
 manual.
 
+@undocumented: __pkginfo__
+@undocumented: use_numeric
+@undocumented: use_numarray
+@undocumented: use_numpy
 @undocumented: LA
 @undocumented: N
 @undocumented: Mathematica

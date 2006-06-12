@@ -1,8 +1,12 @@
 # This module defines a univariate rational function class
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-21
+# last revision: 2006-6-12
 #
+
+"""
+Rational functions in one variable
+"""
 
 from Polynomial import Polynomial
 from Scientific import N; Numeric = N

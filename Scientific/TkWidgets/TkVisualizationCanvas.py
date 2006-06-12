@@ -2,15 +2,8 @@
 # for Tk user interfaces.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-5-30
+# Last revision: 2006-6-12
 #
-
-import Tkinter
-from Canvas import Line
-import string
-from Scientific import N as Numeric
-from Scientific.Geometry import Vector
-from Scientific.Geometry.Transformation import Rotation
 
 """
 3D wireframe canvas widget for Tk
@@ -26,6 +19,13 @@ graphics libraries in addition to Tk.
 
 @undocumented: PolyPoints3D
 """
+
+import Tkinter
+from Canvas import Line
+import string
+from Scientific import N as Numeric
+from Scientific.Geometry import Vector
+from Scientific.Geometry.Transformation import Rotation
 
 class PolyPoints3D:
 

@@ -5,7 +5,7 @@
 # - Only the 'diffuse color' attribute of materials is used for rendering.
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-9
+# Last revision: 2006-6-12
 #
 
 """
@@ -42,11 +42,8 @@ import os, string, sys, tempfile
 
 from Color import *
 
-try:
+if not sys.modules.has_key('epydoc'):
     from pymol import cmd, cgo
-except ImportError:
-    if not sys.modules.has_key('epydoc'):
-        raise
 
 #
 # Scene

@@ -5,13 +5,14 @@
 #
 
 """
-This subpackage contains classes that deal with geometrical
-quantities and objects. The geometrical quantities are vectors and
-tensors, transformations, and quaternions as descriptions of
-rotations.  There are also tensor fields, which were included here
-(rather than in the subpackage Scientific.Functions) because they are
-most often used in a geometric context. Finally, there are classes for
-elementary geometrical objects such as spheres and planes.
+Geometrical quantities and objects
+
+The geometrical quantities are vectors and tensors, transformations,
+and quaternions as descriptions of rotations. There are also tensor
+fields, which were included here (rather than in
+L{Scientific.Functions}) because they are most often used in a
+geometric context. Finally, there are classes for elementary
+geometrical objects such as spheres and planes.
 
 @undocumented: VectorModule*
 @undocumented: TensorModule*

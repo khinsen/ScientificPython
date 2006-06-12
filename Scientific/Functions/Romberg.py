@@ -7,6 +7,10 @@
 # last revision: 2006-4-21
 #
 
+"""
+Numerical integration using the Romberg algorithm
+"""
+
 def trapezoid(function, interval, numtraps):
     """
     Numerical X{integration} using the X{trapezoidal} rule

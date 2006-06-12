@@ -2,10 +2,13 @@
 # gradients using DerivVars and DerivVectors.
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-4-24
+# Last revision: 2006-6-12
 # 
 
-"""This module offers two strategies for automagically calculating the
+"""
+Potential energy functions with automatic gradient evaluation
+
+This module offers two strategies for automagically calculating the
 gradients (and optionally force constants) of a potential energy
 function (or any other function of vectors, for that matter).  The
 more convenient strategy is to create an object of the class

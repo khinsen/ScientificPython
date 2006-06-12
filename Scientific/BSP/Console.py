@@ -1,8 +1,12 @@
 # Parallel console for interactive use of Python/BSP
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2004-11-22
+# last revision: 2006-6-12
 #
+
+"""
+Interactive console for parallel computing
+"""
 
 from Scientific.BSP import ParValue, ParRootFunction, \
                            processorID, numberOfProcessors

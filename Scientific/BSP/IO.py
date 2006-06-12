@@ -1,13 +1,15 @@
 # Parallel IO
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-28
+# last revision: 2006-6-12
 #
 
 """
-This module provides parallel acces to netCDF files. One netCDF dimension
-is defined for splitting the data among processors such that each processor
-is responsible for one slice of the file along that dimension.
+Parallel acces to netCDF files
+
+One netCDF dimension is defined for splitting the data among
+processors such that each processor is responsible for one slice of
+the file along that dimension.
 
 Since netCDF files can be very big, the distribution algorithm gives
 priority to memory efficiency over CPU time efficiency. The processor
@@ -21,7 +23,8 @@ from Scientific import N
 
 class _ParNetCDFFile(ParBase):
 
-    """Distributed netCDF file
+    """
+    Distributed netCDF file
 
     A ParNetCDFFile object acts as much as possible like a NetCDFFile object.
     Variables become ParNetCDFVariable objects, which behave like

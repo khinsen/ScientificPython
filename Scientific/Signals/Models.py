@@ -1,8 +1,12 @@
 # Autoregressive Model for stochastic processes
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-24
+# last revision: 2006-6-12
 #
+
+"""
+Auto-regressive model for stochastic processes
+"""
 
 from Scientific.Functions.Interpolation import InterpolatingFunction
 from Scientific.Functions.Polynomial import Polynomial

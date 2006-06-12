@@ -4,13 +4,8 @@
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # With contributions from RajGopal Srinivasan <raj@cherubino.med.jhmi.edu>
-# Last revision: 2006-5-30
+# Last revision: 2006-6-12
 #
-
-import Tkinter
-from Scientific import N as Numeric
-from Canvas import Line, CanvasText
-import string
 
 """
 Plot widget for Tk user interfaces
@@ -22,6 +17,11 @@ Note that this module is not meant to replace a full-featured
 plot program. It was designed to permit the simple integration of
 plots into Tk-based user interfaces.
 """
+
+import Tkinter
+from Scientific import N as Numeric
+from Canvas import Line, CanvasText
+import string
 
 class PolyPoints:
 

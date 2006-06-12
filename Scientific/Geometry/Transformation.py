@@ -3,8 +3,12 @@
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
-# last revision: 2006-4-28
+# last revision: 2006-6-12
 # 
+
+"""
+Linear transformations in 3D space
+"""
 
 from Scientific import Geometry
 from Scientific import N; Numeric = N

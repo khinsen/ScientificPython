@@ -2,10 +2,12 @@
 # calculations on shared-memory machines.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-5-30
+# last revision: 2006-6-12
 #
 
 """
+Parallel task manager for shared-memory multiprocessor machines
+
 @undocumented: Task
 """
 

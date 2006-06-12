@@ -1,12 +1,15 @@
 # This module defines some geometrical objects in 3D-space.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-28
+# last revision: 2006-6-12
 #
+
+"""
+Geometrical objects in 3D space
+"""
 
 from Scientific.Geometry import Vector
 from Scientific import N; Numeric = N
-
 
 # Small number
 _eps = 1.e-16

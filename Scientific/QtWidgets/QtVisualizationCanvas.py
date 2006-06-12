@@ -5,16 +5,6 @@
 # Last revision: 2006-5-31
 #
 
-try:
-    from qt import *
-except ImportError:
-    from qt_fake import *
-
-import string, os
-from Scientific import N
-from Scientific.Geometry import Vector
-from Scientific.Geometry.Transformation import Rotation
-
 """
 3D wireframe canvas widget for Qt
 
@@ -29,6 +19,16 @@ graphics libraries in addition to Qt.
 
 @undocumented: PolyPoints3D
 """
+
+try:
+    from qt import *
+except ImportError:
+    from qt_fake import *
+
+import string, os
+from Scientific import N
+from Scientific.Geometry import Vector
+from Scientific.Geometry.Transformation import Rotation
 
 # This must be 0 on the Zaurus
 colors_by_name = not os.environ.has_key('QPEDIR')

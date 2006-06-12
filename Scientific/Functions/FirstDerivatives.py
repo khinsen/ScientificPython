@@ -1,18 +1,18 @@
 # Automatic first-order derivatives
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-21
+# last revision: 2006-6-12
 #
 
 """
-This module provides X{automatic differentiation} for functions with
-any number of variables. Instances of the class DerivVar represent the
-values of a function and its partial X{derivatives} with respect to a
-list of variables. All common mathematical operations and functions
-are available for these numbers.  There is no restriction on the type
-of the numbers fed into the code; it works for real and complex
-numbers as well as for any Python type that implements the necessary
-operations.
+Automatic differentiation for functions with any number of variables
+
+Instances of the class DerivVar represent the values of a function and
+its partial X{derivatives} with respect to a list of variables. All
+common mathematical operations and functions are available for these
+numbers. There is no restriction on the type of the numbers fed into
+the code; it works for real and complex numbers as well as for any
+Python type that implements the necessary operations.
 
 This module is as far as possible compatible with the n-th order
 derivatives module Derivatives. If only first-order derivatives

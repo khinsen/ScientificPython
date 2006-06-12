@@ -6,14 +6,6 @@
 # Last revision: 2006-5-31
 #
 
-try:
-    from qt import *
-except ImportError:
-    from qt_fake import *
-
-from Scientific import N
-import string, os
-
 """
 Plot widget for Qt user interfaces
 
@@ -24,6 +16,14 @@ Note that this module is not meant to replace a full-featured
 plot program. It was designed to permit the simple integration of
 plots into Qt-based user interfaces.
 """
+
+try:
+    from qt import *
+except ImportError:
+    from qt_fake import *
+
+from Scientific import N
+import string, os
 
 # This must be 0 on the Zaurus
 colors_by_name = not os.environ.has_key('QPEDIR')

@@ -1,8 +1,12 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-27
+# last revision: 2006-6-12
 #
+
+"""
+Interpolation of functions defined on a grid
+"""
 
 from Scientific import N; Numeric = N
 import Polynomial

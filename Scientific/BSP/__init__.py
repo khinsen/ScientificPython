@@ -1,5 +1,6 @@
-"""This module contains high-level parallelization constructs
-based on the Bulk Synchronous Parallel (BSP) model.
+"""
+High-level parallelization constructs based on the Bulk Synchronous
+Parallel (BSP) model.
 
 Parallelization requires a low-level communications library, which can
 be either BSPlib or MPI. Programs must be run with the bsppython or

@@ -1,8 +1,13 @@
 # VPython interface
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-9
+# Last revision: 2006-6-12
 #
+
+"""
+Definitions of simple 3D graphics objects and scenes containing them,
+to be rendered using VPython
+"""
 
 from Scientific.Geometry import Transformation, Vector
 import os, string, sys, tempfile
@@ -10,11 +15,6 @@ if not sys.modules.has_key('epydoc'):
     import visual
 
 from Color import *
-
-"""
-Definitions of simple 3D graphics objects and scenes containing them,
-to be rendered using VPython
-"""
 
 #
 # Scene

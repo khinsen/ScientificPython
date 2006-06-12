@@ -1,9 +1,12 @@
 # This module provides a class representing scalar, vector, and tensor fields.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-28
+# last revision: 2006-6-12
 #
 
+"""
+Vector and tensor fields with derivatives
+"""
 
 from Scientific import N; Numeric = N
 from Scientific.Geometry import Vector, Tensor

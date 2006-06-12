@@ -5,21 +5,24 @@
 # it uses the standard array indexing syntax.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 1999-7-23
+# last revision: 2006-6-12
 #
 
-"""This module provides a convenient method for constructing
+"""
+Array indexing utility
+
+This module provides a convenient method for constructing
 array indices algorithmically. It provides one importable object,
-'index_expression'.
+L{index_expression}.
 
 For any index combination, including slicing and axis insertion,
-'a[indices]' is the same as 'a[index_expression[indices]]' for any
-array 'a'. However, 'index_expression[indices]' can be used anywhere
+C{a[indices]} is the same as C{a[index_expression[indices]]} for any
+array {a}. However, C{index_expression[indices]} can be used anywhere
 in Python code and returns a tuple of indexing objects that can be
 used in the construction of complex index expressions.
 
 Sole restriction: Slices must be specified in the double-colon
-form, i.e. a[::] is allowed, whereas a[:] is not.
+form, i.e. C{a[::]} is allowed, whereas C{a[:]} is not.
 """
 
 class _index_expression_class:

@@ -6,6 +6,10 @@
 # last revision: 2006-4-28
 #
 
+"""
+Quaternions as representations of rotations in 3D space
+"""
+
 from Scientific import N; Numeric = N
 from Scientific.Geometry import Transformation
 

@@ -1,8 +1,12 @@
 # Coordinated I/O for parallel systems
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-5-28
+# last revision: 2006-6-12
 #
+
+"""
+I/O utilities for use with MPI programs
+"""
 
 class LogFile:
 

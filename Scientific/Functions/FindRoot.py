@@ -4,10 +4,12 @@
 # last revision: 14 Nov 98
 #
 # Cosmetic changes by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-21
+# last revision: 2006-6-12
 #
 
 """
+Newton-Raphson for numerical root finding
+
 Example::
 
     >>>from Scientific.Functions.FindRoot import newtonRaphson

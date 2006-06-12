@@ -2,15 +2,11 @@
 # least squares fits.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-21
+# last revision: 2006-6-12
 #
 
-from Scientific import N, LA
-from FirstDerivatives import DerivVar
-from Scientific import IterationCountExceededError
-
 """
-X{Non-linear least squares} fitting.
+Non-linear least squares fitting
 
 Usage example::
 
@@ -31,6 +27,10 @@ Usage example::
 
     print leastSquaresFit(f2, (3000.,), data_quantum)
 """
+
+from Scientific import N, LA
+from FirstDerivatives import DerivVar
+from Scientific import IterationCountExceededError
 
 def _chiSquare(model, parameters, data):
     n_param = len(parameters)

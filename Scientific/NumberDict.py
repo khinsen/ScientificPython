@@ -5,14 +5,19 @@
 # are addition, subtraction, and multiplication/division by a scalar.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2004-11-22
+# last revision: 2006-6-12
 #
+
+"""
+Dictionary storing numerical values
+"""
 
 from Scientific import DictWithDefault
 
 class NumberDict(DictWithDefault.DictWithDefault):
 
-    """Dictionary storing numerical values
+    """
+    Dictionary storing numerical values
 
     Constructor: NumberDict()
 
