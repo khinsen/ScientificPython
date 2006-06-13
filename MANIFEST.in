@@ -4,8 +4,8 @@ include Src/Scientific_vector.pyx
 include Src/MPI/Scientific_mpi.c Src/MPI/Scientific_mpi.export Src/MPI/mpipython.c Src/MPI/compile.py Src/MPI/impipython
 include Src/BSPlib/Scientific_bsplib.c Src/BSPlib/Scientific_bsplib.export Src/BSPlib/bsppython.c Src/BSPlib/compile.py Src/BSPlib/ibsppython
 include Doc/CHANGELOG
-include Doc/PDF/*
-include Doc/HTML/*
+include Doc/BSP_Tutorial.pdf
+include Doc/Reference/*
 include Examples/*.c Examples/*.py Examples/BSP/*.py Examples/README
 recursive-include Include *.h
 include Tools/makeheader.py
