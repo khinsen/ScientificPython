@@ -7,6 +7,9 @@ This is release 2.5 of ScientificPython. The odd minor release number
 indicates a development release. The main new feature is partial
 compatibility with numarray (see below).
 
+All the documentation is in Doc. To browse the reference manual for all
+the modules, point your browser at Doc/Reference/index.html.
+
 If you find bugs, please tell me, and if you improve something, please
 send me the modified version. I don't promise anything, but since I
 use these modules a lot for my own work, I have an interest in keeping

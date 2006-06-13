@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.Functions.Rational</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.Functions-module.html">Package&nbsp;Functions</a> ::
+        Module&nbsp;Rational
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.Functions.Rational-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h2 class="py-src">Source Code for <a href="Scientific.Functions.Rational-module.html">Module Scientific.Functions.Rational</a></h2>
+<div class="py-src">
+<pre class="py-src">
+<span class="lineno">  1</span>  <span class="py-line"><span class="py-comment"># This module defines a univariate rational function class</span> </span>
+<span class="lineno">  2</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  3</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Written by Konrad Hinsen &lt;hinsen@cnrs-orleans.fr&gt;</span> </span>
+<span class="lineno">  4</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># last revision: 2006-6-12</span> </span>
+<span class="lineno">  5</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  6</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">  7</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno">  8</span>  <span class="py-line"><span class="py-docstring">Rational functions in one variable</span> </span>
+<span class="lineno">  9</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno"> 10</span>  <span class="py-line"> </span>
+<span class="lineno"> 11</span>  <span class="py-line"><span class="py-keyword">from</span> <a class="py-name" href="Scientific.Functions.Polynomial.Polynomial-class.html">Polynomial</a> <span class="py-keyword">import</span> <a class="py-name" href="Scientific.Functions.Polynomial.Polynomial-class.html">Polynomial</a> </span>
+<span class="lineno"> 12</span>  <span class="py-line"><span class="py-keyword">from</span> <a title="Scientific" class="py-name" href="Scientific-module.html">Scientific</a> <span class="py-keyword">import</span> <a class="py-name" href="Scientific.N-module.html">N</a><span class="py-op">;</span> <a class="py-name" href="Scientific.N-module.html">Numeric</a> <span class="py-op">=</span> <a class="py-name" href="Scientific.N-module.html">N</a> </span>
+<span class="lineno"> 13</span>  <span class="py-line"> </span>
+<a name="RationalFunction"></a><div id="RationalFunction-def"><span class="lineno"> 14</span> <a class="pysrc-toggle" href="#" id="RationalFunction-toggle" onclick="toggle('RationalFunction'); return false;">-</a><span class="py-line"><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">:</span> </span>
+</div><div id="RationalFunction-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="RationalFunction-expanded"><span class="lineno"> 15</span>  <span class="py-line"> </span>
+<span class="lineno"> 16</span>  <span class="py-line">    <span class="py-docstring">"""Rational Function</span> </span>
+<span class="lineno"> 17</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 18</span>  <span class="py-line"><span class="py-docstring">    Instances of this class represent rational functions</span> </span>
+<span class="lineno"> 19</span>  <span class="py-line"><span class="py-docstring">    in a single variable. They can be evaluated like functions.</span> </span>
+<span class="lineno"> 20</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 21</span>  <span class="py-line"><span class="py-docstring">    Rational functions support addition, subtraction, multiplication,</span> </span>
+<span class="lineno"> 22</span>  <span class="py-line"><span class="py-docstring">    and division.</span> </span>
+<span class="lineno"> 23</span>  <span class="py-line"><span class="py-docstring">    """</span> </span>
+<span class="lineno"> 24</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__init__"></a><div id="RationalFunction.__init__-def"><span class="lineno"> 25</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__init__-toggle" onclick="toggle('RationalFunction.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">numerator</span><span class="py-op">,</span> <span class="py-param">denominator</span><span class="py-op">=</span><span class="py-op">[</span><span class="py-number">1.</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__init__-expanded"><span class="lineno"> 26</span>  <span class="py-line">        <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 27</span>  <span class="py-line"><span class="py-docstring">        @param numerator: polynomial in one variable, or a list</span> </span>
+<span class="lineno"> 28</span>  <span class="py-line"><span class="py-docstring">            of polynomial coefficients</span> </span>
+<span class="lineno"> 29</span>  <span class="py-line"><span class="py-docstring">        @type numerator: L{Scientific.Functions.Polynomial.Polynomial}</span> </span>
+<span class="lineno"> 30</span>  <span class="py-line"><span class="py-docstring">            or C{list} of numbers</span> </span>
+<span class="lineno"> 31</span>  <span class="py-line"><span class="py-docstring">        @param denominator: polynomial in one variable, or a list</span> </span>
+<span class="lineno"> 32</span>  <span class="py-line"><span class="py-docstring">            of polynomial coefficients</span> </span>
+<span class="lineno"> 33</span>  <span class="py-line"><span class="py-docstring">        @type denominator: L{Scientific.Functions.Polynomial.Polynomial}</span> </span>
+<span class="lineno"> 34</span>  <span class="py-line"><span class="py-docstring">            or C{list} of numbers</span> </span>
+<span class="lineno"> 35</span>  <span class="py-line"><span class="py-docstring">        """</span> </span>
+<span class="lineno"> 36</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">hasattr</span><span class="py-op">(</span><span class="py-name">numerator</span><span class="py-op">,</span> <span class="py-string">'is_polynomial'</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 37</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span> <span class="py-op">=</span> <span class="py-name">numerator</span> </span>
+<span class="lineno"> 38</span>  <span class="py-line">        <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 39</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span> <span class="py-op">=</span> <span id="link-0" class="py-name"><a title="Scientific.Functions.Polynomial
+Scientific.Functions.Polynomial.Polynomial" class="py-name" href="#" onclick="doclink('link-0', 'Polynomial', 'Module Scientific.Functions.Polynomial=Scientific.Functions.Polynomial-module.html,Class Scientific.Functions.Polynomial.Polynomial=Scientific.Functions.Polynomial.Polynomial-class.html'); return false;">Polynomial</a></span></span><span class="py-op">(</span><span class="py-name">numerator</span><span class="py-op">)</span> </span>
+<span class="lineno"> 40</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">hasattr</span><span class="py-op">(</span><span class="py-name">denominator</span><span class="py-op">,</span> <span class="py-string">'is_polynomial'</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 41</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span> <span class="py-op">=</span> <span class="py-name">denominator</span> </span>
+<span class="lineno"> 42</span>  <span class="py-line">        <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 43</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span> <span class="py-op">=</span> <span id="link-1" class="py-name"><a title="Scientific.Functions.Polynomial
+Scientific.Functions.Polynomial.Polynomial" class="py-name" href="#" onclick="doclink('link-1', 'Polynomial', 'Module Scientific.Functions.Polynomial=Scientific.Functions.Polynomial-module.html,Class Scientific.Functions.Polynomial.Polynomial=Scientific.Functions.Polynomial.Polynomial-class.html'); return false;">Polynomial</a></span></span><span class="py-op">(</span><span class="py-name">denominator</span><span class="py-op">)</span> </span>
+<span class="lineno"> 44</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><a title="Scientific.Functions.Rational.RationalFunction._normalize" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html#_normalize">_normalize</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 45</span>  <span class="py-line"> </span>
+<span class="lineno"> 46</span>  <span class="py-line">    <a class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html#is_rational_function">is_rational_function</a> <span class="py-op">=</span> <span class="py-number">1</span> </span>
+<span class="lineno"> 47</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__call__"></a><div id="RationalFunction.__call__-def"><span class="lineno"> 48</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__call__-toggle" onclick="toggle('RationalFunction.__call__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__call__">__call__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">value</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__call__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__call__-expanded"><span class="lineno"> 49</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">(</span><span class="py-name">value</span><span class="py-op">)</span><span class="py-op">/</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">(</span><span class="py-name">value</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 50</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__repr__"></a><div id="RationalFunction.__repr__-def"><span class="lineno"> 51</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__repr__-toggle" onclick="toggle('RationalFunction.__repr__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__repr__">__repr__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__repr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__repr__-expanded"><span class="lineno"> 52</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-string">"RationalFunction(%s,%s)"</span> <span class="py-op">%</span> <span class="py-op">(</span><span class="py-name">repr</span><span class="py-op">(</span><span class="py-name">list</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">,</span> </span>
+<span class="lineno"> 53</span>  <span class="py-line">                                            <span class="py-name">repr</span><span class="py-op">(</span><span class="py-name">list</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 54</span>  <span class="py-line"> </span>
+<a name="RationalFunction._normalize"></a><div id="RationalFunction._normalize-def"><span class="lineno"> 55</span> <a class="pysrc-toggle" href="#" id="RationalFunction._normalize-toggle" onclick="toggle('RationalFunction._normalize'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#_normalize">_normalize</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction._normalize-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction._normalize-expanded"><span class="lineno"> 56</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><a title="Scientific.Functions.Rational.RationalFunction._truncate" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html#_truncate">_truncate</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">)</span> </span>
+<span class="lineno"> 57</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><a title="Scientific.Functions.Rational.RationalFunction._truncate" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html#_truncate">_truncate</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">)</span> </span>
+<span class="lineno"> 58</span>  <span class="py-line">        <span class="py-name">n</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno"> 59</span>  <span class="py-line">        <span class="py-keyword">while</span> <span class="py-number">1</span><span class="py-op">:</span> </span>
+<span class="lineno"> 60</span>  <span class="py-line">            <span class="py-keyword">if</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">[</span><span class="py-name">n</span><span class="py-op">]</span> <span class="py-op">!=</span> <span class="py-number">0</span><span class="py-op">:</span> </span>
+<span class="lineno"> 61</span>  <span class="py-line">                <span class="py-keyword">break</span> </span>
+<span class="lineno"> 62</span>  <span class="py-line">            <span class="py-keyword">if</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">[</span><span class="py-name">n</span><span class="py-op">]</span> <span class="py-op">!=</span> <span class="py-number">0</span><span class="py-op">:</span> </span>
+<span class="lineno"> 63</span>  <span class="py-line">                <span class="py-keyword">break</span> </span>
+<span class="lineno"> 64</span>  <span class="py-line">            <span class="py-name">n</span> <span class="py-op">=</span> <span class="py-name">n</span> <span class="py-op">+</span> <span class="py-number">1</span> </span>
+<span class="lineno"> 65</span>  <span class="py-line">            <span class="py-keyword">if</span> <span class="py-name">n</span> <span class="py-op">==</span> <span class="py-name">len</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 66</span>  <span class="py-line">                <span class="py-keyword">break</span> </span>
+<span class="lineno"> 67</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">n</span> <span class="py-op">&gt;</span> <span class="py-number">0</span><span class="py-op">:</span> </span>
+<span class="lineno"> 68</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span> <span class="py-op">=</span> <span id="link-2" class="py-name"><a title="Scientific.Functions.Polynomial
+Scientific.Functions.Polynomial.Polynomial" class="py-name" href="#" onclick="doclink('link-2', 'Polynomial', 'Module Scientific.Functions.Polynomial=Scientific.Functions.Polynomial-module.html,Class Scientific.Functions.Polynomial.Polynomial=Scientific.Functions.Polynomial.Polynomial-class.html'); return false;">Polynomial</a></span></span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">[</span><span class="py-name">n</span><span class="py-op">:</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno"> 69</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span> <span class="py-op">=</span> <span id="link-3" class="py-name"><a title="Scientific.Functions.Polynomial
+Scientific.Functions.Polynomial.Polynomial" class="py-name" href="#" onclick="doclink('link-3', 'Polynomial', 'Module Scientific.Functions.Polynomial=Scientific.Functions.Polynomial-module.html,Class Scientific.Functions.Polynomial.Polynomial=Scientific.Functions.Polynomial.Polynomial-class.html'); return false;">Polynomial</a></span></span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">[</span><span class="py-name">n</span><span class="py-op">:</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno"> 70</span>  <span class="py-line">        <span class="py-name">factor</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">]</span> </span>
+<span class="lineno"> 71</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">factor</span> <span class="py-op">!=</span> <span class="py-number">1.</span><span class="py-op">:</span> </span>
+<span class="lineno"> 72</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">/</span><span class="py-name">factor</span> </span>
+<span class="lineno"> 73</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">/</span><span class="py-name">factor</span> </span>
+</div><span class="lineno"> 74</span>  <span class="py-line"> </span>
+<a name="RationalFunction._truncate"></a><div id="RationalFunction._truncate-def"><span class="lineno"> 75</span> <a class="pysrc-toggle" href="#" id="RationalFunction._truncate-toggle" onclick="toggle('RationalFunction._truncate'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#_truncate">_truncate</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">poly</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction._truncate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction._truncate-expanded"><span class="lineno"> 76</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">poly</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">]</span> <span class="py-op">!=</span> <span class="py-number">0.</span><span class="py-op">:</span> </span>
+<span class="lineno"> 77</span>  <span class="py-line">            <span class="py-keyword">return</span> <span class="py-name">poly</span> </span>
+<span class="lineno"> 78</span>  <span class="py-line">        <span class="py-name">coeff</span> <span class="py-op">=</span> <span class="py-name">poly</span><span class="py-op">.</span><span class="py-name">coeff</span> </span>
+<span class="lineno"> 79</span>  <span class="py-line">        <span class="py-keyword">while</span> <span class="py-name">len</span><span class="py-op">(</span><span class="py-name">coeff</span><span class="py-op">)</span> <span class="py-op">&gt;</span> <span class="py-number">1</span> <span class="py-keyword">and</span> <span class="py-name">coeff</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-number">0.</span><span class="py-op">:</span> </span>
+<span class="lineno"> 80</span>  <span class="py-line">            <span class="py-name">coeff</span> <span class="py-op">=</span> <span class="py-name">coeff</span><span class="py-op">[</span><span class="py-op">:</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">]</span> </span>
+<span class="lineno"> 81</span>  <span class="py-line">        <span class="py-keyword">return</span> <span id="link-4" class="py-name"><a title="Scientific.Functions.Polynomial
+Scientific.Functions.Polynomial.Polynomial" class="py-name" href="#" onclick="doclink('link-4', 'Polynomial', 'Module Polynomial=Scientific.Functions.Polynomial-module.html,Class Polynomial.Polynomial=Scientific.Functions.Polynomial.Polynomial-class.html'); return false;">Polynomial</a></span></span><span class="py-op">(</span><span class="py-name">coeff</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 82</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__coerce__"></a><div id="RationalFunction.__coerce__-def"><span class="lineno"> 83</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__coerce__-toggle" onclick="toggle('RationalFunction.__coerce__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__coerce__">__coerce__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">other</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__coerce__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__coerce__-expanded"><span class="lineno"> 84</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">hasattr</span><span class="py-op">(</span><span class="py-name">other</span><span class="py-op">,</span> <span class="py-string">'is_rational_function'</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 85</span>  <span class="py-line">            <span class="py-keyword">return</span> <span class="py-op">(</span><span class="py-name">self</span><span class="py-op">,</span> <span class="py-name">other</span><span class="py-op">)</span> </span>
+<span class="lineno"> 86</span>  <span class="py-line">        <span class="py-keyword">elif</span> <span class="py-name">hasattr</span><span class="py-op">(</span><span class="py-name">other</span><span class="py-op">,</span> <span class="py-string">'is_polynomial'</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 87</span>  <span class="py-line">            <span class="py-keyword">return</span> <span class="py-op">(</span><span class="py-name">self</span><span class="py-op">,</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">other</span><span class="py-op">,</span> <span class="py-op">[</span><span class="py-number">1.</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 88</span>  <span class="py-line">        <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 89</span>  <span class="py-line">            <span class="py-keyword">return</span> <span class="py-op">(</span><span class="py-name">self</span><span class="py-op">,</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-op">[</span><span class="py-name">other</span><span class="py-op">]</span><span class="py-op">,</span> <span class="py-op">[</span><span class="py-number">1.</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 90</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__mul__"></a><div id="RationalFunction.__mul__-def"><span class="lineno"> 91</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__mul__-toggle" onclick="toggle('RationalFunction.__mul__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__mul__">__mul__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">other</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__mul__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__mul__-expanded"><span class="lineno"> 92</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">,</span> </span>
+<span class="lineno"> 93</span>  <span class="py-line">                                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 94</span>  <span class="py-line">    <a class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__rmul__">__rmul__</a> <span class="py-op">=</span> <a class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__mul__">__mul__</a> </span>
+<span class="lineno"> 95</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__div__"></a><div id="RationalFunction.__div__-def"><span class="lineno"> 96</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__div__-toggle" onclick="toggle('RationalFunction.__div__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__div__">__div__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">other</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__div__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__div__-expanded"><span class="lineno"> 97</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">,</span> </span>
+<span class="lineno"> 98</span>  <span class="py-line">                                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 99</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__rdiv__"></a><div id="RationalFunction.__rdiv__-def"><span class="lineno">100</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__rdiv__-toggle" onclick="toggle('RationalFunction.__rdiv__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__rdiv__">__rdiv__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">other</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__rdiv__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__rdiv__-expanded"><span class="lineno">101</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">*</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">,</span> </span>
+<span class="lineno">102</span>  <span class="py-line">                                <span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">)</span> </span>
+</div><span class="lineno">103</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__add__"></a><div id="RationalFunction.__add__-def"><span class="lineno">104</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__add__-toggle" onclick="toggle('RationalFunction.__add__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__add__">__add__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">other</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__add__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__add__-expanded"><span class="lineno">105</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">+</span> </span>
+<span class="lineno">106</span>  <span class="py-line">                                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">,</span> </span>
+<span class="lineno">107</span>  <span class="py-line">                                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">)</span> </span>
+</div><span class="lineno">108</span>  <span class="py-line">    <a class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__radd__">__radd__</a> <span class="py-op">=</span> <a class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__add__">__add__</a> </span>
+<span class="lineno">109</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__sub__"></a><div id="RationalFunction.__sub__-def"><span class="lineno">110</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__sub__-toggle" onclick="toggle('RationalFunction.__sub__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__sub__">__sub__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">other</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__sub__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__sub__-expanded"><span class="lineno">111</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">-</span> </span>
+<span class="lineno">112</span>  <span class="py-line">                                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">,</span> </span>
+<span class="lineno">113</span>  <span class="py-line">                                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">)</span> </span>
+</div><span class="lineno">114</span>  <span class="py-line"> </span>
+<a name="RationalFunction.__rsub__"></a><div id="RationalFunction.__rsub__-def"><span class="lineno">115</span> <a class="pysrc-toggle" href="#" id="RationalFunction.__rsub__-toggle" onclick="toggle('RationalFunction.__rsub__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#__rsub__">__rsub__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">other</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.__rsub__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.__rsub__-expanded"><span class="lineno">116</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">*</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">-</span> </span>
+<span class="lineno">117</span>  <span class="py-line">                                <span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">,</span> </span>
+<span class="lineno">118</span>  <span class="py-line">                                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">*</span><span class="py-name">other</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">)</span> </span>
+</div><span class="lineno">119</span>  <span class="py-line"> </span>
+<a name="RationalFunction.divide"></a><div id="RationalFunction.divide-def"><span class="lineno">120</span> <a class="pysrc-toggle" href="#" id="RationalFunction.divide-toggle" onclick="toggle('RationalFunction.divide'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#divide">divide</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">shift</span><span class="py-op">=</span><span class="py-number">0</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.divide-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.divide-expanded"><span class="lineno">121</span>  <span class="py-line">        <span class="py-docstring">"""</span> </span>
+<span class="lineno">122</span>  <span class="py-line"><span class="py-docstring">        @param shift: the power of the independent variable by which</span> </span>
+<span class="lineno">123</span>  <span class="py-line"><span class="py-docstring">            the numerator is multiplied prior to division</span> </span>
+<span class="lineno">124</span>  <span class="py-line"><span class="py-docstring">        @type shift: C{int} (non-negative)</span> </span>
+<span class="lineno">125</span>  <span class="py-line"><span class="py-docstring">        @return: a polynomial and a rational function such that the</span> </span>
+<span class="lineno">126</span>  <span class="py-line"><span class="py-docstring">            sum of the two is equal to the original rational function. The</span> </span>
+<span class="lineno">127</span>  <span class="py-line"><span class="py-docstring">            returned rational function's numerator is of lower order than</span> </span>
+<span class="lineno">128</span>  <span class="py-line"><span class="py-docstring">            its denominator.</span> </span>
+<span class="lineno">129</span>  <span class="py-line"><span class="py-docstring">        @rtype: (L{Scientific.Functions.Polynomial.Polynomial},</span> </span>
+<span class="lineno">130</span>  <span class="py-line"><span class="py-docstring">            L{RationalFunction})</span> </span>
+<span class="lineno">131</span>  <span class="py-line"><span class="py-docstring">        """</span> </span>
+<span class="lineno">132</span>  <span class="py-line">        <span class="py-name">num</span> <span class="py-op">=</span> <span class="py-name">Numeric</span><span class="py-op">.</span><span class="py-name">array</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">.</span><span class="py-name">coeff</span><span class="py-op">,</span> <a title="copy" class="py-name" href="copy-module.html">copy</a><span class="py-op">=</span><span class="py-number">1</span><span class="py-op">)</span> </span>
+<span class="lineno">133</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">shift</span> <span class="py-op">&gt;</span> <span class="py-number">0</span><span class="py-op">:</span> </span>
+<span class="lineno">134</span>  <span class="py-line">            <span class="py-name">num</span> <span class="py-op">=</span> <span class="py-name">Numeric</span><span class="py-op">.</span><span class="py-name">concatenate</span><span class="py-op">(</span><span class="py-op">(</span><span class="py-name">shift</span><span class="py-op">*</span><span class="py-op">[</span><span class="py-number">0.</span><span class="py-op">]</span><span class="py-op">,</span> <span class="py-name">num</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">135</span>  <span class="py-line">        <span class="py-name">den</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">.</span><span class="py-name">coeff</span> </span>
+<span class="lineno">136</span>  <span class="py-line">        <span class="py-name">den_order</span> <span class="py-op">=</span> <span class="py-name">len</span><span class="py-op">(</span><span class="py-name">den</span><span class="py-op">)</span> </span>
+<span class="lineno">137</span>  <span class="py-line">        <span class="py-name">coeff</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno">138</span>  <span class="py-line">        <span class="py-keyword">while</span> <span class="py-name">len</span><span class="py-op">(</span><span class="py-name">num</span><span class="py-op">)</span> <span class="py-op">&gt;=</span> <span class="py-name">den_order</span><span class="py-op">:</span> </span>
+<span class="lineno">139</span>  <span class="py-line">            <span class="py-name">q</span> <span class="py-op">=</span> <span class="py-name">num</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">]</span><span class="py-op">/</span><span class="py-name">den</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">]</span> </span>
+<span class="lineno">140</span>  <span class="py-line">            <span class="py-name">coeff</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-name">q</span><span class="py-op">)</span> </span>
+<span class="lineno">141</span>  <span class="py-line">            <span class="py-name">num</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-name">den_order</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">=</span> <span class="py-name">num</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-name">den_order</span><span class="py-op">:</span><span class="py-op">]</span><span class="py-op">-</span><span class="py-name">q</span><span class="py-op">*</span><span class="py-name">den</span> </span>
+<span class="lineno">142</span>  <span class="py-line">            <span class="py-name">num</span> <span class="py-op">=</span> <span class="py-name">num</span><span class="py-op">[</span><span class="py-op">:</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">]</span> </span>
+<span class="lineno">143</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-keyword">not</span> <span class="py-name">coeff</span><span class="py-op">:</span> </span>
+<span class="lineno">144</span>  <span class="py-line">            <span class="py-name">coeff</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span> </span>
+<span class="lineno">145</span>  <span class="py-line">        <span class="py-name">coeff</span><span class="py-op">.</span><span class="py-name">reverse</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">146</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">len</span><span class="py-op">(</span><span class="py-name">num</span><span class="py-op">)</span> <span class="py-op">==</span> <span class="py-number">0</span><span class="py-op">:</span> </span>
+<span class="lineno">147</span>  <span class="py-line">            <span class="py-name">num</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span> </span>
+<span class="lineno">148</span>  <span class="py-line">        <span class="py-keyword">return</span> <span id="link-5" class="py-name"><a title="Scientific.Functions.Polynomial
+Scientific.Functions.Polynomial.Polynomial" class="py-name" href="#" onclick="doclink('link-5', 'Polynomial', 'Module Polynomial=Scientific.Functions.Polynomial-module.html,Class Polynomial.Polynomial=Scientific.Functions.Polynomial.Polynomial-class.html'); return false;">Polynomial</a></span></span><span class="py-op">(</span><span class="py-name">coeff</span><span class="py-op">)</span><span class="py-op">,</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">num</span><span class="py-op">,</span> <span class="py-name">den</span><span class="py-op">)</span> </span>
+</div><span class="lineno">149</span>  <span class="py-line"> </span>
+<a name="RationalFunction.zeros"></a><div id="RationalFunction.zeros-def"><span class="lineno">150</span> <a class="pysrc-toggle" href="#" id="RationalFunction.zeros-toggle" onclick="toggle('RationalFunction.zeros'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#zeros">zeros</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.zeros-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.zeros-expanded"><span class="lineno">151</span>  <span class="py-line">        <span class="py-docstring">"""</span> </span>
+<span class="lineno">152</span>  <span class="py-line"><span class="py-docstring">        Find the X{zeros} (X{roots}) of the numerator by diagonalization</span> </span>
+<span class="lineno">153</span>  <span class="py-line"><span class="py-docstring">        of the associated Frobenius matrix.</span> </span>
+<span class="lineno">154</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno">155</span>  <span class="py-line"><span class="py-docstring">        @returns: an array containing the zeros</span> </span>
+<span class="lineno">156</span>  <span class="py-line"><span class="py-docstring">        @rtype: C{Numeric.array}</span> </span>
+<span class="lineno">157</span>  <span class="py-line"><span class="py-docstring">        """</span> </span>
+<span class="lineno">158</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">numerator</span><span class="py-op">.</span><span id="link-6" class="py-name"><a title="Scientific.Functions.Polynomial.Polynomial.zeros
+Scientific.Functions.Rational.RationalFunction.zeros" class="py-name" href="#" onclick="doclink('link-6', 'zeros', 'Method Polynomial.Polynomial.zeros()=Scientific.Functions.Polynomial.Polynomial-class.html#zeros,Method zeros()=Scientific.Functions.Rational.RationalFunction-class.html#zeros'); return false;">zeros</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div><span class="lineno">159</span>  <span class="py-line"> </span>
+<a name="RationalFunction.poles"></a><div id="RationalFunction.poles-def"><span class="lineno">160</span> <a class="pysrc-toggle" href="#" id="RationalFunction.poles-toggle" onclick="toggle('RationalFunction.poles'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Functions.Rational.RationalFunction-class.html#poles">poles</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="RationalFunction.poles-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="RationalFunction.poles-expanded"><span class="lineno">161</span>  <span class="py-line">        <span class="py-docstring">"""</span> </span>
+<span class="lineno">162</span>  <span class="py-line"><span class="py-docstring">        Find the X{poles} (zeros of the denominator) by diagonalization</span> </span>
+<span class="lineno">163</span>  <span class="py-line"><span class="py-docstring">        of the associated Frobenius matrix.</span> </span>
+<span class="lineno">164</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno">165</span>  <span class="py-line"><span class="py-docstring">        @returns: an array containing the poles</span> </span>
+<span class="lineno">166</span>  <span class="py-line"><span class="py-docstring">        @rtype: C{Numeric.array}</span> </span>
+<span class="lineno">167</span>  <span class="py-line"><span class="py-docstring">        """</span> </span>
+<span class="lineno">168</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">denominator</span><span class="py-op">.</span><span id="link-7" class="py-name"><a title="Scientific.Functions.Polynomial.Polynomial.zeros
+Scientific.Functions.Rational.RationalFunction.zeros" class="py-name" href="#" onclick="doclink('link-7', 'zeros', 'Method Polynomial.Polynomial.zeros()=Scientific.Functions.Polynomial.Polynomial-class.html#zeros,Method zeros()=Scientific.Functions.Rational.RationalFunction-class.html#zeros'); return false;">zeros</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div></div><span class="lineno">169</span>  <span class="py-line"> </span>
+<span class="lineno">170</span>  <span class="py-line"> </span>
+<span class="lineno">171</span>  <span class="py-line"><span class="py-comment"># Test code</span> </span>
+<span class="lineno">172</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">173</span>  <span class="py-line"><span class="py-keyword">if</span> <span class="py-name">__name__</span> <span class="py-op">==</span> <span class="py-string">'__main__'</span><span class="py-op">:</span> </span>
+<span class="lineno">174</span>  <span class="py-line"> </span>
+<span class="lineno">175</span>  <span class="py-line">    <span class="py-name">p</span> <span class="py-op">=</span> <span id="link-8" class="py-name"><a title="Scientific.Functions.Polynomial
+Scientific.Functions.Polynomial.Polynomial" class="py-name" href="#" onclick="doclink('link-8', 'Polynomial', 'Module Scientific.Functions.Polynomial=Scientific.Functions.Polynomial-module.html,Class Scientific.Functions.Polynomial.Polynomial=Scientific.Functions.Polynomial.Polynomial-class.html'); return false;">Polynomial</a></span></span><span class="py-op">(</span><span class="py-op">[</span><span class="py-number">1.</span><span class="py-op">,</span> <span class="py-number">1.</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno">176</span>  <span class="py-line">    <span class="py-name">invp</span> <span class="py-op">=</span> <span class="py-number">1.</span><span class="py-op">/</span><span class="py-name">p</span> </span>
+<span class="lineno">177</span>  <span class="py-line">    <span class="py-name">pr</span> <span class="py-op">=</span> <a title="Scientific.Functions.Rational.RationalFunction" class="py-name" href="Scientific.Functions.Rational.RationalFunction-class.html">RationalFunction</a><span class="py-op">(</span><span class="py-name">p</span><span class="py-op">)</span> </span>
+<span class="lineno">178</span>  <span class="py-line">    <span class="py-keyword">print</span> <span class="py-name">pr</span><span class="py-op">+</span><span class="py-name">invp</span> </span>
+<span class="lineno">179</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:41:17 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

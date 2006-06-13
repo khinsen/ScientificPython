@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.BSP.Console</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.BSP-module.html">Package&nbsp;BSP</a> ::
+        Module&nbsp;Console
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.BSP.Console-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h2 class="py-src">Source Code for <a href="Scientific.BSP.Console-module.html">Module Scientific.BSP.Console</a></h2>
+<div class="py-src">
+<pre class="py-src">
+<span class="lineno">  1</span>  <span class="py-line"><span class="py-comment"># Parallel console for interactive use of Python/BSP</span> </span>
+<span class="lineno">  2</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  3</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Written by Konrad Hinsen &lt;hinsen@cnrs-orleans.fr&gt;</span> </span>
+<span class="lineno">  4</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># last revision: 2006-6-12</span> </span>
+<span class="lineno">  5</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  6</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">  7</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno">  8</span>  <span class="py-line"><span class="py-docstring">Interactive console for parallel computing</span> </span>
+<span class="lineno">  9</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno"> 10</span>  <span class="py-line"> </span>
+<span class="lineno"> 11</span>  <span class="py-line"><span class="py-keyword">from</span> <a class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.BSP" class="py-name" href="Scientific.BSP-module.html">BSP</a> <span class="py-keyword">import</span> <a class="py-name" href="Scientific.BSP.ParValue-class.html">ParValue</a><span class="py-op">,</span> <a class="py-name" href="Scientific.BSP.ParRootFunction-class.html">ParRootFunction</a><span class="py-op">,</span> \ </span>
+<span class="lineno"> 12</span>  <span class="py-line">                           <a class="py-name" href="Scientific.BSP.Console-module.html#processorID">processorID</a><span class="py-op">,</span> <a class="py-name" href="Scientific.BSP.Console-module.html#numberOfProcessors">numberOfProcessors</a> </span>
+<span class="lineno"> 13</span>  <span class="py-line"><span class="py-keyword">import</span> <a class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.BSP" class="py-name" href="Scientific.BSP-module.html">BSP</a><span class="py-op">.</span><a title="Scientific.BSP.core" class="py-name" href="Scientific.BSP.core-module.html">core</a> </span>
+<span class="lineno"> 14</span>  <span class="py-line"><span class="py-keyword">from</span> <span class="py-name">code</span> <span class="py-keyword">import</span> <span class="py-name">InteractiveInterpreter</span><span class="py-op">,</span> <span class="py-name">InteractiveConsole</span> </span>
+<span class="lineno"> 15</span>  <span class="py-line"><span class="py-keyword">from</span> <span class="py-name">cStringIO</span> <span class="py-keyword">import</span> <span class="py-name">StringIO</span> </span>
+<span class="lineno"> 16</span>  <span class="py-line"><span class="py-keyword">import</span> <span class="py-name">exceptions</span><span class="py-op">,</span> <a class="py-name" href="sys-module.html">sys</a> </span>
+<span class="lineno"> 17</span>  <span class="py-line"> </span>
+<span class="lineno"> 18</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno"> 19</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Special unique object used in synchronization.</span> </span>
+<span class="lineno"> 20</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="OKToken"></a><div id="OKToken-def"><span class="lineno"> 21</span> <a class="pysrc-toggle" href="#" id="OKToken-toggle" onclick="toggle('OKToken'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.BSP.Console.OKToken-class.html">OKToken</a><span class="py-op">:</span> </span>
+</div><div id="OKToken-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="OKToken-expanded"><span class="lineno"> 22</span>  <span class="py-line"> </span>
+<a name="OKToken.__init__"></a><div id="OKToken.__init__-def"><span class="lineno"> 23</span> <a class="pysrc-toggle" href="#" id="OKToken.__init__-toggle" onclick="toggle('OKToken.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.OKToken-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="OKToken.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="OKToken.__init__-expanded"><span class="lineno"> 24</span>  <span class="py-line">        <span class="py-keyword">pass</span> </span>
+</div></div><span class="lineno"> 25</span>  <span class="py-line"> </span>
+<span class="lineno"> 26</span>  <span class="py-line"><a class="py-name" href="Scientific.BSP.Console-module.html#ok">ok</a> <span class="py-op">=</span> <a class="py-name" href="Scientific.BSP.Console.OKToken-class.html">OKToken</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+<a name="isOK"></a><div id="isOK-def"><span class="lineno"> 27</span> <a class="pysrc-toggle" href="#" id="isOK-toggle" onclick="toggle('isOK'); return false;">-</a><span class="py-line"><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console-module.html#isOK">isOK</a><span class="py-op">(</span><span class="py-param">object</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="isOK-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="isOK-expanded"><span class="lineno"> 28</span>  <span class="py-line">    <span class="py-keyword">try</span><span class="py-op">:</span> </span>
+<span class="lineno"> 29</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">object</span><span class="py-op">.</span><span class="py-name">__class__</span> <span class="py-keyword">is</span> <a title="Scientific.BSP.Console.OKToken" class="py-name" href="Scientific.BSP.Console.OKToken-class.html">OKToken</a> </span>
+<span class="lineno"> 30</span>  <span class="py-line">    <span class="py-keyword">except</span> <span class="py-name">AttributeError</span><span class="py-op">:</span> </span>
+<span class="lineno"> 31</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-number">0</span> </span>
+</div><span class="lineno"> 32</span>  <span class="py-line"> </span>
+<span class="lineno"> 33</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno"> 34</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Synchronise all processes when there is a possibility than some have crashed.</span> </span>
+<span class="lineno"> 35</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="synchronize"></a><div id="synchronize-def"><span class="lineno"> 36</span> <a class="pysrc-toggle" href="#" id="synchronize-toggle" onclick="toggle('synchronize'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console-module.html#synchronize">synchronize</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="synchronize-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="synchronize-expanded"><span class="lineno"> 37</span>  <span class="py-line">    <span class="py-name">done</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno"> 38</span>  <span class="py-line">    <span class="py-keyword">while</span> <span class="py-keyword">not</span> <span class="py-name">done</span><span class="py-op">:</span> </span>
+<span class="lineno"> 39</span>  <span class="py-line">        <span id="link-0" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-0', 'put', 'Method Scientific.BSP.ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method Scientific.BSP.ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function Scientific.BSP.core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span><span class="py-op">(</span><span id="link-1" class="py-name"><a title="Scientific.BSP.Console.ok
+Scientific.TkWidgets.ModalDialog.ok" class="py-name" href="#" onclick="doclink('link-1', 'ok', 'Variable Scientific.BSP.Console.ok=Scientific.BSP.Console-module.html#ok,Method Scientific.TkWidgets.ModalDialog.ok()=Scientific.TkWidgets.ModalDialog-class.html#ok'); return false;">ok</a></span></span><span class="py-op">,</span> <span class="py-name">range</span><span class="py-op">(</span><span id="link-2" class="py-name"><a title="Scientific.BSP.Console.processorID
+Scientific.BSP.core.processorID
+Scientific.BSP.processorID" class="py-name" href="#" onclick="doclink('link-2', 'processorID', 'Variable Scientific.BSP.Console.processorID=Scientific.BSP.Console-module.html#processorID,Variable Scientific.BSP.core.processorID=Scientific.BSP.core-module.html#processorID,Variable Scientific.BSP.processorID=Scientific.BSP-module.html#processorID'); return false;">processorID</a></span></span><span class="py-op">)</span> <span class="py-op">+</span> <span class="py-name">range</span><span class="py-op">(</span><span id="link-3" class="py-name"><a title="Scientific.BSP.Console.processorID
+Scientific.BSP.core.processorID
+Scientific.BSP.processorID" class="py-name" href="#" onclick="doclink('link-3', 'processorID', 'Variable Scientific.BSP.Console.processorID=Scientific.BSP.Console-module.html#processorID,Variable Scientific.BSP.core.processorID=Scientific.BSP.core-module.html#processorID,Variable Scientific.BSP.processorID=Scientific.BSP-module.html#processorID'); return false;">processorID</a></span></span><span class="py-op">+</span><span class="py-number">1</span><span class="py-op">,</span> <span id="link-4" class="py-name"><a title="Scientific.BSP.Console.numberOfProcessors
+Scientific.BSP.core.numberOfProcessors
+Scientific.BSP.numberOfProcessors" class="py-name" href="#" onclick="doclink('link-4', 'numberOfProcessors', 'Variable Scientific.BSP.Console.numberOfProcessors=Scientific.BSP.Console-module.html#numberOfProcessors,Variable Scientific.BSP.core.numberOfProcessors=Scientific.BSP.core-module.html#numberOfProcessors,Variable Scientific.BSP.numberOfProcessors=Scientific.BSP-module.html#numberOfProcessors'); return false;">numberOfProcessors</a></span></span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 40</span>  <span class="py-line">        <span class="py-name">status</span> <span class="py-op">=</span> <span id="link-5" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-5', 'sync', 'Method Scientific.BSP.IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function Scientific.BSP.core.sync()=Scientific.BSP.core-module.html#sync,Method Scientific.IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno"> 41</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">len</span><span class="py-op">(</span><span class="py-name">status</span><span class="py-op">)</span> <span class="py-op">==</span> <span id="link-6" class="py-name"><a title="Scientific.BSP.Console.numberOfProcessors
+Scientific.BSP.core.numberOfProcessors
+Scientific.BSP.numberOfProcessors" class="py-name" href="#" onclick="doclink('link-6', 'numberOfProcessors', 'Variable Scientific.BSP.Console.numberOfProcessors=Scientific.BSP.Console-module.html#numberOfProcessors,Variable Scientific.BSP.core.numberOfProcessors=Scientific.BSP.core-module.html#numberOfProcessors,Variable Scientific.BSP.numberOfProcessors=Scientific.BSP-module.html#numberOfProcessors'); return false;">numberOfProcessors</a></span></span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">:</span> </span>
+<span class="lineno"> 42</span>  <span class="py-line">            <span class="py-name">done</span> <span class="py-op">=</span> <span class="py-number">1</span> </span>
+<span class="lineno"> 43</span>  <span class="py-line">            <span class="py-keyword">for</span> <span class="py-name">object</span> <span class="py-keyword">in</span> <span class="py-name">status</span><span class="py-op">:</span> </span>
+<span class="lineno"> 44</span>  <span class="py-line">                <span class="py-keyword">if</span> <span class="py-keyword">not</span> <a title="Scientific.BSP.Console.isOK" class="py-name" href="Scientific.BSP.Console-module.html#isOK">isOK</a><span class="py-op">(</span><span class="py-name">object</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 45</span>  <span class="py-line">                    <span class="py-name">done</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+</div><span class="lineno"> 46</span>  <span class="py-line"> </span>
+<span class="lineno"> 47</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno"> 48</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Special exception object. It is raised by the modified sync()</span> </span>
+<span class="lineno"> 49</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># routine below when it notices that some other process has crashed.</span> </span>
+<span class="lineno"> 50</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="BSPSyncError"></a><div id="BSPSyncError-def"><span class="lineno"> 51</span> <a class="pysrc-toggle" href="#" id="BSPSyncError-toggle" onclick="toggle('BSPSyncError'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.BSP.Console.BSPSyncError-class.html">BSPSyncError</a><span class="py-op">(</span><span class="py-base-class">exceptions</span><span class="py-op">.</span><span class="py-base-class">Exception</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="BSPSyncError-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="BSPSyncError-expanded"><span class="lineno"> 52</span>  <span class="py-line">    <span class="py-keyword">pass</span> </span>
+</div><span class="lineno"> 53</span>  <span class="py-line"> </span>
+<span class="lineno"> 54</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno"> 55</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Modified sync() routine used by interactively executed code</span> </span>
+<span class="lineno"> 56</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># When it captures one of the unique objects (that no other module</span> </span>
+<span class="lineno"> 57</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># can ever generate), it knows that some other process has crashed</span> </span>
+<span class="lineno"> 58</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># prematurely and it crashes its own processes as well to prevent</span> </span>
+<span class="lineno"> 59</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># lockups.</span> </span>
+<span class="lineno"> 60</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="syncCheck"></a><div id="syncCheck-def"><span class="lineno"> 61</span> <a class="pysrc-toggle" href="#" id="syncCheck-toggle" onclick="toggle('syncCheck'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console-module.html#syncCheck">syncCheck</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="syncCheck-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="syncCheck-expanded"><span class="lineno"> 62</span>  <span class="py-line">    <span class="py-name">messages</span> <span class="py-op">=</span> <span id="link-7" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-7', 'sync', 'Method IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function core.sync()=Scientific.BSP.core-module.html#sync,Method IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno"> 63</span>  <span class="py-line">    <span class="py-keyword">for</span> <span class="py-name">object</span> <span class="py-keyword">in</span> <span class="py-name">messages</span><span class="py-op">:</span> </span>
+<span class="lineno"> 64</span>  <span class="py-line">        <span class="py-keyword">if</span> <a title="Scientific.BSP.Console.isOK" class="py-name" href="Scientific.BSP.Console-module.html#isOK">isOK</a><span class="py-op">(</span><span class="py-name">object</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 65</span>  <span class="py-line">            <span class="py-keyword">raise</span> <a title="Scientific.BSP.Console.BSPSyncError" class="py-name" href="Scientific.BSP.Console.BSPSyncError-class.html">BSPSyncError</a> </span>
+<span class="lineno"> 66</span>  <span class="py-line">    <span class="py-keyword">return</span> <span class="py-name">messages</span> </span>
+</div><span class="lineno"> 67</span>  <span class="py-line"><span id="link-8" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-8', 'put', 'Method ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span> <span class="py-op">=</span> <a class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.BSP" class="py-name" href="Scientific.BSP-module.html">BSP</a><span class="py-op">.</span><a title="Scientific.BSP.core" class="py-name" href="Scientific.BSP.core-module.html">core</a><span class="py-op">.</span><span id="link-9" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-9', 'put', 'Method ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span> </span>
+<span class="lineno"> 68</span>  <span class="py-line"><span id="link-10" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-10', 'sync', 'Method IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function core.sync()=Scientific.BSP.core-module.html#sync,Method IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span> <span class="py-op">=</span> <a class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.BSP" class="py-name" href="Scientific.BSP-module.html">BSP</a><span class="py-op">.</span><a title="Scientific.BSP.core" class="py-name" href="Scientific.BSP.core-module.html">core</a><span class="py-op">.</span><span id="link-11" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-11', 'sync', 'Method IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function core.sync()=Scientific.BSP.core-module.html#sync,Method IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span> </span>
+<span class="lineno"> 69</span>  <span class="py-line"><a class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.BSP" class="py-name" href="Scientific.BSP-module.html">BSP</a><span class="py-op">.</span><a title="Scientific.BSP.core" class="py-name" href="Scientific.BSP.core-module.html">core</a><span class="py-op">.</span><span id="link-12" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-12', 'sync', 'Method IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function core.sync()=Scientific.BSP.core-module.html#sync,Method IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span> <span class="py-op">=</span> <a class="py-name" href="Scientific.BSP.Console-module.html#syncCheck">syncCheck</a> </span>
+<span class="lineno"> 70</span>  <span class="py-line"> </span>
+<span class="lineno"> 71</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno"> 72</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Wrappers around stdout and stderr for printing processor numbers</span> </span>
+<span class="lineno"> 73</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="OutputStream"></a><div id="OutputStream-def"><span class="lineno"> 74</span> <a class="pysrc-toggle" href="#" id="OutputStream-toggle" onclick="toggle('OutputStream'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.BSP.Console.OutputStream-class.html">OutputStream</a><span class="py-op">:</span> </span>
+</div><div id="OutputStream-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="OutputStream-expanded"><span class="lineno"> 75</span>  <span class="py-line"> </span>
+<a name="OutputStream.__init__"></a><div id="OutputStream.__init__-def"><span class="lineno"> 76</span> <a class="pysrc-toggle" href="#" id="OutputStream.__init__-toggle" onclick="toggle('OutputStream.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.OutputStream-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">stream</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="OutputStream.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="OutputStream.__init__-expanded"><span class="lineno"> 77</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">stream</span> <span class="py-op">=</span> <span class="py-name">stream</span> </span>
+</div><span class="lineno"> 78</span>  <span class="py-line"> </span>
+<a name="OutputStream.write"></a><div id="OutputStream.write-def"><span class="lineno"> 79</span> <a class="pysrc-toggle" href="#" id="OutputStream.write-toggle" onclick="toggle('OutputStream.write'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.OutputStream-class.html#write">write</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">string</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="OutputStream.write-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="OutputStream.write-expanded"><span class="lineno"> 80</span>  <span class="py-line">        <span class="py-keyword">global</span> <a title="Scientific.BSP.Console._pid_banner" class="py-name" href="Scientific.BSP.Console-module.html#_pid_banner">_pid_banner</a> </span>
+<span class="lineno"> 81</span>  <span class="py-line">        <span class="py-keyword">if</span> <a title="Scientific.BSP.Console._pid_banner" class="py-name" href="Scientific.BSP.Console-module.html#_pid_banner">_pid_banner</a> <span class="py-keyword">is</span> <span class="py-keyword">not</span> <span class="py-name">None</span> <span class="py-keyword">and</span> <a title="string" class="py-name" href="string-module.html">string</a><span class="py-op">:</span> </span>
+<span class="lineno"> 82</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">stream</span><span class="py-op">.</span><span id="link-13" class="py-name"><a title="Scientific.BSP.Console.OutputStream.write
+Scientific.IO.TextFile.TextFile.write
+Scientific.MPI.IO.LogFile.write
+Scientific.Visualization.VMD.SceneFile.write
+Scientific.Visualization.VRML.SceneFile.write
+Scientific.Visualization.VRML2.SceneFile.write" class="py-name" href="#" onclick="doclink('link-13', 'write', 'Method Scientific.BSP.Console.OutputStream.write()=Scientific.BSP.Console.OutputStream-class.html#write,Method Scientific.IO.TextFile.TextFile.write()=Scientific.IO.TextFile.TextFile-class.html#write,Method Scientific.MPI.IO.LogFile.write()=Scientific.MPI.IO.LogFile-class.html#write,Method Scientific.Visualization.VMD.SceneFile.write()=Scientific.Visualization.VMD.SceneFile-class.html#write,Method Scientific.Visualization.VRML.SceneFile.write()=Scientific.Visualization.VRML.SceneFile-class.html#write,Method Scientific.Visualization.VRML2.SceneFile.write()=Scientific.Visualization.VRML2.SceneFile-class.html#write'); return false;">write</a></span></span><span class="py-op">(</span><a title="Scientific.BSP.Console._pid_banner" class="py-name" href="Scientific.BSP.Console-module.html#_pid_banner">_pid_banner</a><span class="py-op">)</span> </span>
+<span class="lineno"> 83</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">stream</span><span class="py-op">.</span><span id="link-14" class="py-name"><a title="Scientific.BSP.Console.OutputStream.write
+Scientific.IO.TextFile.TextFile.write
+Scientific.MPI.IO.LogFile.write
+Scientific.Visualization.VMD.SceneFile.write
+Scientific.Visualization.VRML.SceneFile.write
+Scientific.Visualization.VRML2.SceneFile.write" class="py-name" href="#" onclick="doclink('link-14', 'write', 'Method write()=Scientific.BSP.Console.OutputStream-class.html#write,Method IO.TextFile.TextFile.write()=Scientific.IO.TextFile.TextFile-class.html#write,Method MPI.IO.LogFile.write()=Scientific.MPI.IO.LogFile-class.html#write,Method Visualization.VMD.SceneFile.write()=Scientific.Visualization.VMD.SceneFile-class.html#write,Method Visualization.VRML.SceneFile.write()=Scientific.Visualization.VRML.SceneFile-class.html#write,Method Visualization.VRML2.SceneFile.write()=Scientific.Visualization.VRML2.SceneFile-class.html#write'); return false;">write</a></span></span><span class="py-op">(</span><a title="string" class="py-name" href="string-module.html">string</a><span class="py-op">)</span> </span>
+<span class="lineno"> 84</span>  <span class="py-line">        <a title="Scientific.BSP.Console._pid_banner" class="py-name" href="Scientific.BSP.Console-module.html#_pid_banner">_pid_banner</a> <span class="py-op">=</span> <span class="py-name">None</span> </span>
+</div><span class="lineno"> 85</span>  <span class="py-line"> </span>
+<a name="OutputStream.__getattr__"></a><div id="OutputStream.__getattr__-def"><span class="lineno"> 86</span> <a class="pysrc-toggle" href="#" id="OutputStream.__getattr__-toggle" onclick="toggle('OutputStream.__getattr__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.OutputStream-class.html#__getattr__">__getattr__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">attr</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="OutputStream.__getattr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="OutputStream.__getattr__-expanded"><span class="lineno"> 87</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.BSP.ParValue.getattr" class="py-name" href="Scientific.BSP.ParValue-class.html#getattr">getattr</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">stream</span><span class="py-op">,</span> <span class="py-name">attr</span><span class="py-op">)</span> </span>
+</div></div><span class="lineno"> 88</span>  <span class="py-line"> </span>
+<span class="lineno"> 89</span>  <span class="py-line"><a class="py-name" href="Scientific.BSP.Console-module.html#_pid_banner">_pid_banner</a> <span class="py-op">=</span> <span class="py-name">None</span> </span>
+<span class="lineno"> 90</span>  <span class="py-line"> </span>
+<span class="lineno"> 91</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno"> 92</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Type function that works "through" ParValue objects</span> </span>
+<span class="lineno"> 93</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="typePar"></a><div id="typePar-def"><span class="lineno"> 94</span> <a class="pysrc-toggle" href="#" id="typePar-toggle" onclick="toggle('typePar'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console-module.html#typePar">typePar</a><span class="py-op">(</span><span class="py-param">object</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="typePar-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="typePar-expanded"><span class="lineno"> 95</span>  <span class="py-line">    <span class="py-keyword">if</span> <span class="py-name">hasattr</span><span class="py-op">(</span><span class="py-name">object</span><span class="py-op">,</span> <span class="py-string">'is_parvalue'</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 96</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.BSP.ParValue" class="py-name" href="Scientific.BSP.ParValue-class.html">ParValue</a><span class="py-op">(</span><span id="link-15" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-15', 'type', 'Method Scientific.IO.PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method Scientific.IO.PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span><span class="py-op">(</span><span class="py-name">object</span><span class="py-op">.</span><span class="py-name">value</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 97</span>  <span class="py-line">    <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 98</span>  <span class="py-line">        <span class="py-keyword">return</span> <span id="link-16" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-16', 'type', 'Method Scientific.IO.PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method Scientific.IO.PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span><span class="py-op">(</span><span class="py-name">object</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 99</span>  <span class="py-line"> </span>
+<span class="lineno">100</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno">101</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Parallel console run on processor 0</span> </span>
+<span class="lineno">102</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="ParallelConsole"></a><div id="ParallelConsole-def"><span class="lineno">103</span> <a class="pysrc-toggle" href="#" id="ParallelConsole-toggle" onclick="toggle('ParallelConsole'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.BSP.Console.ParallelConsole-class.html">ParallelConsole</a><span class="py-op">(</span><span class="py-base-class">InteractiveConsole</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParallelConsole-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ParallelConsole-expanded"><span class="lineno">104</span>  <span class="py-line"> </span>
+<a name="ParallelConsole.__init__"></a><div id="ParallelConsole.__init__-def"><span class="lineno">105</span> <a class="pysrc-toggle" href="#" id="ParallelConsole.__init__-toggle" onclick="toggle('ParallelConsole.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.ParallelConsole-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParallelConsole.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ParallelConsole.__init__-expanded"><span class="lineno">106</span>  <span class="py-line">        <span class="py-name">namespace</span> <span class="py-op">=</span> <span class="py-op">{</span><span class="py-string">"__name__"</span><span class="py-op">:</span> <span class="py-string">"__console__"</span><span class="py-op">,</span> </span>
+<span class="lineno">107</span>  <span class="py-line">                     <span class="py-string">"__doc__"</span><span class="py-op">:</span> <span class="py-name">None</span><span class="py-op">,</span> </span>
+<span class="lineno">108</span>  <span class="py-line">                     <span class="py-string">"type"</span><span class="py-op">:</span> <a title="Scientific.BSP.Console.typePar" class="py-name" href="Scientific.BSP.Console-module.html#typePar">typePar</a><span class="py-op">}</span> </span>
+<span class="lineno">109</span>  <span class="py-line">        <span class="py-name">InteractiveConsole</span><span class="py-op">.</span><span id="link-17" class="py-name"><a title="Scientific.BSP.Console.OKToken.__init__
+Scientific.BSP.Console.OutputStream.__init__
+Scientific.BSP.Console.ParallelConsole.__init__
+Scientific.BSP.Console.ParallelInterpreter.__init__
+Scientific.BSP.IO._ParNetCDFVariable.__init__
+Scientific.BSP.ParAccumulator.__init__
+Scientific.BSP.ParClass.__init__
+Scientific.BSP.ParConstant.__init__
+Scientific.BSP.ParData.__init__
+Scientific.BSP.ParFunction.__init__
+Scientific.BSP.ParIndex.__init__
+Scientific.BSP.ParIndexIterator.__init__
+Scientific.BSP.ParIterator.__init__
+Scientific.BSP.ParMessages.__init__
+Scientific.BSP.ParRootFunction.__init__
+Scientific.BSP.ParSequence.__init__
+Scientific.BSP.ParTuple.__init__
+Scientific.BSP.ParValue.__init__
+Scientific.BSP.RemoteObjects.Proxy.__init__
+Scientific.BSP.RemoteObjects.TransferToken.__init__
+Scientific.BSP.Tasks.ParTaskBase.__init__
+Scientific.BSP.core.ParMethod.__init__
+Scientific.BSP.core.ParSlice.__init__
+Scientific.DictWithDefault.DictWithDefault.__init__
+Scientific.Functions.Derivatives.DerivVar.__init__
+Scientific.Functions.FirstDerivatives.DerivVar.__init__
+Scientific.Functions.Interpolation.InterpolatingFunction.__init__
+Scientific.Functions.Interpolation.NetCDFInterpolatingFunction.__init__
+Scientific.Functions.Polynomial.Polynomial.__init__
+Scientific.Functions.Rational.RationalFunction.__init__
+Scientific.Geometry.Objects3D.BravaisLattice.__init__
+Scientific.Geometry.Objects3D.Circle.__init__
+Scientific.Geometry.Objects3D.Cone.__init__
+Scientific.Geometry.Objects3D.Lattice.__init__
+Scientific.Geometry.Objects3D.Line.__init__
+Scientific.Geometry.Objects3D.Plane.__init__
+Scientific.Geometry.Objects3D.RhombicLattice.__init__
+Scientific.Geometry.Objects3D.SCLattice.__init__
+Scientific.Geometry.Objects3D.Sphere.__init__
+Scientific.Geometry.Quaternion.Quaternion.__init__
+Scientific.Geometry.Tensor.__init__
+Scientific.Geometry.TensorAnalysis.ScalarField.__init__
+Scientific.Geometry.TensorAnalysis.TensorField.__init__
+Scientific.Geometry.TensorAnalysis.VectorField.__init__
+Scientific.Geometry.Transformation.Rotation.__init__
+Scientific.Geometry.Transformation.RotationTranslation.__init__
+Scientific.Geometry.Transformation.Translation.__init__
+Scientific.Geometry.Vector.__init__
+Scientific.IO.FortranFormat.FortranFormat.__init__
+Scientific.IO.FortranFormat.FortranLine.__init__
+Scientific.IO.NetCDF.NetCDFFile.__init__
+Scientific.IO.NetCDF.NetCDFVariable.__init__
+Scientific.IO.PDB.Atom.__init__
+Scientific.IO.PDB.Chain.__init__
+Scientific.IO.PDB.Group.__init__
+Scientific.IO.PDB.NucleotideResidue.__init__
+Scientific.IO.PDB.PDBFile.__init__
+Scientific.IO.PDB.ResidueNumber.__init__
+Scientific.IO.PDB.Structure.__init__
+Scientific.IO.TextFile.TextFile.__init__
+Scientific.MPI.IO.LogFile.__init__
+Scientific.Mathematica.Mathematica.__init__
+Scientific.NumberDict.NumberDict.__init__
+Scientific.Physics.PhysicalQuantities.PhysicalQuantity.__init__
+Scientific.Physics.PhysicalQuantities.PhysicalUnit.__init__
+Scientific.Physics.Potential.PotentialWithGradients.__init__
+Scientific.Physics.Potential.PotentialWithGradientsAndForceConstants.__init__
+Scientific.QtWidgets.QtPlotCanvas.HorizontalLine.__init__
+Scientific.QtWidgets.QtPlotCanvas.PlotCanvas.__init__
+Scientific.QtWidgets.QtPlotCanvas.PlotGraphics.__init__
+Scientific.QtWidgets.QtPlotCanvas.PolyLine.__init__
+Scientific.QtWidgets.QtPlotCanvas.PolyMarker.__init__
+Scientific.QtWidgets.QtPlotCanvas.PolyPoints.__init__
+Scientific.QtWidgets.QtPlotCanvas.VerticalLine.__init__
+Scientific.QtWidgets.QtVisualizationCanvas.PolyLine3D.__init__
+Scientific.QtWidgets.QtVisualizationCanvas.VisualizationCanvas.__init__
+Scientific.QtWidgets.QtVisualizationCanvas.VisualizationGraphics.__init__
+Scientific.Signals.Models.AutoRegressiveModel.__init__
+Scientific.Signals.Models.AveragedAutoRegressiveModel.__init__
+Scientific.Statistics.Histogram.Histogram.__init__
+Scientific.Statistics.Histogram.WeightedHistogram.__init__
+Scientific.Threading.TaskManager.TaskManager.__init__
+Scientific.TkWidgets.ButtonBar.__init__
+Scientific.TkWidgets.FilenameEntry.__init__
+Scientific.TkWidgets.FloatEntry.__init__
+Scientific.TkWidgets.ModalDialog.__init__
+Scientific.TkWidgets.StatusBar.__init__
+Scientific.TkWidgets.TkPlotCanvas.HorizontalLine.__init__
+Scientific.TkWidgets.TkPlotCanvas.PlotCanvas.__init__
+Scientific.TkWidgets.TkPlotCanvas.PlotGraphics.__init__
+Scientific.TkWidgets.TkPlotCanvas.PolyLine.__init__
+Scientific.TkWidgets.TkPlotCanvas.PolyMarker.__init__
+Scientific.TkWidgets.TkPlotCanvas.PolyPoints.__init__
+Scientific.TkWidgets.TkPlotCanvas.VerticalLine.__init__
+Scientific.TkWidgets.TkVisualizationCanvas.PolyLine3D.__init__
+Scientific.TkWidgets.TkVisualizationCanvas.VisualizationCanvas.__init__
+Scientific.TkWidgets.TkVisualizationCanvas.VisualizationGraphics.__init__
+Scientific.Visualization.Color.Color.__init__
+Scientific.Visualization.Color.ColorScale.__init__
+Scientific.Visualization.Color.SymmetricColorScale.__init__
+Scientific.Visualization.PyMOL.Arrow.__init__
+Scientific.Visualization.PyMOL.Cone.__init__
+Scientific.Visualization.PyMOL.Cube.__init__
+Scientific.Visualization.PyMOL.Cylinder.__init__
+Scientific.Visualization.PyMOL.Group.__init__
+Scientific.Visualization.PyMOL.Line.__init__
+Scientific.Visualization.PyMOL.Material.__init__
+Scientific.Visualization.PyMOL.Molecules.__init__
+Scientific.Visualization.PyMOL.PyMOLObject.__init__
+Scientific.Visualization.PyMOL.Scene.__init__
+Scientific.Visualization.PyMOL.Sphere.__init__
+Scientific.Visualization.VMD.Arrow.__init__
+Scientific.Visualization.VMD.Cone.__init__
+Scientific.Visualization.VMD.Cube.__init__
+Scientific.Visualization.VMD.Cylinder.__init__
+Scientific.Visualization.VMD.Group.__init__
+Scientific.Visualization.VMD.Line.__init__
+Scientific.Visualization.VMD.Material.__init__
+Scientific.Visualization.VMD.Molecules.__init__
+Scientific.Visualization.VMD.Scene.__init__
+Scientific.Visualization.VMD.SceneFile.__init__
+Scientific.Visualization.VMD.ShapeObject.__init__
+Scientific.Visualization.VMD.Sphere.__init__
+Scientific.Visualization.VMD.VMDObject.__init__
+Scientific.Visualization.VPython.Arrow.__init__
+Scientific.Visualization.VPython.Cone.__init__
+Scientific.Visualization.VPython.Cube.__init__
+Scientific.Visualization.VPython.Cylinder.__init__
+Scientific.Visualization.VPython.GraphicsObject.__init__
+Scientific.Visualization.VPython.Group.__init__
+Scientific.Visualization.VPython.Line.__init__
+Scientific.Visualization.VPython.Material.__init__
+Scientific.Visualization.VPython.PolyLines.__init__
+Scientific.Visualization.VPython.Polygons.__init__
+Scientific.Visualization.VPython.Scene.__init__
+Scientific.Visualization.VPython.Sphere.__init__
+Scientific.Visualization.VRML.Arrow.__init__
+Scientific.Visualization.VRML.Cone.__init__
+Scientific.Visualization.VRML.Cube.__init__
+Scientific.Visualization.VRML.Cylinder.__init__
+Scientific.Visualization.VRML.Group.__init__
+Scientific.Visualization.VRML.Line.__init__
+Scientific.Visualization.VRML.LinearOrientedObject.__init__
+Scientific.Visualization.VRML.Material.__init__
+Scientific.Visualization.VRML.PolyLines.__init__
+Scientific.Visualization.VRML.Polygons.__init__
+Scientific.Visualization.VRML.Scene.__init__
+Scientific.Visualization.VRML.SceneFile.__init__
+Scientific.Visualization.VRML.ShapeObject.__init__
+Scientific.Visualization.VRML.Sphere.__init__
+Scientific.Visualization.VRML.VRMLObject.__init__
+Scientific.Visualization.VRML2.Arrow.__init__
+Scientific.Visualization.VRML2.Camera.__init__
+Scientific.Visualization.VRML2.Cone.__init__
+Scientific.Visualization.VRML2.Cube.__init__
+Scientific.Visualization.VRML2.Cylinder.__init__
+Scientific.Visualization.VRML2.Group.__init__
+Scientific.Visualization.VRML2.Line.__init__
+Scientific.Visualization.VRML2.LinearOrientedObject.__init__
+Scientific.Visualization.VRML2.Material.__init__
+Scientific.Visualization.VRML2.NavigationInfo.__init__
+Scientific.Visualization.VRML2.PolyLines.__init__
+Scientific.Visualization.VRML2.Polygons.__init__
+Scientific.Visualization.VRML2.Scene.__init__
+Scientific.Visualization.VRML2.SceneFile.__init__
+Scientific.Visualization.VRML2.ShapeObject.__init__
+Scientific.Visualization.VRML2.Sphere.__init__
+Scientific.Visualization.VRML2.VRMLObject.__init__
+Scientific.indexing._index_expression_class.__init__" class="py-name" href="#" onclick="doclink('link-17', '__init__', 'Method OKToken.__init__()=Scientific.BSP.Console.OKToken-class.html#__init__,Method OutputStream.__init__()=Scientific.BSP.Console.OutputStream-class.html#__init__,Method __init__()=Scientific.BSP.Console.ParallelConsole-class.html#__init__,Method ParallelInterpreter.__init__()=Scientific.BSP.Console.ParallelInterpreter-class.html#__init__,Method IO._ParNetCDFVariable.__init__()=Scientific.BSP.IO._ParNetCDFVariable-class.html#__init__,Method ParAccumulator.__init__()=Scientific.BSP.ParAccumulator-class.html#__init__,Method ParClass.__init__()=Scientific.BSP.ParClass-class.html#__init__,Method ParConstant.__init__()=Scientific.BSP.ParConstant-class.html#__init__,Method ParData.__init__()=Scientific.BSP.ParData-class.html#__init__,Method ParFunction.__init__()=Scientific.BSP.ParFunction-class.html#__init__,Method ParIndex.__init__()=Scientific.BSP.ParIndex-class.html#__init__,Method ParIndexIterator.__init__()=Scientific.BSP.ParIndexIterator-class.html#__init__,Method ParIterator.__init__()=Scientific.BSP.ParIterator-class.html#__init__,Method ParMessages.__init__()=Scientific.BSP.ParMessages-class.html#__init__,Method ParRootFunction.__init__()=Scientific.BSP.ParRootFunction-class.html#__init__,Method ParSequence.__init__()=Scientific.BSP.ParSequence-class.html#__init__,Method ParTuple.__init__()=Scientific.BSP.ParTuple-class.html#__init__,Method ParValue.__init__()=Scientific.BSP.ParValue-class.html#__init__,Method RemoteObjects.Proxy.__init__()=Scientific.BSP.RemoteObjects.Proxy-class.html#__init__,Method RemoteObjects.TransferToken.__init__()=Scientific.BSP.RemoteObjects.TransferToken-class.html#__init__,Method Tasks.ParTaskBase.__init__()=Scientific.BSP.Tasks.ParTaskBase-class.html#__init__,Method core.ParMethod.__init__()=Scientific.BSP.core.ParMethod-class.html#__init__,Method core.ParSlice.__init__()=Scientific.BSP.core.ParSlice-class.html#__init__,Method DictWithDefault.DictWithDefault.__init__()=Scientific.DictWithDefault.DictWithDefault-class.html#__init__,Method Functions.Derivatives.DerivVar.__init__()=Scientific.Functions.Derivatives.DerivVar-class.html#__init__,Method Functions.FirstDerivatives.DerivVar.__init__()=Scientific.Functions.FirstDerivatives.DerivVar-class.html#__init__,Method Functions.Interpolation.InterpolatingFunction.__init__()=Scientific.Functions.Interpolation.InterpolatingFunction-class.html#__init__,Method Functions.Interpolation.NetCDFInterpolatingFunction.__init__()=Scientific.Functions.Interpolation.NetCDFInterpolatingFunction-class.html#__init__,Method Functions.Polynomial.Polynomial.__init__()=Scientific.Functions.Polynomial.Polynomial-class.html#__init__,Method Functions.Rational.RationalFunction.__init__()=Scientific.Functions.Rational.RationalFunction-class.html#__init__,Method Geometry.Objects3D.BravaisLattice.__init__()=Scientific.Geometry.Objects3D.BravaisLattice-class.html#__init__,Method Geometry.Objects3D.Circle.__init__()=Scientific.Geometry.Objects3D.Circle-class.html#__init__,Method Geometry.Objects3D.Cone.__init__()=Scientific.Geometry.Objects3D.Cone-class.html#__init__,Method Geometry.Objects3D.Lattice.__init__()=Scientific.Geometry.Objects3D.Lattice-class.html#__init__,Method Geometry.Objects3D.Line.__init__()=Scientific.Geometry.Objects3D.Line-class.html#__init__,Method Geometry.Objects3D.Plane.__init__()=Scientific.Geometry.Objects3D.Plane-class.html#__init__,Method Geometry.Objects3D.RhombicLattice.__init__()=Scientific.Geometry.Objects3D.RhombicLattice-class.html#__init__,Method Geometry.Objects3D.SCLattice.__init__()=Scientific.Geometry.Objects3D.SCLattice-class.html#__init__,Method Geometry.Objects3D.Sphere.__init__()=Scientific.Geometry.Objects3D.Sphere-class.html#__init__,Method Geometry.Quaternion.Quaternion.__init__()=Scientific.Geometry.Quaternion.Quaternion-class.html#__init__,Method Geometry.Tensor.__init__()=Scientific.Geometry.Tensor-class.html#__init__,Method Geometry.TensorAnalysis.ScalarField.__init__()=Scientific.Geometry.TensorAnalysis.ScalarField-class.html#__init__,Method Geometry.TensorAnalysis.TensorField.__init__()=Scientific.Geometry.TensorAnalysis.TensorField-class.html#__init__,Method Geometry.TensorAnalysis.VectorField.__init__()=Scientific.Geometry.TensorAnalysis.VectorField-class.html#__init__,Method Geometry.Transformation.Rotation.__init__()=Scientific.Geometry.Transformation.Rotation-class.html#__init__,Method Geometry.Transformation.RotationTranslation.__init__()=Scientific.Geometry.Transformation.RotationTranslation-class.html#__init__,Method Geometry.Transformation.Translation.__init__()=Scientific.Geometry.Transformation.Translation-class.html#__init__,Method Geometry.Vector.__init__()=Scientific.Geometry.Vector-class.html#__init__,Method IO.FortranFormat.FortranFormat.__init__()=Scientific.IO.FortranFormat.FortranFormat-class.html#__init__,Method IO.FortranFormat.FortranLine.__init__()=Scientific.IO.FortranFormat.FortranLine-class.html#__init__,Method IO.NetCDF.NetCDFFile.__init__()=Scientific.IO.NetCDF.NetCDFFile-class.html#__init__,Method IO.NetCDF.NetCDFVariable.__init__()=Scientific.IO.NetCDF.NetCDFVariable-class.html#__init__,Method IO.PDB.Atom.__init__()=Scientific.IO.PDB.Atom-class.html#__init__,Method IO.PDB.Chain.__init__()=Scientific.IO.PDB.Chain-class.html#__init__,Method IO.PDB.Group.__init__()=Scientific.IO.PDB.Group-class.html#__init__,Method IO.PDB.NucleotideResidue.__init__()=Scientific.IO.PDB.NucleotideResidue-class.html#__init__,Method IO.PDB.PDBFile.__init__()=Scientific.IO.PDB.PDBFile-class.html#__init__,Method IO.PDB.ResidueNumber.__init__()=Scientific.IO.PDB.ResidueNumber-class.html#__init__,Method IO.PDB.Structure.__init__()=Scientific.IO.PDB.Structure-class.html#__init__,Method IO.TextFile.TextFile.__init__()=Scientific.IO.TextFile.TextFile-class.html#__init__,Method MPI.IO.LogFile.__init__()=Scientific.MPI.IO.LogFile-class.html#__init__,Method Mathematica.Mathematica.__init__()=Scientific.Mathematica.Mathematica-class.html#__init__,Method NumberDict.NumberDict.__init__()=Scientific.NumberDict.NumberDict-class.html#__init__,Method Physics.PhysicalQuantities.PhysicalQuantity.__init__()=Scientific.Physics.PhysicalQuantities.PhysicalQuantity-class.html#__init__,Method Physics.PhysicalQuantities.PhysicalUnit.__init__()=Scientific.Physics.PhysicalQuantities.PhysicalUnit-class.html#__init__,Method Physics.Potential.PotentialWithGradients.__init__()=Scientific.Physics.Potential.PotentialWithGradients-class.html#__init__,Method Physics.Potential.PotentialWithGradientsAndForceConstants.__init__()=Scientific.Physics.Potential.PotentialWithGradientsAndForceConstants-class.html#__init__,Method QtWidgets.QtPlotCanvas.HorizontalLine.__init__()=Scientific.QtWidgets.QtPlotCanvas.HorizontalLine-class.html#__init__,Method QtWidgets.QtPlotCanvas.PlotCanvas.__init__()=Scientific.QtWidgets.QtPlotCanvas.PlotCanvas-class.html#__init__,Method QtWidgets.QtPlotCanvas.PlotGraphics.__init__()=Scientific.QtWidgets.QtPlotCanvas.PlotGraphics-class.html#__init__,Method QtWidgets.QtPlotCanvas.PolyLine.__init__()=Scientific.QtWidgets.QtPlotCanvas.PolyLine-class.html#__init__,Method QtWidgets.QtPlotCanvas.PolyMarker.__init__()=Scientific.QtWidgets.QtPlotCanvas.PolyMarker-class.html#__init__,Method QtWidgets.QtPlotCanvas.PolyPoints.__init__()=Scientific.QtWidgets.QtPlotCanvas.PolyPoints-class.html#__init__,Method QtWidgets.QtPlotCanvas.VerticalLine.__init__()=Scientific.QtWidgets.QtPlotCanvas.VerticalLine-class.html#__init__,Method QtWidgets.QtVisualizationCanvas.PolyLine3D.__init__()=Scientific.QtWidgets.QtVisualizationCanvas.PolyLine3D-class.html#__init__,Method QtWidgets.QtVisualizationCanvas.VisualizationCanvas.__init__()=Scientific.QtWidgets.QtVisualizationCanvas.VisualizationCanvas-class.html#__init__,Method QtWidgets.QtVisualizationCanvas.VisualizationGraphics.__init__()=Scientific.QtWidgets.QtVisualizationCanvas.VisualizationGraphics-class.html#__init__,Method Signals.Models.AutoRegressiveModel.__init__()=Scientific.Signals.Models.AutoRegressiveModel-class.html#__init__,Method Signals.Models.AveragedAutoRegressiveModel.__init__()=Scientific.Signals.Models.AveragedAutoRegressiveModel-class.html#__init__,Method Statistics.Histogram.Histogram.__init__()=Scientific.Statistics.Histogram.Histogram-class.html#__init__,Method Statistics.Histogram.WeightedHistogram.__init__()=Scientific.Statistics.Histogram.WeightedHistogram-class.html#__init__,Method Threading.TaskManager.TaskManager.__init__()=Scientific.Threading.TaskManager.TaskManager-class.html#__init__,Method TkWidgets.ButtonBar.__init__()=Scientific.TkWidgets.ButtonBar-class.html#__init__,Method TkWidgets.FilenameEntry.__init__()=Scientific.TkWidgets.FilenameEntry-class.html#__init__,Method TkWidgets.FloatEntry.__init__()=Scientific.TkWidgets.FloatEntry-class.html#__init__,Method TkWidgets.ModalDialog.__init__()=Scientific.TkWidgets.ModalDialog-class.html#__init__,Method TkWidgets.StatusBar.__init__()=Scientific.TkWidgets.StatusBar-class.html#__init__,Method TkWidgets.TkPlotCanvas.HorizontalLine.__init__()=Scientific.TkWidgets.TkPlotCanvas.HorizontalLine-class.html#__init__,Method TkWidgets.TkPlotCanvas.PlotCanvas.__init__()=Scientific.TkWidgets.TkPlotCanvas.PlotCanvas-class.html#__init__,Method TkWidgets.TkPlotCanvas.PlotGraphics.__init__()=Scientific.TkWidgets.TkPlotCanvas.PlotGraphics-class.html#__init__,Method TkWidgets.TkPlotCanvas.PolyLine.__init__()=Scientific.TkWidgets.TkPlotCanvas.PolyLine-class.html#__init__,Method TkWidgets.TkPlotCanvas.PolyMarker.__init__()=Scientific.TkWidgets.TkPlotCanvas.PolyMarker-class.html#__init__,Method TkWidgets.TkPlotCanvas.PolyPoints.__init__()=Scientific.TkWidgets.TkPlotCanvas.PolyPoints-class.html#__init__,Method TkWidgets.TkPlotCanvas.VerticalLine.__init__()=Scientific.TkWidgets.TkPlotCanvas.VerticalLine-class.html#__init__,Method TkWidgets.TkVisualizationCanvas.PolyLine3D.__init__()=Scientific.TkWidgets.TkVisualizationCanvas.PolyLine3D-class.html#__init__,Method TkWidgets.TkVisualizationCanvas.VisualizationCanvas.__init__()=Scientific.TkWidgets.TkVisualizationCanvas.VisualizationCanvas-class.html#__init__,Method TkWidgets.TkVisualizationCanvas.VisualizationGraphics.__init__()=Scientific.TkWidgets.TkVisualizationCanvas.VisualizationGraphics-class.html#__init__,Method Visualization.Color.Color.__init__()=Scientific.Visualization.Color.Color-class.html#__init__,Method Visualization.Color.ColorScale.__init__()=Scientific.Visualization.Color.ColorScale-class.html#__init__,Method Visualization.Color.SymmetricColorScale.__init__()=Scientific.Visualization.Color.SymmetricColorScale-class.html#__init__,Method Visualization.PyMOL.Arrow.__init__()=Scientific.Visualization.PyMOL.Arrow-class.html#__init__,Method Visualization.PyMOL.Cone.__init__()=Scientific.Visualization.PyMOL.Cone-class.html#__init__,Method Visualization.PyMOL.Cube.__init__()=Scientific.Visualization.PyMOL.Cube-class.html#__init__,Method Visualization.PyMOL.Cylinder.__init__()=Scientific.Visualization.PyMOL.Cylinder-class.html#__init__,Method Visualization.PyMOL.Group.__init__()=Scientific.Visualization.PyMOL.Group-class.html#__init__,Method Visualization.PyMOL.Line.__init__()=Scientific.Visualization.PyMOL.Line-class.html#__init__,Method Visualization.PyMOL.Material.__init__()=Scientific.Visualization.PyMOL.Material-class.html#__init__,Method Visualization.PyMOL.Molecules.__init__()=Scientific.Visualization.PyMOL.Molecules-class.html#__init__,Method Visualization.PyMOL.PyMOLObject.__init__()=Scientific.Visualization.PyMOL.PyMOLObject-class.html#__init__,Method Visualization.PyMOL.Scene.__init__()=Scientific.Visualization.PyMOL.Scene-class.html#__init__,Method Visualization.PyMOL.Sphere.__init__()=Scientific.Visualization.PyMOL.Sphere-class.html#__init__,Method Visualization.VMD.Arrow.__init__()=Scientific.Visualization.VMD.Arrow-class.html#__init__,Method Visualization.VMD.Cone.__init__()=Scientific.Visualization.VMD.Cone-class.html#__init__,Method Visualization.VMD.Cube.__init__()=Scientific.Visualization.VMD.Cube-class.html#__init__,Method Visualization.VMD.Cylinder.__init__()=Scientific.Visualization.VMD.Cylinder-class.html#__init__,Method Visualization.VMD.Group.__init__()=Scientific.Visualization.VMD.Group-class.html#__init__,Method Visualization.VMD.Line.__init__()=Scientific.Visualization.VMD.Line-class.html#__init__,Method Visualization.VMD.Material.__init__()=Scientific.Visualization.VMD.Material-class.html#__init__,Method Visualization.VMD.Molecules.__init__()=Scientific.Visualization.VMD.Molecules-class.html#__init__,Method Visualization.VMD.Scene.__init__()=Scientific.Visualization.VMD.Scene-class.html#__init__,Method Visualization.VMD.SceneFile.__init__()=Scientific.Visualization.VMD.SceneFile-class.html#__init__,Method Visualization.VMD.ShapeObject.__init__()=Scientific.Visualization.VMD.ShapeObject-class.html#__init__,Method Visualization.VMD.Sphere.__init__()=Scientific.Visualization.VMD.Sphere-class.html#__init__,Method Visualization.VMD.VMDObject.__init__()=Scientific.Visualization.VMD.VMDObject-class.html#__init__,Method Visualization.VPython.Arrow.__init__()=Scientific.Visualization.VPython.Arrow-class.html#__init__,Method Visualization.VPython.Cone.__init__()=Scientific.Visualization.VPython.Cone-class.html#__init__,Method Visualization.VPython.Cube.__init__()=Scientific.Visualization.VPython.Cube-class.html#__init__,Method Visualization.VPython.Cylinder.__init__()=Scientific.Visualization.VPython.Cylinder-class.html#__init__,Method Visualization.VPython.GraphicsObject.__init__()=Scientific.Visualization.VPython.GraphicsObject-class.html#__init__,Method Visualization.VPython.Group.__init__()=Scientific.Visualization.VPython.Group-class.html#__init__,Method Visualization.VPython.Line.__init__()=Scientific.Visualization.VPython.Line-class.html#__init__,Method Visualization.VPython.Material.__init__()=Scientific.Visualization.VPython.Material-class.html#__init__,Method Visualization.VPython.PolyLines.__init__()=Scientific.Visualization.VPython.PolyLines-class.html#__init__,Method Visualization.VPython.Polygons.__init__()=Scientific.Visualization.VPython.Polygons-class.html#__init__,Method Visualization.VPython.Scene.__init__()=Scientific.Visualization.VPython.Scene-class.html#__init__,Method Visualization.VPython.Sphere.__init__()=Scientific.Visualization.VPython.Sphere-class.html#__init__,Method Visualization.VRML.Arrow.__init__()=Scientific.Visualization.VRML.Arrow-class.html#__init__,Method Visualization.VRML.Cone.__init__()=Scientific.Visualization.VRML.Cone-class.html#__init__,Method Visualization.VRML.Cube.__init__()=Scientific.Visualization.VRML.Cube-class.html#__init__,Method Visualization.VRML.Cylinder.__init__()=Scientific.Visualization.VRML.Cylinder-class.html#__init__,Method Visualization.VRML.Group.__init__()=Scientific.Visualization.VRML.Group-class.html#__init__,Method Visualization.VRML.Line.__init__()=Scientific.Visualization.VRML.Line-class.html#__init__,Method Visualization.VRML.LinearOrientedObject.__init__()=Scientific.Visualization.VRML.LinearOrientedObject-class.html#__init__,Method Visualization.VRML.Material.__init__()=Scientific.Visualization.VRML.Material-class.html#__init__,Method Visualization.VRML.PolyLines.__init__()=Scientific.Visualization.VRML.PolyLines-class.html#__init__,Method Visualization.VRML.Polygons.__init__()=Scientific.Visualization.VRML.Polygons-class.html#__init__,Method Visualization.VRML.Scene.__init__()=Scientific.Visualization.VRML.Scene-class.html#__init__,Method Visualization.VRML.SceneFile.__init__()=Scientific.Visualization.VRML.SceneFile-class.html#__init__,Method Visualization.VRML.ShapeObject.__init__()=Scientific.Visualization.VRML.ShapeObject-class.html#__init__,Method Visualization.VRML.Sphere.__init__()=Scientific.Visualization.VRML.Sphere-class.html#__init__,Method Visualization.VRML.VRMLObject.__init__()=Scientific.Visualization.VRML.VRMLObject-class.html#__init__,Method Visualization.VRML2.Arrow.__init__()=Scientific.Visualization.VRML2.Arrow-class.html#__init__,Method Visualization.VRML2.Camera.__init__()=Scientific.Visualization.VRML2.Camera-class.html#__init__,Method Visualization.VRML2.Cone.__init__()=Scientific.Visualization.VRML2.Cone-class.html#__init__,Method Visualization.VRML2.Cube.__init__()=Scientific.Visualization.VRML2.Cube-class.html#__init__,Method Visualization.VRML2.Cylinder.__init__()=Scientific.Visualization.VRML2.Cylinder-class.html#__init__,Method Visualization.VRML2.Group.__init__()=Scientific.Visualization.VRML2.Group-class.html#__init__,Method Visualization.VRML2.Line.__init__()=Scientific.Visualization.VRML2.Line-class.html#__init__,Method Visualization.VRML2.LinearOrientedObject.__init__()=Scientific.Visualization.VRML2.LinearOrientedObject-class.html#__init__,Method Visualization.VRML2.Material.__init__()=Scientific.Visualization.VRML2.Material-class.html#__init__,Method Visualization.VRML2.NavigationInfo.__init__()=Scientific.Visualization.VRML2.NavigationInfo-class.html#__init__,Method Visualization.VRML2.PolyLines.__init__()=Scientific.Visualization.VRML2.PolyLines-class.html#__init__,Method Visualization.VRML2.Polygons.__init__()=Scientific.Visualization.VRML2.Polygons-class.html#__init__,Method Visualization.VRML2.Scene.__init__()=Scientific.Visualization.VRML2.Scene-class.html#__init__,Method Visualization.VRML2.SceneFile.__init__()=Scientific.Visualization.VRML2.SceneFile-class.html#__init__,Method Visualization.VRML2.ShapeObject.__init__()=Scientific.Visualization.VRML2.ShapeObject-class.html#__init__,Method Visualization.VRML2.Sphere.__init__()=Scientific.Visualization.VRML2.Sphere-class.html#__init__,Method Visualization.VRML2.VRMLObject.__init__()=Scientific.Visualization.VRML2.VRMLObject-class.html#__init__,Method indexing._index_expression_class.__init__()=Scientific.indexing._index_expression_class-class.html#__init__'); return false;">__init__</a></span></span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">,</span> <span class="py-name">namespace</span><span class="py-op">)</span> </span>
+</div><span class="lineno">110</span>  <span class="py-line"> </span>
+<a name="ParallelConsole.push"></a><div id="ParallelConsole.push-def"><span class="lineno">111</span> <a class="pysrc-toggle" href="#" id="ParallelConsole.push-toggle" onclick="toggle('ParallelConsole.push'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.ParallelConsole-class.html#push">push</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">line</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParallelConsole.push-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ParallelConsole.push-expanded"><span class="lineno">112</span>  <span class="py-line">        <span class="py-keyword">global</span> <a title="Scientific.BSP.Console._pid_banner" class="py-name" href="Scientific.BSP.Console-module.html#_pid_banner">_pid_banner</a> </span>
+<span class="lineno">113</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">buffer</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-name">line</span><span class="py-op">)</span> </span>
+<span class="lineno">114</span>  <span class="py-line">        <span class="py-name">source</span> <span class="py-op">=</span> <span class="py-string">"\n"</span><span class="py-op">.</span><span class="py-name">join</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">buffer</span><span class="py-op">)</span> </span>
+<span class="lineno">115</span>  <span class="py-line">        <span id="link-18" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-18', 'put', 'Method ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span><span class="py-op">(</span><span class="py-name">source</span><span class="py-op">,</span> <span class="py-name">range</span><span class="py-op">(</span><span class="py-number">1</span><span class="py-op">,</span> <span id="link-19" class="py-name"><a title="Scientific.BSP.Console.numberOfProcessors
+Scientific.BSP.core.numberOfProcessors
+Scientific.BSP.numberOfProcessors" class="py-name" href="#" onclick="doclink('link-19', 'numberOfProcessors', 'Variable numberOfProcessors=Scientific.BSP.Console-module.html#numberOfProcessors,Variable core.numberOfProcessors=Scientific.BSP.core-module.html#numberOfProcessors,Variable numberOfProcessors=Scientific.BSP-module.html#numberOfProcessors'); return false;">numberOfProcessors</a></span></span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">116</span>  <span class="py-line">        <span id="link-20" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-20', 'sync', 'Method IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function core.sync()=Scientific.BSP.core-module.html#sync,Method IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">117</span>  <span class="py-line">        <a title="Scientific.BSP.Console._pid_banner" class="py-name" href="Scientific.BSP.Console-module.html#_pid_banner">_pid_banner</a> <span class="py-op">=</span> <span class="py-op">(</span><span class="py-string">"-- Processor %d "</span> <span class="py-op">%</span> <span id="link-21" class="py-name"><a title="Scientific.BSP.Console.processorID
+Scientific.BSP.core.processorID
+Scientific.BSP.processorID" class="py-name" href="#" onclick="doclink('link-21', 'processorID', 'Variable processorID=Scientific.BSP.Console-module.html#processorID,Variable core.processorID=Scientific.BSP.core-module.html#processorID,Variable processorID=Scientific.BSP-module.html#processorID'); return false;">processorID</a></span></span><span class="py-op">)</span> <span class="py-op">+</span> <span class="py-number">40</span><span class="py-op">*</span><span class="py-string">'-'</span> <span class="py-op">+</span> <span class="py-string">'\n'</span> </span>
+<span class="lineno">118</span>  <span class="py-line">        <span class="py-name">more</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">runsource</span><span class="py-op">(</span><span class="py-name">source</span><span class="py-op">,</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">filename</span><span class="py-op">)</span> </span>
+<span class="lineno">119</span>  <span class="py-line">        <a title="Scientific.BSP.Console._pid_banner" class="py-name" href="Scientific.BSP.Console-module.html#_pid_banner">_pid_banner</a> <span class="py-op">=</span> <span class="py-name">None</span> </span>
+<span class="lineno">120</span>  <span class="py-line">        <a title="Scientific.BSP.Console.synchronize" class="py-name" href="Scientific.BSP.Console-module.html#synchronize">synchronize</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">121</span>  <span class="py-line">        <span class="py-name">output</span> <span class="py-op">=</span> <span id="link-22" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-22', 'sync', 'Method IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function core.sync()=Scientific.BSP.core-module.html#sync,Method IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">122</span>  <span class="py-line">        <span class="py-name">output</span><span class="py-op">.</span><span class="py-name">sort</span><span class="py-op">(</span><span class="py-keyword">lambda</span> <span class="py-name">a</span><span class="py-op">,</span> <span class="py-name">b</span><span class="py-op">:</span> <span class="py-name">cmp</span><span class="py-op">(</span><span class="py-name">a</span><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span><span class="py-op">,</span> <span class="py-name">b</span><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">123</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">pid</span><span class="py-op">,</span> <a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a><span class="py-op">,</span> <a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a> <span class="py-keyword">in</span> <span class="py-name">output</span><span class="py-op">:</span> </span>
+<span class="lineno">124</span>  <span class="py-line">            <span class="py-keyword">if</span> <a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a> <span class="py-keyword">or</span> <a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a><span class="py-op">:</span> </span>
+<span class="lineno">125</span>  <span class="py-line">                <span class="py-keyword">print</span> <span class="py-op">(</span><span class="py-string">"-- Processor %d "</span> <span class="py-op">%</span> <span class="py-name">pid</span><span class="py-op">)</span> <span class="py-op">+</span> <span class="py-number">40</span><span class="py-op">*</span><span class="py-string">'-'</span> </span>
+<span class="lineno">126</span>  <span class="py-line">                <span class="py-keyword">if</span> <a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a><span class="py-op">:</span> </span>
+<span class="lineno">127</span>  <span class="py-line">                    <span class="py-keyword">print</span> <a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a><span class="py-op">,</span> </span>
+<span class="lineno">128</span>  <span class="py-line">                <span class="py-keyword">if</span> <a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a><span class="py-op">:</span> </span>
+<span class="lineno">129</span>  <span class="py-line">                    <span class="py-keyword">print</span> <a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a><span class="py-op">,</span> </span>
+<span class="lineno">130</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-keyword">not</span> <span class="py-name">more</span><span class="py-op">:</span> </span>
+<span class="lineno">131</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">resetbuffer</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">132</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">more</span> </span>
+</div><span class="lineno">133</span>  <span class="py-line"> </span>
+<a name="ParallelConsole.mainloop"></a><div id="ParallelConsole.mainloop-def"><span class="lineno">134</span> <a class="pysrc-toggle" href="#" id="ParallelConsole.mainloop-toggle" onclick="toggle('ParallelConsole.mainloop'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.ParallelConsole-class.html#mainloop">mainloop</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParallelConsole.mainloop-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ParallelConsole.mainloop-expanded"><span class="lineno">135</span>  <span class="py-line">        <span class="py-name">cprt</span> <span class="py-op">=</span> <span class="py-string">'Type "copyright", "credits" or "license" for more information.'</span> </span>
+<span class="lineno">136</span>  <span class="py-line">        <span class="py-name">banner</span> <span class="py-op">=</span> <span class="py-string">"Python %s on %s\n%s\n(Parallel console, %d processors)"</span> <span class="py-op">%</span> \ </span>
+<span class="lineno">137</span>  <span class="py-line">                 <span class="py-op">(</span><a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.version" class="py-name" href="sys-module.html#version">version</a><span class="py-op">,</span> <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.platform" class="py-name" href="sys-module.html#platform">platform</a><span class="py-op">,</span> <span class="py-name">cprt</span><span class="py-op">,</span> <span id="link-23" class="py-name"><a title="Scientific.BSP.Console.numberOfProcessors
+Scientific.BSP.core.numberOfProcessors
+Scientific.BSP.numberOfProcessors" class="py-name" href="#" onclick="doclink('link-23', 'numberOfProcessors', 'Variable numberOfProcessors=Scientific.BSP.Console-module.html#numberOfProcessors,Variable core.numberOfProcessors=Scientific.BSP.core-module.html#numberOfProcessors,Variable numberOfProcessors=Scientific.BSP-module.html#numberOfProcessors'); return false;">numberOfProcessors</a></span></span><span class="py-op">)</span> </span>
+<span class="lineno">138</span>  <span class="py-line">        <span class="py-keyword">while</span> <span class="py-number">1</span><span class="py-op">:</span> </span>
+<span class="lineno">139</span>  <span class="py-line">            <span class="py-keyword">try</span><span class="py-op">:</span> </span>
+<span class="lineno">140</span>  <span class="py-line">                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">interact</span><span class="py-op">(</span><span class="py-name">banner</span><span class="py-op">)</span> </span>
+<span class="lineno">141</span>  <span class="py-line">                <span class="py-keyword">break</span> </span>
+<span class="lineno">142</span>  <span class="py-line">            <span class="py-keyword">except</span> <span class="py-name">KeyboardInterrupt</span><span class="py-op">:</span> </span>
+<span class="lineno">143</span>  <span class="py-line">                <span class="py-keyword">print</span> <span class="py-string">"KeyboardInterrupt"</span> </span>
+<span class="lineno">144</span>  <span class="py-line">                <span class="py-name">banner</span> <span class="py-op">=</span> <span class="py-string">""</span> </span>
+<span class="lineno">145</span>  <span class="py-line">        <span id="link-24" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-24', 'put', 'Method ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span><span class="py-op">(</span><span class="py-name">None</span><span class="py-op">,</span> <span class="py-name">range</span><span class="py-op">(</span><span class="py-number">1</span><span class="py-op">,</span> <span id="link-25" class="py-name"><a title="Scientific.BSP.Console.numberOfProcessors
+Scientific.BSP.core.numberOfProcessors
+Scientific.BSP.numberOfProcessors" class="py-name" href="#" onclick="doclink('link-25', 'numberOfProcessors', 'Variable numberOfProcessors=Scientific.BSP.Console-module.html#numberOfProcessors,Variable core.numberOfProcessors=Scientific.BSP.core-module.html#numberOfProcessors,Variable numberOfProcessors=Scientific.BSP-module.html#numberOfProcessors'); return false;">numberOfProcessors</a></span></span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">146</span>  <span class="py-line">        <span id="link-26" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-26', 'sync', 'Method IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function core.sync()=Scientific.BSP.core-module.html#sync,Method IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div></div><span class="lineno">147</span>  <span class="py-line"> </span>
+<span class="lineno">148</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno">149</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Interpreter run on all other processors</span> </span>
+<span class="lineno">150</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="ParallelInterpreter"></a><div id="ParallelInterpreter-def"><span class="lineno">151</span> <a class="pysrc-toggle" href="#" id="ParallelInterpreter-toggle" onclick="toggle('ParallelInterpreter'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.BSP.Console.ParallelInterpreter-class.html">ParallelInterpreter</a><span class="py-op">(</span><span class="py-base-class">InteractiveInterpreter</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParallelInterpreter-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ParallelInterpreter-expanded"><span class="lineno">152</span>  <span class="py-line"> </span>
+<a name="ParallelInterpreter.__init__"></a><div id="ParallelInterpreter.__init__-def"><span class="lineno">153</span> <a class="pysrc-toggle" href="#" id="ParallelInterpreter.__init__-toggle" onclick="toggle('ParallelInterpreter.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.ParallelInterpreter-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParallelInterpreter.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ParallelInterpreter.__init__-expanded"><span class="lineno">154</span>  <span class="py-line">        <span class="py-name">locals</span> <span class="py-op">=</span> <span class="py-op">{</span><span class="py-string">"__name__"</span><span class="py-op">:</span> <span class="py-string">"__console__"</span><span class="py-op">,</span> </span>
+<span class="lineno">155</span>  <span class="py-line">                  <span class="py-string">"__doc__"</span><span class="py-op">:</span> <span class="py-name">None</span><span class="py-op">,</span> </span>
+<span class="lineno">156</span>  <span class="py-line">                  <span class="py-string">"type"</span><span class="py-op">:</span> <a title="Scientific.BSP.Console.typePar" class="py-name" href="Scientific.BSP.Console-module.html#typePar">typePar</a><span class="py-op">}</span> </span>
+<span class="lineno">157</span>  <span class="py-line">        <span class="py-name">InteractiveInterpreter</span><span class="py-op">.</span><span id="link-27" class="py-name"><a title="Scientific.BSP.Console.OKToken.__init__
+Scientific.BSP.Console.OutputStream.__init__
+Scientific.BSP.Console.ParallelConsole.__init__
+Scientific.BSP.Console.ParallelInterpreter.__init__
+Scientific.BSP.IO._ParNetCDFVariable.__init__
+Scientific.BSP.ParAccumulator.__init__
+Scientific.BSP.ParClass.__init__
+Scientific.BSP.ParConstant.__init__
+Scientific.BSP.ParData.__init__
+Scientific.BSP.ParFunction.__init__
+Scientific.BSP.ParIndex.__init__
+Scientific.BSP.ParIndexIterator.__init__
+Scientific.BSP.ParIterator.__init__
+Scientific.BSP.ParMessages.__init__
+Scientific.BSP.ParRootFunction.__init__
+Scientific.BSP.ParSequence.__init__
+Scientific.BSP.ParTuple.__init__
+Scientific.BSP.ParValue.__init__
+Scientific.BSP.RemoteObjects.Proxy.__init__
+Scientific.BSP.RemoteObjects.TransferToken.__init__
+Scientific.BSP.Tasks.ParTaskBase.__init__
+Scientific.BSP.core.ParMethod.__init__
+Scientific.BSP.core.ParSlice.__init__
+Scientific.DictWithDefault.DictWithDefault.__init__
+Scientific.Functions.Derivatives.DerivVar.__init__
+Scientific.Functions.FirstDerivatives.DerivVar.__init__
+Scientific.Functions.Interpolation.InterpolatingFunction.__init__
+Scientific.Functions.Interpolation.NetCDFInterpolatingFunction.__init__
+Scientific.Functions.Polynomial.Polynomial.__init__
+Scientific.Functions.Rational.RationalFunction.__init__
+Scientific.Geometry.Objects3D.BravaisLattice.__init__
+Scientific.Geometry.Objects3D.Circle.__init__
+Scientific.Geometry.Objects3D.Cone.__init__
+Scientific.Geometry.Objects3D.Lattice.__init__
+Scientific.Geometry.Objects3D.Line.__init__
+Scientific.Geometry.Objects3D.Plane.__init__
+Scientific.Geometry.Objects3D.RhombicLattice.__init__
+Scientific.Geometry.Objects3D.SCLattice.__init__
+Scientific.Geometry.Objects3D.Sphere.__init__
+Scientific.Geometry.Quaternion.Quaternion.__init__
+Scientific.Geometry.Tensor.__init__
+Scientific.Geometry.TensorAnalysis.ScalarField.__init__
+Scientific.Geometry.TensorAnalysis.TensorField.__init__
+Scientific.Geometry.TensorAnalysis.VectorField.__init__
+Scientific.Geometry.Transformation.Rotation.__init__
+Scientific.Geometry.Transformation.RotationTranslation.__init__
+Scientific.Geometry.Transformation.Translation.__init__
+Scientific.Geometry.Vector.__init__
+Scientific.IO.FortranFormat.FortranFormat.__init__
+Scientific.IO.FortranFormat.FortranLine.__init__
+Scientific.IO.NetCDF.NetCDFFile.__init__
+Scientific.IO.NetCDF.NetCDFVariable.__init__
+Scientific.IO.PDB.Atom.__init__
+Scientific.IO.PDB.Chain.__init__
+Scientific.IO.PDB.Group.__init__
+Scientific.IO.PDB.NucleotideResidue.__init__
+Scientific.IO.PDB.PDBFile.__init__
+Scientific.IO.PDB.ResidueNumber.__init__
+Scientific.IO.PDB.Structure.__init__
+Scientific.IO.TextFile.TextFile.__init__
+Scientific.MPI.IO.LogFile.__init__
+Scientific.Mathematica.Mathematica.__init__
+Scientific.NumberDict.NumberDict.__init__
+Scientific.Physics.PhysicalQuantities.PhysicalQuantity.__init__
+Scientific.Physics.PhysicalQuantities.PhysicalUnit.__init__
+Scientific.Physics.Potential.PotentialWithGradients.__init__
+Scientific.Physics.Potential.PotentialWithGradientsAndForceConstants.__init__
+Scientific.QtWidgets.QtPlotCanvas.HorizontalLine.__init__
+Scientific.QtWidgets.QtPlotCanvas.PlotCanvas.__init__
+Scientific.QtWidgets.QtPlotCanvas.PlotGraphics.__init__
+Scientific.QtWidgets.QtPlotCanvas.PolyLine.__init__
+Scientific.QtWidgets.QtPlotCanvas.PolyMarker.__init__
+Scientific.QtWidgets.QtPlotCanvas.PolyPoints.__init__
+Scientific.QtWidgets.QtPlotCanvas.VerticalLine.__init__
+Scientific.QtWidgets.QtVisualizationCanvas.PolyLine3D.__init__
+Scientific.QtWidgets.QtVisualizationCanvas.VisualizationCanvas.__init__
+Scientific.QtWidgets.QtVisualizationCanvas.VisualizationGraphics.__init__
+Scientific.Signals.Models.AutoRegressiveModel.__init__
+Scientific.Signals.Models.AveragedAutoRegressiveModel.__init__
+Scientific.Statistics.Histogram.Histogram.__init__
+Scientific.Statistics.Histogram.WeightedHistogram.__init__
+Scientific.Threading.TaskManager.TaskManager.__init__
+Scientific.TkWidgets.ButtonBar.__init__
+Scientific.TkWidgets.FilenameEntry.__init__
+Scientific.TkWidgets.FloatEntry.__init__
+Scientific.TkWidgets.ModalDialog.__init__
+Scientific.TkWidgets.StatusBar.__init__
+Scientific.TkWidgets.TkPlotCanvas.HorizontalLine.__init__
+Scientific.TkWidgets.TkPlotCanvas.PlotCanvas.__init__
+Scientific.TkWidgets.TkPlotCanvas.PlotGraphics.__init__
+Scientific.TkWidgets.TkPlotCanvas.PolyLine.__init__
+Scientific.TkWidgets.TkPlotCanvas.PolyMarker.__init__
+Scientific.TkWidgets.TkPlotCanvas.PolyPoints.__init__
+Scientific.TkWidgets.TkPlotCanvas.VerticalLine.__init__
+Scientific.TkWidgets.TkVisualizationCanvas.PolyLine3D.__init__
+Scientific.TkWidgets.TkVisualizationCanvas.VisualizationCanvas.__init__
+Scientific.TkWidgets.TkVisualizationCanvas.VisualizationGraphics.__init__
+Scientific.Visualization.Color.Color.__init__
+Scientific.Visualization.Color.ColorScale.__init__
+Scientific.Visualization.Color.SymmetricColorScale.__init__
+Scientific.Visualization.PyMOL.Arrow.__init__
+Scientific.Visualization.PyMOL.Cone.__init__
+Scientific.Visualization.PyMOL.Cube.__init__
+Scientific.Visualization.PyMOL.Cylinder.__init__
+Scientific.Visualization.PyMOL.Group.__init__
+Scientific.Visualization.PyMOL.Line.__init__
+Scientific.Visualization.PyMOL.Material.__init__
+Scientific.Visualization.PyMOL.Molecules.__init__
+Scientific.Visualization.PyMOL.PyMOLObject.__init__
+Scientific.Visualization.PyMOL.Scene.__init__
+Scientific.Visualization.PyMOL.Sphere.__init__
+Scientific.Visualization.VMD.Arrow.__init__
+Scientific.Visualization.VMD.Cone.__init__
+Scientific.Visualization.VMD.Cube.__init__
+Scientific.Visualization.VMD.Cylinder.__init__
+Scientific.Visualization.VMD.Group.__init__
+Scientific.Visualization.VMD.Line.__init__
+Scientific.Visualization.VMD.Material.__init__
+Scientific.Visualization.VMD.Molecules.__init__
+Scientific.Visualization.VMD.Scene.__init__
+Scientific.Visualization.VMD.SceneFile.__init__
+Scientific.Visualization.VMD.ShapeObject.__init__
+Scientific.Visualization.VMD.Sphere.__init__
+Scientific.Visualization.VMD.VMDObject.__init__
+Scientific.Visualization.VPython.Arrow.__init__
+Scientific.Visualization.VPython.Cone.__init__
+Scientific.Visualization.VPython.Cube.__init__
+Scientific.Visualization.VPython.Cylinder.__init__
+Scientific.Visualization.VPython.GraphicsObject.__init__
+Scientific.Visualization.VPython.Group.__init__
+Scientific.Visualization.VPython.Line.__init__
+Scientific.Visualization.VPython.Material.__init__
+Scientific.Visualization.VPython.PolyLines.__init__
+Scientific.Visualization.VPython.Polygons.__init__
+Scientific.Visualization.VPython.Scene.__init__
+Scientific.Visualization.VPython.Sphere.__init__
+Scientific.Visualization.VRML.Arrow.__init__
+Scientific.Visualization.VRML.Cone.__init__
+Scientific.Visualization.VRML.Cube.__init__
+Scientific.Visualization.VRML.Cylinder.__init__
+Scientific.Visualization.VRML.Group.__init__
+Scientific.Visualization.VRML.Line.__init__
+Scientific.Visualization.VRML.LinearOrientedObject.__init__
+Scientific.Visualization.VRML.Material.__init__
+Scientific.Visualization.VRML.PolyLines.__init__
+Scientific.Visualization.VRML.Polygons.__init__
+Scientific.Visualization.VRML.Scene.__init__
+Scientific.Visualization.VRML.SceneFile.__init__
+Scientific.Visualization.VRML.ShapeObject.__init__
+Scientific.Visualization.VRML.Sphere.__init__
+Scientific.Visualization.VRML.VRMLObject.__init__
+Scientific.Visualization.VRML2.Arrow.__init__
+Scientific.Visualization.VRML2.Camera.__init__
+Scientific.Visualization.VRML2.Cone.__init__
+Scientific.Visualization.VRML2.Cube.__init__
+Scientific.Visualization.VRML2.Cylinder.__init__
+Scientific.Visualization.VRML2.Group.__init__
+Scientific.Visualization.VRML2.Line.__init__
+Scientific.Visualization.VRML2.LinearOrientedObject.__init__
+Scientific.Visualization.VRML2.Material.__init__
+Scientific.Visualization.VRML2.NavigationInfo.__init__
+Scientific.Visualization.VRML2.PolyLines.__init__
+Scientific.Visualization.VRML2.Polygons.__init__
+Scientific.Visualization.VRML2.Scene.__init__
+Scientific.Visualization.VRML2.SceneFile.__init__
+Scientific.Visualization.VRML2.ShapeObject.__init__
+Scientific.Visualization.VRML2.Sphere.__init__
+Scientific.Visualization.VRML2.VRMLObject.__init__
+Scientific.indexing._index_expression_class.__init__" class="py-name" href="#" onclick="doclink('link-27', '__init__', 'Method OKToken.__init__()=Scientific.BSP.Console.OKToken-class.html#__init__,Method OutputStream.__init__()=Scientific.BSP.Console.OutputStream-class.html#__init__,Method ParallelConsole.__init__()=Scientific.BSP.Console.ParallelConsole-class.html#__init__,Method __init__()=Scientific.BSP.Console.ParallelInterpreter-class.html#__init__,Method IO._ParNetCDFVariable.__init__()=Scientific.BSP.IO._ParNetCDFVariable-class.html#__init__,Method ParAccumulator.__init__()=Scientific.BSP.ParAccumulator-class.html#__init__,Method ParClass.__init__()=Scientific.BSP.ParClass-class.html#__init__,Method ParConstant.__init__()=Scientific.BSP.ParConstant-class.html#__init__,Method ParData.__init__()=Scientific.BSP.ParData-class.html#__init__,Method ParFunction.__init__()=Scientific.BSP.ParFunction-class.html#__init__,Method ParIndex.__init__()=Scientific.BSP.ParIndex-class.html#__init__,Method ParIndexIterator.__init__()=Scientific.BSP.ParIndexIterator-class.html#__init__,Method ParIterator.__init__()=Scientific.BSP.ParIterator-class.html#__init__,Method ParMessages.__init__()=Scientific.BSP.ParMessages-class.html#__init__,Method ParRootFunction.__init__()=Scientific.BSP.ParRootFunction-class.html#__init__,Method ParSequence.__init__()=Scientific.BSP.ParSequence-class.html#__init__,Method ParTuple.__init__()=Scientific.BSP.ParTuple-class.html#__init__,Method ParValue.__init__()=Scientific.BSP.ParValue-class.html#__init__,Method RemoteObjects.Proxy.__init__()=Scientific.BSP.RemoteObjects.Proxy-class.html#__init__,Method RemoteObjects.TransferToken.__init__()=Scientific.BSP.RemoteObjects.TransferToken-class.html#__init__,Method Tasks.ParTaskBase.__init__()=Scientific.BSP.Tasks.ParTaskBase-class.html#__init__,Method core.ParMethod.__init__()=Scientific.BSP.core.ParMethod-class.html#__init__,Method core.ParSlice.__init__()=Scientific.BSP.core.ParSlice-class.html#__init__,Method DictWithDefault.DictWithDefault.__init__()=Scientific.DictWithDefault.DictWithDefault-class.html#__init__,Method Functions.Derivatives.DerivVar.__init__()=Scientific.Functions.Derivatives.DerivVar-class.html#__init__,Method Functions.FirstDerivatives.DerivVar.__init__()=Scientific.Functions.FirstDerivatives.DerivVar-class.html#__init__,Method Functions.Interpolation.InterpolatingFunction.__init__()=Scientific.Functions.Interpolation.InterpolatingFunction-class.html#__init__,Method Functions.Interpolation.NetCDFInterpolatingFunction.__init__()=Scientific.Functions.Interpolation.NetCDFInterpolatingFunction-class.html#__init__,Method Functions.Polynomial.Polynomial.__init__()=Scientific.Functions.Polynomial.Polynomial-class.html#__init__,Method Functions.Rational.RationalFunction.__init__()=Scientific.Functions.Rational.RationalFunction-class.html#__init__,Method Geometry.Objects3D.BravaisLattice.__init__()=Scientific.Geometry.Objects3D.BravaisLattice-class.html#__init__,Method Geometry.Objects3D.Circle.__init__()=Scientific.Geometry.Objects3D.Circle-class.html#__init__,Method Geometry.Objects3D.Cone.__init__()=Scientific.Geometry.Objects3D.Cone-class.html#__init__,Method Geometry.Objects3D.Lattice.__init__()=Scientific.Geometry.Objects3D.Lattice-class.html#__init__,Method Geometry.Objects3D.Line.__init__()=Scientific.Geometry.Objects3D.Line-class.html#__init__,Method Geometry.Objects3D.Plane.__init__()=Scientific.Geometry.Objects3D.Plane-class.html#__init__,Method Geometry.Objects3D.RhombicLattice.__init__()=Scientific.Geometry.Objects3D.RhombicLattice-class.html#__init__,Method Geometry.Objects3D.SCLattice.__init__()=Scientific.Geometry.Objects3D.SCLattice-class.html#__init__,Method Geometry.Objects3D.Sphere.__init__()=Scientific.Geometry.Objects3D.Sphere-class.html#__init__,Method Geometry.Quaternion.Quaternion.__init__()=Scientific.Geometry.Quaternion.Quaternion-class.html#__init__,Method Geometry.Tensor.__init__()=Scientific.Geometry.Tensor-class.html#__init__,Method Geometry.TensorAnalysis.ScalarField.__init__()=Scientific.Geometry.TensorAnalysis.ScalarField-class.html#__init__,Method Geometry.TensorAnalysis.TensorField.__init__()=Scientific.Geometry.TensorAnalysis.TensorField-class.html#__init__,Method Geometry.TensorAnalysis.VectorField.__init__()=Scientific.Geometry.TensorAnalysis.VectorField-class.html#__init__,Method Geometry.Transformation.Rotation.__init__()=Scientific.Geometry.Transformation.Rotation-class.html#__init__,Method Geometry.Transformation.RotationTranslation.__init__()=Scientific.Geometry.Transformation.RotationTranslation-class.html#__init__,Method Geometry.Transformation.Translation.__init__()=Scientific.Geometry.Transformation.Translation-class.html#__init__,Method Geometry.Vector.__init__()=Scientific.Geometry.Vector-class.html#__init__,Method IO.FortranFormat.FortranFormat.__init__()=Scientific.IO.FortranFormat.FortranFormat-class.html#__init__,Method IO.FortranFormat.FortranLine.__init__()=Scientific.IO.FortranFormat.FortranLine-class.html#__init__,Method IO.NetCDF.NetCDFFile.__init__()=Scientific.IO.NetCDF.NetCDFFile-class.html#__init__,Method IO.NetCDF.NetCDFVariable.__init__()=Scientific.IO.NetCDF.NetCDFVariable-class.html#__init__,Method IO.PDB.Atom.__init__()=Scientific.IO.PDB.Atom-class.html#__init__,Method IO.PDB.Chain.__init__()=Scientific.IO.PDB.Chain-class.html#__init__,Method IO.PDB.Group.__init__()=Scientific.IO.PDB.Group-class.html#__init__,Method IO.PDB.NucleotideResidue.__init__()=Scientific.IO.PDB.NucleotideResidue-class.html#__init__,Method IO.PDB.PDBFile.__init__()=Scientific.IO.PDB.PDBFile-class.html#__init__,Method IO.PDB.ResidueNumber.__init__()=Scientific.IO.PDB.ResidueNumber-class.html#__init__,Method IO.PDB.Structure.__init__()=Scientific.IO.PDB.Structure-class.html#__init__,Method IO.TextFile.TextFile.__init__()=Scientific.IO.TextFile.TextFile-class.html#__init__,Method MPI.IO.LogFile.__init__()=Scientific.MPI.IO.LogFile-class.html#__init__,Method Mathematica.Mathematica.__init__()=Scientific.Mathematica.Mathematica-class.html#__init__,Method NumberDict.NumberDict.__init__()=Scientific.NumberDict.NumberDict-class.html#__init__,Method Physics.PhysicalQuantities.PhysicalQuantity.__init__()=Scientific.Physics.PhysicalQuantities.PhysicalQuantity-class.html#__init__,Method Physics.PhysicalQuantities.PhysicalUnit.__init__()=Scientific.Physics.PhysicalQuantities.PhysicalUnit-class.html#__init__,Method Physics.Potential.PotentialWithGradients.__init__()=Scientific.Physics.Potential.PotentialWithGradients-class.html#__init__,Method Physics.Potential.PotentialWithGradientsAndForceConstants.__init__()=Scientific.Physics.Potential.PotentialWithGradientsAndForceConstants-class.html#__init__,Method QtWidgets.QtPlotCanvas.HorizontalLine.__init__()=Scientific.QtWidgets.QtPlotCanvas.HorizontalLine-class.html#__init__,Method QtWidgets.QtPlotCanvas.PlotCanvas.__init__()=Scientific.QtWidgets.QtPlotCanvas.PlotCanvas-class.html#__init__,Method QtWidgets.QtPlotCanvas.PlotGraphics.__init__()=Scientific.QtWidgets.QtPlotCanvas.PlotGraphics-class.html#__init__,Method QtWidgets.QtPlotCanvas.PolyLine.__init__()=Scientific.QtWidgets.QtPlotCanvas.PolyLine-class.html#__init__,Method QtWidgets.QtPlotCanvas.PolyMarker.__init__()=Scientific.QtWidgets.QtPlotCanvas.PolyMarker-class.html#__init__,Method QtWidgets.QtPlotCanvas.PolyPoints.__init__()=Scientific.QtWidgets.QtPlotCanvas.PolyPoints-class.html#__init__,Method QtWidgets.QtPlotCanvas.VerticalLine.__init__()=Scientific.QtWidgets.QtPlotCanvas.VerticalLine-class.html#__init__,Method QtWidgets.QtVisualizationCanvas.PolyLine3D.__init__()=Scientific.QtWidgets.QtVisualizationCanvas.PolyLine3D-class.html#__init__,Method QtWidgets.QtVisualizationCanvas.VisualizationCanvas.__init__()=Scientific.QtWidgets.QtVisualizationCanvas.VisualizationCanvas-class.html#__init__,Method QtWidgets.QtVisualizationCanvas.VisualizationGraphics.__init__()=Scientific.QtWidgets.QtVisualizationCanvas.VisualizationGraphics-class.html#__init__,Method Signals.Models.AutoRegressiveModel.__init__()=Scientific.Signals.Models.AutoRegressiveModel-class.html#__init__,Method Signals.Models.AveragedAutoRegressiveModel.__init__()=Scientific.Signals.Models.AveragedAutoRegressiveModel-class.html#__init__,Method Statistics.Histogram.Histogram.__init__()=Scientific.Statistics.Histogram.Histogram-class.html#__init__,Method Statistics.Histogram.WeightedHistogram.__init__()=Scientific.Statistics.Histogram.WeightedHistogram-class.html#__init__,Method Threading.TaskManager.TaskManager.__init__()=Scientific.Threading.TaskManager.TaskManager-class.html#__init__,Method TkWidgets.ButtonBar.__init__()=Scientific.TkWidgets.ButtonBar-class.html#__init__,Method TkWidgets.FilenameEntry.__init__()=Scientific.TkWidgets.FilenameEntry-class.html#__init__,Method TkWidgets.FloatEntry.__init__()=Scientific.TkWidgets.FloatEntry-class.html#__init__,Method TkWidgets.ModalDialog.__init__()=Scientific.TkWidgets.ModalDialog-class.html#__init__,Method TkWidgets.StatusBar.__init__()=Scientific.TkWidgets.StatusBar-class.html#__init__,Method TkWidgets.TkPlotCanvas.HorizontalLine.__init__()=Scientific.TkWidgets.TkPlotCanvas.HorizontalLine-class.html#__init__,Method TkWidgets.TkPlotCanvas.PlotCanvas.__init__()=Scientific.TkWidgets.TkPlotCanvas.PlotCanvas-class.html#__init__,Method TkWidgets.TkPlotCanvas.PlotGraphics.__init__()=Scientific.TkWidgets.TkPlotCanvas.PlotGraphics-class.html#__init__,Method TkWidgets.TkPlotCanvas.PolyLine.__init__()=Scientific.TkWidgets.TkPlotCanvas.PolyLine-class.html#__init__,Method TkWidgets.TkPlotCanvas.PolyMarker.__init__()=Scientific.TkWidgets.TkPlotCanvas.PolyMarker-class.html#__init__,Method TkWidgets.TkPlotCanvas.PolyPoints.__init__()=Scientific.TkWidgets.TkPlotCanvas.PolyPoints-class.html#__init__,Method TkWidgets.TkPlotCanvas.VerticalLine.__init__()=Scientific.TkWidgets.TkPlotCanvas.VerticalLine-class.html#__init__,Method TkWidgets.TkVisualizationCanvas.PolyLine3D.__init__()=Scientific.TkWidgets.TkVisualizationCanvas.PolyLine3D-class.html#__init__,Method TkWidgets.TkVisualizationCanvas.VisualizationCanvas.__init__()=Scientific.TkWidgets.TkVisualizationCanvas.VisualizationCanvas-class.html#__init__,Method TkWidgets.TkVisualizationCanvas.VisualizationGraphics.__init__()=Scientific.TkWidgets.TkVisualizationCanvas.VisualizationGraphics-class.html#__init__,Method Visualization.Color.Color.__init__()=Scientific.Visualization.Color.Color-class.html#__init__,Method Visualization.Color.ColorScale.__init__()=Scientific.Visualization.Color.ColorScale-class.html#__init__,Method Visualization.Color.SymmetricColorScale.__init__()=Scientific.Visualization.Color.SymmetricColorScale-class.html#__init__,Method Visualization.PyMOL.Arrow.__init__()=Scientific.Visualization.PyMOL.Arrow-class.html#__init__,Method Visualization.PyMOL.Cone.__init__()=Scientific.Visualization.PyMOL.Cone-class.html#__init__,Method Visualization.PyMOL.Cube.__init__()=Scientific.Visualization.PyMOL.Cube-class.html#__init__,Method Visualization.PyMOL.Cylinder.__init__()=Scientific.Visualization.PyMOL.Cylinder-class.html#__init__,Method Visualization.PyMOL.Group.__init__()=Scientific.Visualization.PyMOL.Group-class.html#__init__,Method Visualization.PyMOL.Line.__init__()=Scientific.Visualization.PyMOL.Line-class.html#__init__,Method Visualization.PyMOL.Material.__init__()=Scientific.Visualization.PyMOL.Material-class.html#__init__,Method Visualization.PyMOL.Molecules.__init__()=Scientific.Visualization.PyMOL.Molecules-class.html#__init__,Method Visualization.PyMOL.PyMOLObject.__init__()=Scientific.Visualization.PyMOL.PyMOLObject-class.html#__init__,Method Visualization.PyMOL.Scene.__init__()=Scientific.Visualization.PyMOL.Scene-class.html#__init__,Method Visualization.PyMOL.Sphere.__init__()=Scientific.Visualization.PyMOL.Sphere-class.html#__init__,Method Visualization.VMD.Arrow.__init__()=Scientific.Visualization.VMD.Arrow-class.html#__init__,Method Visualization.VMD.Cone.__init__()=Scientific.Visualization.VMD.Cone-class.html#__init__,Method Visualization.VMD.Cube.__init__()=Scientific.Visualization.VMD.Cube-class.html#__init__,Method Visualization.VMD.Cylinder.__init__()=Scientific.Visualization.VMD.Cylinder-class.html#__init__,Method Visualization.VMD.Group.__init__()=Scientific.Visualization.VMD.Group-class.html#__init__,Method Visualization.VMD.Line.__init__()=Scientific.Visualization.VMD.Line-class.html#__init__,Method Visualization.VMD.Material.__init__()=Scientific.Visualization.VMD.Material-class.html#__init__,Method Visualization.VMD.Molecules.__init__()=Scientific.Visualization.VMD.Molecules-class.html#__init__,Method Visualization.VMD.Scene.__init__()=Scientific.Visualization.VMD.Scene-class.html#__init__,Method Visualization.VMD.SceneFile.__init__()=Scientific.Visualization.VMD.SceneFile-class.html#__init__,Method Visualization.VMD.ShapeObject.__init__()=Scientific.Visualization.VMD.ShapeObject-class.html#__init__,Method Visualization.VMD.Sphere.__init__()=Scientific.Visualization.VMD.Sphere-class.html#__init__,Method Visualization.VMD.VMDObject.__init__()=Scientific.Visualization.VMD.VMDObject-class.html#__init__,Method Visualization.VPython.Arrow.__init__()=Scientific.Visualization.VPython.Arrow-class.html#__init__,Method Visualization.VPython.Cone.__init__()=Scientific.Visualization.VPython.Cone-class.html#__init__,Method Visualization.VPython.Cube.__init__()=Scientific.Visualization.VPython.Cube-class.html#__init__,Method Visualization.VPython.Cylinder.__init__()=Scientific.Visualization.VPython.Cylinder-class.html#__init__,Method Visualization.VPython.GraphicsObject.__init__()=Scientific.Visualization.VPython.GraphicsObject-class.html#__init__,Method Visualization.VPython.Group.__init__()=Scientific.Visualization.VPython.Group-class.html#__init__,Method Visualization.VPython.Line.__init__()=Scientific.Visualization.VPython.Line-class.html#__init__,Method Visualization.VPython.Material.__init__()=Scientific.Visualization.VPython.Material-class.html#__init__,Method Visualization.VPython.PolyLines.__init__()=Scientific.Visualization.VPython.PolyLines-class.html#__init__,Method Visualization.VPython.Polygons.__init__()=Scientific.Visualization.VPython.Polygons-class.html#__init__,Method Visualization.VPython.Scene.__init__()=Scientific.Visualization.VPython.Scene-class.html#__init__,Method Visualization.VPython.Sphere.__init__()=Scientific.Visualization.VPython.Sphere-class.html#__init__,Method Visualization.VRML.Arrow.__init__()=Scientific.Visualization.VRML.Arrow-class.html#__init__,Method Visualization.VRML.Cone.__init__()=Scientific.Visualization.VRML.Cone-class.html#__init__,Method Visualization.VRML.Cube.__init__()=Scientific.Visualization.VRML.Cube-class.html#__init__,Method Visualization.VRML.Cylinder.__init__()=Scientific.Visualization.VRML.Cylinder-class.html#__init__,Method Visualization.VRML.Group.__init__()=Scientific.Visualization.VRML.Group-class.html#__init__,Method Visualization.VRML.Line.__init__()=Scientific.Visualization.VRML.Line-class.html#__init__,Method Visualization.VRML.LinearOrientedObject.__init__()=Scientific.Visualization.VRML.LinearOrientedObject-class.html#__init__,Method Visualization.VRML.Material.__init__()=Scientific.Visualization.VRML.Material-class.html#__init__,Method Visualization.VRML.PolyLines.__init__()=Scientific.Visualization.VRML.PolyLines-class.html#__init__,Method Visualization.VRML.Polygons.__init__()=Scientific.Visualization.VRML.Polygons-class.html#__init__,Method Visualization.VRML.Scene.__init__()=Scientific.Visualization.VRML.Scene-class.html#__init__,Method Visualization.VRML.SceneFile.__init__()=Scientific.Visualization.VRML.SceneFile-class.html#__init__,Method Visualization.VRML.ShapeObject.__init__()=Scientific.Visualization.VRML.ShapeObject-class.html#__init__,Method Visualization.VRML.Sphere.__init__()=Scientific.Visualization.VRML.Sphere-class.html#__init__,Method Visualization.VRML.VRMLObject.__init__()=Scientific.Visualization.VRML.VRMLObject-class.html#__init__,Method Visualization.VRML2.Arrow.__init__()=Scientific.Visualization.VRML2.Arrow-class.html#__init__,Method Visualization.VRML2.Camera.__init__()=Scientific.Visualization.VRML2.Camera-class.html#__init__,Method Visualization.VRML2.Cone.__init__()=Scientific.Visualization.VRML2.Cone-class.html#__init__,Method Visualization.VRML2.Cube.__init__()=Scientific.Visualization.VRML2.Cube-class.html#__init__,Method Visualization.VRML2.Cylinder.__init__()=Scientific.Visualization.VRML2.Cylinder-class.html#__init__,Method Visualization.VRML2.Group.__init__()=Scientific.Visualization.VRML2.Group-class.html#__init__,Method Visualization.VRML2.Line.__init__()=Scientific.Visualization.VRML2.Line-class.html#__init__,Method Visualization.VRML2.LinearOrientedObject.__init__()=Scientific.Visualization.VRML2.LinearOrientedObject-class.html#__init__,Method Visualization.VRML2.Material.__init__()=Scientific.Visualization.VRML2.Material-class.html#__init__,Method Visualization.VRML2.NavigationInfo.__init__()=Scientific.Visualization.VRML2.NavigationInfo-class.html#__init__,Method Visualization.VRML2.PolyLines.__init__()=Scientific.Visualization.VRML2.PolyLines-class.html#__init__,Method Visualization.VRML2.Polygons.__init__()=Scientific.Visualization.VRML2.Polygons-class.html#__init__,Method Visualization.VRML2.Scene.__init__()=Scientific.Visualization.VRML2.Scene-class.html#__init__,Method Visualization.VRML2.SceneFile.__init__()=Scientific.Visualization.VRML2.SceneFile-class.html#__init__,Method Visualization.VRML2.ShapeObject.__init__()=Scientific.Visualization.VRML2.ShapeObject-class.html#__init__,Method Visualization.VRML2.Sphere.__init__()=Scientific.Visualization.VRML2.Sphere-class.html#__init__,Method Visualization.VRML2.VRMLObject.__init__()=Scientific.Visualization.VRML2.VRMLObject-class.html#__init__,Method indexing._index_expression_class.__init__()=Scientific.indexing._index_expression_class-class.html#__init__'); return false;">__init__</a></span></span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">,</span> <span class="py-name">locals</span><span class="py-op">)</span> </span>
+</div><span class="lineno">158</span>  <span class="py-line"> </span>
+<a name="ParallelInterpreter.mainloop"></a><div id="ParallelInterpreter.mainloop-def"><span class="lineno">159</span> <a class="pysrc-toggle" href="#" id="ParallelInterpreter.mainloop-toggle" onclick="toggle('ParallelInterpreter.mainloop'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console.ParallelInterpreter-class.html#mainloop">mainloop</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParallelInterpreter.mainloop-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ParallelInterpreter.mainloop-expanded"><span class="lineno">160</span>  <span class="py-line">        <span class="py-keyword">while</span> <span class="py-number">1</span><span class="py-op">:</span> </span>
+<span class="lineno">161</span>  <span class="py-line">            <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a><span class="py-op">.</span><span id="link-28" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.close
+Scientific.IO.NetCDF.NetCDFFile.close
+Scientific.IO.PDB.PDBFile.close
+Scientific.IO.TextFile.TextFile.close
+Scientific.MPI.IO.LogFile.close
+Scientific.Visualization.VMD.SceneFile.close
+Scientific.Visualization.VRML.SceneFile.close
+Scientific.Visualization.VRML2.SceneFile.close" class="py-name" href="#" onclick="doclink('link-28', 'close', 'Method Scientific.BSP.IO._ParNetCDFFile.close()=Scientific.BSP.IO._ParNetCDFFile-class.html#close,Method Scientific.IO.NetCDF.NetCDFFile.close()=Scientific.IO.NetCDF.NetCDFFile-class.html#close,Method Scientific.IO.PDB.PDBFile.close()=Scientific.IO.PDB.PDBFile-class.html#close,Method Scientific.IO.TextFile.TextFile.close()=Scientific.IO.TextFile.TextFile-class.html#close,Method Scientific.MPI.IO.LogFile.close()=Scientific.MPI.IO.LogFile-class.html#close,Method Scientific.Visualization.VMD.SceneFile.close()=Scientific.Visualization.VMD.SceneFile-class.html#close,Method Scientific.Visualization.VRML.SceneFile.close()=Scientific.Visualization.VRML.SceneFile-class.html#close,Method Scientific.Visualization.VRML2.SceneFile.close()=Scientific.Visualization.VRML2.SceneFile-class.html#close'); return false;">close</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">162</span>  <span class="py-line">            <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a> <span class="py-op">=</span> <span class="py-name">StringIO</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">163</span>  <span class="py-line">            <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a><span class="py-op">.</span><span id="link-29" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.close
+Scientific.IO.NetCDF.NetCDFFile.close
+Scientific.IO.PDB.PDBFile.close
+Scientific.IO.TextFile.TextFile.close
+Scientific.MPI.IO.LogFile.close
+Scientific.Visualization.VMD.SceneFile.close
+Scientific.Visualization.VRML.SceneFile.close
+Scientific.Visualization.VRML2.SceneFile.close" class="py-name" href="#" onclick="doclink('link-29', 'close', 'Method Scientific.BSP.IO._ParNetCDFFile.close()=Scientific.BSP.IO._ParNetCDFFile-class.html#close,Method Scientific.IO.NetCDF.NetCDFFile.close()=Scientific.IO.NetCDF.NetCDFFile-class.html#close,Method Scientific.IO.PDB.PDBFile.close()=Scientific.IO.PDB.PDBFile-class.html#close,Method Scientific.IO.TextFile.TextFile.close()=Scientific.IO.TextFile.TextFile-class.html#close,Method Scientific.MPI.IO.LogFile.close()=Scientific.MPI.IO.LogFile-class.html#close,Method Scientific.Visualization.VMD.SceneFile.close()=Scientific.Visualization.VMD.SceneFile-class.html#close,Method Scientific.Visualization.VRML.SceneFile.close()=Scientific.Visualization.VRML.SceneFile-class.html#close,Method Scientific.Visualization.VRML2.SceneFile.close()=Scientific.Visualization.VRML2.SceneFile-class.html#close'); return false;">close</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">164</span>  <span class="py-line">            <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a> <span class="py-op">=</span> <span class="py-name">StringIO</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">165</span>  <span class="py-line">            <span class="py-name">source</span> <span class="py-op">=</span> <span id="link-30" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-30', 'sync', 'Method Scientific.BSP.IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function Scientific.BSP.core.sync()=Scientific.BSP.core-module.html#sync,Method Scientific.IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span> </span>
+<span class="lineno">166</span>  <span class="py-line">            <span class="py-keyword">if</span> <span class="py-name">source</span> <span class="py-keyword">is</span> <span class="py-name">None</span><span class="py-op">:</span> </span>
+<span class="lineno">167</span>  <span class="py-line">                <span class="py-keyword">break</span> </span>
+<span class="lineno">168</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">runsource</span><span class="py-op">(</span><span class="py-name">source</span><span class="py-op">)</span> </span>
+<span class="lineno">169</span>  <span class="py-line">            <a title="Scientific.BSP.Console.synchronize" class="py-name" href="Scientific.BSP.Console-module.html#synchronize">synchronize</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">170</span>  <span class="py-line">            <span id="link-31" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-31', 'put', 'Method Scientific.BSP.ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method Scientific.BSP.ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function Scientific.BSP.core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span><span class="py-op">(</span><span class="py-op">(</span><span id="link-32" class="py-name"><a title="Scientific.BSP.Console.processorID
+Scientific.BSP.core.processorID
+Scientific.BSP.processorID" class="py-name" href="#" onclick="doclink('link-32', 'processorID', 'Variable Scientific.BSP.Console.processorID=Scientific.BSP.Console-module.html#processorID,Variable Scientific.BSP.core.processorID=Scientific.BSP.core-module.html#processorID,Variable Scientific.BSP.processorID=Scientific.BSP-module.html#processorID'); return false;">processorID</a></span></span><span class="py-op">,</span> <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a><span class="py-op">.</span><span class="py-name">getvalue</span><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span> <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a><span class="py-op">.</span><span class="py-name">getvalue</span><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">,</span> </span>
+<span class="lineno">171</span>  <span class="py-line">                <span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno">172</span>  <span class="py-line">            <span id="link-33" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-33', 'sync', 'Method Scientific.BSP.IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function Scientific.BSP.core.sync()=Scientific.BSP.core-module.html#sync,Method Scientific.IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div></div><span class="lineno">173</span>  <span class="py-line"> </span>
+<span class="lineno">174</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno">175</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Parallel console function</span> </span>
+<span class="lineno">176</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="console"></a><div id="console-def"><span class="lineno">177</span> <a class="pysrc-toggle" href="#" id="console-toggle" onclick="toggle('console'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console-module.html#console">console</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="console-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="console-expanded"><span class="lineno">178</span>  <span class="py-line">    <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a> <span class="py-op">=</span> <a title="Scientific.BSP.Console.OutputStream" class="py-name" href="Scientific.BSP.Console.OutputStream-class.html">OutputStream</a><span class="py-op">(</span><a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a><span class="py-op">)</span> </span>
+<span class="lineno">179</span>  <span class="py-line">    <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a> <span class="py-op">=</span> <a title="Scientific.BSP.Console.OutputStream" class="py-name" href="Scientific.BSP.Console.OutputStream-class.html">OutputStream</a><span class="py-op">(</span><a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a><span class="py-op">)</span> </span>
+<span class="lineno">180</span>  <span class="py-line">    <span class="py-name">my_console</span> <span class="py-op">=</span> <a title="Scientific.BSP.Console.ParallelConsole" class="py-name" href="Scientific.BSP.Console.ParallelConsole-class.html">ParallelConsole</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">181</span>  <span class="py-line">    <span class="py-name">my_console</span><span class="py-op">.</span><span class="py-name">raw_input</span> <span class="py-op">=</span> <span class="py-name">raw_input</span> </span>
+<span class="lineno">182</span>  <span class="py-line">    <span class="py-name">my_console</span><span class="py-op">.</span><span id="link-34" class="py-name"><a title="Scientific.BSP.Console.ParallelConsole.mainloop
+Scientific.BSP.Console.ParallelInterpreter.mainloop" class="py-name" href="#" onclick="doclink('link-34', 'mainloop', 'Method ParallelConsole.mainloop()=Scientific.BSP.Console.ParallelConsole-class.html#mainloop,Method ParallelInterpreter.mainloop()=Scientific.BSP.Console.ParallelInterpreter-class.html#mainloop'); return false;">mainloop</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div><span class="lineno">183</span>  <span class="py-line"> </span>
+<a name="interpreter"></a><div id="interpreter-def"><span class="lineno">184</span> <a class="pysrc-toggle" href="#" id="interpreter-toggle" onclick="toggle('interpreter'); return false;">-</a><span class="py-line"><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Console-module.html#interpreter">interpreter</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="interpreter-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="interpreter-expanded"><span class="lineno">185</span>  <span class="py-line">    <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stdout" class="py-name" href="sys-module.html#stdout">stdout</a> <span class="py-op">=</span> <span class="py-name">StringIO</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">186</span>  <span class="py-line">    <a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.stderr" class="py-name" href="sys-module.html#stderr">stderr</a> <span class="py-op">=</span> <span class="py-name">StringIO</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">187</span>  <span class="py-line">    <span class="py-name">my_interpreter</span> <span class="py-op">=</span> <a title="Scientific.BSP.Console.ParallelInterpreter" class="py-name" href="Scientific.BSP.Console.ParallelInterpreter-class.html">ParallelInterpreter</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">188</span>  <span class="py-line">    <span class="py-name">my_interpreter</span><span class="py-op">.</span><span id="link-35" class="py-name"><a title="Scientific.BSP.Console.ParallelConsole.mainloop
+Scientific.BSP.Console.ParallelInterpreter.mainloop" class="py-name" href="#" onclick="doclink('link-35', 'mainloop', 'Method ParallelConsole.mainloop()=Scientific.BSP.Console.ParallelConsole-class.html#mainloop,Method ParallelInterpreter.mainloop()=Scientific.BSP.Console.ParallelInterpreter-class.html#mainloop'); return false;">mainloop</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div><span class="lineno">189</span>  <span class="py-line"> </span>
+<span class="lineno">190</span>  <span class="py-line"><span class="py-name">parallelConsole</span> <span class="py-op">=</span> <a class="py-name" href="Scientific.BSP.ParRootFunction-class.html">ParRootFunction</a><span class="py-op">(</span><a class="py-name" href="Scientific.BSP.Console-module.html#console">console</a><span class="py-op">,</span> <a class="py-name" href="Scientific.BSP.Console-module.html#interpreter">interpreter</a><span class="py-op">)</span> </span>
+<span class="lineno">191</span>  <span class="py-line"> </span>
+<span class="lineno">192</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno">193</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Run parallel console</span> </span>
+<span class="lineno">194</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">195</span>  <span class="py-line"><span class="py-comment"></span><span class="py-keyword">if</span> <span class="py-name">__name__</span> <span class="py-op">==</span> <span class="py-string">'__main__'</span><span class="py-op">:</span> </span>
+<span class="lineno">196</span>  <span class="py-line">    <span class="py-name">parallelConsole</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">197</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:44:19 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

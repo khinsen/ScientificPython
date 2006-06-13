@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.IO.PDB.Structure</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.IO-module.html">Package&nbsp;IO</a> ::
+        <a href="Scientific.IO.PDB-module.html">Module&nbsp;PDB</a> ::
+        Class&nbsp;Structure
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.IO.PDB.Structure-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h2 class="class">Class Structure
+<br/><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure">source&nbsp;code</a></span></h2>
+<p>A high-level representation of the contents of a PDB file</p>
+  The components of a structure can be accessed in several ways ('s' is 
+  an instance of this class):
+  <ul>
+    <li>
+      's.residues' is a list of all PDB residues, in the order in which 
+      they occurred in the file.
+    </li>
+    <li>
+      's.peptide_chains' is a list of PeptideChain objects, containing 
+      all peptide chains in the file in their original order.
+    </li>
+    <li>
+      's.nucleotide_chains' is a list of NucleotideChain objects, 
+      containing all nucleotide chains in the file in their original 
+      order.
+    </li>
+    <li>
+      's.molecules' is a list of all PDB residues that are neither amino
+      acid residues nor nucleotide residues, in their original order.
+    </li>
+    <li>
+      's.objects' is a list of all high-level objects (peptide chains, 
+      nucleotide chains, and molecules) in their original order.
+    </li>
+  </ul>
+  An iteration over a Structure instance by a for-loop is equivalent to 
+  an iteration over the residue list.<br /><br />
+
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Nested Classes</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-NestedClasses"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.IO.PDB.Molecule-class.html">molecule_constructor</a></strong></td>
+  <td class="summary">Molecule in a PDB file</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.IO.PDB.NucleotideChain-class.html">nucleotide_chain_constructor</a></strong></td>
+  <td class="summary">Nucleotide chain in a PDB file</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.IO.PDB.PeptideChain-class.html">peptide_chain_constructor</a></strong></td>
+  <td class="summary">Peptide chain in a PDB file</td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Instance Methods</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#__getitem__" class="sig-name">__getitem__</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">item</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#__init__" class="sig-name">__init__</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">model</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">alternate_code</span>=<span class="sig-default">'A'</span>)</span>
+    <br />Constructor: Structure(|filename|, |model|='0', 
+      |alternate_code|='&quot;A&quot;'),
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#__len__" class="sig-name">__len__</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#__repr__" class="sig-name">__repr__</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#_joinChains" class="sig-name">_joinChains</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">constructor</span>,
+        <span class="sig-arg">chain_list</span>,
+        <span class="sig-arg">first</span>,
+        <span class="sig-arg">second</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#_splitChain" class="sig-name">_splitChain</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">constructor</span>,
+        <span class="sig-arg">chain_list</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">position</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#addMolecule" class="sig-name">addMolecule</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">molecule</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#deleteHydrogens" class="sig-name">deleteHydrogens</a>(<span class="sig-arg">self</span>)</span>
+    <br />Remove all hydrogen atoms
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#extractData" class="sig-name">extractData</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#joinNucleotideChains" class="sig-name">joinNucleotideChains</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">first</span>,
+        <span class="sig-arg">second</span>)</span>
+    <br />Join two nucleotide chains into a single one.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#joinPeptideChains" class="sig-name">joinPeptideChains</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">first</span>,
+        <span class="sig-arg">second</span>)</span>
+    <br />Join two peptide chains into a single one.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#newChain" class="sig-name">newChain</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">residue</span>,
+        <span class="sig-arg">chain_data</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#newResidue" class="sig-name">newResidue</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">residue_data</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#parseFile" class="sig-name">parseFile</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#renumberAtoms" class="sig-name">renumberAtoms</a>(<span class="sig-arg">self</span>)</span>
+    <br />Renumber all atoms sequentially starting with 1
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#splitNucleotideChain" class="sig-name">splitNucleotideChain</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">position</span>)</span>
+    <br />Split a nucleotide chain into two chains
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#splitPeptideChain" class="sig-name">splitPeptideChain</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">position</span>)</span>
+    <br />Split a peptide chain into two chains
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Structure-class.html#writeToFile" class="sig-name">writeToFile</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>)</span>
+    <br />Write everything to a file
+  </td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Method Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__getitem__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__getitem__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">item</span>)</span>
+    <br /><em class="fname">(Indexing operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.__getitem__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="__init__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">model</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">alternate_code</span>=<span class="sig-default">'A'</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.__init__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Constructor: Structure(|filename|, |model|='0', 
+  |alternate_code|='&quot;A&quot;'),
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>filename</code></strong> (<code><code>string</code></code>) - the name of the PDB file. Compressed files and URLs are 
+          accepted, as for class <a 
+          href="Scientific.IO.PDB.PDBFile-class.html" 
+          class="link">PDBFile</a>.</li>
+        <li><strong class="pname"><code>model</code></strong> (<code><code>int</code></code>) - the number of the model to read from a multiple-model file. 
+          Only one model can be treated at a time.</li>
+        <li><strong class="pname"><code>alternate_code</code></strong> (<code>single-letter <code>string</code></code>) - the version of the positions to be read from a file with 
+          alternate positions.</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="__len__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__len__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Length operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.__len__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="__repr__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.__repr__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_joinChains"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_joinChains</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">constructor</span>,
+        <span class="sig-arg">chain_list</span>,
+        <span class="sig-arg">first</span>,
+        <span class="sig-arg">second</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure._joinChains">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_splitChain"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_splitChain</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">constructor</span>,
+        <span class="sig-arg">chain_list</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">position</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure._splitChain">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addMolecule"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addMolecule</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">molecule</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.addMolecule">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="deleteHydrogens"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">deleteHydrogens</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.deleteHydrogens">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Remove all hydrogen atoms
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="extractData"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">extractData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.extractData">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="joinNucleotideChains"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">joinNucleotideChains</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">first</span>,
+        <span class="sig-arg">second</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.joinNucleotideChains">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Join two nucleotide chains into a single one. The new chain occupies 
+  the position of the first chain, the second one is removed from the 
+  nucleotide chain list.
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>first</code></strong> (<code><code>int</code></code>) - the number of the first chain</li>
+        <li><strong class="pname"><code>second</code></strong> (<code><code>int</code></code>) - the number of the second chain</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="joinPeptideChains"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">joinPeptideChains</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">first</span>,
+        <span class="sig-arg">second</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.joinPeptideChains">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Join two peptide chains into a single one. The new chain occupies the 
+  position of the first chain, the second one is removed from the peptide 
+  chain list.
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>first</code></strong> (<code><code>int</code></code>) - the number of the first chain</li>
+        <li><strong class="pname"><code>second</code></strong> (<code><code>int</code></code>) - the number of the second chain</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="newChain"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">newChain</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">residue</span>,
+        <span class="sig-arg">chain_data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.newChain">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="newResidue"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">newResidue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">residue_data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.newResidue">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="parseFile"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">parseFile</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.parseFile">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="renumberAtoms"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">renumberAtoms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.renumberAtoms">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Renumber all atoms sequentially starting with 1
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="splitNucleotideChain"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">splitNucleotideChain</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">position</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.splitNucleotideChain">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Split a nucleotide chain into two chains</p>
+  The two chain fragments remain adjacent in the nucleotide chain list, 
+  i.e. the numbers of all following chains increase by one.
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>number</code></strong> (<code><code>int</code></code>) - the number of the nucleotide chain to be split</li>
+        <li><strong class="pname"><code>position</code></strong> (<code><code>int</code></code>) - the residue index at which the chain is split.</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="splitPeptideChain"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">splitPeptideChain</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">position</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.splitPeptideChain">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Split a peptide chain into two chains</p>
+  The two chain fragments remain adjacent in the peptide chain list, 
+  i.e. the numbers of all following chains increase by one.
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>number</code></strong> (<code><code>int</code></code>) - the number of the peptide chain to be split</li>
+        <li><strong class="pname"><code>position</code></strong> (<code><code>int</code></code>) - the residue index at which the chain is split.</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="writeToFile"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">writeToFile</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Structure.writeToFile">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Write everything to a file
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>file</code></strong> (<code><a href="Scientific.IO.PDB.PDBFile-class.html" 
+          class="link">PDBFile</a> or <code>string</code></code>) - a PDB file object or a filename</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:39:59 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

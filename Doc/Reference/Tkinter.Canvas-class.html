@@ -1,0 +1,2590 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Tkinter.Canvas</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Tkinter ::
+        Canvas ::
+        Class&nbsp;Canvas
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Tkinter.Canvas-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h2 class="class">Class Canvas</h2>
+<pre class="base-tree">
+  <a href="Tkinter.Misc-class.html">Misc</a> --+        
+         |        
+<a href="Tkinter.BaseWidget-class.html">BaseWidget</a> --+    
+             |    
+      <a href="Tkinter.Pack-class.html">Pack</a> --+    
+             |    
+     <a href="Tkinter.Place-class.html">Place</a> --+    
+             |    
+      <a href="Tkinter.Grid-class.html">Grid</a> --+    
+             |    
+        <a href="Tkinter.Widget-class.html">Widget</a> --+
+                 |
+                <strong class="uidshort">Canvas</strong>
+</pre>
+
+<hr />
+Canvas widget to display graphical elements like lines or text.<br /><br />
+
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Nested Classes</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-NestedClasses"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.Misc-class.html">Misc</a></code></span>:
+      <code><a href="float-class.html">getdouble</a></code>,
+      <code><a href="int-class.html">getint</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<br />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Instance Methods</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#__init__" class="sig-name">__init__</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">master</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Construct a canvas widget with the parent MASTER.
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#_create" class="sig-name">_create</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemType</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">kw</span>)</span>
+    <br />Internal function.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#addtag" class="sig-name">addtag</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Internal function.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#addtag_above" class="sig-name">addtag_above</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+    <br />Add tag NEWTAG to all items above TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#addtag_all" class="sig-name">addtag_all</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>)</span>
+    <br />Add tag NEWTAG to all items.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#addtag_below" class="sig-name">addtag_below</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+    <br />Add tag NEWTAG to all items below TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#addtag_closest" class="sig-name">addtag_closest</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>,
+        <span class="sig-arg">halo</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">start</span>=<span class="sig-default">None</span>)</span>
+    <br />Add tag NEWTAG to item which is closest to pixel at X, Y.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#addtag_enclosed" class="sig-name">addtag_enclosed</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">x1</span>,
+        <span class="sig-arg">y1</span>,
+        <span class="sig-arg">x2</span>,
+        <span class="sig-arg">y2</span>)</span>
+    <br />Add tag NEWTAG to all items in the rectangle defined by 
+      X1,Y1,X2,Y2.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#addtag_overlapping" class="sig-name">addtag_overlapping</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">x1</span>,
+        <span class="sig-arg">y1</span>,
+        <span class="sig-arg">x2</span>,
+        <span class="sig-arg">y2</span>)</span>
+    <br />Add tag NEWTAG to all items which overlap the rectangle defined by
+      X1,Y1,X2,Y2.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#addtag_withtag" class="sig-name">addtag_withtag</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+    <br />Add tag NEWTAG to all items with TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#bbox" class="sig-name">bbox</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Return a tuple of X1,Y1,X2,Y2 coordinates for a rectangle which 
+      encloses all items with tags specified as arguments.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#canvasx" class="sig-name">canvasx</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">screenx</span>,
+        <span class="sig-arg">gridspacing</span>=<span class="sig-default">None</span>)</span>
+    <br />Return the canvas x coordinate of pixel position SCREENX rounded 
+      to nearest multiple of GRIDSPACING units.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#canvasy" class="sig-name">canvasy</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">screeny</span>,
+        <span class="sig-arg">gridspacing</span>=<span class="sig-default">None</span>)</span>
+    <br />Return the canvas y coordinate of pixel position SCREENY rounded 
+      to nearest multiple of GRIDSPACING units.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#coords" class="sig-name">coords</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Return a list of coordinates for the item given in ARGS.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_arc" class="sig-name">create_arc</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create arc shaped region with coordinates x1,y1,x2,y2.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_bitmap" class="sig-name">create_bitmap</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create bitmap with coordinates x1,y1.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_image" class="sig-name">create_image</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create image item with coordinates x1,y1.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_line" class="sig-name">create_line</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create line with coordinates x1,y1,...,xn,yn.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_oval" class="sig-name">create_oval</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create oval with coordinates x1,y1,x2,y2.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_polygon" class="sig-name">create_polygon</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create polygon with coordinates x1,y1,...,xn,yn.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_rectangle" class="sig-name">create_rectangle</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create rectangle with coordinates x1,y1,x2,y2.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_text" class="sig-name">create_text</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create text with coordinates x1,y1.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#create_window" class="sig-name">create_window</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Create window with coordinates x1,y1,x2,y2.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#dchars" class="sig-name">dchars</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Delete characters of text items identified by tag or id in ARGS 
+      (possibly several times) from FIRST to LAST character 
+      (including).
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#delete" class="sig-name">delete</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Delete items identified by all tag or ids contained in ARGS.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#dtag" class="sig-name">dtag</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Delete tag or id given as last arguments in ARGS from items 
+      identified by first argument in ARGS.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#find" class="sig-name">find</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Internal function.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#find_above" class="sig-name">find_above</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+    <br />Return items above TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#find_all" class="sig-name">find_all</a>(<span class="sig-arg">self</span>)</span>
+    <br />Return all items.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#find_below" class="sig-name">find_below</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+    <br />Return all items below TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#find_closest" class="sig-name">find_closest</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>,
+        <span class="sig-arg">halo</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">start</span>=<span class="sig-default">None</span>)</span>
+    <br />Return item which is closest to pixel at X, Y.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#find_enclosed" class="sig-name">find_enclosed</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x1</span>,
+        <span class="sig-arg">y1</span>,
+        <span class="sig-arg">x2</span>,
+        <span class="sig-arg">y2</span>)</span>
+    <br />Return all items in rectangle defined by X1,Y1,X2,Y2.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#find_overlapping" class="sig-name">find_overlapping</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x1</span>,
+        <span class="sig-arg">y1</span>,
+        <span class="sig-arg">x2</span>,
+        <span class="sig-arg">y2</span>)</span>
+    <br />Return all items which overlap the rectangle defined by 
+      X1,Y1,X2,Y2.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#find_withtag" class="sig-name">find_withtag</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+    <br />Return all items with TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#focus" class="sig-name">focus</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Set focus to the first item specified in ARGS.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#gettags" class="sig-name">gettags</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Return tags associated with the first item specified in ARGS.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#icursor" class="sig-name">icursor</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Set cursor at position POS in the item identified by TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#index" class="sig-name">index</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Return position of cursor as integer in item specified in 
+      ARGS.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#insert" class="sig-name">insert</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Insert TEXT in item TAGORID at position POS.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#itemcget" class="sig-name">itemcget</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">option</span>)</span>
+    <br />Return the resource value for an OPTION for item TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#itemconfig" class="sig-name">itemconfig</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Configure resources of an item TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#itemconfigure" class="sig-name">itemconfigure</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Configure resources of an item TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#lift" class="sig-name">lift</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Raise an item TAGORID given in ARGS (optional above another 
+      item).
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#lower" class="sig-name">lower</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Lower an item TAGORID given in ARGS (optional below another 
+      item).
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#move" class="sig-name">move</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Move an item TAGORID given in ARGS.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#postscript" class="sig-name">postscript</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Print the contents of the canvas to a postscript file.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#scale" class="sig-name">scale</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Scale item TAGORID with XORIGIN, YORIGIN, XSCALE, YSCALE.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#scan_dragto" class="sig-name">scan_dragto</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>,
+        <span class="sig-arg">gain</span>=<span class="sig-default">10</span>)</span>
+    <br />Adjust the view of the canvas to GAIN times the difference between
+      X and Y and the coordinates given in scan_mark.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#scan_mark" class="sig-name">scan_mark</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>)</span>
+    <br />Remember the current X, Y coordinates.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#select_adjust" class="sig-name">select_adjust</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">index</span>)</span>
+    <br />Adjust the end of the selection near the cursor of an item TAGORID
+      to index.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#select_clear" class="sig-name">select_clear</a>(<span class="sig-arg">self</span>)</span>
+    <br />Clear the selection if it is in this widget.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#select_from" class="sig-name">select_from</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">index</span>)</span>
+    <br />Set the fixed end of a selection in item TAGORID to INDEX.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#select_item" class="sig-name">select_item</a>(<span class="sig-arg">self</span>)</span>
+    <br />Return the item which has the selection.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#select_to" class="sig-name">select_to</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">index</span>)</span>
+    <br />Set the variable end of a selection in item TAGORID to INDEX.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#tag_bind" class="sig-name">tag_bind</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">sequence</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">func</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">add</span>=<span class="sig-default">None</span>)</span>
+    <br />Bind to all items with TAGORID at event SEQUENCE a call to 
+      function FUNC.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#tag_lower" class="sig-name">tag_lower</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Lower an item TAGORID given in ARGS (optional below another 
+      item).
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#tag_raise" class="sig-name">tag_raise</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Raise an item TAGORID given in ARGS (optional above another 
+      item).
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#tag_unbind" class="sig-name">tag_unbind</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">sequence</span>,
+        <span class="sig-arg">funcid</span>=<span class="sig-default">None</span>)</span>
+    <br />Unbind for all items with TAGORID for event SEQUENCE  the function
+      identified with FUNCID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#tkraise" class="sig-name">tkraise</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Raise an item TAGORID given in ARGS (optional above another 
+      item).
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#type" class="sig-name">type</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+    <br />Return the type of the item TAGORID.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#xview" class="sig-name">xview</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Query and change horizontal position of the view.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#xview_moveto" class="sig-name">xview_moveto</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fraction</span>)</span>
+    <br />Adjusts the view in the window so that FRACTION of the total width
+      of the canvas is off-screen to the left.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#xview_scroll" class="sig-name">xview_scroll</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">what</span>)</span>
+    <br />Shift the x-view according to NUMBER which is measured in 
+      &quot;units&quot; or &quot;pages&quot; (WHAT).
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#yview" class="sig-name">yview</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Query and change vertical position of the view.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#yview_moveto" class="sig-name">yview_moveto</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fraction</span>)</span>
+    <br />Adjusts the view in the window so that FRACTION of the total 
+      height of the canvas is off-screen to the top.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Canvas-class.html#yview_scroll" class="sig-name">yview_scroll</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">what</span>)</span>
+    <br />Shift the y-view according to NUMBER which is measured in 
+      &quot;units&quot; or &quot;pages&quot; (WHAT).
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.BaseWidget-class.html">BaseWidget</a></code></span>:
+      <code><a href="Tkinter.BaseWidget-class.html#destroy">destroy</a></code>
+      </p>
+    <div class="private">    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.BaseWidget-class.html">BaseWidget</a></code></span> (private):
+      <code><a href="Tkinter.BaseWidget-class.html#_do">_do</a></code>,
+      <code><a href="Tkinter.BaseWidget-class.html#_setup">_setup</a></code>
+      </p></div>
+    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.Misc-class.html">Misc</a></code></span>:
+      <code><a href="Tkinter.Misc-class.html#__getitem__">__getitem__</a></code>,
+      <code><a href="Tkinter.Misc-class.html#__setitem__">__setitem__</a></code>,
+      <code><a href="Tkinter.Misc-class.html#__str__">__str__</a></code>,
+      <code><a href="Tkinter.Misc-class.html#after">after</a></code>,
+      <code><a href="Tkinter.Misc-class.html#after_cancel">after_cancel</a></code>,
+      <code><a href="Tkinter.Misc-class.html#after_idle">after_idle</a></code>,
+      <code><a href="Tkinter.Misc-class.html#bell">bell</a></code>,
+      <code><a href="Tkinter.Misc-class.html#bind">bind</a></code>,
+      <code><a href="Tkinter.Misc-class.html#bind_all">bind_all</a></code>,
+      <code><a href="Tkinter.Misc-class.html#bind_class">bind_class</a></code>,
+      <code><a href="Tkinter.Misc-class.html#bindtags">bindtags</a></code>,
+      <code><a href="Tkinter.Misc-class.html#cget">cget</a></code>,
+      <code><a href="Tkinter.Misc-class.html#clipboard_append">clipboard_append</a></code>,
+      <code><a href="Tkinter.Misc-class.html#clipboard_clear">clipboard_clear</a></code>,
+      <code><a href="Tkinter.Misc-class.html#colormodel">colormodel</a></code>,
+      <code><a href="Tkinter.Misc-class.html#columnconfigure">columnconfigure</a></code>,
+      <code><a href="Tkinter.Misc-class.html#config">config</a></code>,
+      <code><a href="Tkinter.Misc-class.html#configure">configure</a></code>,
+      <code><a href="Tkinter.Misc-class.html#deletecommand">deletecommand</a></code>,
+      <code><a href="Tkinter.Misc-class.html#event_add">event_add</a></code>,
+      <code><a href="Tkinter.Misc-class.html#event_delete">event_delete</a></code>,
+      <code><a href="Tkinter.Misc-class.html#event_generate">event_generate</a></code>,
+      <code><a href="Tkinter.Misc-class.html#event_info">event_info</a></code>,
+      <code><a href="Tkinter.Misc-class.html#focus_displayof">focus_displayof</a></code>,
+      <code><a href="Tkinter.Misc-class.html#focus_force">focus_force</a></code>,
+      <code><a href="Tkinter.Misc-class.html#focus_get">focus_get</a></code>,
+      <code><a href="Tkinter.Misc-class.html#focus_lastfor">focus_lastfor</a></code>,
+      <code><a href="Tkinter.Misc-class.html#focus_set">focus_set</a></code>,
+      <code><a href="Tkinter.Misc-class.html#getboolean">getboolean</a></code>,
+      <code><a href="Tkinter.Misc-class.html#getvar">getvar</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grab_current">grab_current</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grab_release">grab_release</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grab_set">grab_set</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grab_set_global">grab_set_global</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grab_status">grab_status</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grid_bbox">grid_bbox</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grid_columnconfigure">grid_columnconfigure</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grid_location">grid_location</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grid_propagate">grid_propagate</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grid_rowconfigure">grid_rowconfigure</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grid_size">grid_size</a></code>,
+      <code><a href="Tkinter.Misc-class.html#grid_slaves">grid_slaves</a></code>,
+      <code><a href="Tkinter.Misc-class.html#image_names">image_names</a></code>,
+      <code><a href="Tkinter.Misc-class.html#image_types">image_types</a></code>,
+      <code><a href="Tkinter.Misc-class.html#keys">keys</a></code>,
+      <code><a href="Tkinter.Misc-class.html#mainloop">mainloop</a></code>,
+      <code><a href="Tkinter.Misc-class.html#nametowidget">nametowidget</a></code>,
+      <code><a href="Tkinter.Misc-class.html#option_add">option_add</a></code>,
+      <code><a href="Tkinter.Misc-class.html#option_clear">option_clear</a></code>,
+      <code><a href="Tkinter.Misc-class.html#option_get">option_get</a></code>,
+      <code><a href="Tkinter.Misc-class.html#option_readfile">option_readfile</a></code>,
+      <code><a href="Tkinter.Misc-class.html#pack_propagate">pack_propagate</a></code>,
+      <code><a href="Tkinter.Misc-class.html#pack_slaves">pack_slaves</a></code>,
+      <code><a href="Tkinter.Misc-class.html#place_slaves">place_slaves</a></code>,
+      <code><a href="Tkinter.Misc-class.html#propagate">propagate</a></code>,
+      <code><a href="Tkinter.Misc-class.html#quit">quit</a></code>,
+      <code><a href="Tkinter.Misc-class.html#register">register</a></code>,
+      <code><a href="Tkinter.Misc-class.html#rowconfigure">rowconfigure</a></code>,
+      <code><a href="Tkinter.Misc-class.html#selection_clear">selection_clear</a></code>,
+      <code><a href="Tkinter.Misc-class.html#selection_get">selection_get</a></code>,
+      <code><a href="Tkinter.Misc-class.html#selection_handle">selection_handle</a></code>,
+      <code><a href="Tkinter.Misc-class.html#selection_own">selection_own</a></code>,
+      <code><a href="Tkinter.Misc-class.html#selection_own_get">selection_own_get</a></code>,
+      <code><a href="Tkinter.Misc-class.html#send">send</a></code>,
+      <code><a href="Tkinter.Misc-class.html#setvar">setvar</a></code>,
+      <code><a href="Tkinter.Misc-class.html#size">size</a></code>,
+      <code><a href="Tkinter.Misc-class.html#slaves">slaves</a></code>,
+      <code><a href="Tkinter.Misc-class.html#tk_bisque">tk_bisque</a></code>,
+      <code><a href="Tkinter.Misc-class.html#tk_focusFollowsMouse">tk_focusFollowsMouse</a></code>,
+      <code><a href="Tkinter.Misc-class.html#tk_focusNext">tk_focusNext</a></code>,
+      <code><a href="Tkinter.Misc-class.html#tk_focusPrev">tk_focusPrev</a></code>,
+      <code><a href="Tkinter.Misc-class.html#tk_menuBar">tk_menuBar</a></code>,
+      <code><a href="Tkinter.Misc-class.html#tk_setPalette">tk_setPalette</a></code>,
+      <code><a href="Tkinter.Misc-class.html#tk_strictMotif">tk_strictMotif</a></code>,
+      <code><a href="Tkinter.Misc-class.html#unbind">unbind</a></code>,
+      <code><a href="Tkinter.Misc-class.html#unbind_all">unbind_all</a></code>,
+      <code><a href="Tkinter.Misc-class.html#unbind_class">unbind_class</a></code>,
+      <code><a href="Tkinter.Misc-class.html#update">update</a></code>,
+      <code><a href="Tkinter.Misc-class.html#update_idletasks">update_idletasks</a></code>,
+      <code><a href="Tkinter.Misc-class.html#wait_variable">wait_variable</a></code>,
+      <code><a href="Tkinter.Misc-class.html#wait_visibility">wait_visibility</a></code>,
+      <code><a href="Tkinter.Misc-class.html#wait_window">wait_window</a></code>,
+      <code><a href="Tkinter.Misc-class.html#waitvar">waitvar</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_atom">winfo_atom</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_atomname">winfo_atomname</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_cells">winfo_cells</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_children">winfo_children</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_class">winfo_class</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_colormapfull">winfo_colormapfull</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_containing">winfo_containing</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_depth">winfo_depth</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_exists">winfo_exists</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_fpixels">winfo_fpixels</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_geometry">winfo_geometry</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_height">winfo_height</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_id">winfo_id</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_interps">winfo_interps</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_ismapped">winfo_ismapped</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_manager">winfo_manager</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_name">winfo_name</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_parent">winfo_parent</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_pathname">winfo_pathname</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_pixels">winfo_pixels</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_pointerx">winfo_pointerx</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_pointerxy">winfo_pointerxy</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_pointery">winfo_pointery</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_reqheight">winfo_reqheight</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_reqwidth">winfo_reqwidth</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_rgb">winfo_rgb</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_rootx">winfo_rootx</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_rooty">winfo_rooty</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_screen">winfo_screen</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_screencells">winfo_screencells</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_screendepth">winfo_screendepth</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_screenheight">winfo_screenheight</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_screenmmheight">winfo_screenmmheight</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_screenmmwidth">winfo_screenmmwidth</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_screenvisual">winfo_screenvisual</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_screenwidth">winfo_screenwidth</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_server">winfo_server</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_toplevel">winfo_toplevel</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_viewable">winfo_viewable</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_visual">winfo_visual</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_visualid">winfo_visualid</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_visualsavailable">winfo_visualsavailable</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_vrootheight">winfo_vrootheight</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_vrootwidth">winfo_vrootwidth</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_vrootx">winfo_vrootx</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_vrooty">winfo_vrooty</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_width">winfo_width</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_x">winfo_x</a></code>,
+      <code><a href="Tkinter.Misc-class.html#winfo_y">winfo_y</a></code>
+      </p>
+    <div class="private">    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.Misc-class.html">Misc</a></code></span> (private):
+      <code><a href="Tkinter.Misc-class.html#_bind">_bind</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_configure">_configure</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_displayof">_displayof</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_getboolean">_getboolean</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_getdoubles">_getdoubles</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_getints">_getints</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_grid_configure">_grid_configure</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_nametowidget">_nametowidget</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_options">_options</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_register">_register</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_report_exception">_report_exception</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_root">_root</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_substitute">_substitute</a></code>
+      </p></div>
+    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.Pack-class.html">Pack</a></code></span>:
+      <code><a href="Tkinter.Pack-class.html#forget">forget</a></code>,
+      <code><a href="Tkinter.Pack-class.html#info">info</a></code>,
+      <code><a href="Tkinter.Pack-class.html#pack">pack</a></code>,
+      <code><a href="Tkinter.Pack-class.html#pack_configure">pack_configure</a></code>,
+      <code><a href="Tkinter.Pack-class.html#pack_forget">pack_forget</a></code>,
+      <code><a href="Tkinter.Pack-class.html#pack_info">pack_info</a></code>
+      </p>
+    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.Place-class.html">Place</a></code></span>:
+      <code><a href="Tkinter.Place-class.html#place">place</a></code>,
+      <code><a href="Tkinter.Place-class.html#place_configure">place_configure</a></code>,
+      <code><a href="Tkinter.Place-class.html#place_forget">place_forget</a></code>,
+      <code><a href="Tkinter.Place-class.html#place_info">place_info</a></code>
+      </p>
+    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.Grid-class.html">Grid</a></code></span>:
+      <code><a href="Tkinter.Grid-class.html#grid">grid</a></code>,
+      <code><a href="Tkinter.Grid-class.html#grid_configure">grid_configure</a></code>,
+      <code><a href="Tkinter.Grid-class.html#grid_forget">grid_forget</a></code>,
+      <code><a href="Tkinter.Grid-class.html#grid_info">grid_info</a></code>,
+      <code><a href="Tkinter.Grid-class.html#grid_remove">grid_remove</a></code>,
+      <code><a href="Tkinter.Grid-class.html#location">location</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<br />
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Class Variables</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.Misc-class.html">Misc</a></code></span>:
+      <code><a href="Tkinter.Misc-class.html#_noarg_">_noarg_</a></code>
+      </p>
+    <div class="private">    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Tkinter.Misc-class.html">Misc</a></code></span> (private):
+      <code><a href="Tkinter.Misc-class.html#_subst_format">_subst_format</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_subst_format_str">_subst_format_str</a></code>,
+      <code><a href="Tkinter.Misc-class.html#_tclCommands">_tclCommands</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+
+<br />
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Method Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">master</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Construct a canvas widget with the parent MASTER.</p>
+  Valid resource names: background, bd, bg, borderwidth, closeenough, 
+  confine, cursor, height, highlightbackground, highlightcolor, 
+  highlightthickness, insertbackground, insertborderwidth, insertofftime, 
+  insertontime, insertwidth, offset, relief, scrollregion, 
+  selectbackground, selectborderwidth, selectforeground, state, takefocus, 
+  width, xscrollcommand, xscrollincrement, yscrollcommand, 
+  yscrollincrement.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      BaseWidget.__init__
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_create"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_create</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">itemType</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Internal function.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addtag"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addtag</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Internal function.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addtag_above"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addtag_above</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add tag NEWTAG to all items above TAGORID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addtag_all"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addtag_all</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add tag NEWTAG to all items.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addtag_below"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addtag_below</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add tag NEWTAG to all items below TAGORID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addtag_closest"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addtag_closest</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>,
+        <span class="sig-arg">halo</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">start</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add tag NEWTAG to item which is closest to pixel at X, Y. If several 
+  match take the top-most. All items closer than HALO are considered 
+  overlapping (all are closests). If START is specified the next below this
+  tag is taken.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addtag_enclosed"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addtag_enclosed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">x1</span>,
+        <span class="sig-arg">y1</span>,
+        <span class="sig-arg">x2</span>,
+        <span class="sig-arg">y2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add tag NEWTAG to all items in the rectangle defined by 
+  X1,Y1,X2,Y2.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addtag_overlapping"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addtag_overlapping</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">x1</span>,
+        <span class="sig-arg">y1</span>,
+        <span class="sig-arg">x2</span>,
+        <span class="sig-arg">y2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add tag NEWTAG to all items which overlap the rectangle defined by 
+  X1,Y1,X2,Y2.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addtag_withtag"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addtag_withtag</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">newtag</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Add tag NEWTAG to all items with TAGORID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="bbox"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">bbox</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a tuple of X1,Y1,X2,Y2 coordinates for a rectangle which 
+  encloses all items with tags specified as arguments.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      Misc.bbox
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="canvasx"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">canvasx</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">screenx</span>,
+        <span class="sig-arg">gridspacing</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return the canvas x coordinate of pixel position SCREENX rounded to 
+  nearest multiple of GRIDSPACING units.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="canvasy"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">canvasy</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">screeny</span>,
+        <span class="sig-arg">gridspacing</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return the canvas y coordinate of pixel position SCREENY rounded to 
+  nearest multiple of GRIDSPACING units.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="coords"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">coords</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a list of coordinates for the item given in ARGS.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_arc"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_arc</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create arc shaped region with coordinates x1,y1,x2,y2.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_bitmap"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_bitmap</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create bitmap with coordinates x1,y1.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_image"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_image</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create image item with coordinates x1,y1.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_line"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_line</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create line with coordinates x1,y1,...,xn,yn.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_oval"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_oval</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create oval with coordinates x1,y1,x2,y2.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_polygon"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_polygon</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create polygon with coordinates x1,y1,...,xn,yn.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_rectangle"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_rectangle</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create rectangle with coordinates x1,y1,x2,y2.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_text"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_text</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create text with coordinates x1,y1.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="create_window"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">create_window</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Create window with coordinates x1,y1,x2,y2.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="dchars"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">dchars</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Delete characters of text items identified by tag or id in ARGS 
+  (possibly several times) from FIRST to LAST character (including).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="delete"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">delete</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Delete items identified by all tag or ids contained in ARGS.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="dtag"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">dtag</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Delete tag or id given as last arguments in ARGS from items identified
+  by first argument in ARGS.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="find"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">find</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Internal function.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="find_above"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">find_above</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return items above TAGORID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="find_all"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">find_all</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return all items.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="find_below"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">find_below</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return all items below TAGORID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="find_closest"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">find_closest</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>,
+        <span class="sig-arg">halo</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">start</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return item which is closest to pixel at X, Y. If several match take 
+  the top-most. All items closer than HALO are considered overlapping (all 
+  are closests). If START is specified the next below this tag is 
+  taken.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="find_enclosed"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">find_enclosed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x1</span>,
+        <span class="sig-arg">y1</span>,
+        <span class="sig-arg">x2</span>,
+        <span class="sig-arg">y2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return all items in rectangle defined by X1,Y1,X2,Y2.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="find_overlapping"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">find_overlapping</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x1</span>,
+        <span class="sig-arg">y1</span>,
+        <span class="sig-arg">x2</span>,
+        <span class="sig-arg">y2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return all items which overlap the rectangle defined by 
+  X1,Y1,X2,Y2.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="find_withtag"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">find_withtag</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return all items with TAGORID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="focus"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">focus</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Set focus to the first item specified in ARGS.
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      Misc.focus
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="gettags"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">gettags</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return tags associated with the first item specified in ARGS.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="icursor"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">icursor</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Set cursor at position POS in the item identified by TAGORID. In ARGS 
+  TAGORID must be first.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="index"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">index</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return position of cursor as integer in item specified in ARGS.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="insert"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">insert</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Insert TEXT in item TAGORID at position POS. ARGS must be TAGORID POS 
+  TEXT.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="itemcget"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">itemcget</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">option</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return the resource value for an OPTION for item TAGORID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="itemconfig"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">itemconfig</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Configure resources of an item TAGORID.</p>
+  The values for resources are specified as keyword arguments. To get an
+  overview about the allowed keyword arguments call the method without 
+  arguments.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="itemconfigure"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">itemconfigure</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Configure resources of an item TAGORID.</p>
+  The values for resources are specified as keyword arguments. To get an
+  overview about the allowed keyword arguments call the method without 
+  arguments.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="lift"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">lift</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Raise an item TAGORID given in ARGS (optional above another item).
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      Misc.tkraise
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="lower"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">lower</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Lower an item TAGORID given in ARGS (optional below another item).
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      Misc.lower
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="move"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">move</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Move an item TAGORID given in ARGS.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="postscript"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">postscript</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Print the contents of the canvas to a postscript file. Valid options: 
+  colormap, colormode, file, fontmap, height, pageanchor, pageheight, 
+  pagewidth, pagex, pagey, rotate, witdh, x, y.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="scale"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">scale</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Scale item TAGORID with XORIGIN, YORIGIN, XSCALE, YSCALE.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="scan_dragto"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">scan_dragto</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>,
+        <span class="sig-arg">gain</span>=<span class="sig-default">10</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Adjust the view of the canvas to GAIN times the difference between X 
+  and Y and the coordinates given in scan_mark.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="scan_mark"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">scan_mark</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Remember the current X, Y coordinates.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="select_adjust"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">select_adjust</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">index</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Adjust the end of the selection near the cursor of an item TAGORID to 
+  index.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="select_clear"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">select_clear</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Clear the selection if it is in this widget.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="select_from"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">select_from</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">index</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Set the fixed end of a selection in item TAGORID to INDEX.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="select_item"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">select_item</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return the item which has the selection.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="select_to"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">select_to</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">index</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Set the variable end of a selection in item TAGORID to INDEX.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tag_bind"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">tag_bind</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">sequence</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">func</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">add</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Bind to all items with TAGORID at event SEQUENCE a call to function 
+  FUNC.</p>
+  An additional boolean parameter ADD specifies whether FUNC will be 
+  called additionally to the other bound function or whether it will 
+  replace the previous function. See bind for the return value.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tag_lower"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">tag_lower</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Lower an item TAGORID given in ARGS (optional below another item).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tag_raise"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">tag_raise</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Raise an item TAGORID given in ARGS (optional above another item).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tag_unbind"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">tag_unbind</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>,
+        <span class="sig-arg">sequence</span>,
+        <span class="sig-arg">funcid</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Unbind for all items with TAGORID for event SEQUENCE  the function 
+  identified with FUNCID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tkraise"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">tkraise</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Raise an item TAGORID given in ARGS (optional above another item).
+  <dl><dt></dt><dd>
+    <dl><dt>Overrides:
+      Misc.tkraise
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="type"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">type</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tagOrId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return the type of the item TAGORID.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="xview"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">xview</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Query and change horizontal position of the view.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="xview_moveto"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">xview_moveto</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fraction</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Adjusts the view in the window so that FRACTION of the total width of 
+  the canvas is off-screen to the left.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="xview_scroll"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">xview_scroll</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">what</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Shift the x-view according to NUMBER which is measured in 
+  &quot;units&quot; or &quot;pages&quot; (WHAT).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="yview"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">yview</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Query and change vertical position of the view.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="yview_moveto"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">yview_moveto</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fraction</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Adjusts the view in the window so that FRACTION of the total height of
+  the canvas is off-screen to the top.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="yview_scroll"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">yview_scroll</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">what</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Shift the y-view according to NUMBER which is measured in 
+  &quot;units&quot; or &quot;pages&quot; (WHAT).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:40:23 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

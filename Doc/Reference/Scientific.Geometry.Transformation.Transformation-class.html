@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.Geometry.Transformation.Transformation</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.Geometry-module.html">Package&nbsp;Geometry</a> ::
+        <a href="Scientific.Geometry.Transformation-module.html">Module&nbsp;Transformation</a> ::
+        Class&nbsp;Transformation
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.Geometry.Transformation.Transformation-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h2 class="class">Class Transformation
+<br/><span class="codelink"><a href="Scientific.Geometry.Transformation-pysrc.html#Transformation">source&nbsp;code</a></span></h2>
+<dl><dt>Known Subclasses:</dt>
+<dd>
+    <a href="Scientific.Geometry.Transformation.Rotation-class.html">Rotation</a>,
+    <a href="Scientific.Geometry.Transformation.RotationTranslation-class.html">RotationTranslation</a>,
+    <a href="Scientific.Geometry.Transformation.Translation-class.html">Translation</a>
+</dd></dl>
+
+<hr />
+<p>Linear coordinate transformation.</p>
+  <p>Transformation objects represent linear coordinate transformations in 
+  a 3D space. They can be applied to vectors, returning another vector. If 
+  t is a transformation and v is a vector, t(v) returns the transformed 
+  vector.</p>
+  <p>Transformations support composition: if t1 and t2 are transformation 
+  objects, t1*t2 is another transformation object which corresponds to 
+  applying t1 <b>after</b> t2.</p>
+  This class is an abstract base class. Instances can only be created of
+  concrete subclasses, i.e. translations or rotations.<br /><br />
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Instance Methods</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      <a 
+      href="Scientific.Geometry.Transformation.Transformation-class.html" 
+      class="link">Transformation</a>
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.Geometry.Transformation.Transformation-class.html#inverse" class="sig-name">inverse</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      <a href="Scientific.Geometry.Transformation.Rotation-class.html" 
+      class="link">Rotation</a>
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.Geometry.Transformation.Transformation-class.html#rotation" class="sig-name">rotation</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.Geometry.Transformation.Transformation-class.html#screwMotion" class="sig-name">screwMotion</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      <a 
+      href="Scientific.Geometry.Transformation.Translation-class.html" 
+      class="link">Translation</a>
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.Geometry.Transformation.Transformation-class.html#translation" class="sig-name">translation</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Method Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="inverse"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">inverse</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.Geometry.Transformation-pysrc.html#Transformation.inverse">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+    <dl><dt>Returns: <code><a 
+      href="Scientific.Geometry.Transformation.Transformation-class.html" 
+      class="link">Transformation</a></code></dt>
+        <dd>the inverse transformation</dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="rotation"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">rotation</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.Geometry.Transformation-pysrc.html#Transformation.rotation">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+    <dl><dt>Returns: <code><a href="Scientific.Geometry.Transformation.Rotation-class.html" 
+      class="link">Rotation</a></code></dt>
+        <dd>the rotational component</dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="screwMotion"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">screwMotion</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.Geometry.Transformation-pysrc.html#Transformation.screwMotion">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd>the four parameters (reference, direction, angle, distance) of
+          a screw-like motion that is equivalent to the transformation. The
+          screw motion consists of a displacement of distance (a 
+          <code>float</code>) along direction (a normalized <a 
+          href="Scientific.Geometry.Vector-class.html" 
+          class="link">Scientific.Geometry.Vector</a>) plus a rotation of 
+          angle radians around an axis pointing along direction and passing
+          through the point reference (a <a 
+          href="Scientific.Geometry.Vector-class.html" 
+          class="link">Scientific.Geometry.Vector</a>).</dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="translation"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">translation</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.Geometry.Transformation-pysrc.html#Transformation.translation">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+    <dl><dt>Returns: <code><a 
+      href="Scientific.Geometry.Transformation.Translation-class.html" 
+      class="link">Translation</a></code></dt>
+        <dd>the translational component. In the case of a mixed 
+          rotation/translation, this translation is executed <b>after</b> 
+          the rotation.</dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:39:56 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

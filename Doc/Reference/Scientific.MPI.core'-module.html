@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.MPI.core'</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.MPI-module.html">Package&nbsp;MPI</a> ::
+        Module&nbsp;core'
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.MPI.core%27-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h2 class="module">Module core'
+<br/><span class="codelink"><a href="Scientific.MPI.core%27-pysrc.html">source&nbsp;code</a></span></h2>
+<p>Python interface to the Message Passing Interface (MPI)</p>
+  <p>This module contains a Python interface to the Message Passing 
+  Interface (MPI), and standardized library for message-passing parallel 
+  computing. Please read an introduction to MPI before using this module; 
+  some terms in the documentation do not make much sense unless you 
+  understand the principles of MPI.</p>
+  <p>This module contains an object, 'world', which represents the default 
+  communicator in MPI. This communicator can be used directly for sending 
+  and receiving data, or other communicators can be derived from it.</p>
+  A number of global constants are also defined (<a 
+  href="Scientific.MPI.max-class.html" class="link">max</a>, <a 
+  href="Scientific.MPI.min-class.html" class="link">min</a>, <a 
+  href="Scientific.MPI.prod-class.html" class="link">prod</a>, <a 
+  href="Scientific.MPI.sum-class.html" class="link">sum</a>, <a 
+  href="Scientific.MPI.land-class.html" class="link">land</a>, <a 
+  href="Scientific.MPI.lor-class.html" class="link">lor</a>, <a 
+  href="Scientific.MPI.lxor-class.html" class="link">lxor</a>, <a 
+  href="Scientific.MPI.band-class.html" class="link">band</a>, <a 
+  href="Scientific.MPI.bor-class.html" class="link">bor</a>, <a 
+  href="Scientific.MPI.bxor-class.html" class="link">bxor</a>, <a 
+  href="Scientific.MPI.maxloc-class.html" class="link">maxloc</a>), and <a 
+  href="Scientific.MPI.minloc-class.html" class="link">minloc</a>). They 
+  are used to specify the desired operator in calls to the 'reduce' and 
+  'allreduce' methods of the communicator objects.<br /><br />
+
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Classes</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.MPICommunicator-class.html">MPICommunicator</a></strong></td>
+  <td class="summary">MPI Communicator</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.MPIError-class.html">MPIError</a></strong></td>
+  <td class="summary">MPI call failed</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.MPIOperationObject-class.html">MPIOperationObject</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.MPIRequest-class.html">MPIRequest</a></strong></td>
+  <td class="summary">MPI Request</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.band-class.html">band</a></strong></td>
+  <td class="summary">The 'bitwise and' operation in reduce/allreduce 
+        communications.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.bor-class.html">bor</a></strong></td>
+  <td class="summary">The 'bitwise or' operation in reduce/allreduce 
+        communications.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.bxor-class.html">bxor</a></strong></td>
+  <td class="summary">The 'bitwise exclusive-or' operation.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.land-class.html">land</a></strong></td>
+  <td class="summary">The 'logical and' operation in reduce/allreduce 
+        communications.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.lor-class.html">lor</a></strong></td>
+  <td class="summary">The 'logical or' operation in reduce/allreduce 
+        communications.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.lxor-class.html">lxor</a></strong></td>
+  <td class="summary">The 'logical exclusive-or' operation.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.max-class.html">max</a></strong></td>
+  <td class="summary">The 'maximum' operation in reduce/allreduce communications.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.maxloc-class.html">maxloc</a></strong></td>
+  <td class="summary">The 'location of the maximum' operation.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.min-class.html">min</a></strong></td>
+  <td class="summary">The 'minimum' operation in reduce/allreduce communications.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.minloc-class.html">minloc</a></strong></td>
+  <td class="summary">The 'location of the minimum' operation.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.prod-class.html">prod</a></strong></td>
+  <td class="summary">The 'product' operation in reduce/allreduce communications.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.replace-class.html">replace</a></strong></td>
+  <td class="summary">The 'replace' operation.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.sum-class.html">sum</a></strong></td>
+  <td class="summary">The 'sum' operation in reduce/allreduce communications.</td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Variables</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.core%27-module.html#_C_API">_C_API</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Scientific.MPI.core%27-module.html#world">world</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Variables Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_C_API"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>_C_API</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="None"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="world"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>world</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;Scientific.MPI.MPICommunicator instance at 0x5001e8&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;Scientific.MPI.MPICommunicator instance at 0x5001e8&gt;                  
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:39:41 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

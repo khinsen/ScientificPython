@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.IO.PDB.Group</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.IO-module.html">Package&nbsp;IO</a> ::
+        <a href="Scientific.IO.PDB-module.html">Module&nbsp;PDB</a> ::
+        Class&nbsp;Group
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.IO.PDB.Group-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h2 class="class">Class Group
+<br/><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group">source&nbsp;code</a></span></h2>
+<dl><dt>Known Subclasses:</dt>
+<dd>
+    <a href="Scientific.IO.PDB.Residue-class.html">Residue</a>,
+    <a href="Scientific.IO.PDB.Molecule-class.html">Molecule</a>
+</dd></dl>
+
+<hr />
+<p>Atom group (residue or molecule) in a PDB file</p>
+  <p>This is an abstract base class. Instances can be created using one of 
+  the subclasses (<a href="Scientific.IO.PDB.Molecule-class.html" 
+  class="link">Molecule</a>, <a 
+  href="Scientific.IO.PDB.AminoAcidResidue-class.html" 
+  class="link">AminoAcidResidue</a>, <a 
+  href="Scientific.IO.PDB.NucleotideResidue-class.html" 
+  class="link">NucleotideResidue</a>).</p>
+  Group objects permit iteration over atoms with for-loops, as well as 
+  extraction of atoms by indexing with the atom name.<br /><br />
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Instance Methods</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#__getitem__" class="sig-name">__getitem__</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">item</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#__init__" class="sig-name">__init__</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">atoms</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">number</span>=<span class="sig-default">None</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#__len__" class="sig-name">__len__</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#__repr__" class="sig-name">__repr__</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#__str__" class="sig-name">__str__</a>(<span class="sig-arg">self</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#addAtom" class="sig-name">addAtom</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">atom</span>)</span>
+    <br />Add an atom to the group
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#changeName" class="sig-name">changeName</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>)</span>
+    <br />Set the PDB residue name
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#deleteAtom" class="sig-name">deleteAtom</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">atom</span>)</span>
+    <br />Remove an atom from the group
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#deleteHydrogens" class="sig-name">deleteHydrogens</a>(<span class="sig-arg">self</span>)</span>
+    <br />Remove all hydrogen atoms of the group
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#isCompatible" class="sig-name">isCompatible</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">residue_data</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.IO.PDB.Group-class.html#writeToFile" class="sig-name">writeToFile</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>)</span>
+    <br />Write the group to a file
+  </td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Method Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__getitem__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__getitem__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">item</span>)</span>
+    <br /><em class="fname">(Indexing operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.__getitem__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>item</code></strong> (<code><code>int</code> or <code>string</code></code>) - an integer index or an atom name</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="__init__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">atoms</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">number</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.__init__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>name</code></strong> (<code><code>string</code></code>) - the name of the group</li>
+        <li><strong class="pname"><code>atoms</code></strong> (<code><code>list</code> or <code>NoneType</code></code>) - a list of atoms (or <code>None</code> for no atoms)</li>
+        <li><strong class="pname"><code>number</code></strong> (<code><code>int</code> or <code>NoneType</code></code>) - the PDB residue number (or <code>None</code>)</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="__len__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__len__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Length operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.__len__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="__repr__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.__str__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="__str__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__str__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Informal representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.__str__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="addAtom"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">addAtom</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">atom</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.addAtom">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Add an atom to the group
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>atom</code></strong> (<code><a href="Scientific.IO.PDB.Atom-class.html" 
+          class="link">Atom</a></code>) - the atom</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="changeName"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">changeName</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.changeName">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Set the PDB residue name
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>name</code></strong> (<code><code>string</code></code>) - the new name</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="deleteAtom"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">deleteAtom</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">atom</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.deleteAtom">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Remove an atom from the group
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>atom</code></strong> (<code><code class="link">atom</code></code>) - the atom to be removed</li>
+    </ul>
+    <dl><dt>Raises:</dt></dl>
+    <ul>
+        <li><code><strong class='fraise'>KeyError</strong></code> - if the atom is not part of the group</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="deleteHydrogens"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">deleteHydrogens</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.deleteHydrogens">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Remove all hydrogen atoms of the group
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="isCompatible"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">isCompatible</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">residue_data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.isCompatible">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="writeToFile"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">writeToFile</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.IO.PDB-pysrc.html#Group.writeToFile">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Write the group to a file
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>file</code></strong> (<code><a href="Scientific.IO.PDB.PDBFile-class.html" 
+          class="link">PDBFile</a> or <code>string</code></code>) - a PDBFile object or a file name</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:39:58 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

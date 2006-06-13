@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.BSP.Tasks</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.BSP-module.html">Package&nbsp;BSP</a> ::
+        Module&nbsp;Tasks
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.BSP.Tasks-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h2 class="py-src">Source Code for <a href="Scientific.BSP.Tasks-module.html">Module Scientific.BSP.Tasks</a></h2>
+<div class="py-src">
+<pre class="py-src">
+<span class="lineno">  1</span>  <span class="py-line"><span class="py-comment"># Task lists with automatic load balancing</span> </span>
+<span class="lineno">  2</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  3</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Written by Konrad Hinsen &lt;hinsen@cnrs-orleans.fr&gt;</span> </span>
+<span class="lineno">  4</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># last revision: 2004-12-13</span> </span>
+<span class="lineno">  5</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  6</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">  7</span>  <span class="py-line"><span class="py-keyword">from</span> <a title="Scientific" class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.BSP" class="py-name" href="Scientific.BSP-module.html">BSP</a><span class="py-op">.</span><a title="Scientific.BSP.core" class="py-name" href="Scientific.BSP.core-module.html">core</a> <span class="py-keyword">import</span> <a class="py-name" href="Scientific.BSP.ParBase-class.html">ParBase</a><span class="py-op">,</span> <a class="py-name" href="Scientific.BSP.ParClass-class.html">ParClass</a><span class="py-op">,</span> <a class="py-name" href="Scientific.BSP.Tasks-module.html#ParInvalid">ParInvalid</a> </span>
+<span class="lineno">  8</span>  <span class="py-line"><span class="py-keyword">import</span> <span class="py-name">operator</span> </span>
+<span class="lineno">  9</span>  <span class="py-line"><span class="py-keyword">from</span> <span class="py-name">time</span> <span class="py-keyword">import</span> <span class="py-name">clock</span> </span>
+<span class="lineno"> 10</span>  <span class="py-line"> </span>
+<a name="ParTaskBase"></a><div id="ParTaskBase-def"><span class="lineno"> 11</span> <a class="pysrc-toggle" href="#" id="ParTaskBase-toggle" onclick="toggle('ParTaskBase'); return false;">-</a><span class="py-line"><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.BSP.Tasks.ParTaskBase-class.html">ParTaskBase</a><span class="py-op">:</span> </span>
+</div><div id="ParTaskBase-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ParTaskBase-expanded"><span class="lineno"> 12</span>  <span class="py-line"> </span>
+<a name="ParTaskBase.__init__"></a><div id="ParTaskBase.__init__-def"><span class="lineno"> 13</span> <a class="pysrc-toggle" href="#" id="ParTaskBase.__init__-toggle" onclick="toggle('ParTaskBase.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Tasks.ParTaskBase-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParTaskBase.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ParTaskBase.__init__-expanded"><span class="lineno"> 14</span>  <span class="py-line">        <span class="py-keyword">pass</span> </span>
+</div><span class="lineno"> 15</span>  <span class="py-line"> </span>
+<a name="ParTaskBase.step"></a><div id="ParTaskBase.step-def"><span class="lineno"> 16</span> <a class="pysrc-toggle" href="#" id="ParTaskBase.step-toggle" onclick="toggle('ParTaskBase.step'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Tasks.ParTaskBase-class.html#step">step</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">messages</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParTaskBase.step-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ParTaskBase.step-expanded"><span class="lineno"> 17</span>  <span class="py-line">        <span class="py-keyword">raise</span> <span class="py-name">NotImplementedError</span> </span>
+</div><span class="lineno"> 18</span>  <span class="py-line"> </span>
+<a name="ParTaskBase.setIndex"></a><div id="ParTaskBase.setIndex-def"><span class="lineno"> 19</span> <a class="pysrc-toggle" href="#" id="ParTaskBase.setIndex-toggle" onclick="toggle('ParTaskBase.setIndex'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Tasks.ParTaskBase-class.html#setIndex">setIndex</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">index</span><span class="py-op">,</span> <span class="py-param">total</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="ParTaskBase.setIndex-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ParTaskBase.setIndex-expanded"><span class="lineno"> 20</span>  <span class="py-line">        <span class="py-keyword">pass</span> </span>
+</div></div><span class="lineno"> 21</span>  <span class="py-line"> </span>
+<span class="lineno"> 22</span>  <span class="py-line"> </span>
+<a name="_ParTaskList"></a><div id="_ParTaskList-def"><span class="lineno"> 23</span> <a class="pysrc-toggle" href="#" id="_ParTaskList-toggle" onclick="toggle('_ParTaskList'); return false;">-</a><span class="py-line"><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.BSP.Tasks._ParTaskList-class.html">_ParTaskList</a><span class="py-op">(</span><span class="py-base-class">ParBase</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="_ParTaskList-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="_ParTaskList-expanded"><span class="lineno"> 24</span>  <span class="py-line"> </span>
+<a name="_ParTaskList.__parinit__"></a><div id="_ParTaskList.__parinit__-def"><span class="lineno"> 25</span> <a class="pysrc-toggle" href="#" id="_ParTaskList.__parinit__-toggle" onclick="toggle('_ParTaskList.__parinit__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Tasks._ParTaskList-class.html#__parinit__">__parinit__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">pid</span><span class="py-op">,</span> <span class="py-param">nprocs</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="_ParTaskList.__parinit__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="_ParTaskList.__parinit__-expanded"><span class="lineno"> 26</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 27</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">new_tasks</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 28</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid</span> <span class="py-op">=</span> <span class="py-name">pid</span> </span>
+<span class="lineno"> 29</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">nprocs</span> <span class="py-op">=</span> <span class="py-name">nprocs</span> </span>
+<span class="lineno"> 30</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">index_map</span> <span class="py-op">=</span> <span class="py-op">{</span><span class="py-op">}</span> </span>
+<span class="lineno"> 31</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid_from_index</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+</div><span class="lineno"> 32</span>  <span class="py-line"> </span>
+<a name="_ParTaskList.addTask"></a><div id="_ParTaskList.addTask-def"><span class="lineno"> 33</span> <a class="pysrc-toggle" href="#" id="_ParTaskList.addTask-toggle" onclick="toggle('_ParTaskList.addTask'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Tasks._ParTaskList-class.html#addTask">addTask</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">task</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="_ParTaskList.addTask-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="_ParTaskList.addTask-expanded"><span class="lineno"> 34</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">task</span> <span class="py-keyword">is</span> <span class="py-keyword">not</span> <span id="link-0" class="py-name"><a title="Scientific.BSP.IO.ParInvalid
+Scientific.BSP.ParInvalid
+Scientific.BSP.Tasks.ParInvalid
+Scientific.BSP.core.ParInvalid" class="py-name" href="#" onclick="doclink('link-0', 'ParInvalid', 'Variable IO.ParInvalid=Scientific.BSP.IO-module.html#ParInvalid,Variable ParInvalid=Scientific.BSP-module.html#ParInvalid,Variable ParInvalid=Scientific.BSP.Tasks-module.html#ParInvalid,Variable core.ParInvalid=Scientific.BSP.core-module.html#ParInvalid'); return false;">ParInvalid</a></span></span><span class="py-op">:</span> </span>
+<span class="lineno"> 35</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">new_tasks</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-name">task</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 36</span>  <span class="py-line"> </span>
+<a name="_ParTaskList.step"></a><div id="_ParTaskList.step-def"><span class="lineno"> 37</span> <a class="pysrc-toggle" href="#" id="_ParTaskList.step-toggle" onclick="toggle('_ParTaskList.step'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.BSP.Tasks._ParTaskList-class.html#step">step</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-op">*</span><span class="py-param">args</span><span class="py-op">,</span> <span class="py-op">**</span><span class="py-param">kwargs</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="_ParTaskList.step-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="_ParTaskList.step-expanded"><span class="lineno"> 38</span>  <span class="py-line">        <span class="py-comment"># Insert any new tasks into task list</span> </span>
+<span class="lineno"> 39</span>  <span class="py-line"><span class="py-comment"></span>        <span class="py-keyword">if</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">new_tasks</span><span class="py-op">:</span> </span>
+<span class="lineno"> 40</span>  <span class="py-line">            <span class="py-comment"># Send number of tasks and number of new tasks to root</span> </span>
+<span class="lineno"> 41</span>  <span class="py-line"><span class="py-comment"></span>            <span class="py-name">counts</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span id="link-1" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-1', 'put', 'Method Scientific.BSP.ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method Scientific.BSP.ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function Scientific.BSP.core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span><span class="py-op">(</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid</span><span class="py-op">,</span> <span class="py-name">len</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span><span class="py-op">)</span><span class="py-op">,</span> <span class="py-name">len</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">new_tasks</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">,</span> </span>
+<span class="lineno"> 42</span>  <span class="py-line">                              <span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno"> 43</span>  <span class="py-line">            <span class="py-comment"># Root determines the first new task index for each processor</span> </span>
+<span class="lineno"> 44</span>  <span class="py-line"><span class="py-comment"></span>            <span class="py-name">ntot</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno"> 45</span>  <span class="py-line">            <span class="py-keyword">for</span> <span class="py-name">pid</span><span class="py-op">,</span> <span class="py-name">nt</span><span class="py-op">,</span> <span class="py-name">nnt</span> <span class="py-keyword">in</span> <span class="py-name">counts</span><span class="py-op">:</span> </span>
+<span class="lineno"> 46</span>  <span class="py-line">                <span class="py-name">ntot</span> <span class="py-op">+=</span> <span class="py-name">nt</span> </span>
+<span class="lineno"> 47</span>  <span class="py-line">            <span class="py-name">messages</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 48</span>  <span class="py-line">            <span class="py-keyword">for</span> <span class="py-name">pid</span><span class="py-op">,</span> <span class="py-name">nt</span><span class="py-op">,</span> <span class="py-name">nnt</span> <span class="py-keyword">in</span> <span class="py-name">counts</span><span class="py-op">:</span> </span>
+<span class="lineno"> 49</span>  <span class="py-line">                <span class="py-name">messages</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-op">(</span><span class="py-name">pid</span><span class="py-op">,</span> <span class="py-name">ntot</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 50</span>  <span class="py-line">                <span class="py-name">ntot</span> <span class="py-op">+=</span> <span class="py-name">nnt</span> </span>
+<span class="lineno"> 51</span>  <span class="py-line">            <span class="py-name">index</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><a title="Scientific.BSP.ParBase.exchangeMessages" class="py-name" href="Scientific.BSP.ParBase-class.html#exchangeMessages">exchangeMessages</a><span class="py-op">(</span><span class="py-name">messages</span><span class="py-op">)</span><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span> </span>
+<span class="lineno"> 52</span>  <span class="py-line">            <span class="py-comment"># Add new task to task list and set index</span> </span>
+<span class="lineno"> 53</span>  <span class="py-line"><span class="py-comment"></span>            <span class="py-keyword">for</span> <span class="py-name">task</span> <span class="py-keyword">in</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">new_tasks</span><span class="py-op">:</span> </span>
+<span class="lineno"> 54</span>  <span class="py-line">                <span class="py-name">task</span><span class="py-op">.</span><span class="py-name">_index</span> <span class="py-op">=</span> <span class="py-name">index</span> </span>
+<span class="lineno"> 55</span>  <span class="py-line">                <span class="py-name">task</span><span class="py-op">.</span><a title="Scientific.BSP.core._messages" class="py-name" href="Scientific.BSP.core-module.html#_messages">_messages</a> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 56</span>  <span class="py-line">                <span class="py-name">task</span><span class="py-op">.</span><a title="Scientific.BSP.Tasks.ParTaskBase.setIndex" class="py-name" href="Scientific.BSP.Tasks.ParTaskBase-class.html#setIndex">setIndex</a><span class="py-op">(</span><span class="py-name">index</span><span class="py-op">,</span> <span class="py-name">ntot</span><span class="py-op">)</span> </span>
+<span class="lineno"> 57</span>  <span class="py-line">                <span class="py-name">index</span> <span class="py-op">+=</span> <span class="py-number">1</span> </span>
+<span class="lineno"> 58</span>  <span class="py-line">                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-name">task</span><span class="py-op">)</span> </span>
+<span class="lineno"> 59</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">new_tasks</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 60</span>  <span class="py-line">            <span class="py-comment"># Update index map</span> </span>
+<span class="lineno"> 61</span>  <span class="py-line"><span class="py-comment"></span>            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">index_map</span> <span class="py-op">=</span> <span class="py-op">{</span><span class="py-op">}</span> </span>
+<span class="lineno"> 62</span>  <span class="py-line">            <span class="py-keyword">for</span> <span class="py-name">i</span> <span class="py-keyword">in</span> <span class="py-name">range</span><span class="py-op">(</span><span class="py-name">len</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 63</span>  <span class="py-line">                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">index_map</span><span class="py-op">[</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span><span class="py-op">[</span><span class="py-name">i</span><span class="py-op">]</span><span class="py-op">.</span><span class="py-name">_index</span><span class="py-op">]</span> <span class="py-op">=</span> <span class="py-name">i</span> </span>
+<span class="lineno"> 64</span>  <span class="py-line">            <span class="py-comment"># Update pid map</span> </span>
+<span class="lineno"> 65</span>  <span class="py-line"><span class="py-comment"></span>            <span class="py-name">indices</span> <span class="py-op">=</span> <a title="Scientific.BSP.ParValue.map" class="py-name" href="Scientific.BSP.ParValue-class.html#map">map</a><span class="py-op">(</span><span class="py-keyword">lambda</span> <span class="py-name">t</span><span class="py-op">:</span> <span class="py-name">t</span><span class="py-op">.</span><span class="py-name">_index</span><span class="py-op">,</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span><span class="py-op">)</span> </span>
+<span class="lineno"> 66</span>  <span class="py-line">            <span class="py-name">all</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span id="link-2" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-2', 'put', 'Method Scientific.BSP.ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method Scientific.BSP.ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function Scientific.BSP.core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span><span class="py-op">(</span><span class="py-op">(</span><span class="py-name">pid</span><span class="py-op">,</span> <span class="py-name">indices</span><span class="py-op">)</span><span class="py-op">,</span> <span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno"> 67</span>  <span class="py-line">            <span class="py-name">all</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span id="link-3" class="py-name"><a title="Scientific.BSP.ParBase.broadcast
+Scientific.BSP.ParValue.broadcast
+Scientific.MPI.MPICommunicator.broadcast" class="py-name" href="#" onclick="doclink('link-3', 'broadcast', 'Method Scientific.BSP.ParBase.broadcast()=Scientific.BSP.ParBase-class.html#broadcast,Method Scientific.BSP.ParValue.broadcast()=Scientific.BSP.ParValue-class.html#broadcast,Method Scientific.MPI.MPICommunicator.broadcast()=Scientific.MPI.MPICommunicator-class.html#broadcast'); return false;">broadcast</a></span></span><span class="py-op">(</span><span class="py-name">all</span><span class="py-op">)</span> </span>
+<span class="lineno"> 68</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid_from_index</span> <span class="py-op">=</span> <span class="py-name">ntot</span><span class="py-op">*</span><span class="py-op">[</span><span class="py-name">None</span><span class="py-op">]</span> </span>
+<span class="lineno"> 69</span>  <span class="py-line">            <span class="py-keyword">for</span> <span class="py-name">pid</span><span class="py-op">,</span> <span class="py-name">indices</span> <span class="py-keyword">in</span> <span class="py-name">all</span><span class="py-op">:</span> </span>
+<span class="lineno"> 70</span>  <span class="py-line">                <span class="py-keyword">for</span> <span class="py-name">index</span> <span class="py-keyword">in</span> <span class="py-name">indices</span><span class="py-op">:</span> </span>
+<span class="lineno"> 71</span>  <span class="py-line">                    <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid_from_index</span><span class="py-op">[</span><span class="py-name">index</span><span class="py-op">]</span> <span class="py-op">=</span> <span class="py-name">pid</span> </span>
+<span class="lineno"> 72</span>  <span class="py-line">        <span class="py-comment"># Run all tasks and record the time used by each</span> </span>
+<span class="lineno"> 73</span>  <span class="py-line"><span class="py-comment"></span>        <span class="py-name">start</span> <span class="py-op">=</span> <span class="py-name">clock</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno"> 74</span>  <span class="py-line">        <span class="py-name">total</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno"> 75</span>  <span class="py-line">        <span class="py-name">messages</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 76</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">task</span> <span class="py-keyword">in</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span><span class="py-op">:</span> </span>
+<span class="lineno"> 77</span>  <span class="py-line">            <span class="py-name">messages</span> <span class="py-op">+=</span> <span class="py-name">task</span><span class="py-op">.</span><span id="link-4" class="py-name"><a title="Scientific.BSP.Tasks.ParTaskBase.step
+Scientific.BSP.Tasks._ParTaskList.step" class="py-name" href="#" onclick="doclink('link-4', 'step', 'Method Scientific.BSP.Tasks.ParTaskBase.step()=Scientific.BSP.Tasks.ParTaskBase-class.html#step,Method Scientific.BSP.Tasks._ParTaskList.step()=Scientific.BSP.Tasks._ParTaskList-class.html#step'); return false;">step</a></span></span><span class="py-op">(</span><span class="py-name">task</span><span class="py-op">.</span><a title="Scientific.BSP.core._messages" class="py-name" href="Scientific.BSP.core-module.html#_messages">_messages</a><span class="py-op">)</span> </span>
+<span class="lineno"> 78</span>  <span class="py-line">            <span class="py-name">end</span> <span class="py-op">=</span> <span class="py-name">clock</span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno"> 79</span>  <span class="py-line">            <span class="py-name">task</span><span class="py-op">.</span><span class="py-name">_time</span> <span class="py-op">=</span> <span class="py-name">end</span><span class="py-op">-</span><span class="py-name">start</span> </span>
+<span class="lineno"> 80</span>  <span class="py-line">            <span class="py-name">total</span> <span class="py-op">+=</span> <span class="py-name">end</span><span class="py-op">-</span><span class="py-name">start</span> </span>
+<span class="lineno"> 81</span>  <span class="py-line">            <span class="py-name">start</span> <span class="py-op">=</span> <span class="py-name">end</span> </span>
+<span class="lineno"> 82</span>  <span class="py-line">        <span class="py-comment"># Distribute messages</span> </span>
+<span class="lineno"> 83</span>  <span class="py-line"><span class="py-comment"></span>        <span class="py-name">to_send</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 84</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">i</span> <span class="py-keyword">in</span> <span class="py-name">range</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">nprocs</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 85</span>  <span class="py-line">            <span class="py-name">to_send</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-op">[</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno"> 86</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">index</span><span class="py-op">,</span> <a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a> <span class="py-keyword">in</span> <span class="py-name">messages</span><span class="py-op">:</span> </span>
+<span class="lineno"> 87</span>  <span class="py-line">            <span class="py-name">pid</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid_from_index</span><span class="py-op">[</span><span class="py-name">index</span><span class="py-op">]</span> </span>
+<span class="lineno"> 88</span>  <span class="py-line">            <span class="py-name">to_send</span><span class="py-op">[</span><span class="py-name">pid</span><span class="py-op">]</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-op">(</span><span class="py-name">index</span><span class="py-op">,</span> <a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 89</span>  <span class="py-line">        <span class="py-name">my_messages</span> <span class="py-op">=</span> <span class="py-name">to_send</span><span class="py-op">[</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid</span><span class="py-op">]</span> </span>
+<span class="lineno"> 90</span>  <span class="py-line">        <span class="py-name">messages</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 91</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">pid</span> <span class="py-keyword">in</span> <span class="py-name">range</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">nprocs</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 92</span>  <span class="py-line">            <span class="py-keyword">if</span> <span class="py-name">pid</span> <span class="py-op">!=</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid</span><span class="py-op">:</span> </span>
+<span class="lineno"> 93</span>  <span class="py-line">                <span class="py-name">messages</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-op">(</span><span class="py-name">pid</span><span class="py-op">,</span> <span class="py-name">to_send</span><span class="py-op">[</span><span class="py-name">pid</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 94</span>  <span class="py-line">        <span class="py-name">my_messages</span> <span class="py-op">+=</span> <span id="link-5" class="py-name"><a title="Scientific.BSP.ParValue.reduce
+Scientific.MPI.MPICommunicator.reduce" class="py-name" href="#" onclick="doclink('link-5', 'reduce', 'Method ParValue.reduce()=Scientific.BSP.ParValue-class.html#reduce,Method MPI.MPICommunicator.reduce()=Scientific.MPI.MPICommunicator-class.html#reduce'); return false;">reduce</a></span></span><span class="py-op">(</span><span class="py-name">operator</span><span class="py-op">.</span><span id="link-6" class="py-name"><a title="Scientific.N.add
+Scientific.Signals.Models.AveragedAutoRegressiveModel.add" class="py-name" href="#" onclick="doclink('link-6', 'add', 'Variable N.add=Scientific.N-module.html#add,Method Signals.Models.AveragedAutoRegressiveModel.add()=Scientific.Signals.Models.AveragedAutoRegressiveModel-class.html#add'); return false;">add</a></span></span><span class="py-op">,</span> <span class="py-name">self</span><span class="py-op">.</span><a title="Scientific.BSP.ParBase.exchangeMessages" class="py-name" href="Scientific.BSP.ParBase-class.html#exchangeMessages">exchangeMessages</a><span class="py-op">(</span><span class="py-name">messages</span><span class="py-op">)</span><span class="py-op">,</span> </span>
+<span class="lineno"> 95</span>  <span class="py-line">                              <span class="py-op">[</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno"> 96</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">task</span> <span class="py-keyword">in</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span><span class="py-op">:</span> </span>
+<span class="lineno"> 97</span>  <span class="py-line">            <span class="py-name">task</span><span class="py-op">.</span><a title="Scientific.BSP.core._messages" class="py-name" href="Scientific.BSP.core-module.html#_messages">_messages</a> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 98</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">index</span><span class="py-op">,</span> <a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a> <span class="py-keyword">in</span> <span class="py-name">my_messages</span><span class="py-op">:</span> </span>
+<span class="lineno"> 99</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">tasks</span><span class="py-op">[</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">index_map</span><span class="py-op">[</span><span class="py-name">index</span><span class="py-op">]</span><span class="py-op">]</span><span class="py-op">.</span><a title="Scientific.BSP.core._messages" class="py-name" href="Scientific.BSP.core-module.html#_messages">_messages</a><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a><span class="py-op">)</span> </span>
+<span class="lineno">100</span>  <span class="py-line">        <span class="py-comment"># Root calculates the runtime discrepancy</span> </span>
+<span class="lineno">101</span>  <span class="py-line"><span class="py-comment"></span>        <span class="py-name">messages</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span id="link-7" class="py-name"><a title="Scientific.BSP.ParBase.put
+Scientific.BSP.ParValue.put
+Scientific.BSP.core.put" class="py-name" href="#" onclick="doclink('link-7', 'put', 'Method ParBase.put()=Scientific.BSP.ParBase-class.html#put,Method ParValue.put()=Scientific.BSP.ParValue-class.html#put,Function core.put()=Scientific.BSP.core-module.html#put'); return false;">put</a></span></span><span class="py-op">(</span><span class="py-op">(</span><span class="py-name">pid</span><span class="py-op">,</span> <span class="py-name">total</span><span class="py-op">)</span><span class="py-op">,</span> <span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno">102</span>  <span class="py-line">        <span class="py-name">times</span> <span class="py-op">=</span> <a title="Scientific.BSP.ParValue.map" class="py-name" href="Scientific.BSP.ParValue-class.html#map">map</a><span class="py-op">(</span><span class="py-keyword">lambda</span> <a title="Scientific.Geometry.Vector.x" class="py-name" href="Scientific.Geometry.Vector-class.html#x">x</a><span class="py-op">:</span> <a title="Scientific.Geometry.Vector.x" class="py-name" href="Scientific.Geometry.Vector-class.html#x">x</a><span class="py-op">[</span><span class="py-number">1</span><span class="py-op">]</span><span class="py-op">,</span> <span class="py-name">messages</span><span class="py-op">)</span> </span>
+<span class="lineno">103</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">pid</span> <span class="py-op">==</span> <span class="py-number">0</span><span class="py-op">:</span> </span>
+<span class="lineno">104</span>  <span class="py-line">            <span class="py-name">average</span> <span class="py-op">=</span> <span id="link-8" class="py-name"><a title="Dialog.N
+FileDialog.N
+Scientific.N
+Tkinter.N" class="py-name" href="#" onclick="doclink('link-8', 'N', 'Variable Dialog.N=Dialog-module.html#N,Variable FileDialog.N=FileDialog-module.html#N,Module Scientific.N=Scientific.N-module.html,Variable Tkinter.N=Tkinter-module.html#N'); return false;">N</a></span></span><span class="py-op">.</span><a title="Scientific.MPI.sum" class="py-name" href="Scientific.MPI.sum-class.html">sum</a><span class="py-op">(</span><span class="py-name">times</span><span class="py-op">)</span><span class="py-op">/</span><span class="py-name">len</span><span class="py-op">(</span><span class="py-name">times</span><span class="py-op">)</span> </span>
+<span class="lineno">105</span>  <span class="py-line">            <span class="py-name">discrepancy</span> <span class="py-op">=</span> <span id="link-9" class="py-name"><a title="Dialog.N
+FileDialog.N
+Scientific.N
+Tkinter.N" class="py-name" href="#" onclick="doclink('link-9', 'N', 'Variable Dialog.N=Dialog-module.html#N,Variable FileDialog.N=FileDialog-module.html#N,Module Scientific.N=Scientific.N-module.html,Variable Tkinter.N=Tkinter-module.html#N'); return false;">N</a></span></span><span class="py-op">.</span><a title="Scientific.N.maximum" class="py-name" href="Scientific.N-module.html#maximum">maximum</a><span class="py-op">.</span><span id="link-10" class="py-name"><a title="Scientific.BSP.ParValue.reduce
+Scientific.MPI.MPICommunicator.reduce" class="py-name" href="#" onclick="doclink('link-10', 'reduce', 'Method Scientific.BSP.ParValue.reduce()=Scientific.BSP.ParValue-class.html#reduce,Method Scientific.MPI.MPICommunicator.reduce()=Scientific.MPI.MPICommunicator-class.html#reduce'); return false;">reduce</a></span></span><span class="py-op">(</span><span class="py-name">times</span><span class="py-op">)</span><span class="py-op">-</span><span id="link-11" class="py-name"><a title="Dialog.N
+FileDialog.N
+Scientific.N
+Tkinter.N" class="py-name" href="#" onclick="doclink('link-11', 'N', 'Variable Dialog.N=Dialog-module.html#N,Variable FileDialog.N=FileDialog-module.html#N,Module Scientific.N=Scientific.N-module.html,Variable Tkinter.N=Tkinter-module.html#N'); return false;">N</a></span></span><span class="py-op">.</span><a title="Scientific.N.minimum" class="py-name" href="Scientific.N-module.html#minimum">minimum</a><span class="py-op">.</span><span id="link-12" class="py-name"><a title="Scientific.BSP.ParValue.reduce
+Scientific.MPI.MPICommunicator.reduce" class="py-name" href="#" onclick="doclink('link-12', 'reduce', 'Method Scientific.BSP.ParValue.reduce()=Scientific.BSP.ParValue-class.html#reduce,Method Scientific.MPI.MPICommunicator.reduce()=Scientific.MPI.MPICommunicator-class.html#reduce'); return false;">reduce</a></span></span><span class="py-op">(</span><span class="py-name">times</span><span class="py-op">)</span> </span>
+</div></div><span class="lineno">106</span>  <span class="py-line">            <span class="py-comment">#print discrepancy, average</span> </span>
+<span class="lineno">107</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">108</span>  <span class="py-line"><a class="py-name" href="Scientific.BSP.Tasks-module.html#ParTaskList">ParTaskList</a> <span class="py-op">=</span> <a class="py-name" href="Scientific.BSP.ParClass-class.html">ParClass</a><span class="py-op">(</span><a class="py-name" href="Scientific.BSP.Tasks._ParTaskList-class.html">_ParTaskList</a><span class="py-op">)</span> </span>
+<span class="lineno">109</span>  <span class="py-line"> </span>
+<span class="lineno">110</span>  <span class="py-line"> </span>
+<span class="lineno">111</span>  <span class="py-line"><span class="py-keyword">if</span> <span class="py-name">__name__</span> <span class="py-op">==</span> <span class="py-string">'__main__'</span><span class="py-op">:</span> </span>
+<span class="lineno">112</span>  <span class="py-line"> </span>
+<span class="lineno">113</span>  <span class="py-line">    <span class="py-keyword">from</span> <a title="Scientific" class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.BSP" class="py-name" href="Scientific.BSP-module.html">BSP</a><span class="py-op">.</span><a title="Scientific.BSP.core" class="py-name" href="Scientific.BSP.core-module.html">core</a> <span class="py-keyword">import</span> <a title="Scientific.BSP.ParValue" class="py-name" href="Scientific.BSP.ParValue-class.html">ParValue</a><span class="py-op">,</span> <a title="Scientific.BSP.ParSequence" class="py-name" href="Scientific.BSP.ParSequence-class.html">ParSequence</a><span class="py-op">,</span> <a title="Scientific.BSP.ParIterator" class="py-name" href="Scientific.BSP.ParIterator-class.html">ParIterator</a> </span>
+<span class="lineno">114</span>  <span class="py-line"> </span>
+<span class="lineno">115</span>  <span class="py-line">    <span class="py-keyword">class</span> <span class="py-def-name">_SimpleTask</span><span class="py-op">(</span><span class="py-base-class">ParTaskBase</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">116</span>  <span class="py-line"> </span>
+<span class="lineno">117</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">__init__</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">value</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">118</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">value</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-name">value</span><span class="py-op">]</span> </span>
+</div><span class="lineno">119</span>  <span class="py-line"> </span>
+<span class="lineno">120</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">__repr__</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">121</span>  <span class="py-line">            <span class="py-keyword">return</span> <span class="py-string">"SimpleTask(%s)"</span> <span class="py-op">%</span> <span class="py-name">repr</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">value</span><span class="py-op">)</span> </span>
+</div><span class="lineno">122</span>  <span class="py-line"> </span>
+<span class="lineno">123</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">setIndex</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">index</span><span class="py-op">,</span> <span class="py-param">total</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">124</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">neighbour</span> <span class="py-op">=</span> <span class="py-op">(</span><span class="py-name">index</span><span class="py-op">+</span><span class="py-number">1</span><span class="py-op">)</span><span class="py-op">%</span><span class="py-name">total</span> </span>
+</div><span class="lineno">125</span>  <span class="py-line"> </span>
+<span class="lineno">126</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">step</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">messages</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">127</span>  <span class="py-line">            <span class="py-keyword">try</span><span class="py-op">:</span> </span>
+<span class="lineno">128</span>  <span class="py-line">                <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">value</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-name">messages</span><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno">129</span>  <span class="py-line">            <span class="py-keyword">except</span> <span class="py-name">IndexError</span><span class="py-op">:</span> </span>
+<span class="lineno">130</span>  <span class="py-line">                <span class="py-keyword">pass</span> </span>
+<span class="lineno">131</span>  <span class="py-line">            <span class="py-keyword">return</span> <span class="py-op">[</span><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">neighbour</span><span class="py-op">,</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">value</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">]</span> </span>
+</div></div><span class="lineno">132</span>  <span class="py-line"> </span>
+<span class="lineno">133</span>  <span class="py-line">    <span class="py-name">SimpleTask</span> <span class="py-op">=</span> <a title="Scientific.BSP.ParValue" class="py-name" href="Scientific.BSP.ParValue-class.html">ParValue</a><span class="py-op">(</span><span class="py-name">_SimpleTask</span><span class="py-op">)</span> </span>
+<span class="lineno">134</span>  <span class="py-line">    <span class="py-name">tasks</span> <span class="py-op">=</span> <a title="Scientific.BSP.Tasks.ParTaskList" class="py-name" href="Scientific.BSP.Tasks-module.html#ParTaskList">ParTaskList</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">135</span>  <span class="py-line">    <span class="py-keyword">for</span> <span class="py-name">i</span> <span class="py-keyword">in</span> <a title="Scientific.BSP.ParIterator" class="py-name" href="Scientific.BSP.ParIterator-class.html">ParIterator</a><span class="py-op">(</span><a title="Scientific.BSP.ParSequence" class="py-name" href="Scientific.BSP.ParSequence-class.html">ParSequence</a><span class="py-op">(</span><span class="py-name">range</span><span class="py-op">(</span><span class="py-number">10</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">136</span>  <span class="py-line">        <span class="py-name">tasks</span><span class="py-op">.</span><a title="Scientific.BSP.Tasks._ParTaskList.addTask" class="py-name" href="Scientific.BSP.Tasks._ParTaskList-class.html#addTask">addTask</a><span class="py-op">(</span><span class="py-name">SimpleTask</span><span class="py-op">(</span><span class="py-name">i</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">137</span>  <span class="py-line">    <span class="py-keyword">for</span> <span class="py-name">i</span> <span class="py-keyword">in</span> <span class="py-name">range</span><span class="py-op">(</span><span class="py-number">5</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">138</span>  <span class="py-line">        <span class="py-name">tasks</span><span class="py-op">.</span><span id="link-13" class="py-name"><a title="Scientific.BSP.Tasks.ParTaskBase.step
+Scientific.BSP.Tasks._ParTaskList.step" class="py-name" href="#" onclick="doclink('link-13', 'step', 'Method Scientific.BSP.Tasks.ParTaskBase.step()=Scientific.BSP.Tasks.ParTaskBase-class.html#step,Method Scientific.BSP.Tasks._ParTaskList.step()=Scientific.BSP.Tasks._ParTaskList-class.html#step'); return false;">step</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">139</span>  <span class="py-line">        <span class="py-keyword">print</span> <span class="py-name">tasks</span><span class="py-op">.</span><span class="py-name">tasks</span> </span>
+<span class="lineno">140</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:42:23 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

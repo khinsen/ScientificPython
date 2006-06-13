@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.Physics.Potential</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.Physics-module.html">Package&nbsp;Physics</a> ::
+        Module&nbsp;Potential
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.Physics.Potential-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h2 class="py-src">Source Code for <a href="Scientific.Physics.Potential-module.html">Module Scientific.Physics.Potential</a></h2>
+<div class="py-src">
+<pre class="py-src">
+<span class="lineno">  1</span>  <span class="py-line"><span class="py-comment"># Definitions to help evaluating potentials and their</span> </span>
+<span class="lineno">  2</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># gradients using DerivVars and DerivVectors.</span> </span>
+<span class="lineno">  3</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  4</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Written by: Konrad Hinsen &lt;hinsen@cnrs-orleans.fr&gt;</span> </span>
+<span class="lineno">  5</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Last revision: 2006-6-12</span> </span>
+<span class="lineno">  6</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># </span> </span>
+<span class="lineno">  7</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">  8</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno">  9</span>  <span class="py-line"><span class="py-docstring">Potential energy functions with automatic gradient evaluation</span> </span>
+<span class="lineno"> 10</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 11</span>  <span class="py-line"><span class="py-docstring">This module offers two strategies for automagically calculating the</span> </span>
+<span class="lineno"> 12</span>  <span class="py-line"><span class="py-docstring">gradients (and optionally force constants) of a potential energy</span> </span>
+<span class="lineno"> 13</span>  <span class="py-line"><span class="py-docstring">function (or any other function of vectors, for that matter).  The</span> </span>
+<span class="lineno"> 14</span>  <span class="py-line"><span class="py-docstring">more convenient strategy is to create an object of the class</span> </span>
+<span class="lineno"> 15</span>  <span class="py-line"><span class="py-docstring">PotentialWithGradients. It takes a regular Python function object</span> </span>
+<span class="lineno"> 16</span>  <span class="py-line"><span class="py-docstring">defining the potential energy and is itself a callable object</span> </span>
+<span class="lineno"> 17</span>  <span class="py-line"><span class="py-docstring">returning the energy and its gradients with respect to all arguments</span> </span>
+<span class="lineno"> 18</span>  <span class="py-line"><span class="py-docstring">that are vectors.</span> </span>
+<span class="lineno"> 19</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 20</span>  <span class="py-line"><span class="py-docstring">Example::</span> </span>
+<span class="lineno"> 21</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 22</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;def _harmonic(k,r1,r2):</span> </span>
+<span class="lineno"> 23</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;    dr = r2-r1</span> </span>
+<span class="lineno"> 24</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;    return k*dr*dr</span> </span>
+<span class="lineno"> 25</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;harmonic = PotentialWithGradients(_harmonic)</span> </span>
+<span class="lineno"> 26</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;energy, gradients = harmonic(1., Vector(0,3,1), Vector(1,2,0))</span> </span>
+<span class="lineno"> 27</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;print energy, gradients</span> </span>
+<span class="lineno"> 28</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 29</span>  <span class="py-line"><span class="py-docstring">prints::</span> </span>
+<span class="lineno"> 30</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 31</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;3.0</span> </span>
+<span class="lineno"> 32</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;[Vector(-2.0,2.0,2.0), Vector(2.0,-2.0,-2.0)]</span> </span>
+<span class="lineno"> 33</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 34</span>  <span class="py-line"><span class="py-docstring">The disadvantage of this procedure is that if one of the arguments is a</span> </span>
+<span class="lineno"> 35</span>  <span class="py-line"><span class="py-docstring">vector parameter, rather than a position, an unnecessary gradient will</span> </span>
+<span class="lineno"> 36</span>  <span class="py-line"><span class="py-docstring">be calculated. A more flexible method is to insert calls to two</span> </span>
+<span class="lineno"> 37</span>  <span class="py-line"><span class="py-docstring">function from this module into the definition of the energy</span> </span>
+<span class="lineno"> 38</span>  <span class="py-line"><span class="py-docstring">function. The first, DerivVectors(), is called to indicate which</span> </span>
+<span class="lineno"> 39</span>  <span class="py-line"><span class="py-docstring">vectors correspond to gradients, and the second, EnergyGradients(),</span> </span>
+<span class="lineno"> 40</span>  <span class="py-line"><span class="py-docstring">extracts energy and gradients from the result of the calculation.</span> </span>
+<span class="lineno"> 41</span>  <span class="py-line"><span class="py-docstring">The above example is therefore equivalent to::</span> </span>
+<span class="lineno"> 42</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 43</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;def harmonic(k, r1, r2):</span> </span>
+<span class="lineno"> 44</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;    r1, r2 = DerivVectors(r1, r2)</span> </span>
+<span class="lineno"> 45</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;    dr = r2-r1</span> </span>
+<span class="lineno"> 46</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;    e = k*dr*dr</span> </span>
+<span class="lineno"> 47</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;    return EnergyGradients(e,2)</span> </span>
+<span class="lineno"> 48</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 49</span>  <span class="py-line"><span class="py-docstring">To include the force constant matrix, the above example has to be</span> </span>
+<span class="lineno"> 50</span>  <span class="py-line"><span class="py-docstring">modified as follows::</span> </span>
+<span class="lineno"> 51</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 52</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;def _harmonic(k,r1,r2):</span> </span>
+<span class="lineno"> 53</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;    dr = r2-r1</span> </span>
+<span class="lineno"> 54</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;    return k*dr*dr</span> </span>
+<span class="lineno"> 55</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;harmonic = PotentialWithGradientsAndForceConstants(_harmonic)</span> </span>
+<span class="lineno"> 56</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;energy, gradients, force_constants = harmonic(1.,Vector(0,3,1),Vector(1,2,0))</span> </span>
+<span class="lineno"> 57</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;print energy</span> </span>
+<span class="lineno"> 58</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;print gradients</span> </span>
+<span class="lineno"> 59</span>  <span class="py-line"><span class="py-docstring">  &gt;&gt;&gt;print force_constants</span> </span>
+<span class="lineno"> 60</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 61</span>  <span class="py-line"><span class="py-docstring">The force constants are returned as a nested list representing a</span> </span>
+<span class="lineno"> 62</span>  <span class="py-line"><span class="py-docstring">matrix. This can easily be converted to an array for further</span> </span>
+<span class="lineno"> 63</span>  <span class="py-line"><span class="py-docstring">processing if the numerical extensions to Python are available.</span> </span>
+<span class="lineno"> 64</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno"> 65</span>  <span class="py-line"> </span>
+<span class="lineno"> 66</span>  <span class="py-line"><span class="py-keyword">from</span> <a title="Scientific" class="py-name" href="Scientific-module.html">Scientific</a> <span class="py-keyword">import</span> <a class="py-name" href="Scientific.N-module.html">N</a><span class="py-op">;</span> <a class="py-name" href="Scientific.N-module.html">Numeric</a> <span class="py-op">=</span> <a class="py-name" href="Scientific.N-module.html">N</a> </span>
+<span class="lineno"> 67</span>  <span class="py-line"><span class="py-keyword">from</span> <a title="Scientific" class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.Geometry" class="py-name" href="Scientific.Geometry-module.html">Geometry</a> <span class="py-keyword">import</span> <a class="py-name" href="Scientific.Geometry.Vector-class.html">Vector</a><span class="py-op">,</span> <a title="Scientific.Geometry.VectorModule'.isVector" class="py-name" href="Scientific.Geometry.VectorModule%27-module.html#isVector">isVector</a> </span>
+<span class="lineno"> 68</span>  <span class="py-line"><span class="py-keyword">from</span> <a title="Scientific" class="py-name" href="Scientific-module.html">Scientific</a><span class="py-op">.</span><a title="Scientific.Functions" class="py-name" href="Scientific.Functions-module.html">Functions</a> <span class="py-keyword">import</span> <a class="py-name" href="Scientific.Functions.FirstDerivatives-module.html">FirstDerivatives</a><span class="py-op">,</span> <a class="py-name" href="Scientific.Functions.Derivatives-module.html">Derivatives</a> </span>
+<span class="lineno"> 69</span>  <span class="py-line"> </span>
+<span class="lineno"> 70</span>  <span class="py-line"> </span>
+<a name="DerivVectors"></a><div id="DerivVectors-def"><span class="lineno"> 71</span> <a class="pysrc-toggle" href="#" id="DerivVectors-toggle" onclick="toggle('DerivVectors'); return false;">-</a><span class="py-line"><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Physics.Potential-module.html#DerivVectors">DerivVectors</a><span class="py-op">(</span><span class="py-op">*</span><span class="py-param">args</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="DerivVectors-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="DerivVectors-expanded"><span class="lineno"> 72</span>  <span class="py-line">    <span class="py-name">index</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno"> 73</span>  <span class="py-line">    <span class="py-name">list</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 74</span>  <span class="py-line">    <span class="py-keyword">for</span> <span class="py-name">a</span> <span class="py-keyword">in</span> <span class="py-name">args</span><span class="py-op">:</span> </span>
+<span class="lineno"> 75</span>  <span class="py-line">        <span class="py-name">list</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><a title="Scientific.Functions.FirstDerivatives" class="py-name" href="Scientific.Functions.FirstDerivatives-module.html">FirstDerivatives</a><span class="py-op">.</span><span id="link-0" class="py-name"><a title="Scientific.Functions.Derivatives.DerivVector
+Scientific.Functions.FirstDerivatives.DerivVector" class="py-name" href="#" onclick="doclink('link-0', 'DerivVector', 'Function Scientific.Functions.Derivatives.DerivVector()=Scientific.Functions.Derivatives-module.html#DerivVector,Function Scientific.Functions.FirstDerivatives.DerivVector()=Scientific.Functions.FirstDerivatives-module.html#DerivVector'); return false;">DerivVector</a></span></span><span class="py-op">(</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.x" class="py-name" href="Scientific.Geometry.Vector-class.html#x">x</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.y" class="py-name" href="Scientific.Geometry.Vector-class.html#y">y</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.z" class="py-name" href="Scientific.Geometry.Vector-class.html#z">z</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span><span class="py-name">index</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 76</span>  <span class="py-line">        <span class="py-name">index</span> <span class="py-op">=</span> <span class="py-name">index</span> <span class="py-op">+</span> <span class="py-number">3</span> </span>
+<span class="lineno"> 77</span>  <span class="py-line">    <span class="py-keyword">return</span> <span class="py-name">tuple</span><span class="py-op">(</span><span class="py-name">list</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 78</span>  <span class="py-line"> </span>
+<a name="EnergyGradients"></a><div id="EnergyGradients-def"><span class="lineno"> 79</span> <a class="pysrc-toggle" href="#" id="EnergyGradients-toggle" onclick="toggle('EnergyGradients'); return false;">-</a><span class="py-line"><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Physics.Potential-module.html#EnergyGradients">EnergyGradients</a><span class="py-op">(</span><span class="py-param">e</span><span class="py-op">,</span> <span class="py-param">n</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="EnergyGradients-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="EnergyGradients-expanded"><span class="lineno"> 80</span>  <span class="py-line">    <span class="py-name">energy</span> <span class="py-op">=</span> <a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span> </span>
+<span class="lineno"> 81</span>  <span class="py-line">    <span class="py-name">deriv</span> <span class="py-op">=</span> <a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a><span class="py-op">[</span><span class="py-number">1</span><span class="py-op">]</span> </span>
+<span class="lineno"> 82</span>  <span class="py-line">    <span class="py-name">deriv</span> <span class="py-op">=</span> <span class="py-name">deriv</span> <span class="py-op">+</span> <span class="py-op">(</span><span class="py-number">3</span><span class="py-op">*</span><span class="py-name">n</span><span class="py-op">-</span><span class="py-name">len</span><span class="py-op">(</span><span class="py-name">deriv</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">*</span><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span> </span>
+<span class="lineno"> 83</span>  <span class="py-line">    <span class="py-name">gradients</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 84</span>  <span class="py-line">    <span class="py-name">i</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno"> 85</span>  <span class="py-line">    <span class="py-keyword">for</span> <span class="py-name">j</span> <span class="py-keyword">in</span> <span class="py-name">range</span><span class="py-op">(</span><span class="py-name">n</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 86</span>  <span class="py-line">        <span class="py-name">gradients</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><a title="Scientific.Geometry.Vector" class="py-name" href="Scientific.Geometry.Vector-class.html">Vector</a><span class="py-op">(</span><span class="py-name">deriv</span><span class="py-op">[</span><span class="py-name">i</span><span class="py-op">]</span><span class="py-op">,</span><span class="py-name">deriv</span><span class="py-op">[</span><span class="py-name">i</span><span class="py-op">+</span><span class="py-number">1</span><span class="py-op">]</span><span class="py-op">,</span><span class="py-name">deriv</span><span class="py-op">[</span><span class="py-name">i</span><span class="py-op">+</span><span class="py-number">2</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 87</span>  <span class="py-line">        <span class="py-name">i</span> <span class="py-op">=</span> <span class="py-name">i</span><span class="py-op">+</span><span class="py-number">3</span> </span>
+<span class="lineno"> 88</span>  <span class="py-line">    <span class="py-keyword">return</span> <span class="py-op">(</span><span class="py-name">energy</span><span class="py-op">,</span> <span class="py-name">gradients</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 89</span>  <span class="py-line"> </span>
+<a name="EnergyGradientsForceConstants"></a><div id="EnergyGradientsForceConstants-def"><span class="lineno"> 90</span> <a class="pysrc-toggle" href="#" id="EnergyGradientsForceConstants-toggle" onclick="toggle('EnergyGradientsForceConstants'); return false;">-</a><span class="py-line"><span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Physics.Potential-module.html#EnergyGradientsForceConstants">EnergyGradientsForceConstants</a><span class="py-op">(</span><span class="py-param">e</span><span class="py-op">,</span> <span class="py-param">n</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="EnergyGradientsForceConstants-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="EnergyGradientsForceConstants-expanded"><span class="lineno"> 91</span>  <span class="py-line">    <span class="py-name">energy</span> <span class="py-op">=</span> <a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span> </span>
+<span class="lineno"> 92</span>  <span class="py-line">    <span class="py-name">deriv</span> <span class="py-op">=</span> <a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a><span class="py-op">[</span><span class="py-number">1</span><span class="py-op">]</span> </span>
+<span class="lineno"> 93</span>  <span class="py-line">    <span class="py-name">deriv</span> <span class="py-op">=</span> <span class="py-name">deriv</span> <span class="py-op">+</span> <span class="py-op">(</span><span class="py-number">3</span><span class="py-op">*</span><span class="py-name">n</span><span class="py-op">-</span><span class="py-name">len</span><span class="py-op">(</span><span class="py-name">deriv</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">*</span><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span> </span>
+<span class="lineno"> 94</span>  <span class="py-line">    <span class="py-name">gradients</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno"> 95</span>  <span class="py-line">    <span class="py-name">i</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno"> 96</span>  <span class="py-line">    <span class="py-keyword">for</span> <span class="py-name">j</span> <span class="py-keyword">in</span> <span class="py-name">range</span><span class="py-op">(</span><span class="py-name">n</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 97</span>  <span class="py-line">        <span class="py-name">gradients</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><a title="Scientific.Geometry.Vector" class="py-name" href="Scientific.Geometry.Vector-class.html">Vector</a><span class="py-op">(</span><span class="py-name">deriv</span><span class="py-op">[</span><span class="py-name">i</span><span class="py-op">]</span><span class="py-op">,</span><span class="py-name">deriv</span><span class="py-op">[</span><span class="py-name">i</span><span class="py-op">+</span><span class="py-number">1</span><span class="py-op">]</span><span class="py-op">,</span><span class="py-name">deriv</span><span class="py-op">[</span><span class="py-name">i</span><span class="py-op">+</span><span class="py-number">2</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 98</span>  <span class="py-line">        <span class="py-name">i</span> <span class="py-op">=</span> <span class="py-name">i</span><span class="py-op">+</span><span class="py-number">3</span> </span>
+<span class="lineno"> 99</span>  <span class="py-line">    <span class="py-keyword">return</span> <span class="py-op">(</span><span class="py-name">energy</span><span class="py-op">,</span> <span class="py-name">gradients</span><span class="py-op">,</span> <span class="py-name">Numeric</span><span class="py-op">.</span><span class="py-name">array</span><span class="py-op">(</span><a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a><span class="py-op">[</span><span class="py-number">2</span><span class="py-op">]</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+</div><span class="lineno">100</span>  <span class="py-line"> </span>
+<span class="lineno">101</span>  <span class="py-line"> </span>
+<span class="lineno">102</span>  <span class="py-line"><span class="py-comment"># Potential function class with gradients</span> </span>
+<span class="lineno">103</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<a name="PotentialWithGradients"></a><div id="PotentialWithGradients-def"><span class="lineno">104</span> <a class="pysrc-toggle" href="#" id="PotentialWithGradients-toggle" onclick="toggle('PotentialWithGradients'); return false;">-</a><span class="py-line"><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.Physics.Potential.PotentialWithGradients-class.html">PotentialWithGradients</a><span class="py-op">:</span> </span>
+</div><div id="PotentialWithGradients-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="PotentialWithGradients-expanded"><span class="lineno">105</span>  <span class="py-line"> </span>
+<a name="PotentialWithGradients.__init__"></a><div id="PotentialWithGradients.__init__-def"><span class="lineno">106</span> <a class="pysrc-toggle" href="#" id="PotentialWithGradients.__init__-toggle" onclick="toggle('PotentialWithGradients.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Physics.Potential.PotentialWithGradients-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">func</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="PotentialWithGradients.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="PotentialWithGradients.__init__-expanded"><span class="lineno">107</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">func</span> <span class="py-op">=</span> <span class="py-name">func</span> </span>
+</div><span class="lineno">108</span>  <span class="py-line"> </span>
+<a name="PotentialWithGradients.__call__"></a><div id="PotentialWithGradients.__call__-def"><span class="lineno">109</span> <a class="pysrc-toggle" href="#" id="PotentialWithGradients.__call__-toggle" onclick="toggle('PotentialWithGradients.__call__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Physics.Potential.PotentialWithGradients-class.html#__call__">__call__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-op">*</span><span class="py-param">args</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="PotentialWithGradients.__call__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="PotentialWithGradients.__call__-expanded"><span class="lineno">110</span>  <span class="py-line">        <span class="py-name">arglist</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno">111</span>  <span class="py-line">        <span class="py-name">nvector</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno">112</span>  <span class="py-line">        <span class="py-name">index</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno">113</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">a</span> <span class="py-keyword">in</span> <span class="py-name">args</span><span class="py-op">:</span> </span>
+<span class="lineno">114</span>  <span class="py-line">            <span class="py-keyword">if</span> <a title="Scientific.Geometry.VectorModule'.isVector" class="py-name" href="Scientific.Geometry.VectorModule%27-module.html#isVector">isVector</a><span class="py-op">(</span><span class="py-name">a</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">115</span>  <span class="py-line">                <span class="py-name">arglist</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><a title="Scientific.Functions.FirstDerivatives" class="py-name" href="Scientific.Functions.FirstDerivatives-module.html">FirstDerivatives</a><span class="py-op">.</span><span id="link-1" class="py-name"><a title="Scientific.Functions.Derivatives.DerivVector
+Scientific.Functions.FirstDerivatives.DerivVector" class="py-name" href="#" onclick="doclink('link-1', 'DerivVector', 'Function Scientific.Functions.Derivatives.DerivVector()=Scientific.Functions.Derivatives-module.html#DerivVector,Function Scientific.Functions.FirstDerivatives.DerivVector()=Scientific.Functions.FirstDerivatives-module.html#DerivVector'); return false;">DerivVector</a></span></span><span class="py-op">(</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.x" class="py-name" href="Scientific.Geometry.Vector-class.html#x">x</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.y" class="py-name" href="Scientific.Geometry.Vector-class.html#y">y</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.z" class="py-name" href="Scientific.Geometry.Vector-class.html#z">z</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span> </span>
+<span class="lineno">116</span>  <span class="py-line">                                                            <span class="py-name">index</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">117</span>  <span class="py-line">                <span class="py-name">nvector</span> <span class="py-op">=</span> <span class="py-name">nvector</span> <span class="py-op">+</span> <span class="py-number">1</span> </span>
+<span class="lineno">118</span>  <span class="py-line">                <span class="py-name">index</span> <span class="py-op">=</span> <span class="py-name">index</span> <span class="py-op">+</span> <span class="py-number">3</span> </span>
+<span class="lineno">119</span>  <span class="py-line">            <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno">120</span>  <span class="py-line">                <span class="py-name">arglist</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-name">a</span><span class="py-op">)</span> </span>
+<span class="lineno">121</span>  <span class="py-line">        <a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a> <span class="py-op">=</span> <a title="Scientific.TkWidgets.ModalDialog.apply" class="py-name" href="Scientific.TkWidgets.ModalDialog-class.html#apply">apply</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">func</span><span class="py-op">,</span> <span class="py-name">tuple</span><span class="py-op">(</span><span class="py-name">arglist</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">122</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.Physics.Potential.EnergyGradients" class="py-name" href="Scientific.Physics.Potential-module.html#EnergyGradients">EnergyGradients</a><span class="py-op">(</span><a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a><span class="py-op">,</span><span class="py-name">nvector</span><span class="py-op">)</span> </span>
+</div></div><span class="lineno">123</span>  <span class="py-line"> </span>
+<span class="lineno">124</span>  <span class="py-line"> </span>
+<span class="lineno">125</span>  <span class="py-line"><span class="py-comment"># Potential function class with gradients and force constants</span> </span>
+<span class="lineno">126</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<a name="PotentialWithGradientsAndForceConstants"></a><div id="PotentialWithGradientsAndForceConstants-def"><span class="lineno">127</span> <a class="pysrc-toggle" href="#" id="PotentialWithGradientsAndForceConstants-toggle" onclick="toggle('PotentialWithGradientsAndForceConstants'); return false;">-</a><span class="py-line"><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.Physics.Potential.PotentialWithGradientsAndForceConstants-class.html">PotentialWithGradientsAndForceConstants</a><span class="py-op">:</span> </span>
+</div><div id="PotentialWithGradientsAndForceConstants-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="PotentialWithGradientsAndForceConstants-expanded"><span class="lineno">128</span>  <span class="py-line"> </span>
+<a name="PotentialWithGradientsAndForceConstants.__init__"></a><div id="PotentialWithGradientsAndForceConstants.__init__-def"><span class="lineno">129</span> <a class="pysrc-toggle" href="#" id="PotentialWithGradientsAndForceConstants.__init__-toggle" onclick="toggle('PotentialWithGradientsAndForceConstants.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Physics.Potential.PotentialWithGradientsAndForceConstants-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">func</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="PotentialWithGradientsAndForceConstants.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="PotentialWithGradientsAndForceConstants.__init__-expanded"><span class="lineno">130</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">func</span> <span class="py-op">=</span> <span class="py-name">func</span> </span>
+</div><span class="lineno">131</span>  <span class="py-line"> </span>
+<a name="PotentialWithGradientsAndForceConstants.__call__"></a><div id="PotentialWithGradientsAndForceConstants.__call__-def"><span class="lineno">132</span> <a class="pysrc-toggle" href="#" id="PotentialWithGradientsAndForceConstants.__call__-toggle" onclick="toggle('PotentialWithGradientsAndForceConstants.__call__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.Physics.Potential.PotentialWithGradientsAndForceConstants-class.html#__call__">__call__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-op">*</span><span class="py-param">args</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="PotentialWithGradientsAndForceConstants.__call__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="PotentialWithGradientsAndForceConstants.__call__-expanded"><span class="lineno">133</span>  <span class="py-line">        <span class="py-name">arglist</span> <span class="py-op">=</span> <span class="py-op">[</span><span class="py-op">]</span> </span>
+<span class="lineno">134</span>  <span class="py-line">        <span class="py-name">nvector</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno">135</span>  <span class="py-line">        <span class="py-name">index</span> <span class="py-op">=</span> <span class="py-number">0</span> </span>
+<span class="lineno">136</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">a</span> <span class="py-keyword">in</span> <span class="py-name">args</span><span class="py-op">:</span> </span>
+<span class="lineno">137</span>  <span class="py-line">            <span class="py-keyword">if</span> <a title="Scientific.Geometry.VectorModule'.isVector" class="py-name" href="Scientific.Geometry.VectorModule%27-module.html#isVector">isVector</a><span class="py-op">(</span><span class="py-name">a</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">138</span>  <span class="py-line">                <span class="py-name">arglist</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><a title="Scientific.Functions.Derivatives" class="py-name" href="Scientific.Functions.Derivatives-module.html">Derivatives</a><span class="py-op">.</span><span id="link-2" class="py-name"><a title="Scientific.Functions.Derivatives.DerivVector
+Scientific.Functions.FirstDerivatives.DerivVector" class="py-name" href="#" onclick="doclink('link-2', 'DerivVector', 'Function Scientific.Functions.Derivatives.DerivVector()=Scientific.Functions.Derivatives-module.html#DerivVector,Function Scientific.Functions.FirstDerivatives.DerivVector()=Scientific.Functions.FirstDerivatives-module.html#DerivVector'); return false;">DerivVector</a></span></span><span class="py-op">(</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.x" class="py-name" href="Scientific.Geometry.Vector-class.html#x">x</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.y" class="py-name" href="Scientific.Geometry.Vector-class.html#y">y</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span><span class="py-name">a</span><span class="py-op">.</span><a title="Scientific.Geometry.Vector.z" class="py-name" href="Scientific.Geometry.Vector-class.html#z">z</a><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">,</span> </span>
+<span class="lineno">139</span>  <span class="py-line">                                                       <span class="py-name">index</span><span class="py-op">,</span> <span class="py-number">2</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">140</span>  <span class="py-line">                <span class="py-name">nvector</span> <span class="py-op">=</span> <span class="py-name">nvector</span> <span class="py-op">+</span> <span class="py-number">1</span> </span>
+<span class="lineno">141</span>  <span class="py-line">                <span class="py-name">index</span> <span class="py-op">=</span> <span class="py-name">index</span> <span class="py-op">+</span> <span class="py-number">3</span> </span>
+<span class="lineno">142</span>  <span class="py-line">            <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno">143</span>  <span class="py-line">                <span class="py-name">arglist</span><span class="py-op">.</span><span class="py-name">append</span><span class="py-op">(</span><span class="py-name">a</span><span class="py-op">)</span> </span>
+<span class="lineno">144</span>  <span class="py-line">        <a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a> <span class="py-op">=</span> <a title="Scientific.TkWidgets.ModalDialog.apply" class="py-name" href="Scientific.TkWidgets.ModalDialog-class.html#apply">apply</a><span class="py-op">(</span><span class="py-name">self</span><span class="py-op">.</span><span class="py-name">func</span><span class="py-op">,</span> <span class="py-name">tuple</span><span class="py-op">(</span><span class="py-name">arglist</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno">145</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.Physics.Potential.EnergyGradientsForceConstants" class="py-name" href="Scientific.Physics.Potential-module.html#EnergyGradientsForceConstants">EnergyGradientsForceConstants</a><span class="py-op">(</span><a title="Scientific.N.e" class="py-name" href="Scientific.N-module.html#e">e</a><span class="py-op">,</span> <span class="py-name">nvector</span><span class="py-op">)</span> </span>
+</div></div><span class="lineno">146</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:45:23 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.IO.TextFile</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.IO-module.html">Package&nbsp;IO</a> ::
+        Module&nbsp;TextFile
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.IO.TextFile-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h2 class="py-src">Source Code for <a href="Scientific.IO.TextFile-module.html">Module Scientific.IO.TextFile</a></h2>
+<div class="py-src">
+<pre class="py-src">
+<span class="lineno">  1</span>  <span class="py-line"><span class="py-comment"># Text files with automatic (un)compression and URL access.</span> </span>
+<span class="lineno">  2</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  3</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Written by: Konrad Hinsen &lt;hinsen@cnrs-orleans.fr&gt;</span> </span>
+<span class="lineno">  4</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Last revision: 2006-5-28</span> </span>
+<span class="lineno">  5</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># </span> </span>
+<span class="lineno">  6</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">  7</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno">  8</span>  <span class="py-line"><span class="py-docstring">Text files with line iteration and transparent compression</span> </span>
+<span class="lineno">  9</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno"> 10</span>  <span class="py-line"> </span>
+<span class="lineno"> 11</span>  <span class="py-line"><span class="py-keyword">import</span> <a class="py-name" href="os-module.html">os</a><span class="py-op">,</span> <a class="py-name" href="string-module.html">string</a><span class="py-op">,</span> <a class="py-name" href="sys-module.html">sys</a> </span>
+<span class="lineno"> 12</span>  <span class="py-line"> </span>
+<span class="lineno"> 13</span>  <span class="py-line"><span class="py-comment"># Use the gzip module for Python version 1.5.2 or higher</span> </span>
+<span class="lineno"> 14</span>  <span class="py-line"><span class="py-comment"></span><span class="py-name">gzip</span> <span class="py-op">=</span> <span class="py-name">None</span> </span>
+<span class="lineno"> 15</span>  <span class="py-line"><span class="py-keyword">try</span><span class="py-op">:</span> </span>
+<span class="lineno"> 16</span>  <span class="py-line">    <a title="Scientific.IO.TextFile._version" class="py-name" href="Scientific.IO.TextFile-module.html#_version">_version</a> <span class="py-op">=</span> <a title="Scientific.BSP.ParValue.map" class="py-name" href="Scientific.BSP.ParValue-class.html#map">map</a><span class="py-op">(</span><a title="string" class="py-name" href="string-module.html">string</a><span class="py-op">.</span><span class="py-name">atoi</span><span class="py-op">,</span> </span>
+<span class="lineno"> 17</span>  <span class="py-line">                   <a title="string" class="py-name" href="string-module.html">string</a><span class="py-op">.</span><span class="py-name">split</span><span class="py-op">(</span><a title="string" class="py-name" href="string-module.html">string</a><span class="py-op">.</span><span class="py-name">split</span><span class="py-op">(</span><a title="sys" class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.version" class="py-name" href="sys-module.html#version">version</a><span class="py-op">)</span><span class="py-op">[</span><span class="py-number">0</span><span class="py-op">]</span><span class="py-op">,</span> <span class="py-string">'.'</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 18</span>  <span class="py-line">    <span class="py-keyword">if</span> <a title="Scientific.IO.TextFile._version" class="py-name" href="Scientific.IO.TextFile-module.html#_version">_version</a> <span class="py-op">&gt;=</span> <span class="py-op">[</span><span class="py-number">1</span><span class="py-op">,</span> <span class="py-number">5</span><span class="py-op">,</span> <span class="py-number">2</span><span class="py-op">]</span><span class="py-op">:</span> </span>
+<span class="lineno"> 19</span>  <span class="py-line">        <span class="py-keyword">try</span><span class="py-op">:</span> </span>
+<span class="lineno"> 20</span>  <span class="py-line">            <span class="py-keyword">import</span> <span class="py-name">gzip</span> </span>
+<span class="lineno"> 21</span>  <span class="py-line">        <span class="py-keyword">except</span> <span class="py-name">ImportError</span><span class="py-op">:</span> </span>
+<span class="lineno"> 22</span>  <span class="py-line">            <span class="py-name">gzip</span> <span class="py-op">=</span> <span class="py-name">None</span> </span>
+<span class="lineno"> 23</span>  <span class="py-line"><span class="py-keyword">except</span><span class="py-op">:</span> </span>
+<span class="lineno"> 24</span>  <span class="py-line">    <span class="py-keyword">pass</span> </span>
+<span class="lineno"> 25</span>  <span class="py-line"> </span>
+<a name="TextFile"></a><div id="TextFile-def"><span class="lineno"> 26</span> <a class="pysrc-toggle" href="#" id="TextFile-toggle" onclick="toggle('TextFile'); return false;">-</a><span class="py-line"><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html">TextFile</a><span class="py-op">:</span> </span>
+</div><div id="TextFile-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="TextFile-expanded"><span class="lineno"> 27</span>  <span class="py-line"> </span>
+<span class="lineno"> 28</span>  <span class="py-line">    <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 29</span>  <span class="py-line"><span class="py-docstring">    Text files with line iteration and transparent compression</span> </span>
+<span class="lineno"> 30</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 31</span>  <span class="py-line"><span class="py-docstring">    TextFile instances can be used like normal file objects</span> </span>
+<span class="lineno"> 32</span>  <span class="py-line"><span class="py-docstring">    (i.e. by calling read(), readline(), readlines(), and write()), but</span> </span>
+<span class="lineno"> 33</span>  <span class="py-line"><span class="py-docstring">    can also be used as sequences of lines in for-loops.</span> </span>
+<span class="lineno"> 34</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 35</span>  <span class="py-line"><span class="py-docstring">    TextFile objects also handle compression transparently. i.e. it is</span> </span>
+<span class="lineno"> 36</span>  <span class="py-line"><span class="py-docstring">    possible to read lines from a compressed text file as if it were not</span> </span>
+<span class="lineno"> 37</span>  <span class="py-line"><span class="py-docstring">    compressed.  Compression is deduced from the file name suffixes '.Z'</span> </span>
+<span class="lineno"> 38</span>  <span class="py-line"><span class="py-docstring">    (compress/uncompress), '.gz' (gzip/gunzip), and '.bz2' (bzip2).</span> </span>
+<span class="lineno"> 39</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 40</span>  <span class="py-line"><span class="py-docstring">    Finally, TextFile objects accept file names that start with '~' or</span> </span>
+<span class="lineno"> 41</span>  <span class="py-line"><span class="py-docstring">    '~user' to indicate a home directory, as well as URLs (for reading only).</span> </span>
+<span class="lineno"> 42</span>  <span class="py-line"><span class="py-docstring">    """</span> </span>
+<span class="lineno"> 43</span>  <span class="py-line"> </span>
+<a name="TextFile.__init__"></a><div id="TextFile.__init__-def"><span class="lineno"> 44</span> <a class="pysrc-toggle" href="#" id="TextFile.__init__-toggle" onclick="toggle('TextFile.__init__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#__init__">__init__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">filename</span><span class="py-op">,</span> <span class="py-param">mode</span> <span class="py-op">=</span> <span class="py-string">'r'</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.__init__-expanded"><span class="lineno"> 45</span>  <span class="py-line">        <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 46</span>  <span class="py-line"><span class="py-docstring">        @param filename: file name or URL</span> </span>
+<span class="lineno"> 47</span>  <span class="py-line"><span class="py-docstring">        @type filename: C{string}</span> </span>
+<span class="lineno"> 48</span>  <span class="py-line"><span class="py-docstring">        @param mode: file access mode: 'r' (read), 'w' (write), or 'a' (append)</span> </span>
+<span class="lineno"> 49</span>  <span class="py-line"><span class="py-docstring">        @type mode: C{string}</span> </span>
+<span class="lineno"> 50</span>  <span class="py-line"><span class="py-docstring">        """</span> </span>
+<span class="lineno"> 51</span>  <span class="py-line">        <span class="py-keyword">if</span> <a title="string" class="py-name" href="string-module.html">string</a><span class="py-op">.</span><span class="py-name">find</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span> <span class="py-string">':/'</span><span class="py-op">)</span> <span class="py-op">&gt;</span> <span class="py-number">1</span><span class="py-op">:</span> <span class="py-comment"># URL</span> </span>
+<span class="lineno"> 52</span>  <span class="py-line">            <span class="py-keyword">if</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a> <span class="py-op">!=</span> <span class="py-string">'r'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 53</span>  <span class="py-line">                <span class="py-keyword">raise</span> <span class="py-name">IOError</span><span class="py-op">(</span><span class="py-string">"can't write to a URL"</span><span class="py-op">)</span> </span>
+<span class="lineno"> 54</span>  <span class="py-line">            <span class="py-keyword">import</span> <span class="py-name">urllib</span> </span>
+<span class="lineno"> 55</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <span class="py-name">urllib</span><span class="py-op">.</span><span class="py-name">urlopen</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">)</span> </span>
+<span class="lineno"> 56</span>  <span class="py-line">        <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 57</span>  <span class="py-line">            <span class="py-name">filename</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><a title="sys.path" class="py-name" href="sys-module.html#path">path</a><span class="py-op">.</span><span class="py-name">expanduser</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">)</span> </span>
+<span class="lineno"> 58</span>  <span class="py-line">            <span class="py-keyword">if</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a> <span class="py-op">==</span> <span class="py-string">'r'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 59</span>  <span class="py-line">                <span class="py-keyword">if</span> <span class="py-keyword">not</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><a title="sys.path" class="py-name" href="sys-module.html#path">path</a><span class="py-op">.</span><span class="py-name">exists</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 60</span>  <span class="py-line">                    <span class="py-keyword">raise</span> <span class="py-name">IOError</span><span class="py-op">(</span><span class="py-op">(</span><span class="py-number">2</span><span class="py-op">,</span> <span class="py-string">'No such file or directory: '</span> </span>
+<span class="lineno"> 61</span>  <span class="py-line">                                   <span class="py-op">+</span> <span class="py-name">filename</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 62</span>  <span class="py-line">                <span class="py-keyword">if</span> <span class="py-name">filename</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">2</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-string">'.Z'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 63</span>  <span class="py-line">                    <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><span class="py-name">popen</span><span class="py-op">(</span><span class="py-string">"uncompress -c "</span> <span class="py-op">+</span> <span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno"> 64</span>  <span class="py-line">                <span class="py-keyword">elif</span> <span class="py-name">filename</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">3</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-string">'.gz'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 65</span>  <span class="py-line">                    <span class="py-keyword">if</span> <span class="py-name">gzip</span> <span class="py-keyword">is</span> <span class="py-name">None</span><span class="py-op">:</span> </span>
+<span class="lineno"> 66</span>  <span class="py-line">                        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><span class="py-name">popen</span><span class="py-op">(</span><span class="py-string">"gunzip -c "</span> <span class="py-op">+</span> <span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno"> 67</span>  <span class="py-line">                    <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 68</span>  <span class="py-line">                        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <span class="py-name">gzip</span><span class="py-op">.</span><span class="py-name">GzipFile</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span> <span class="py-string">'rb'</span><span class="py-op">)</span> </span>
+<span class="lineno"> 69</span>  <span class="py-line">                <span class="py-keyword">elif</span> <span class="py-name">filename</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">4</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-string">'.bz2'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 70</span>  <span class="py-line">                    <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><span class="py-name">popen</span><span class="py-op">(</span><span class="py-string">"bzip2 -dc "</span> <span class="py-op">+</span> <span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno"> 71</span>  <span class="py-line">                <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 72</span>  <span class="py-line">                    <span class="py-keyword">try</span><span class="py-op">:</span> </span>
+<span class="lineno"> 73</span>  <span class="py-line">                        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <span class="py-name">open</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno"> 74</span>  <span class="py-line">                    <span class="py-keyword">except</span> <span class="py-name">IOError</span><span class="py-op">,</span> <span class="py-name">details</span><span class="py-op">:</span> </span>
+<span class="lineno"> 75</span>  <span class="py-line">                        <span class="py-keyword">if</span> <span id="link-0" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-0', 'type', 'Method Scientific.IO.PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method Scientific.IO.PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span><span class="py-op">(</span><span class="py-name">details</span><span class="py-op">)</span> <span class="py-op">==</span> <span id="link-1" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-1', 'type', 'Method Scientific.IO.PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method Scientific.IO.PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span><span class="py-op">(</span><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 76</span>  <span class="py-line">                            <span class="py-name">details</span> <span class="py-op">=</span> <span class="py-name">details</span> <span class="py-op">+</span> <span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span><span class="py-op">)</span> </span>
+<span class="lineno"> 77</span>  <span class="py-line">                        <span class="py-keyword">raise</span> <span class="py-name">IOError</span><span class="py-op">(</span><span class="py-name">details</span><span class="py-op">)</span> </span>
+<span class="lineno"> 78</span>  <span class="py-line">            <span class="py-keyword">elif</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a> <span class="py-op">==</span> <span class="py-string">'w'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 79</span>  <span class="py-line">                <span class="py-keyword">if</span> <span class="py-name">filename</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">2</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-string">'.Z'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 80</span>  <span class="py-line">                    <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><span class="py-name">popen</span><span class="py-op">(</span><span class="py-string">"compress &gt; "</span> <span class="py-op">+</span> <span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno"> 81</span>  <span class="py-line">                <span class="py-keyword">elif</span> <span class="py-name">filename</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">3</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-string">'.gz'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 82</span>  <span class="py-line">                    <span class="py-keyword">if</span> <span class="py-name">gzip</span> <span class="py-keyword">is</span> <span class="py-name">None</span><span class="py-op">:</span> </span>
+<span class="lineno"> 83</span>  <span class="py-line">                        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><span class="py-name">popen</span><span class="py-op">(</span><span class="py-string">"gzip &gt; "</span> <span class="py-op">+</span> <span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno"> 84</span>  <span class="py-line">                    <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 85</span>  <span class="py-line">                        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <span class="py-name">gzip</span><span class="py-op">.</span><span class="py-name">GzipFile</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span> <span class="py-string">'wb'</span><span class="py-op">)</span> </span>
+<span class="lineno"> 86</span>  <span class="py-line">                <span class="py-keyword">elif</span> <span class="py-name">filename</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">4</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-string">'.bz2'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 87</span>  <span class="py-line">                    <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><span class="py-name">popen</span><span class="py-op">(</span><span class="py-string">"bzip2 &gt; "</span> <span class="py-op">+</span> <span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno"> 88</span>  <span class="py-line">                <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno"> 89</span>  <span class="py-line">                    <span class="py-keyword">try</span><span class="py-op">:</span> </span>
+<span class="lineno"> 90</span>  <span class="py-line">                        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <span class="py-name">open</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno"> 91</span>  <span class="py-line">                    <span class="py-keyword">except</span> <span class="py-name">IOError</span><span class="py-op">,</span> <span class="py-name">details</span><span class="py-op">:</span> </span>
+<span class="lineno"> 92</span>  <span class="py-line">                        <span class="py-keyword">if</span> <span id="link-2" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-2', 'type', 'Method Scientific.IO.PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method Scientific.IO.PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span><span class="py-op">(</span><span class="py-name">details</span><span class="py-op">)</span> <span class="py-op">==</span> <span id="link-3" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-3', 'type', 'Method Scientific.IO.PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method Scientific.IO.PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span><span class="py-op">(</span><span class="py-op">(</span><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 93</span>  <span class="py-line">                            <span class="py-name">details</span> <span class="py-op">=</span> <span class="py-name">details</span> <span class="py-op">+</span> <span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span><span class="py-op">)</span> </span>
+<span class="lineno"> 94</span>  <span class="py-line">                        <span class="py-keyword">raise</span> <span class="py-name">IOError</span><span class="py-op">(</span><span class="py-name">details</span><span class="py-op">)</span> </span>
+<span class="lineno"> 95</span>  <span class="py-line">            <span class="py-keyword">elif</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a> <span class="py-op">==</span> <span class="py-string">'a'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 96</span>  <span class="py-line">                <span class="py-keyword">if</span> <span class="py-name">filename</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">2</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-string">'.Z'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 97</span>  <span class="py-line">                    <span class="py-keyword">raise</span> <span class="py-name">IOError</span><span class="py-op">(</span><span class="py-op">(</span><span class="py-number">0</span><span class="py-op">,</span> <span class="py-string">"Can't append to .Z files"</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+<span class="lineno"> 98</span>  <span class="py-line">                <span class="py-keyword">elif</span> <span class="py-name">filename</span><span class="py-op">[</span><span class="py-op">-</span><span class="py-number">3</span><span class="py-op">:</span><span class="py-op">]</span> <span class="py-op">==</span> <span class="py-string">'.gz'</span><span class="py-op">:</span> </span>
+<span class="lineno"> 99</span>  <span class="py-line">                    <span class="py-keyword">if</span> <span class="py-name">gzip</span> <span class="py-keyword">is</span> <span class="py-name">None</span><span class="py-op">:</span> </span>
+<span class="lineno">100</span>  <span class="py-line">                        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><span class="py-name">popen</span><span class="py-op">(</span><span class="py-string">"gzip &gt;&gt; "</span> <span class="py-op">+</span> <span class="py-name">filename</span><span class="py-op">,</span> <span class="py-string">"w"</span><span class="py-op">)</span> </span>
+<span class="lineno">101</span>  <span class="py-line">                    <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno">102</span>  <span class="py-line">                        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <span class="py-name">gzip</span><span class="py-op">.</span><span class="py-name">GzipFile</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span> <span class="py-string">'ab'</span><span class="py-op">)</span> </span>
+<span class="lineno">103</span>  <span class="py-line">                <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno">104</span>  <span class="py-line">                    <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span> <span class="py-op">=</span> <span class="py-name">open</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span> </span>
+<span class="lineno">105</span>  <span class="py-line">            <span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno">106</span>  <span class="py-line">                <span class="py-keyword">raise</span> <span class="py-name">IOError</span><span class="py-op">(</span><span class="py-op">(</span><span class="py-number">0</span><span class="py-op">,</span> <span class="py-string">'Illegal mode: '</span> <span class="py-op">+</span> <span class="py-name">repr</span><span class="py-op">(</span><a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">)</span><span class="py-op">)</span><span class="py-op">)</span> </span>
+</div><span class="lineno">107</span>  <span class="py-line"> </span>
+<a name="TextFile.__del__"></a><div id="TextFile.__del__-def"><span class="lineno">108</span> <a class="pysrc-toggle" href="#" id="TextFile.__del__-toggle" onclick="toggle('TextFile.__del__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#__del__">__del__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.__del__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.__del__-expanded"><span class="lineno">109</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span id="link-4" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.close
+Scientific.IO.NetCDF.NetCDFFile.close
+Scientific.IO.PDB.PDBFile.close
+Scientific.IO.TextFile.TextFile.close
+Scientific.MPI.IO.LogFile.close
+Scientific.Visualization.VMD.SceneFile.close
+Scientific.Visualization.VRML.SceneFile.close
+Scientific.Visualization.VRML2.SceneFile.close" class="py-name" href="#" onclick="doclink('link-4', 'close', 'Method BSP.IO._ParNetCDFFile.close()=Scientific.BSP.IO._ParNetCDFFile-class.html#close,Method NetCDF.NetCDFFile.close()=Scientific.IO.NetCDF.NetCDFFile-class.html#close,Method PDB.PDBFile.close()=Scientific.IO.PDB.PDBFile-class.html#close,Method close()=Scientific.IO.TextFile.TextFile-class.html#close,Method MPI.IO.LogFile.close()=Scientific.MPI.IO.LogFile-class.html#close,Method Visualization.VMD.SceneFile.close()=Scientific.Visualization.VMD.SceneFile-class.html#close,Method Visualization.VRML.SceneFile.close()=Scientific.Visualization.VRML.SceneFile-class.html#close,Method Visualization.VRML2.SceneFile.close()=Scientific.Visualization.VRML2.SceneFile-class.html#close'); return false;">close</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div><span class="lineno">110</span>  <span class="py-line"> </span>
+<a name="TextFile.__getitem__"></a><div id="TextFile.__getitem__-def"><span class="lineno">111</span> <a class="pysrc-toggle" href="#" id="TextFile.__getitem__-toggle" onclick="toggle('TextFile.__getitem__'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#__getitem__">__getitem__</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">item</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.__getitem__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.__getitem__-expanded"><span class="lineno">112</span>  <span class="py-line">        <span class="py-name">line</span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span><span class="py-op">.</span><a title="Scientific.IO.TextFile.TextFile.readline" class="py-name" href="Scientific.IO.TextFile.TextFile-class.html#readline">readline</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+<span class="lineno">113</span>  <span class="py-line">        <span class="py-keyword">if</span> <span class="py-keyword">not</span> <span class="py-name">line</span><span class="py-op">:</span> </span>
+<span class="lineno">114</span>  <span class="py-line">            <span class="py-keyword">raise</span> <span class="py-name">IndexError</span> </span>
+<span class="lineno">115</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">line</span> </span>
+</div><span class="lineno">116</span>  <span class="py-line"> </span>
+<a name="TextFile.read"></a><div id="TextFile.read-def"><span class="lineno">117</span> <a class="pysrc-toggle" href="#" id="TextFile.read-toggle" onclick="toggle('TextFile.read'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#read">read</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">size</span><span class="py-op">=</span><span class="py-op">-</span><span class="py-number">1</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.read-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.read-expanded"><span class="lineno">118</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span><span class="py-op">.</span><a title="Scientific.IO.TextFile.TextFile.read" class="py-name" href="Scientific.IO.TextFile.TextFile-class.html#read">read</a><span class="py-op">(</span><span class="py-name">size</span><span class="py-op">)</span> </span>
+</div><span class="lineno">119</span>  <span class="py-line"> </span>
+<a name="TextFile.readline"></a><div id="TextFile.readline-def"><span class="lineno">120</span> <a class="pysrc-toggle" href="#" id="TextFile.readline-toggle" onclick="toggle('TextFile.readline'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#readline">readline</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.readline-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.readline-expanded"><span class="lineno">121</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span><span class="py-op">.</span><a title="Scientific.IO.TextFile.TextFile.readline" class="py-name" href="Scientific.IO.TextFile.TextFile-class.html#readline">readline</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div><span class="lineno">122</span>  <span class="py-line"> </span>
+<a name="TextFile.readlines"></a><div id="TextFile.readlines-def"><span class="lineno">123</span> <a class="pysrc-toggle" href="#" id="TextFile.readlines-toggle" onclick="toggle('TextFile.readlines'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#readlines">readlines</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.readlines-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.readlines-expanded"><span class="lineno">124</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span><span class="py-op">.</span><a title="Scientific.IO.TextFile.TextFile.readlines" class="py-name" href="Scientific.IO.TextFile.TextFile-class.html#readlines">readlines</a><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div><span class="lineno">125</span>  <span class="py-line"> </span>
+<a name="TextFile.write"></a><div id="TextFile.write-def"><span class="lineno">126</span> <a class="pysrc-toggle" href="#" id="TextFile.write-toggle" onclick="toggle('TextFile.write'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#write">write</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">data</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.write-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.write-expanded"><span class="lineno">127</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span><span class="py-op">.</span><span id="link-5" class="py-name"><a title="Scientific.BSP.Console.OutputStream.write
+Scientific.IO.TextFile.TextFile.write
+Scientific.MPI.IO.LogFile.write
+Scientific.Visualization.VMD.SceneFile.write
+Scientific.Visualization.VRML.SceneFile.write
+Scientific.Visualization.VRML2.SceneFile.write" class="py-name" href="#" onclick="doclink('link-5', 'write', 'Method BSP.Console.OutputStream.write()=Scientific.BSP.Console.OutputStream-class.html#write,Method write()=Scientific.IO.TextFile.TextFile-class.html#write,Method MPI.IO.LogFile.write()=Scientific.MPI.IO.LogFile-class.html#write,Method Visualization.VMD.SceneFile.write()=Scientific.Visualization.VMD.SceneFile-class.html#write,Method Visualization.VRML.SceneFile.write()=Scientific.Visualization.VRML.SceneFile-class.html#write,Method Visualization.VRML2.SceneFile.write()=Scientific.Visualization.VRML2.SceneFile-class.html#write'); return false;">write</a></span></span><span class="py-op">(</span><a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a><span class="py-op">)</span> </span>
+</div><span class="lineno">128</span>  <span class="py-line"> </span>
+<a name="TextFile.writelines"></a><div id="TextFile.writelines-def"><span class="lineno">129</span> <a class="pysrc-toggle" href="#" id="TextFile.writelines-toggle" onclick="toggle('TextFile.writelines'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#writelines">writelines</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">list</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.writelines-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.writelines-expanded"><span class="lineno">130</span>  <span class="py-line">        <span class="py-keyword">for</span> <span class="py-name">line</span> <span class="py-keyword">in</span> <span class="py-name">list</span><span class="py-op">:</span> </span>
+<span class="lineno">131</span>  <span class="py-line">            <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span><span class="py-op">.</span><span id="link-6" class="py-name"><a title="Scientific.BSP.Console.OutputStream.write
+Scientific.IO.TextFile.TextFile.write
+Scientific.MPI.IO.LogFile.write
+Scientific.Visualization.VMD.SceneFile.write
+Scientific.Visualization.VRML.SceneFile.write
+Scientific.Visualization.VRML2.SceneFile.write" class="py-name" href="#" onclick="doclink('link-6', 'write', 'Method Scientific.BSP.Console.OutputStream.write()=Scientific.BSP.Console.OutputStream-class.html#write,Method Scientific.IO.TextFile.TextFile.write()=Scientific.IO.TextFile.TextFile-class.html#write,Method Scientific.MPI.IO.LogFile.write()=Scientific.MPI.IO.LogFile-class.html#write,Method Scientific.Visualization.VMD.SceneFile.write()=Scientific.Visualization.VMD.SceneFile-class.html#write,Method Scientific.Visualization.VRML.SceneFile.write()=Scientific.Visualization.VRML.SceneFile-class.html#write,Method Scientific.Visualization.VRML2.SceneFile.write()=Scientific.Visualization.VRML2.SceneFile-class.html#write'); return false;">write</a></span></span><span class="py-op">(</span><span class="py-name">line</span><span class="py-op">)</span> </span>
+</div><span class="lineno">132</span>  <span class="py-line"> </span>
+<a name="TextFile.close"></a><div id="TextFile.close-def"><span class="lineno">133</span> <a class="pysrc-toggle" href="#" id="TextFile.close-toggle" onclick="toggle('TextFile.close'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#close">close</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.close-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.close-expanded"><span class="lineno">134</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span><span class="py-op">.</span><span id="link-7" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.close
+Scientific.IO.NetCDF.NetCDFFile.close
+Scientific.IO.PDB.PDBFile.close
+Scientific.IO.TextFile.TextFile.close
+Scientific.MPI.IO.LogFile.close
+Scientific.Visualization.VMD.SceneFile.close
+Scientific.Visualization.VRML.SceneFile.close
+Scientific.Visualization.VRML2.SceneFile.close" class="py-name" href="#" onclick="doclink('link-7', 'close', 'Method BSP.IO._ParNetCDFFile.close()=Scientific.BSP.IO._ParNetCDFFile-class.html#close,Method NetCDF.NetCDFFile.close()=Scientific.IO.NetCDF.NetCDFFile-class.html#close,Method PDB.PDBFile.close()=Scientific.IO.PDB.PDBFile-class.html#close,Method close()=Scientific.IO.TextFile.TextFile-class.html#close,Method MPI.IO.LogFile.close()=Scientific.MPI.IO.LogFile-class.html#close,Method Visualization.VMD.SceneFile.close()=Scientific.Visualization.VMD.SceneFile-class.html#close,Method Visualization.VRML.SceneFile.close()=Scientific.Visualization.VRML.SceneFile-class.html#close,Method Visualization.VRML2.SceneFile.close()=Scientific.Visualization.VRML2.SceneFile-class.html#close'); return false;">close</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div><span class="lineno">135</span>  <span class="py-line"> </span>
+<a name="TextFile.flush"></a><div id="TextFile.flush-def"><span class="lineno">136</span> <a class="pysrc-toggle" href="#" id="TextFile.flush-toggle" onclick="toggle('TextFile.flush'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.TextFile.TextFile-class.html#flush">flush</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="TextFile.flush-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TextFile.flush-expanded"><span class="lineno">137</span>  <span class="py-line">        <span class="py-name">self</span><span class="py-op">.</span><span class="py-name">file</span><span class="py-op">.</span><span id="link-8" class="py-name"><a title="Scientific.IO.TextFile.TextFile.flush
+Scientific.MPI.IO.LogFile.flush" class="py-name" href="#" onclick="doclink('link-8', 'flush', 'Method flush()=Scientific.IO.TextFile.TextFile-class.html#flush,Method MPI.IO.LogFile.flush()=Scientific.MPI.IO.LogFile-class.html#flush'); return false;">flush</a></span></span><span class="py-op">(</span><span class="py-op">)</span> </span>
+</div></div><span class="lineno">138</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:45:41 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

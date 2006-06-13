@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.IO.NetCDF</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.IO-module.html">Package&nbsp;IO</a> ::
+        Module&nbsp;NetCDF
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.IO.NetCDF-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h2 class="py-src">Source Code for <a href="Scientific.IO.NetCDF-module.html">Module Scientific.IO.NetCDF</a></h2>
+<div class="py-src">
+<pre class="py-src">
+<span class="lineno">  1</span>  <span class="py-line"><span class="py-comment"># The netCDF interface is mostly written in C; this module only</span> </span>
+<span class="lineno">  2</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># adds some luxury and puts everything in its proper place in the</span> </span>
+<span class="lineno">  3</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># package hierarchy.</span> </span>
+<span class="lineno">  4</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno">  5</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Written by Konrad Hinsen &lt;hinsen@cnrs-orleans.fr&gt;</span> </span>
+<span class="lineno">  6</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># Last revision: 2006-5-28</span> </span>
+<span class="lineno">  7</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># </span> </span>
+<span class="lineno">  8</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">  9</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno"> 10</span>  <span class="py-line"><span class="py-docstring">Python interface to the netCDF library</span> </span>
+<span class="lineno"> 11</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="lineno"> 12</span>  <span class="py-line"> </span>
+<span class="lineno"> 13</span>  <span class="py-line"><span class="py-keyword">import</span> <a class="py-name" href="sys-module.html">sys</a> </span>
+<span class="lineno"> 14</span>  <span class="py-line"> </span>
+<span class="lineno"> 15</span>  <span class="py-line"><span class="py-keyword">if</span> <a class="py-name" href="sys-module.html">sys</a><span class="py-op">.</span><a title="sys.modules" class="py-name" href="sys-module.html#modules">modules</a><span class="py-op">.</span><span class="py-name">has_key</span><span class="py-op">(</span><span class="py-string">'epydoc'</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 16</span>  <span class="py-line"> </span>
+<span class="lineno"> 17</span>  <span class="py-line">    <span class="py-comment"># Fake code just for the docstrings!</span> </span>
+<span class="lineno"> 18</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno"> 19</span>  <span class="py-line">    <span class="py-keyword">from</span> <span class="py-name">Scientific_netcdf</span> <span class="py-keyword">import</span> <span id="link-0" class="py-name"><a title="Scientific.IO.NetCDF._C_API
+Scientific.MPI._C_API
+Scientific.MPI.core'._C_API" class="py-name" href="#" onclick="doclink('link-0', '_C_API', 'Variable Scientific.IO.NetCDF._C_API=Scientific.IO.NetCDF-module.html#_C_API,Variable Scientific.MPI._C_API=Scientific.MPI-module.html#_C_API,Variable Scientific.MPI.core'._C_API=Scientific.MPI.core%27-module.html#_C_API'); return false;">_C_API</a></span></span> </span>
+<span class="lineno"> 20</span>  <span class="py-line"> </span>
+<span class="lineno"> 21</span>  <span class="py-line">    <span class="py-keyword">class</span> <span class="py-def-name">NetCDFFile</span><span class="py-op">:</span> </span>
+<span class="lineno"> 22</span>  <span class="py-line"> </span>
+<span class="lineno"> 23</span>  <span class="py-line">        <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 24</span>  <span class="py-line"><span class="py-docstring">        X{netCDF} file</span> </span>
+<span class="lineno"> 25</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 26</span>  <span class="py-line"><span class="py-docstring">        A NetCDFFile object has two standard attributes: 'dimensions' and</span> </span>
+<span class="lineno"> 27</span>  <span class="py-line"><span class="py-docstring">        'variables'. The values of both are dictionaries, mapping dimension</span> </span>
+<span class="lineno"> 28</span>  <span class="py-line"><span class="py-docstring">        names to their associated lengths and variable names to variables,</span> </span>
+<span class="lineno"> 29</span>  <span class="py-line"><span class="py-docstring">        respectively. Application programs should never modify these</span> </span>
+<span class="lineno"> 30</span>  <span class="py-line"><span class="py-docstring">        dictionaries.</span> </span>
+<span class="lineno"> 31</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 32</span>  <span class="py-line"><span class="py-docstring">        All other attributes correspond to global attributes defined in the</span> </span>
+<span class="lineno"> 33</span>  <span class="py-line"><span class="py-docstring">        netCDF file. Global file attributes are created by assigning to</span> </span>
+<span class="lineno"> 34</span>  <span class="py-line"><span class="py-docstring">        an attribute of the NetCDFFile object. </span> </span>
+<span class="lineno"> 35</span>  <span class="py-line"><span class="py-docstring">        """</span> </span>
+<span class="lineno"> 36</span>  <span class="py-line"> </span>
+<span class="lineno"> 37</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">__init__</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-op">*</span><span class="py-param">args</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 38</span>  <span class="py-line">            <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 39</span>  <span class="py-line"><span class="py-docstring">            @param filename: name of the netCDF file. By convention,</span> </span>
+<span class="lineno"> 40</span>  <span class="py-line"><span class="py-docstring">                             netCDF files have the extension ".nc", but</span> </span>
+<span class="lineno"> 41</span>  <span class="py-line"><span class="py-docstring">                             this is not enforced. The filename may contain</span> </span>
+<span class="lineno"> 42</span>  <span class="py-line"><span class="py-docstring">                             a home directory indication starting with "~".</span> </span>
+<span class="lineno"> 43</span>  <span class="py-line"><span class="py-docstring">            @type filename: C{string}</span> </span>
+<span class="lineno"> 44</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno"> 45</span>  <span class="py-line"><span class="py-docstring">            @param mode: access mode. "r" means read-only; no data can be</span> </span>
+<span class="lineno"> 46</span>  <span class="py-line"><span class="py-docstring">                         modified. "w" means write; a new file is created,</span> </span>
+<span class="lineno"> 47</span>  <span class="py-line"><span class="py-docstring">                         an existing file with the same name is deleted.</span> </span>
+<span class="lineno"> 48</span>  <span class="py-line"><span class="py-docstring">                         "a" means append (in analogy with serial files);</span> </span>
+<span class="lineno"> 49</span>  <span class="py-line"><span class="py-docstring">                         an existing file is opened for reading and writing,</span> </span>
+<span class="lineno"> 50</span>  <span class="py-line"><span class="py-docstring">                         if the file does not exist it is created. "r+" is</span> </span>
+<span class="lineno"> 51</span>  <span class="py-line"><span class="py-docstring">                         similar to "a", but the file must already exist.</span> </span>
+<span class="lineno"> 52</span>  <span class="py-line"><span class="py-docstring">                         An "s" can be appended to any of the modes listed</span> </span>
+<span class="lineno"> 53</span>  <span class="py-line"><span class="py-docstring">                         above; it indicates that the file will be opened</span> </span>
+<span class="lineno"> 54</span>  <span class="py-line"><span class="py-docstring">                         or created in "share" mode, which reduces buffering</span> </span>
+<span class="lineno"> 55</span>  <span class="py-line"><span class="py-docstring">                         in order to permit simultaneous read access by other</span> </span>
+<span class="lineno"> 56</span>  <span class="py-line"><span class="py-docstring">                         processes to a file that is being written.</span> </span>
+<span class="lineno"> 57</span>  <span class="py-line"><span class="py-docstring">            @type mode: C{string}</span> </span>
+<span class="lineno"> 58</span>  <span class="py-line"><span class="py-docstring">            """</span> </span>
+<span class="lineno"> 59</span>  <span class="py-line">            <span class="py-keyword">raise</span> <span class="py-name">ImportError</span><span class="py-op">(</span><span class="py-string">"this code should never be executed"</span><span class="py-op">)</span> </span>
+</div><span class="lineno"> 60</span>  <span class="py-line"> </span>
+<span class="lineno"> 61</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">close</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 62</span>  <span class="py-line">            <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 63</span>  <span class="py-line"><span class="py-docstring">            Close the file. Any read or write access to the file</span> </span>
+<span class="lineno"> 64</span>  <span class="py-line"><span class="py-docstring">            or one of its variables after closing raises an exception.</span> </span>
+<span class="lineno"> 65</span>  <span class="py-line"><span class="py-docstring">            """</span> </span>
+<span class="lineno"> 66</span>  <span class="py-line">            <span class="py-keyword">pass</span> </span>
+</div><span class="lineno"> 67</span>  <span class="py-line">         </span>
+<span class="lineno"> 68</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">createDimension</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">name</span><span class="py-op">,</span> <span class="py-param">length</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 69</span>  <span class="py-line">            <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 70</span>  <span class="py-line"><span class="py-docstring">            @param name: the name of the dimension</span> </span>
+<span class="lineno"> 71</span>  <span class="py-line"><span class="py-docstring">            @type name: C{string}</span> </span>
+<span class="lineno"> 72</span>  <span class="py-line"><span class="py-docstring">            @param length: the length of the new dimension. C{None} stands</span> </span>
+<span class="lineno"> 73</span>  <span class="py-line"><span class="py-docstring">                           for the unlimited dimension. Note that there</span> </span>
+<span class="lineno"> 74</span>  <span class="py-line"><span class="py-docstring">                           can be only one unlimited dimension per file.</span> </span>
+<span class="lineno"> 75</span>  <span class="py-line"><span class="py-docstring">            @type length: C{int} or C{NoneType}</span> </span>
+<span class="lineno"> 76</span>  <span class="py-line"><span class="py-docstring">            """</span> </span>
+<span class="lineno"> 77</span>  <span class="py-line">            <span class="py-keyword">pass</span> </span>
+</div><span class="lineno"> 78</span>  <span class="py-line"> </span>
+<span class="lineno"> 79</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">createVariable</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">name</span><span class="py-op">,</span> <span class="py-param">type</span><span class="py-op">,</span> <span class="py-param">dimensions</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 80</span>  <span class="py-line">            <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 81</span>  <span class="py-line"><span class="py-docstring">            @param name: the name of the new variable</span> </span>
+<span class="lineno"> 82</span>  <span class="py-line"><span class="py-docstring">            @type name: C{string}</span> </span>
+<span class="lineno"> 83</span>  <span class="py-line"><span class="py-docstring">            @param type: the data type of the elements; the same one-letter</span> </span>
+<span class="lineno"> 84</span>  <span class="py-line"><span class="py-docstring">                         codes as in C{Numeric} are used and the use of the</span> </span>
+<span class="lineno"> 85</span>  <span class="py-line"><span class="py-docstring">                         pre-defined constants (Numeric.Float etc.) is</span> </span>
+<span class="lineno"> 86</span>  <span class="py-line"><span class="py-docstring">                         strongly recommended.</span> </span>
+<span class="lineno"> 87</span>  <span class="py-line"><span class="py-docstring">            @type type: C{string}</span> </span>
+<span class="lineno"> 88</span>  <span class="py-line"><span class="py-docstring">            @param dimensions: a tuple of dimension names that have been</span> </span>
+<span class="lineno"> 89</span>  <span class="py-line"><span class="py-docstring">                               defined earlier</span> </span>
+<span class="lineno"> 90</span>  <span class="py-line"><span class="py-docstring">            @type dimensions: C{tuple} of C{string}</span> </span>
+<span class="lineno"> 91</span>  <span class="py-line"><span class="py-docstring">            @returns: the object corresponding to the new variable</span> </span>
+<span class="lineno"> 92</span>  <span class="py-line"><span class="py-docstring">            @rtype: L{NetCDFVariable}</span> </span>
+<span class="lineno"> 93</span>  <span class="py-line"><span class="py-docstring">            """</span> </span>
+<span class="lineno"> 94</span>  <span class="py-line">            <span class="py-keyword">pass</span> </span>
+</div><span class="lineno"> 95</span>  <span class="py-line"> </span>
+<span class="lineno"> 96</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">sync</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno"> 97</span>  <span class="py-line">            <span class="py-docstring">"""</span> </span>
+<span class="lineno"> 98</span>  <span class="py-line"><span class="py-docstring">            Write all buffered data to the disk file.</span> </span>
+<span class="lineno"> 99</span>  <span class="py-line"><span class="py-docstring">            """</span> </span>
+</div><span class="lineno">100</span>  <span class="py-line">        <span id="link-1" class="py-name"><a title="Scientific.IO.TextFile.TextFile.flush
+Scientific.MPI.IO.LogFile.flush" class="py-name" href="#" onclick="doclink('link-1', 'flush', 'Method Scientific.IO.TextFile.TextFile.flush()=Scientific.IO.TextFile.TextFile-class.html#flush,Method Scientific.MPI.IO.LogFile.flush()=Scientific.MPI.IO.LogFile-class.html#flush'); return false;">flush</a></span></span> <span class="py-op">=</span> <span id="link-2" class="py-name"><a title="Scientific.BSP.IO._ParNetCDFFile.sync
+Scientific.BSP.core.sync
+Scientific.IO.NetCDF.NetCDFFile.sync" class="py-name" href="#" onclick="doclink('link-2', 'sync', 'Method Scientific.BSP.IO._ParNetCDFFile.sync()=Scientific.BSP.IO._ParNetCDFFile-class.html#sync,Function Scientific.BSP.core.sync()=Scientific.BSP.core-module.html#sync,Method Scientific.IO.NetCDF.NetCDFFile.sync()=Scientific.IO.NetCDF.NetCDFFile-class.html#sync'); return false;">sync</a></span></span> </span>
+</div><span class="lineno">101</span>  <span class="py-line"> </span>
+<span class="lineno">102</span>  <span class="py-line">    <span class="py-keyword">class</span> <span class="py-def-name">NetCDFVariable</span><span class="py-op">:</span> </span>
+<span class="lineno">103</span>  <span class="py-line"> </span>
+<span class="lineno">104</span>  <span class="py-line">        <span class="py-docstring">"""</span> </span>
+<span class="lineno">105</span>  <span class="py-line"><span class="py-docstring">        Variable in a netCDF file</span> </span>
+<span class="lineno">106</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno">107</span>  <span class="py-line"><span class="py-docstring">        NetCDFVariable objects are constructed by calling the method</span> </span>
+<span class="lineno">108</span>  <span class="py-line"><span class="py-docstring">        'createVariable' on the L{NetCDFFile} object.</span> </span>
+<span class="lineno">109</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno">110</span>  <span class="py-line"><span class="py-docstring">        NetCDFVariable objects behave much like array objects defined</span> </span>
+<span class="lineno">111</span>  <span class="py-line"><span class="py-docstring">        in module Numeric, except that their data resides in a file.</span> </span>
+<span class="lineno">112</span>  <span class="py-line"><span class="py-docstring">        Data is read by indexing and written by assigning to an</span> </span>
+<span class="lineno">113</span>  <span class="py-line"><span class="py-docstring">        indexed subset; the entire array can be accessed by the index</span> </span>
+<span class="lineno">114</span>  <span class="py-line"><span class="py-docstring">        '[:]' or using the methods 'getValue' and</span> </span>
+<span class="lineno">115</span>  <span class="py-line"><span class="py-docstring">        'assignValue'. NetCDFVariable objects also have attribute</span> </span>
+<span class="lineno">116</span>  <span class="py-line"><span class="py-docstring">        "shape" with the same meaning as for arrays, but the shape</span> </span>
+<span class="lineno">117</span>  <span class="py-line"><span class="py-docstring">        cannot be modified. There is another read-only attribute</span> </span>
+<span class="lineno">118</span>  <span class="py-line"><span class="py-docstring">        "dimensions", whose value is the tuple of dimension names.</span> </span>
+<span class="lineno">119</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno">120</span>  <span class="py-line"><span class="py-docstring">        All other attributes correspond to variable attributes defined in the</span> </span>
+<span class="lineno">121</span>  <span class="py-line"><span class="py-docstring">        netCDF file. Variable attributes are created by assigning to</span> </span>
+<span class="lineno">122</span>  <span class="py-line"><span class="py-docstring">        an attribute of the NetCDFVariable object. </span> </span>
+<span class="lineno">123</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno">124</span>  <span class="py-line"><span class="py-docstring">        B{Note:}</span> </span>
+<span class="lineno">125</span>  <span class="py-line"><span class="py-docstring">        If a file open for reading is simultaneously written by another program,</span> </span>
+<span class="lineno">126</span>  <span class="py-line"><span class="py-docstring">        the size of the unlimited dimension may change. Every time the shape</span> </span>
+<span class="lineno">127</span>  <span class="py-line"><span class="py-docstring">        of a variable is requested, the current size will be obtained from</span> </span>
+<span class="lineno">128</span>  <span class="py-line"><span class="py-docstring">        the file. For reading and writing, the size obtained during the last</span> </span>
+<span class="lineno">129</span>  <span class="py-line"><span class="py-docstring">        shape request is used. This ensures consistency: foo[-1] means the</span> </span>
+<span class="lineno">130</span>  <span class="py-line"><span class="py-docstring">        same thing no matter how often it is evaluated, as long as the shape</span> </span>
+<span class="lineno">131</span>  <span class="py-line"><span class="py-docstring">        is not re-evaluated in between.</span> </span>
+<span class="lineno">132</span>  <span class="py-line"><span class="py-docstring">        """</span> </span>
+<span class="lineno">133</span>  <span class="py-line"> </span>
+<span class="lineno">134</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">__init__</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-op">*</span><span class="py-param">args</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">135</span>  <span class="py-line">            <span class="py-keyword">raise</span> <span class="py-name">ImportError</span><span class="py-op">(</span><span class="py-string">"this code should never be executed"</span><span class="py-op">)</span> </span>
+</div><span class="lineno">136</span>  <span class="py-line"> </span>
+<span class="lineno">137</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">assignValue</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">value</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">138</span>  <span class="py-line">            <span class="py-docstring">"""</span> </span>
+<span class="lineno">139</span>  <span class="py-line"><span class="py-docstring">            Assign a new value to the variable. This method allows</span> </span>
+<span class="lineno">140</span>  <span class="py-line"><span class="py-docstring">            assignment to scalar variables, which cannot be indexed.</span> </span>
+<span class="lineno">141</span>  <span class="py-line"><span class="py-docstring">            </span> </span>
+<span class="lineno">142</span>  <span class="py-line"><span class="py-docstring">            @param value: the new value for the variable</span> </span>
+<span class="lineno">143</span>  <span class="py-line"><span class="py-docstring">            """</span> </span>
+<span class="lineno">144</span>  <span class="py-line">            <span class="py-keyword">pass</span> </span>
+</div><span class="lineno">145</span>  <span class="py-line"> </span>
+<span class="lineno">146</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">getValue</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">147</span>  <span class="py-line">            <span class="py-docstring">"""</span> </span>
+<span class="lineno">148</span>  <span class="py-line"><span class="py-docstring">            Return the value of the variable. This method allows</span> </span>
+<span class="lineno">149</span>  <span class="py-line"><span class="py-docstring">            access to scalar variables, which cannot be indexed.</span> </span>
+<span class="lineno">150</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="lineno">151</span>  <span class="py-line"><span class="py-docstring">            @returns: the current value of the variable</span> </span>
+<span class="lineno">152</span>  <span class="py-line"><span class="py-docstring">            """</span> </span>
+<span class="lineno">153</span>  <span class="py-line">            <span class="py-keyword">pass</span> </span>
+</div><span class="lineno">154</span>  <span class="py-line"> </span>
+<span class="lineno">155</span>  <span class="py-line">        <span class="py-keyword">def</span> <span class="py-def-name">typecode</span><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">156</span>  <span class="py-line">            <span class="py-docstring">"""</span> </span>
+<span class="lineno">157</span>  <span class="py-line"><span class="py-docstring">            @returns:  the variable's type code</span> </span>
+<span class="lineno">158</span>  <span class="py-line"><span class="py-docstring">            @rtype: C{string}</span> </span>
+<span class="lineno">159</span>  <span class="py-line"><span class="py-docstring">            """</span> </span>
+<span class="lineno">160</span>  <span class="py-line">            <span class="py-keyword">pass</span> </span>
+</div></div><span class="lineno">161</span>  <span class="py-line"> </span>
+<span class="lineno">162</span>  <span class="py-line"><span class="py-keyword">else</span><span class="py-op">:</span> </span>
+<span class="lineno">163</span>  <span class="py-line"> </span>
+<span class="lineno">164</span>  <span class="py-line">    <span class="py-comment"># This is the real code.</span> </span>
+<span class="lineno">165</span>  <span class="py-line"><span class="py-comment"></span>    <span class="py-keyword">from</span> <span class="py-name">Scientific_netcdf</span> <span class="py-keyword">import</span> <span class="py-op">*</span> </span>
+<span class="lineno">166</span>  <span class="py-line">    <span class="py-keyword">from</span> <span class="py-name">Scientific_netcdf</span> <span class="py-keyword">import</span> <span id="link-3" class="py-name"><a title="Scientific.IO.NetCDF._C_API
+Scientific.MPI._C_API
+Scientific.MPI.core'._C_API" class="py-name" href="#" onclick="doclink('link-3', '_C_API', 'Variable Scientific.IO.NetCDF._C_API=Scientific.IO.NetCDF-module.html#_C_API,Variable Scientific.MPI._C_API=Scientific.MPI-module.html#_C_API,Variable Scientific.MPI.core'._C_API=Scientific.MPI.core%27-module.html#_C_API'); return false;">_C_API</a></span></span> </span>
+<span class="lineno">167</span>  <span class="py-line">    <span class="py-keyword">import</span> <a title="os" class="py-name" href="os-module.html">os</a> </span>
+<span class="lineno">168</span>  <span class="py-line"> </span>
+<span class="lineno">169</span>  <span class="py-line">    <span class="py-name">_NetCDFFile</span> <span class="py-op">=</span> <a title="Scientific.IO.NetCDF.NetCDFFile" class="py-name" href="Scientific.IO.NetCDF.NetCDFFile-class.html">NetCDFFile</a> </span>
+<span class="lineno">170</span>  <span class="py-line">    <span class="py-keyword">def</span> <span class="py-def-name">NetCDFFile</span><span class="py-op">(</span><span class="py-param">filename</span><span class="py-op">,</span> <span class="py-param">mode</span><span class="py-op">=</span><span class="py-name">None</span><span class="py-op">,</span> <span class="py-param">history</span><span class="py-op">=</span><span class="py-name">None</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+<span class="lineno">171</span>  <span class="py-line">        <span class="py-name">filename</span> <span class="py-op">=</span> <a title="os" class="py-name" href="os-module.html">os</a><span class="py-op">.</span><a title="sys.path" class="py-name" href="sys-module.html#path">path</a><span class="py-op">.</span><span class="py-name">expanduser</span><span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">)</span> </span>
+<span class="lineno">172</span>  <span class="py-line">        <span class="py-name">args</span> <span class="py-op">=</span> <span class="py-op">(</span><span class="py-name">filename</span><span class="py-op">,</span><span class="py-op">)</span> </span>
+<span class="lineno">173</span>  <span class="py-line">        <span class="py-keyword">if</span> <a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a> <span class="py-keyword">is</span> <span class="py-keyword">not</span> <span class="py-name">None</span><span class="py-op">:</span> </span>
+<span class="lineno">174</span>  <span class="py-line">            <span class="py-name">args</span> <span class="py-op">=</span> <span class="py-name">args</span> <span class="py-op">+</span> <span class="py-op">(</span><a title="Scientific.Statistics.mode" class="py-name" href="Scientific.Statistics-module.html#mode">mode</a><span class="py-op">,</span><span class="py-op">)</span> </span>
+<span class="lineno">175</span>  <span class="py-line">            <span class="py-keyword">if</span> <span class="py-name">history</span> <span class="py-keyword">is</span> <span class="py-keyword">not</span> <span class="py-name">None</span><span class="py-op">:</span> </span>
+<span class="lineno">176</span>  <span class="py-line">                <span class="py-name">args</span> <span class="py-op">=</span> <span class="py-name">args</span> <span class="py-op">+</span> <span class="py-op">(</span><span class="py-name">history</span><span class="py-op">,</span><span class="py-op">)</span> </span>
+<span class="lineno">177</span>  <span class="py-line">        <span class="py-keyword">return</span> <a title="Scientific.TkWidgets.ModalDialog.apply" class="py-name" href="Scientific.TkWidgets.ModalDialog-class.html#apply">apply</a><span class="py-op">(</span><span class="py-name">_NetCDFFile</span><span class="py-op">,</span> <span class="py-name">args</span><span class="py-op">)</span> </span>
+</div><span class="lineno">178</span>  <span class="py-line"> </span>
+<span class="lineno">179</span>  <span class="py-line">    <span class="py-keyword">del</span> <a title="sys" class="py-name" href="sys-module.html">sys</a> </span>
+<span class="lineno">180</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:45:02 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

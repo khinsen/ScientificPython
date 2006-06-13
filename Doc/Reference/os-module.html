@@ -1,0 +1,4365 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>os</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;os
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="os-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h2 class="module">Module os</h2>
+<p>OS routines for Mac, DOS, NT, or Posix depending on what system we're 
+  on.</p>
+  This exports:
+  <ul>
+    <li>
+      all functions from posix, nt, os2, mac, or ce, e.g. unlink, stat, 
+      etc.
+    </li>
+    <li>
+      os.path is one of the modules posixpath, ntpath, or macpath
+    </li>
+    <li>
+      os.name is 'posix', 'nt', 'os2', 'mac', 'ce' or 'riscos'
+    </li>
+    <li>
+      os.curdir is a string representing the current directory ('.' or 
+      ':')
+    </li>
+    <li>
+      os.pardir is a string representing the parent directory ('..' or 
+      '::')
+    </li>
+    <li>
+      os.sep is the (or a most common) pathname separator ('/' or ':' or
+      '\\')
+    </li>
+    <li>
+      os.extsep is the extension separator ('.' or '/')
+    </li>
+    <li>
+      os.altsep is the alternate pathname separator (None or '/')
+    </li>
+    <li>
+      os.pathsep is the component separator used in $PATH etc
+    </li>
+    <li>
+      os.linesep is the line separator in text files ('\r' or '\n' or 
+      '\r\n')
+    </li>
+    <li>
+      os.defpath is the default search path for executables
+    </li>
+    <li>
+      os.devnull is the file path of the null device ('/dev/null', 
+      etc.)
+    </li>
+  </ul>
+  Programs that import and use 'os' stand a better chance of being 
+  portable between different platforms.  Of course, they must then only use
+  functions that are defined by all platforms (e.g., unlink and opendir), 
+  and leave all pathname manipulation to os.path (e.g., split and 
+  join).<br /><br />
+
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Classes</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="os._Environ-class.html">_Environ</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Functions</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#_execvpe" class="sig-name">_execvpe</a>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>=<span class="sig-default">None</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#_exists" class="sig-name">_exists</a>(<span class="sig-arg">name</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#_get_exports_list" class="sig-name">_get_exports_list</a>(<span class="sig-arg">module</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#_make_stat_result" class="sig-name">_make_stat_result</a>(<span class="sig-arg">tup</span>,
+        <span class="sig-arg">dict</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#_make_statvfs_result" class="sig-name">_make_statvfs_result</a>(<span class="sig-arg">tup</span>,
+        <span class="sig-arg">dict</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#_pickle_stat_result" class="sig-name">_pickle_stat_result</a>(<span class="sig-arg">sr</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#_pickle_statvfs_result" class="sig-name">_pickle_statvfs_result</a>(<span class="sig-arg">sr</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#_spawnvef" class="sig-name">_spawnvef</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">func</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#execl" class="sig-name">execl</a>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Execute the executable file with argument list args, replacing the
+      current process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#execle" class="sig-name">execle</a>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Execute the executable file with argument list args and 
+      environment env, replacing the current process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#execlp" class="sig-name">execlp</a>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Execute the executable file (which is searched for along $PATH) 
+      with argument list args, replacing the current process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#execlpe" class="sig-name">execlpe</a>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Execute the executable file (which is searched for along $PATH) 
+      with argument list args and environment env, replacing the current 
+      process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#execvp" class="sig-name">execvp</a>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>)</span>
+    <br />Execute the executable file (which is searched for along $PATH) 
+      with argument list args, replacing the current process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#execvpe" class="sig-name">execvpe</a>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>)</span>
+    <br />Execute the executable file (which is searched for along $PATH) 
+      with argument list args and environment env , replacing the current 
+      process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#getenv" class="sig-name">getenv</a>(<span class="sig-arg">key</span>,
+        <span class="sig-arg">default</span>=<span class="sig-default">None</span>)</span>
+    <br />Get an environment variable, return None if it doesn't exist.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#makedirs" class="sig-name">makedirs</a>(<span class="sig-arg">path</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">0777</span>)</span>
+    <br />Super-mkdir; create a leaf directory and all intermediate 
+      ones.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#popen2" class="sig-name">popen2</a>(<span class="sig-arg">cmd</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">'t'</span>,
+        <span class="sig-arg">bufsize</span>=<span class="sig-default">-1</span>)</span>
+    <br />Execute the shell command 'cmd' in a sub-process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#popen3" class="sig-name">popen3</a>(<span class="sig-arg">cmd</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">'t'</span>,
+        <span class="sig-arg">bufsize</span>=<span class="sig-default">-1</span>)</span>
+    <br />Execute the shell command 'cmd' in a sub-process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#popen4" class="sig-name">popen4</a>(<span class="sig-arg">cmd</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">'t'</span>,
+        <span class="sig-arg">bufsize</span>=<span class="sig-default">-1</span>)</span>
+    <br />Execute the shell command 'cmd' in a sub-process.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#removedirs" class="sig-name">removedirs</a>(<span class="sig-arg">path</span>)</span>
+    <br />Super-rmdir; remove a leaf directory and empty all intermediate 
+      ones.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#renames" class="sig-name">renames</a>(<span class="sig-arg">old</span>,
+        <span class="sig-arg">new</span>)</span>
+    <br />Super-rename; create directories as necessary and delete any left 
+      empty.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#spawnl" class="sig-name">spawnl</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Execute file with arguments from args in a subprocess.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#spawnle" class="sig-name">spawnle</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Execute file with arguments from args in a subprocess with the 
+      supplied environment.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#spawnlp" class="sig-name">spawnlp</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Execute file (which is looked for along $PATH) with arguments from
+      args in a subprocess with the supplied environment.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#spawnlpe" class="sig-name">spawnlpe</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br />Execute file (which is looked for along $PATH) with arguments from
+      args in a subprocess with the supplied environment.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#spawnv" class="sig-name">spawnv</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>)</span>
+    <br />Execute file with arguments from args in a subprocess.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#spawnve" class="sig-name">spawnve</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>)</span>
+    <br />Execute file with arguments from args in a subprocess with the 
+      specified environment.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#spawnvp" class="sig-name">spawnvp</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>)</span>
+    <br />Execute file (which is looked for along $PATH) with arguments from
+      args in a subprocess.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#spawnvpe" class="sig-name">spawnvpe</a>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>)</span>
+    <br />Execute file (which is looked for along $PATH) with arguments from
+      args in a subprocess with the supplied environment.
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#urandom" class="sig-name">urandom</a>(<span class="sig-arg">n</span>)</span>
+    <br />Return a string of n random bytes suitable for cryptographic 
+      use.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="os-module.html#walk" class="sig-name">walk</a>(<span class="sig-arg">top</span>,
+        <span class="sig-arg">topdown</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">onerror</span>=<span class="sig-default">None</span>)</span>
+    <br />Directory tree generator.
+  </td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Variables</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_CANTCREAT">EX_CANTCREAT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_CONFIG">EX_CONFIG</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_DATAERR">EX_DATAERR</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_IOERR">EX_IOERR</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_NOHOST">EX_NOHOST</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_NOINPUT">EX_NOINPUT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_NOPERM">EX_NOPERM</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_NOUSER">EX_NOUSER</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_OK">EX_OK</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_OSERR">EX_OSERR</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_OSFILE">EX_OSFILE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_PROTOCOL">EX_PROTOCOL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_SOFTWARE">EX_SOFTWARE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_TEMPFAIL">EX_TEMPFAIL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_UNAVAILABLE">EX_UNAVAILABLE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#EX_USAGE">EX_USAGE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#F_OK">F_OK</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#NGROUPS_MAX">NGROUPS_MAX</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_APPEND">O_APPEND</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_CREAT">O_CREAT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_EXCL">O_EXCL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_NDELAY">O_NDELAY</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_NOCTTY">O_NOCTTY</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_NOFOLLOW">O_NOFOLLOW</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_NONBLOCK">O_NONBLOCK</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_RDONLY">O_RDONLY</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_RDWR">O_RDWR</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_TRUNC">O_TRUNC</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#O_WRONLY">O_WRONLY</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#P_NOWAIT">P_NOWAIT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#P_NOWAITO">P_NOWAITO</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#P_WAIT">P_WAIT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#R_OK">R_OK</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#TMP_MAX">TMP_MAX</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WCOREDUMP">WCOREDUMP</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WEXITSTATUS">WEXITSTATUS</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WIFEXITED">WIFEXITED</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WIFSIGNALED">WIFSIGNALED</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WIFSTOPPED">WIFSTOPPED</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WNOHANG">WNOHANG</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WSTOPSIG">WSTOPSIG</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WTERMSIG">WTERMSIG</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#WUNTRACED">WUNTRACED</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#W_OK">W_OK</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#X_OK">X_OK</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#_urandomfd">_urandomfd</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#abort">abort</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#access">access</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#altsep">altsep</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#chdir">chdir</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#chmod">chmod</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#chown">chown</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#chroot">chroot</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#close">close</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#confstr">confstr</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#confstr_names">confstr_names</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#ctermid">ctermid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#curdir">curdir</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#defpath">defpath</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#devnull">devnull</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#dup">dup</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#dup2">dup2</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#environ">environ</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#error">error</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#execv">execv</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#execve">execve</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#extsep">extsep</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#fchdir">fchdir</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#fdopen">fdopen</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#fork">fork</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#forkpty">forkpty</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#fpathconf">fpathconf</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#fstat">fstat</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#fsync">fsync</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#ftruncate">ftruncate</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getcwd">getcwd</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getcwdu">getcwdu</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getegid">getegid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#geteuid">geteuid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getgid">getgid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getgroups">getgroups</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getloadavg">getloadavg</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getlogin">getlogin</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getpgid">getpgid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getpgrp">getpgrp</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getpid">getpid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getppid">getppid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getsid">getsid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#getuid">getuid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#isatty">isatty</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#kill">kill</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#killpg">killpg</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#linesep">linesep</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#link">link</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#listdir">listdir</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#lseek">lseek</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#lstat">lstat</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#major">major</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#makedev">makedev</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#minor">minor</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#mkdir">mkdir</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#mkfifo">mkfifo</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#mknod">mknod</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#name">name</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#nice">nice</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#open">open</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#openpty">openpty</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#pardir">pardir</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#pathconf">pathconf</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#pathconf_names">pathconf_names</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#pathsep">pathsep</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#pipe">pipe</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#popen">popen</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#putenv">putenv</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#read">read</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#readlink">readlink</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#remove">remove</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#rename">rename</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#rmdir">rmdir</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#sep">sep</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setegid">setegid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#seteuid">seteuid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setgid">setgid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setgroups">setgroups</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setpgid">setpgid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setpgrp">setpgrp</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setregid">setregid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setreuid">setreuid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setsid">setsid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#setuid">setuid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#stat">stat</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#stat_float_times">stat_float_times</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#stat_result">stat_result</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#statvfs_result">statvfs_result</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#strerror">strerror</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#symlink">symlink</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#sysconf">sysconf</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#sysconf_names">sysconf_names</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#system">system</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#tcgetpgrp">tcgetpgrp</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#tcsetpgrp">tcsetpgrp</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#tempnam">tempnam</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#times">times</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#tmpfile">tmpfile</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#tmpnam">tmpnam</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#ttyname">ttyname</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#umask">umask</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#uname">uname</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#unlink">unlink</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#unsetenv">unsetenv</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#utime">utime</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#wait">wait</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#waitpid">waitpid</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="os-module.html#write">write</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Function Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_execvpe"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_execvpe</span>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_exists"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_exists</span>(<span class="sig-arg">name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_get_exports_list"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_get_exports_list</span>(<span class="sig-arg">module</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_make_stat_result"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_make_stat_result</span>(<span class="sig-arg">tup</span>,
+        <span class="sig-arg">dict</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_make_statvfs_result"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_make_statvfs_result</span>(<span class="sig-arg">tup</span>,
+        <span class="sig-arg">dict</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_pickle_stat_result"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_pickle_stat_result</span>(<span class="sig-arg">sr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_pickle_statvfs_result"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_pickle_statvfs_result</span>(<span class="sig-arg">sr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_spawnvef"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_spawnvef</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">func</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="execl"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">execl</span>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the executable file with argument list args, replacing the 
+  current process.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="execle"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">execle</span>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the executable file with argument list args and environment 
+  env, replacing the current process.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="execlp"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">execlp</span>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the executable file (which is searched for along $PATH) with 
+  argument list args, replacing the current process.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="execlpe"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">execlpe</span>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the executable file (which is searched for along $PATH) with 
+  argument list args and environment env, replacing the current 
+  process.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="execvp"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">execvp</span>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the executable file (which is searched for along $PATH) with 
+  argument list args, replacing the current process. args may be a list or 
+  tuple of strings.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="execvpe"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">execvpe</span>(<span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the executable file (which is searched for along $PATH) with 
+  argument list args and environment env , replacing the current process. 
+  args may be a list or tuple of strings.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getenv"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">getenv</span>(<span class="sig-arg">key</span>,
+        <span class="sig-arg">default</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Get an environment variable, return None if it doesn't exist. The 
+  optional second argument can specify an alternate default.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="makedirs"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">makedirs</span>(<span class="sig-arg">path</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">0777</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Super-mkdir; create a leaf directory and all intermediate ones. Works 
+  like mkdir, except that any intermediate path segment (not just the 
+  rightmost) will be created if it does not exist.  This is recursive.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="popen2"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">popen2</span>(<span class="sig-arg">cmd</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">'t'</span>,
+        <span class="sig-arg">bufsize</span>=<span class="sig-default">-1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the shell command 'cmd' in a sub-process.  On UNIX, 'cmd' may 
+  be a sequence, in which case arguments will be passed directly to the 
+  program without shell intervention (as with os.spawnv()).  If 'cmd' is a 
+  string it will be passed to the shell (as with os.system()). If 'bufsize'
+  is specified, it sets the buffer size for the I/O pipes.  The file 
+  objects (child_stdin, child_stdout) are returned.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="popen3"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">popen3</span>(<span class="sig-arg">cmd</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">'t'</span>,
+        <span class="sig-arg">bufsize</span>=<span class="sig-default">-1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the shell command 'cmd' in a sub-process.  On UNIX, 'cmd' may 
+  be a sequence, in which case arguments will be passed directly to the 
+  program without shell intervention (as with os.spawnv()).  If 'cmd' is a 
+  string it will be passed to the shell (as with os.system()). If 'bufsize'
+  is specified, it sets the buffer size for the I/O pipes.  The file 
+  objects (child_stdin, child_stdout, child_stderr) are returned.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="popen4"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">popen4</span>(<span class="sig-arg">cmd</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">'t'</span>,
+        <span class="sig-arg">bufsize</span>=<span class="sig-default">-1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute the shell command 'cmd' in a sub-process.  On UNIX, 'cmd' may 
+  be a sequence, in which case arguments will be passed directly to the 
+  program without shell intervention (as with os.spawnv()).  If 'cmd' is a 
+  string it will be passed to the shell (as with os.system()). If 'bufsize'
+  is specified, it sets the buffer size for the I/O pipes.  The file 
+  objects (child_stdin, child_stdout_stderr) are returned.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="removedirs"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">removedirs</span>(<span class="sig-arg">path</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Super-rmdir; remove a leaf directory and empty all intermediate ones.
+  Works like rmdir except that, if the leaf directory is successfully 
+  removed, directories corresponding to rightmost path segments will be 
+  pruned away until either the whole path is consumed or an error occurs.  
+  Errors during this latter phase are ignored -- they generally mean that a
+  directory was not empty.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="renames"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">renames</span>(<span class="sig-arg">old</span>,
+        <span class="sig-arg">new</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Super-rename; create directories as necessary and delete any left 
+  empty.  Works like rename, except creation of any intermediate 
+  directories needed to make the new pathname good is attempted first.  
+  After the rename, directories corresponding to rightmost path segments of
+  the old name will be pruned way until either the whole path is consumed 
+  or a nonempty directory is found.</p>
+  Note: this function can fail with the new directory structure made if 
+  you lack permissions needed to unlink the leaf directory or file.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="spawnl"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">spawnl</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute file with arguments from args in a subprocess. If mode == 
+  P_NOWAIT return the pid of the process. If mode == P_WAIT return the 
+  process's exit code if it exits normally; otherwise return -SIG, where 
+  SIG is the signal that killed it.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="spawnle"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">spawnle</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute file with arguments from args in a subprocess with the 
+  supplied environment. If mode == P_NOWAIT return the pid of the process. 
+  If mode == P_WAIT return the process's exit code if it exits normally; 
+  otherwise return -SIG, where SIG is the signal that killed it.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="spawnlp"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">spawnlp</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute file (which is looked for along $PATH) with arguments from 
+  args in a subprocess with the supplied environment. If mode == P_NOWAIT 
+  return the pid of the process. If mode == P_WAIT return the process's 
+  exit code if it exits normally; otherwise return -SIG, where SIG is the 
+  signal that killed it.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="spawnlpe"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">spawnlpe</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute file (which is looked for along $PATH) with arguments from 
+  args in a subprocess with the supplied environment. If mode == P_NOWAIT 
+  return the pid of the process. If mode == P_WAIT return the process's 
+  exit code if it exits normally; otherwise return -SIG, where SIG is the 
+  signal that killed it.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="spawnv"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">spawnv</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute file with arguments from args in a subprocess. If mode == 
+  P_NOWAIT return the pid of the process. If mode == P_WAIT return the 
+  process's exit code if it exits normally; otherwise return -SIG, where 
+  SIG is the signal that killed it.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="spawnve"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">spawnve</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute file with arguments from args in a subprocess with the 
+  specified environment. If mode == P_NOWAIT return the pid of the process.
+  If mode == P_WAIT return the process's exit code if it exits normally; 
+  otherwise return -SIG, where SIG is the signal that killed it.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="spawnvp"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">spawnvp</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute file (which is looked for along $PATH) with arguments from 
+  args in a subprocess. If mode == P_NOWAIT return the pid of the process. 
+  If mode == P_WAIT return the process's exit code if it exits normally; 
+  otherwise return -SIG, where SIG is the signal that killed it.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="spawnvpe"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">spawnvpe</span>(<span class="sig-arg">mode</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">env</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Execute file (which is looked for along $PATH) with arguments from 
+  args in a subprocess with the supplied environment. If mode == P_NOWAIT 
+  return the pid of the process. If mode == P_WAIT return the process's 
+  exit code if it exits normally; otherwise return -SIG, where SIG is the 
+  signal that killed it.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+integer
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="urandom"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">urandom</span>(<span class="sig-arg">n</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a string of n random bytes suitable for cryptographic use.
+  <dl><dt></dt><dd>
+    <dl><dt>Returns:</dt>
+        <dd><pre class="literalblock">
+str
+
+</pre></dd></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="walk"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">walk</span>(<span class="sig-arg">top</span>,
+        <span class="sig-arg">topdown</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">onerror</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <pre class="literalblock">
+Directory tree generator.
+
+For each directory in the directory tree rooted at top (including top
+itself, but excluding '.' and '..'), yields a 3-tuple
+
+    dirpath, dirnames, filenames
+
+dirpath is a string, the path to the directory.  dirnames is a list of
+the names of the subdirectories in dirpath (excluding '.' and '..').
+filenames is a list of the names of the non-directory files in dirpath.
+Note that the names in the lists are just names, with no path components.
+To get a full path (which begins with top) to a file or directory in
+dirpath, do os.path.join(dirpath, name).
+
+If optional arg 'topdown' is true or not specified, the triple for a
+directory is generated before the triples for any of its subdirectories
+(directories are generated top down).  If topdown is false, the triple
+for a directory is generated after the triples for all of its
+subdirectories (directories are generated bottom up).
+
+When topdown is true, the caller can modify the dirnames list in-place
+(e.g., via del or slice assignment), and walk will only recurse into the
+subdirectories whose names remain in dirnames; this can be used to prune
+the search, or to impose a specific order of visiting.  Modifying
+dirnames when topdown is false is ineffective, since the directories in
+dirnames have already been generated by the time dirnames itself is
+generated.
+
+By default errors from the os.listdir() call are ignored.  If
+optional arg 'onerror' is specified, it should be a function; it
+will be called with one argument, an os.error instance.  It can
+report the error to continue with the walk, or raise the exception
+to abort the walk.  Note that the filename is available as the
+filename attribute of the exception object.
+
+Caution:  if you pass a relative pathname for top, don't change the
+current working directory between resumptions of walk.  walk never
+changes the current directory, and assumes that the client doesn't
+either.
+
+Example:
+
+from os.path import join, getsize
+for root, dirs, files in walk('python/Lib/email'):
+    print root, &quot;consumes&quot;,
+    print sum([getsize(join(root, name)) for name in files]),
+    print &quot;bytes in&quot;, len(files), &quot;non-directory files&quot;
+    if 'CVS' in dirs:
+        dirs.remove('CVS')  # don't visit CVS directories
+
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Variables Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="EX_CANTCREAT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_CANTCREAT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="73"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+73&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_CONFIG"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_CONFIG</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="78"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+78&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_DATAERR"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_DATAERR</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="65"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+65&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_IOERR"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_IOERR</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="74"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+74&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_NOHOST"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_NOHOST</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="68"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+68&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_NOINPUT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_NOINPUT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="66"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+66&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_NOPERM"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_NOPERM</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="77"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+77&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_NOUSER"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_NOUSER</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="67"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+67&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_OK"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_OK</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_OSERR"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_OSERR</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="71"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+71&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_OSFILE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_OSFILE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="72"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+72&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_PROTOCOL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_PROTOCOL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="76"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+76&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_SOFTWARE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_SOFTWARE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="70"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+70&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_TEMPFAIL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_TEMPFAIL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="75"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+75&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_UNAVAILABLE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_UNAVAILABLE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="69"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+69&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EX_USAGE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EX_USAGE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="64"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+64&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="F_OK"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>F_OK</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NGROUPS_MAX"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NGROUPS_MAX</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="16"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+16&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_APPEND"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_APPEND</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="8"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_CREAT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_CREAT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="512"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+512&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_EXCL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_EXCL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="2048"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+2048&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_NDELAY"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_NDELAY</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="4"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_NOCTTY"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_NOCTTY</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_NOFOLLOW"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_NOFOLLOW</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="256"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+256&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_NONBLOCK"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_NONBLOCK</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="4"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_RDONLY"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_RDONLY</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_RDWR"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_RDWR</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="2"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_TRUNC"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_TRUNC</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1024"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="O_WRONLY"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>O_WRONLY</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="P_NOWAIT"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>P_NOWAIT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="P_NOWAITO"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>P_NOWAITO</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="P_WAIT"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>P_WAIT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="R_OK"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>R_OK</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="4"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="TMP_MAX"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>TMP_MAX</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="308915776"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+308915776&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WCOREDUMP"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WCOREDUMP</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function WCOREDUMP&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function WCOREDUMP&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WEXITSTATUS"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WEXITSTATUS</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function WEXITSTATUS&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function WEXITSTATUS&gt;                                        
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WIFEXITED"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WIFEXITED</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function WIFEXITED&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function WIFEXITED&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WIFSIGNALED"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WIFSIGNALED</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function WIFSIGNALED&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function WIFSIGNALED&gt;                                        
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WIFSTOPPED"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WIFSTOPPED</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function WIFSTOPPED&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function WIFSTOPPED&gt;                                         
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WNOHANG"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WNOHANG</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WSTOPSIG"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WSTOPSIG</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function WSTOPSIG&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function WSTOPSIG&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WTERMSIG"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WTERMSIG</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function WTERMSIG&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function WTERMSIG&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WUNTRACED"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WUNTRACED</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="2"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="W_OK"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>W_OK</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="2"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="X_OK"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>X_OK</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_urandomfd"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>_urandomfd</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="11"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="abort"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>abort</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function abort&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function abort&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="access"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>access</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function access&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function access&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="altsep"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>altsep</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="None"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="chdir"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>chdir</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function chdir&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function chdir&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="chmod"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>chmod</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function chmod&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function chmod&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="chown"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>chown</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function chown&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function chown&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="chroot"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>chroot</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function chroot&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function chroot&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="close"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>close</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function close&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function close&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="confstr"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>confstr</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function confstr&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function confstr&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="confstr_names"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>confstr_names</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="{'CS_PATH': 1}"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{'CS_PATH': 1}                                                         
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="ctermid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ctermid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function ctermid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function ctermid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="curdir"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>curdir</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'.'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>.<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="defpath"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>defpath</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="':/bin:/usr/bin'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>:/bin:/usr/bin<span class="variable-quote">'</span>                                                       
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="devnull"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>devnull</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'/dev/null'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>/dev/null<span class="variable-quote">'</span>                                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="dup"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>dup</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function dup&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function dup&gt;                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="dup2"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>dup2</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function dup2&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function dup2&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="environ"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>environ</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="{'_': '/usr/bin/env', 'EMACSPATH': '/Applications/Emacs.app/Contents/MacOS/libexec:/Applications/Emacs.app/Contents/MacOS/bin', 'ASPELL_CONF': 'prefix /Applications/Emacs.app/Contents/Resources;data-dir /Applications/Emacs.app/Contents/Resources/lib/aspell-powerpc;dict-dir /Applications/Emacs.app/Contents/Resources/lib/aspell-powerpc;conf-dir /Applications/Emacs.app/Contents/Resources/etc', 'CPATH': '/sw/include', 'EMACS': 't', 'USER': 'hinsen', 'HOME': '/Users/hinsen', 'PATH': '/Users/hinsen/bin:/usr/local/bin:/Users/hinsen/bin:/usr/local/bin:/usr/X11R6/bin:/usr/lib/portage/bin:/sw/bin:/sw..."><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{'_': '/usr/bin/env', 'EMACSPATH': '/Applications/Emacs.app/Contents/M<span class="variable-linewrap">\</span>
+acOS/libexec:/Applications/Emacs.app/Contents/MacOS/bin', 'ASPELL_CONF<span class="variable-linewrap">\</span>
+': 'prefix /Applications/Emacs.app/Contents/Resources;data-dir /Applic<span class="variable-linewrap">\</span>
+ations/Emacs.app/Contents/Resources/lib/aspell-powerpc;dict-dir /Appli<span class="variable-linewrap">\</span>
+cations/Emacs.app/Contents/Resources/lib/aspell-powerpc;conf-dir /Appl<span class="variable-linewrap">\</span>
+ications/Emacs.app/Contents/Resources/etc', 'CPATH': '/sw/include', 'E<span class="variable-linewrap">\</span>
+MACS': 't', 'USER': 'hinsen', 'HOME': '/Users/hinsen', 'PATH': '/Users<span class="variable-linewrap">\</span>
+/hinsen/bin:/usr/local/bin:/Users/hinsen/bin:/usr/local/bin:/usr/X11R6<span class="variable-linewrap">\</span>
+<span class="variable-ellipsis">...</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="error"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>error</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;class exceptions.OSError at 0x76f0&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;class exceptions.OSError at 0x76f0&gt;                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="execv"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>execv</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function execv&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function execv&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="execve"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>execve</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function execve&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function execve&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="extsep"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>extsep</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'.'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>.<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="fchdir"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>fchdir</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function fchdir&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function fchdir&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="fdopen"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>fdopen</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function fdopen&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function fdopen&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="fork"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>fork</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function fork&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function fork&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="forkpty"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>forkpty</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function forkpty&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function forkpty&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="fpathconf"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>fpathconf</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function fpathconf&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function fpathconf&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="fstat"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>fstat</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function fstat&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function fstat&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="fsync"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>fsync</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function fsync&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function fsync&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="ftruncate"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ftruncate</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function ftruncate&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function ftruncate&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getcwd"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getcwd</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getcwd&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getcwd&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getcwdu"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getcwdu</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getcwdu&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getcwdu&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getegid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getegid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getegid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getegid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="geteuid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>geteuid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function geteuid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function geteuid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getgid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getgid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getgid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getgid&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getgroups"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getgroups</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getgroups&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getgroups&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getloadavg"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getloadavg</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getloadavg&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getloadavg&gt;                                         
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getlogin"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getlogin</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getlogin&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getlogin&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getpgid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getpgid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getpgid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getpgid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getpgrp"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getpgrp</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getpgrp&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getpgrp&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getpid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getpid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getpid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getpid&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getppid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getppid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getppid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getppid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getsid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getsid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getsid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getsid&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getuid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>getuid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function getuid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function getuid&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="isatty"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>isatty</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function isatty&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function isatty&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="kill"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>kill</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function kill&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function kill&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="killpg"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>killpg</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function killpg&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function killpg&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="linesep"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>linesep</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'\n'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'''</span>
+<span class="variable-quote">'''</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="link"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>link</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function link&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function link&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="listdir"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>listdir</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function listdir&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function listdir&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="lseek"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>lseek</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function lseek&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function lseek&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="lstat"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>lstat</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function lstat&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function lstat&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="major"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>major</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function major&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function major&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="makedev"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>makedev</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function makedev&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function makedev&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="minor"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>minor</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function minor&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function minor&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="mkdir"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>mkdir</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function mkdir&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function mkdir&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="mkfifo"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>mkfifo</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function mkfifo&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function mkfifo&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="mknod"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>mknod</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function mknod&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function mknod&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="name"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>name</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'posix'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>posix<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="nice"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>nice</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function nice&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function nice&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="open"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>open</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function open&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function open&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="openpty"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>openpty</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function openpty&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function openpty&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="pardir"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>pardir</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'..'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>..<span class="variable-quote">'</span>                                                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="pathconf"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>pathconf</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function pathconf&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function pathconf&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="pathconf_names"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>pathconf_names</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="{'PC_MAX_INPUT': 3, 'PC_VDISABLE': 9, 'PC_NAME_MAX': 4, 'PC_MAX_CANON': 2, 'PC_CHOWN_RESTRICTED': 7, 'PC_NO_TRUNC': 8, 'PC_LINK_MAX': 1, 'PC_PIPE_BUF': 6, 'PC_PATH_MAX': 5}"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{'PC_CHOWN_RESTRICTED': 7,
+ 'PC_LINK_MAX': 1,
+ 'PC_MAX_CANON': 2,
+ 'PC_MAX_INPUT': 3,
+ 'PC_NAME_MAX': 4,
+ 'PC_NO_TRUNC': 8,
+ 'PC_PATH_MAX': 5,
+ 'PC_PIPE_BUF': 6,
+<span class="variable-ellipsis">...</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="pathsep"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>pathsep</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="':'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>:<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="pipe"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>pipe</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function pipe&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function pipe&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="popen"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>popen</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function popen&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function popen&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="putenv"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>putenv</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function putenv&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function putenv&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="read"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>read</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function read&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function read&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="readlink"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>readlink</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function readlink&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function readlink&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="remove"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>remove</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function remove&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function remove&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="rename"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>rename</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function rename&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function rename&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="rmdir"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>rmdir</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function rmdir&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function rmdir&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="sep"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>sep</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'/'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>/<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setegid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setegid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setegid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setegid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="seteuid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>seteuid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function seteuid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function seteuid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setgid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setgid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setgid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setgid&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setgroups"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setgroups</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setgroups&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setgroups&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setpgid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setpgid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setpgid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setpgid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setpgrp"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setpgrp</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setpgrp&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setpgrp&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setregid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setregid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setregid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setregid&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setreuid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setreuid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setreuid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setreuid&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setsid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setsid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setsid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setsid&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="setuid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>setuid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function setuid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function setuid&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="stat"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>stat</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function stat&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function stat&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="stat_float_times"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>stat_float_times</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function stat_float_times&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function stat_float_times&gt;                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="stat_result"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>stat_result</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;type 'posix.stat_result'&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;type 'posix.stat_result'&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="statvfs_result"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>statvfs_result</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;type 'posix.statvfs_result'&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;type 'posix.statvfs_result'&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="strerror"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>strerror</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function strerror&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function strerror&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="symlink"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>symlink</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function symlink&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function symlink&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="sysconf"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>sysconf</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function sysconf&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function sysconf&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="sysconf_names"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>sysconf_names</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="{'SC_OPEN_MAX': 5, 'SC_STREAM_MAX': 26, 'SC_2_UPE': 25, 'SC_AIO_LISTIO_MAX': 42, 'SC_AIO_MAX': 43, 'SC_RE_DUP_MAX': 16, 'SC_BC_SCALE_MAX': 11, 'SC_TZNAME_MAX': 27, 'SC_LINE_MAX': 15, 'SC_2_C_DEV': 19, 'SC_COLL_WEIGHTS_MAX': 13, 'SC_2_C_BIND': 18, 'SC_BC_DIM_MAX': 10, 'SC_2_FORT_RUN': 22, 'SC_BC_STRING_MAX': 12, 'SC_EXPR_NEST_MAX': 14, 'SC_2_VERSION': 17, 'SC_2_SW_DEV': 24, 'SC_2_LOCALEDEF': 23, 'SC_ASYNCHRONOUS_IO': 28, 'SC_PAGESIZE': 29, 'SC_CHILD_MAX': 2, 'SC_2_CHAR_TERM': 20, 'SC_ARG_MAX': 1, 'SC_VERSION': 8, 'SC_BC_BASE_MAX': 9, 'SC_NGROUPS_MAX': 4, 'SC_2_FORT_DEV': 21, 'SC_AIO_PRIO_DEL..."><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{'SC_2_CHAR_TERM': 20,
+ 'SC_2_C_BIND': 18,
+ 'SC_2_C_DEV': 19,
+ 'SC_2_FORT_DEV': 21,
+ 'SC_2_FORT_RUN': 22,
+ 'SC_2_LOCALEDEF': 23,
+ 'SC_2_SW_DEV': 24,
+ 'SC_2_UPE': 25,
+<span class="variable-ellipsis">...</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="system"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>system</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function system&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function system&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tcgetpgrp"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>tcgetpgrp</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function tcgetpgrp&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function tcgetpgrp&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tcsetpgrp"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>tcsetpgrp</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function tcsetpgrp&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function tcsetpgrp&gt;                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tempnam"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>tempnam</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function tempnam&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function tempnam&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="times"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>times</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function times&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function times&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tmpfile"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>tmpfile</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function tmpfile&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function tmpfile&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="tmpnam"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>tmpnam</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function tmpnam&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function tmpnam&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="ttyname"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ttyname</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function ttyname&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function ttyname&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="umask"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>umask</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function umask&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function umask&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="uname"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>uname</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function uname&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function uname&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="unlink"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>unlink</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function unlink&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function unlink&gt;                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="unsetenv"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>unsetenv</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function unsetenv&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function unsetenv&gt;                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="utime"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>utime</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function utime&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function utime&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="wait"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>wait</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function wait&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function wait&gt;                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="waitpid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>waitpid</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function waitpid&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function waitpid&gt;                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="write"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>write</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="&lt;built-in function write&gt;"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;built-in function write&gt;                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:39:45 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

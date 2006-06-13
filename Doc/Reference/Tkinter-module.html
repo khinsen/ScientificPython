@@ -1,0 +1,2544 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Tkinter</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;Tkinter
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Tkinter-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h2 class="module">Module Tkinter</h2>
+<p>Wrapper functions for Tcl/Tk.</p>
+  <p>Tkinter provides classes which allow the display, positioning and 
+  control of widgets. Toplevel widgets are Tk and Toplevel. Other widgets 
+  are Frame, Label, Entry, Text, Canvas, Button, Radiobutton, Checkbutton, 
+  Scale, Listbox, Scrollbar, OptionMenu, Spinbox LabelFrame and 
+  PanedWindow.</p>
+  <p>Properties of the widgets are specified with keyword arguments. 
+  Keyword arguments have the same name as the corresponding resource under 
+  Tk.</p>
+  <p>Widgets are positioned with one of the geometry managers Place, Pack 
+  or Grid. These managers can be called with methods place, pack, grid 
+  available in every Widget.</p>
+  <p>Actions are bound to events by resources (e.g. keyword argument 
+  command) or with the method bind.</p>
+  Example (Hello, World): import Tkinter from Tkconstants import * tk = 
+  Tkinter.Tk() frame = Tkinter.Frame(tk, relief=RIDGE, borderwidth=2) 
+  frame.pack(fill=BOTH,expand=1) label = Tkinter.Label(frame, 
+  text=&quot;Hello, World&quot;) label.pack(fill=X, expand=1) button = 
+  Tkinter.Button(frame,text=&quot;Exit&quot;,command=tk.destroy) 
+  button.pack(side=BOTTOM) tk.mainloop()<br /><br />
+
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Classes</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.BaseWidget-class.html">BaseWidget</a></strong></td>
+  <td class="summary">Internal class.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.BitmapImage-class.html">BitmapImage</a></strong></td>
+  <td class="summary">Widget which can display a bitmap.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.BooleanVar-class.html">BooleanVar</a></strong></td>
+  <td class="summary">Value holder for boolean variables.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Button-class.html">Button</a></strong></td>
+  <td class="summary">Button widget.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.CallWrapper-class.html">CallWrapper</a></strong></td>
+  <td class="summary">Internal class.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Canvas-class.html">Canvas</a></strong></td>
+  <td class="summary">Canvas widget to display graphical elements like lines or 
+        text.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Checkbutton-class.html">Checkbutton</a></strong></td>
+  <td class="summary">Checkbutton widget which is either in on- or off-state.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.DoubleVar-class.html">DoubleVar</a></strong></td>
+  <td class="summary">Value holder for float variables.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Entry-class.html">Entry</a></strong></td>
+  <td class="summary">Entry widget which allows to display simple text.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Event-class.html">Event</a></strong></td>
+  <td class="summary">Container for the properties of an event.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Frame-class.html">Frame</a></strong></td>
+  <td class="summary">Frame widget which may contain other widgets and can have a 3D 
+        border.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Grid-class.html">Grid</a></strong></td>
+  <td class="summary">Geometry manager Grid.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Image-class.html">Image</a></strong></td>
+  <td class="summary">Base class for images.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.IntVar-class.html">IntVar</a></strong></td>
+  <td class="summary">Value holder for integer variables.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Label-class.html">Label</a></strong></td>
+  <td class="summary">Label widget which can display text and bitmaps.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.LabelFrame-class.html">LabelFrame</a></strong></td>
+  <td class="summary">labelframe widget.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Listbox-class.html">Listbox</a></strong></td>
+  <td class="summary">Listbox widget which can display a list of strings.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Menu-class.html">Menu</a></strong></td>
+  <td class="summary">Menu widget which allows to display menu bars, pull-down menus 
+        and pop-up menus.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Menubutton-class.html">Menubutton</a></strong></td>
+  <td class="summary">Menubutton widget, obsolete since Tk8.0.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Message-class.html">Message</a></strong></td>
+  <td class="summary">Message widget to display multiline text.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Misc-class.html">Misc</a></strong></td>
+  <td class="summary">Internal class.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.OptionMenu-class.html">OptionMenu</a></strong></td>
+  <td class="summary">OptionMenu which allows the user to select a value from a 
+        menu.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Pack-class.html">Pack</a></strong></td>
+  <td class="summary">Geometry manager Pack.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.PanedWindow-class.html">PanedWindow</a></strong></td>
+  <td class="summary">panedwindow widget.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.PhotoImage-class.html">PhotoImage</a></strong></td>
+  <td class="summary">Widget which can display colored images in GIF, PPM/PGM 
+        format.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Place-class.html">Place</a></strong></td>
+  <td class="summary">Geometry manager Place.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Radiobutton-class.html">Radiobutton</a></strong></td>
+  <td class="summary">Radiobutton widget which shows only one of several buttons in 
+        on-state.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Scale-class.html">Scale</a></strong></td>
+  <td class="summary">Scale widget which can display a numerical scale.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Scrollbar-class.html">Scrollbar</a></strong></td>
+  <td class="summary">Scrollbar widget which displays a slider at a certain 
+        position.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Spinbox-class.html">Spinbox</a></strong></td>
+  <td class="summary">spinbox widget.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.StringVar-class.html">StringVar</a></strong></td>
+  <td class="summary">Value holder for strings variables.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Studbutton-class.html">Studbutton</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Text-class.html">Text</a></strong></td>
+  <td class="summary">Text widget which can display text in various forms.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Tk-class.html">Tk</a></strong></td>
+  <td class="summary">Toplevel widget of Tk which represents mostly the main window of
+        an appliation.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Toplevel-class.html">Toplevel</a></strong></td>
+  <td class="summary">Toplevel widget, e.g.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Tributton-class.html">Tributton</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Variable-class.html">Variable</a></strong></td>
+  <td class="summary">Class to define value holders for e.g.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Widget-class.html">Widget</a></strong></td>
+  <td class="summary">Internal class.</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter.Wm-class.html">Wm</a></strong></td>
+  <td class="summary">Provides functions for the communication with the window 
+        manager.</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter._setit-class.html">_setit</a></strong></td>
+  <td class="summary">Internal class.</td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Functions</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#At" class="sig-name">At</a>(<span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>=<span class="sig-default">None</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#AtEnd" class="sig-name">AtEnd</a>()</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#AtInsert" class="sig-name">AtInsert</a>(<span class="sig-arg">*args</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#AtSelFirst" class="sig-name">AtSelFirst</a>()</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#AtSelLast" class="sig-name">AtSelLast</a>()</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#NoDefaultRoot" class="sig-name">NoDefaultRoot</a>()</span>
+    <br />Inhibit setting of default root window.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#Tcl" class="sig-name">Tcl</a>(<span class="sig-arg">screenName</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">baseName</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">className</span>=<span class="sig-default">'Tk'</span>,
+        <span class="sig-arg">useTk</span>=<span class="sig-default">0</span>)</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#_cnfmerge" class="sig-name">_cnfmerge</a>(<span class="sig-arg">cnfs</span>)</span>
+    <br />Internal function.
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#_exit" class="sig-name">_exit</a>(<span class="sig-arg">code</span>=<span class="sig-default">'0'</span>)</span>
+    <br />Internal function.
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#_test" class="sig-name">_test</a>()</span>
+    
+  </td>
+</tr>
+<tr class="private">
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#_tkerror" class="sig-name">_tkerror</a>(<span class="sig-arg">err</span>)</span>
+    <br />Internal function.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#getboolean" class="sig-name">getboolean</a>(<span class="sig-arg">s</span>)</span>
+    <br />Convert true and false to integer values 1 and 0.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#image_names" class="sig-name">image_names</a>()</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#image_types" class="sig-name">image_types</a>()</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter-module.html#mainloop" class="sig-name">mainloop</a>(<span class="sig-arg">n</span>=<span class="sig-default">0</span>)</span>
+    <br />Run the main loop of Tcl.
+  </td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Variables</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#ACTIVE">ACTIVE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#ALL">ALL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#ANCHOR">ANCHOR</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#ARC">ARC</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#BASELINE">BASELINE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#BEVEL">BEVEL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#BOTH">BOTH</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#BOTTOM">BOTTOM</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#BROWSE">BROWSE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#BUTT">BUTT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#CASCADE">CASCADE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#CENTER">CENTER</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#CHAR">CHAR</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#CHECKBUTTON">CHECKBUTTON</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#CHORD">CHORD</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#COMMAND">COMMAND</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#CURRENT">CURRENT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#DISABLED">DISABLED</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#DOTBOX">DOTBOX</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#E">E</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#END">END</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#EW">EW</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#EXCEPTION">EXCEPTION</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#EXTENDED">EXTENDED</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#FALSE">FALSE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#FIRST">FIRST</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#FLAT">FLAT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#GROOVE">GROOVE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#HIDDEN">HIDDEN</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#HORIZONTAL">HORIZONTAL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#INSERT">INSERT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#INSIDE">INSIDE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#LAST">LAST</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#LEFT">LEFT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#MITER">MITER</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#MOVETO">MOVETO</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#MULTIPLE">MULTIPLE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#N">N</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#NE">NE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#NO">NO</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#NONE">NONE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#NORMAL">NORMAL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#NS">NS</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#NSEW">NSEW</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#NUMERIC">NUMERIC</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#NW">NW</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#OFF">OFF</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#ON">ON</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#OUTSIDE">OUTSIDE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#PAGES">PAGES</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#PIESLICE">PIESLICE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#PROJECTING">PROJECTING</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#RADIOBUTTON">RADIOBUTTON</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#RAISED">RAISED</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#READABLE">READABLE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#RIDGE">RIDGE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#RIGHT">RIGHT</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#ROUND">ROUND</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#S">S</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SCROLL">SCROLL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SE">SE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SEL">SEL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SEL_FIRST">SEL_FIRST</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SEL_LAST">SEL_LAST</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SEPARATOR">SEPARATOR</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SINGLE">SINGLE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SOLID">SOLID</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SUNKEN">SUNKEN</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#SW">SW</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#StringTypes">StringTypes</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#TOP">TOP</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#TRUE">TRUE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#TclVersion">TclVersion</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#TkVersion">TkVersion</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#UNDERLINE">UNDERLINE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#UNITS">UNITS</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#VERTICAL">VERTICAL</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#W">W</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#WORD">WORD</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#WRITABLE">WRITABLE</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#X">X</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#Y">Y</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#YES">YES</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#__version__">__version__</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#_default_root">_default_root</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#_support_default_root">_support_default_root</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr class="private">
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#_varnum">_varnum</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+<tr>
+  <td width="15%" class="summary">
+    <strong><a href="Tkinter-module.html#wantobjects">wantobjects</a></strong></td>
+  <td class="summary">&nbsp;</td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Function Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="At"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">At</span>(<span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="AtEnd"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">AtEnd</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="AtInsert"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">AtInsert</span>(<span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="AtSelFirst"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">AtSelFirst</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="AtSelLast"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">AtSelLast</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NoDefaultRoot"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">NoDefaultRoot</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Inhibit setting of default root window.</p>
+  Call this function to inhibit that the first instance of Tk is used 
+  for windows without an explicit parent window.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="Tcl"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">Tcl</span>(<span class="sig-arg">screenName</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">baseName</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">className</span>=<span class="sig-default">'Tk'</span>,
+        <span class="sig-arg">useTk</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_cnfmerge"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_cnfmerge</span>(<span class="sig-arg">cnfs</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Internal function.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_exit"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_exit</span>(<span class="sig-arg">code</span>=<span class="sig-default">'0'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Internal function. Calling it will throw the exception SystemExit.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_test"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_test</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_tkerror"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">_tkerror</span>(<span class="sig-arg">err</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Internal function.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="getboolean"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">getboolean</span>(<span class="sig-arg">s</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Convert true and false to integer values 1 and 0.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="image_names"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">image_names</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="image_types"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">image_types</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="mainloop"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">mainloop</span>(<span class="sig-arg">n</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Run the main loop of Tcl.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Variables Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="ACTIVE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ACTIVE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'active'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>active<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="ALL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ALL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'all'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>all<span class="variable-quote">'</span>                                                                  
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="ANCHOR"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ANCHOR</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'anchor'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>anchor<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="ARC"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ARC</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'arc'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>arc<span class="variable-quote">'</span>                                                                  
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="BASELINE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>BASELINE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'baseline'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>baseline<span class="variable-quote">'</span>                                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="BEVEL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>BEVEL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'bevel'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>bevel<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="BOTH"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>BOTH</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'both'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>both<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="BOTTOM"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>BOTTOM</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'bottom'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>bottom<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="BROWSE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>BROWSE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'browse'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>browse<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="BUTT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>BUTT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'butt'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>butt<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="CASCADE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>CASCADE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'cascade'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>cascade<span class="variable-quote">'</span>                                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="CENTER"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>CENTER</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'center'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>center<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="CHAR"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>CHAR</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'char'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>char<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="CHECKBUTTON"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>CHECKBUTTON</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'checkbutton'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>checkbutton<span class="variable-quote">'</span>                                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="CHORD"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>CHORD</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'chord'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>chord<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="COMMAND"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>COMMAND</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'command'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>command<span class="variable-quote">'</span>                                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="CURRENT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>CURRENT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'current'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>current<span class="variable-quote">'</span>                                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="DISABLED"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>DISABLED</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'disabled'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>disabled<span class="variable-quote">'</span>                                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="DOTBOX"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>DOTBOX</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'dotbox'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>dotbox<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="E"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>E</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'e'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>e<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="END"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>END</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'end'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>end<span class="variable-quote">'</span>                                                                  
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EW"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EW</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'ew'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>ew<span class="variable-quote">'</span>                                                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EXCEPTION"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EXCEPTION</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="8"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="EXTENDED"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>EXTENDED</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'extended'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>extended<span class="variable-quote">'</span>                                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="FALSE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>FALSE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="FIRST"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>FIRST</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'first'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>first<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="FLAT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>FLAT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'flat'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>flat<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="GROOVE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>GROOVE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'groove'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>groove<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="HIDDEN"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>HIDDEN</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'hidden'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>hidden<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="HORIZONTAL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>HORIZONTAL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'horizontal'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>horizontal<span class="variable-quote">'</span>                                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="INSERT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>INSERT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'insert'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>insert<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="INSIDE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>INSIDE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'inside'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>inside<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="LAST"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>LAST</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'last'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>last<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="LEFT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>LEFT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'left'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>left<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="MITER"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>MITER</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'miter'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>miter<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="MOVETO"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>MOVETO</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'moveto'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>moveto<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="MULTIPLE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>MULTIPLE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'multiple'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>multiple<span class="variable-quote">'</span>                                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="N"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>N</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'n'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>n<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'ne'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>ne<span class="variable-quote">'</span>                                                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NO"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NO</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NONE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NONE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'none'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>none<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NORMAL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NORMAL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'normal'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>normal<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NS"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NS</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'ns'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>ns<span class="variable-quote">'</span>                                                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NSEW"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NSEW</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'nsew'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>nsew<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NUMERIC"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NUMERIC</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'numeric'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>numeric<span class="variable-quote">'</span>                                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="NW"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>NW</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'nw'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>nw<span class="variable-quote">'</span>                                                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="OFF"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>OFF</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="ON"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ON</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="OUTSIDE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>OUTSIDE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'outside'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>outside<span class="variable-quote">'</span>                                                              
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="PAGES"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>PAGES</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'pages'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>pages<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="PIESLICE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>PIESLICE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'pieslice'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>pieslice<span class="variable-quote">'</span>                                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="PROJECTING"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>PROJECTING</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'projecting'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>projecting<span class="variable-quote">'</span>                                                           
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="RADIOBUTTON"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>RADIOBUTTON</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'radiobutton'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>radiobutton<span class="variable-quote">'</span>                                                          
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="RAISED"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>RAISED</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'raised'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>raised<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="READABLE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>READABLE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="2"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="RIDGE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>RIDGE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'ridge'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>ridge<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="RIGHT"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>RIGHT</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'right'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>right<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="ROUND"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>ROUND</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'round'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>round<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="S"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>S</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'s'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>s<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SCROLL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SCROLL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'scroll'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>scroll<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'se'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>se<span class="variable-quote">'</span>                                                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SEL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SEL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'sel'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>sel<span class="variable-quote">'</span>                                                                  
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SEL_FIRST"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SEL_FIRST</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'sel.first'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>sel.first<span class="variable-quote">'</span>                                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SEL_LAST"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SEL_LAST</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'sel.last'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>sel.last<span class="variable-quote">'</span>                                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SEPARATOR"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SEPARATOR</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'separator'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>separator<span class="variable-quote">'</span>                                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SINGLE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SINGLE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'single'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>single<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SOLID"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SOLID</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'solid'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>solid<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SUNKEN"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SUNKEN</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'sunken'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>sunken<span class="variable-quote">'</span>                                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="SW"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>SW</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'sw'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>sw<span class="variable-quote">'</span>                                                                   
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="StringTypes"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>StringTypes</h3>
+  
+  <dl><dt></dt><dd>
+    <dl><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+(&lt;type 'str'&gt;, &lt;type 'unicode'&gt;)                                       
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="TOP"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>TOP</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'top'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>top<span class="variable-quote">'</span>                                                                  
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="TRUE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>TRUE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="TclVersion"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>TclVersion</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="8.4000000000000004"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+8.4000000000000004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="TkVersion"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>TkVersion</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="8.4000000000000004"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+8.4000000000000004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="UNDERLINE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>UNDERLINE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'underline'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>underline<span class="variable-quote">'</span>                                                            
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="UNITS"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>UNITS</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'units'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>units<span class="variable-quote">'</span>                                                                
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="VERTICAL"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>VERTICAL</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'vertical'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>vertical<span class="variable-quote">'</span>                                                             
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="W"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>W</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'w'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>w<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WORD"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WORD</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'word'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>word<span class="variable-quote">'</span>                                                                 
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="WRITABLE"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>WRITABLE</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="4"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="X"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>X</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'x'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>x<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="Y"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>Y</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'y'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>y<span class="variable-quote">'</span>                                                                    
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="YES"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>YES</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="__version__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>__version__</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="'$Revision: 1.181.2.1 $'"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<span class="variable-quote">'</span>$Revision: 1.181.2.1 $<span class="variable-quote">'</span>                                               
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_default_root"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>_default_root</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="None"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_support_default_root"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>_support_default_root</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="_varnum"></a>
+<div class="private">
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>_varnum</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="0"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="wantobjects"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <h3>wantobjects</h3>
+  
+  <dl><dt></dt><dd>
+    <dl title="1"><dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </pre></td></tr></table></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:39:44 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

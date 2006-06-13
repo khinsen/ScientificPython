@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.IO.PDBExportFilters</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.IO-module.html">Package&nbsp;IO</a> ::
+        Module&nbsp;PDBExportFilters
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.IO.PDBExportFilters-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h2 class="py-src">Source Code for <a href="Scientific.IO.PDBExportFilters-module.html">Module Scientific.IO.PDBExportFilters</a></h2>
+<div class="py-src">
+<pre class="py-src">
+<span class="lineno"> 1</span>  <span class="py-line"><span class="py-comment"># Export filters for PDB output.</span> </span>
+<span class="lineno"> 2</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<span class="lineno"> 3</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno"> 4</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno"> 5</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># A convenient base class...</span> </span>
+<span class="lineno"> 6</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment">#</span> </span>
+<a name="PDBExportFilter"></a><div id="PDBExportFilter-def"><span class="lineno"> 7</span> <a class="pysrc-toggle" href="#" id="PDBExportFilter-toggle" onclick="toggle('PDBExportFilter'); return false;">-</a><span class="py-line"><span class="py-comment"></span><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.IO.PDBExportFilters.PDBExportFilter-class.html">PDBExportFilter</a><span class="py-op">:</span> </span>
+</div><div id="PDBExportFilter-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="PDBExportFilter-expanded"><span class="lineno"> 8</span>  <span class="py-line"> </span>
+<a name="PDBExportFilter.processLine"></a><div id="PDBExportFilter.processLine-def"><span class="lineno"> 9</span> <a class="pysrc-toggle" href="#" id="PDBExportFilter.processLine-toggle" onclick="toggle('PDBExportFilter.processLine'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.PDBExportFilters.PDBExportFilter-class.html#processLine">processLine</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">type</span><span class="py-op">,</span> <span class="py-param">data</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="PDBExportFilter.processLine-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PDBExportFilter.processLine-expanded"><span class="lineno">10</span>  <span class="py-line">        <span class="py-keyword">return</span> <span id="link-0" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-0', 'type', 'Method PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span><span class="py-op">,</span> <a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a> </span>
+</div><span class="lineno">11</span>  <span class="py-line"> </span>
+<a name="PDBExportFilter.processResidue"></a><div id="PDBExportFilter.processResidue-def"><span class="lineno">12</span> <a class="pysrc-toggle" href="#" id="PDBExportFilter.processResidue-toggle" onclick="toggle('PDBExportFilter.processResidue'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.PDBExportFilters.PDBExportFilter-class.html#processResidue">processResidue</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">name</span><span class="py-op">,</span> <span class="py-param">number</span><span class="py-op">,</span> <span class="py-param">terminus</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="PDBExportFilter.processResidue-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PDBExportFilter.processResidue-expanded"><span class="lineno">13</span>  <span class="py-line">        <span class="py-keyword">return</span> <span id="link-1" class="py-name"><a title="Scientific.BSP.name
+Scientific.Physics.PhysicalQuantities.PhysicalUnit.name
+copy.name
+os.name" class="py-name" href="#" onclick="doclink('link-1', 'name', 'Variable BSP.name=Scientific.BSP-module.html#name,Method Physics.PhysicalQuantities.PhysicalUnit.name()=Scientific.Physics.PhysicalQuantities.PhysicalUnit-class.html#name,Variable copy.name=copy-module.html#name,Variable os.name=os-module.html#name'); return false;">name</a></span></span><span class="py-op">,</span> <span class="py-name">number</span> </span>
+</div><span class="lineno">14</span>  <span class="py-line"> </span>
+<a name="PDBExportFilter.processChain"></a><div id="PDBExportFilter.processChain-def"><span class="lineno">15</span> <a class="pysrc-toggle" href="#" id="PDBExportFilter.processChain-toggle" onclick="toggle('PDBExportFilter.processChain'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.PDBExportFilters.PDBExportFilter-class.html#processChain">processChain</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">chain_id</span><span class="py-op">,</span> <span class="py-param">segment_id</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="PDBExportFilter.processChain-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PDBExportFilter.processChain-expanded"><span class="lineno">16</span>  <span class="py-line">        <span class="py-keyword">return</span> <span class="py-name">chain_id</span><span class="py-op">,</span> <span class="py-name">segment_id</span> </span>
+</div><span class="lineno">17</span>  <span class="py-line"> </span>
+<a name="PDBExportFilter.terminateChain"></a><div id="PDBExportFilter.terminateChain-def"><span class="lineno">18</span> <a class="pysrc-toggle" href="#" id="PDBExportFilter.terminateChain-toggle" onclick="toggle('PDBExportFilter.terminateChain'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.PDBExportFilters.PDBExportFilter-class.html#terminateChain">terminateChain</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="PDBExportFilter.terminateChain-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PDBExportFilter.terminateChain-expanded"><span class="lineno">19</span>  <span class="py-line">        <span class="py-keyword">pass</span> </span>
+</div></div><span class="lineno">20</span>  <span class="py-line"> </span>
+<span class="lineno">21</span>  <span class="py-line"><span class="py-comment">#</span> </span>
+<span class="lineno">22</span>  <span class="py-line"><span class="py-comment"></span><span class="py-comment"># XPlor export filter</span> </span>
+<span class="lineno">23</span>  <span class="py-line"><span class="py-comment"></span> </span>
+<span class="lineno">24</span>  <span class="py-line"><span class="py-keyword">import</span> <a class="py-name" href="string-module.html">string</a> </span>
+<span class="lineno">25</span>  <span class="py-line"> </span>
+<a name="XPlorExportFilter"></a><div id="XPlorExportFilter-def"><span class="lineno">26</span> <a class="pysrc-toggle" href="#" id="XPlorExportFilter-toggle" onclick="toggle('XPlorExportFilter'); return false;">-</a><span class="py-line"><span class="py-keyword">class</span> <a class="py-def-name" href="Scientific.IO.PDBExportFilters.XPlorExportFilter-class.html">XPlorExportFilter</a><span class="py-op">(</span><span class="py-base-class">PDBExportFilter</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="XPlorExportFilter-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="XPlorExportFilter-expanded"><span class="lineno">27</span>  <span class="py-line"> </span>
+<span class="lineno">28</span>  <span class="py-line">    <a class="py-name" href="Scientific.IO.PDBExportFilters.XPlorExportFilter-class.html#xplor_atom_names">xplor_atom_names</a> <span class="py-op">=</span> <span class="py-op">{</span><span class="py-string">' OXT'</span><span class="py-op">:</span> <span class="py-string">'OT2'</span><span class="py-op">}</span> </span>
+<span class="lineno">29</span>  <span class="py-line"> </span>
+<a name="XPlorExportFilter.processLine"></a><div id="XPlorExportFilter.processLine-def"><span class="lineno">30</span> <a class="pysrc-toggle" href="#" id="XPlorExportFilter.processLine-toggle" onclick="toggle('XPlorExportFilter.processLine'); return false;">-</a><span class="py-line">    <span class="py-keyword">def</span> <a class="py-def-name" href="Scientific.IO.PDBExportFilters.XPlorExportFilter-class.html#processLine">processLine</a><span class="py-op">(</span><span class="py-param">self</span><span class="py-op">,</span> <span class="py-param">type</span><span class="py-op">,</span> <span class="py-param">data</span><span class="py-op">)</span><span class="py-op">:</span> </span>
+</div><div id="XPlorExportFilter.processLine-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="XPlorExportFilter.processLine-expanded"><span class="lineno">31</span>  <span class="py-line">        <span class="py-keyword">if</span> <span id="link-2" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-2', 'type', 'Method PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span> <span class="py-op">==</span> <span class="py-string">'TER'</span><span class="py-op">:</span> </span>
+<span class="lineno">32</span>  <span class="py-line">            <span class="py-keyword">return</span> <span class="py-name">None</span><span class="py-op">,</span> <a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a> </span>
+<span class="lineno">33</span>  <span class="py-line">        <span class="py-keyword">if</span> <span id="link-3" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-3', 'type', 'Method PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span> <span class="py-op">==</span> <span class="py-string">'ATOM'</span> <span class="py-keyword">or</span> <span id="link-4" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-4', 'type', 'Method PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span> <span class="py-op">==</span> <span class="py-string">'HETATM'</span> <span class="py-keyword">or</span> <span id="link-5" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-5', 'type', 'Method PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span> <span class="py-op">==</span> <span class="py-string">'ANISOU'</span><span class="py-op">:</span> </span>
+<span class="lineno">34</span>  <span class="py-line">            <span id="link-6" class="py-name"><a title="Scientific.BSP.name
+Scientific.Physics.PhysicalQuantities.PhysicalUnit.name
+copy.name
+os.name" class="py-name" href="#" onclick="doclink('link-6', 'name', 'Variable Scientific.BSP.name=Scientific.BSP-module.html#name,Method Scientific.Physics.PhysicalQuantities.PhysicalUnit.name()=Scientific.Physics.PhysicalQuantities.PhysicalUnit-class.html#name,Variable copy.name=copy-module.html#name,Variable os.name=os-module.html#name'); return false;">name</a></span></span> <span class="py-op">=</span> <span class="py-name">self</span><span class="py-op">.</span><a title="Scientific.IO.PDBExportFilters.XPlorExportFilter.xplor_atom_names" class="py-name" href="Scientific.IO.PDBExportFilters.XPlorExportFilter-class.html#xplor_atom_names">xplor_atom_names</a><span class="py-op">.</span><span id="link-7" class="py-name"><a title="Scientific.BSP.ParBase.get
+Scientific.BSP.ParValue.get
+Scientific.TkWidgets.FilenameEntry.get
+Scientific.TkWidgets.FloatEntry.get
+Scientific.TkWidgets.IntEntry.get" class="py-name" href="#" onclick="doclink('link-7', 'get', 'Method Scientific.BSP.ParBase.get()=Scientific.BSP.ParBase-class.html#get,Method Scientific.BSP.ParValue.get()=Scientific.BSP.ParValue-class.html#get,Method Scientific.TkWidgets.FilenameEntry.get()=Scientific.TkWidgets.FilenameEntry-class.html#get,Method Scientific.TkWidgets.FloatEntry.get()=Scientific.TkWidgets.FloatEntry-class.html#get,Method Scientific.TkWidgets.IntEntry.get()=Scientific.TkWidgets.IntEntry-class.html#get'); return false;">get</a></span></span><span class="py-op">(</span><a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a><span class="py-op">[</span><span class="py-string">'name'</span><span class="py-op">]</span><span class="py-op">,</span> <a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a><span class="py-op">[</span><span class="py-string">'name'</span><span class="py-op">]</span><span class="py-op">)</span> </span>
+<span class="lineno">35</span>  <span class="py-line">            <a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a><span class="py-op">[</span><span class="py-string">'name'</span><span class="py-op">]</span> <span class="py-op">=</span> <span id="link-8" class="py-name"><a title="Scientific.BSP.name
+Scientific.Physics.PhysicalQuantities.PhysicalUnit.name
+copy.name
+os.name" class="py-name" href="#" onclick="doclink('link-8', 'name', 'Variable Scientific.BSP.name=Scientific.BSP-module.html#name,Method Scientific.Physics.PhysicalQuantities.PhysicalUnit.name()=Scientific.Physics.PhysicalQuantities.PhysicalUnit-class.html#name,Variable copy.name=copy-module.html#name,Variable os.name=os-module.html#name'); return false;">name</a></span></span> </span>
+<span class="lineno">36</span>  <span class="py-line">        <span class="py-keyword">return</span> <span id="link-9" class="py-name"><a title="Scientific.IO.PDB.Atom.type
+Scientific.IO.PDB.HetAtom.type" class="py-name" href="#" onclick="doclink('link-9', 'type', 'Method PDB.Atom.type()=Scientific.IO.PDB.Atom-class.html#type,Method PDB.HetAtom.type()=Scientific.IO.PDB.HetAtom-class.html#type'); return false;">type</a></span></span><span class="py-op">,</span> <a title="Scientific.BSP.ParMessages.data" class="py-name" href="Scientific.BSP.ParMessages-class.html#data">data</a> </span>
+</div></div><span class="lineno">37</span>  <span class="py-line"> </span>
+<span class="lineno">38</span>  <span class="py-line"> </span>
+<span class="lineno">39</span>  <span class="py-line"><a class="py-name" href="Scientific.IO.PDBExportFilters-module.html#export_filters">export_filters</a> <span class="py-op">=</span> <span class="py-op">{</span><span class="py-string">'xplor'</span><span class="py-op">:</span> <a class="py-name" href="Scientific.IO.PDBExportFilters.XPlorExportFilter-class.html">XPlorExportFilter</a><span class="py-op">}</span> </span>
+<span class="lineno">40</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:42:04 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

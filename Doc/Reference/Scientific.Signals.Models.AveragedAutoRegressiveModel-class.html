@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scientific.Signals.Models.AveragedAutoRegressiveModel</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Scientific-module.html">Package&nbsp;Scientific</a> ::
+        <a href="Scientific.Signals-module.html">Package&nbsp;Signals</a> ::
+        <a href="Scientific.Signals.Models-module.html">Module&nbsp;Models</a> ::
+        Class&nbsp;AveragedAutoRegressiveModel
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Scientific.Signals.Models.AveragedAutoRegressiveModel-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h2 class="class">Class AveragedAutoRegressiveModel
+<br/><span class="codelink"><a href="Scientific.Signals.Models-pysrc.html#AveragedAutoRegressiveModel">source&nbsp;code</a></span></h2>
+<pre class="base-tree">
+<a href="Scientific.Signals.Models.AutoRegressiveModel-class.html">AutoRegressiveModel</a> --+
+                      |
+                     <strong class="uidshort">AveragedAutoRegressiveModel</strong>
+</pre>
+
+<hr />
+<p>Averaged auto-regressive model for stochastic process</p>
+  An averaged model is constructed by averaging the model coefficients 
+  of several auto-regressive models of the same order. An averaged model is
+  created empty, then individual models are added.<br /><br />
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Instance Methods</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.Signals.Models.AveragedAutoRegressiveModel-class.html#__init__" class="sig-name">__init__</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">order</span>,
+        <span class="sig-arg">delta_t</span>)</span>
+    
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Scientific.Signals.Models.AveragedAutoRegressiveModel-class.html#add" class="sig-name">add</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">model</span>,
+        <span class="sig-arg">weight</span>=<span class="sig-default">1</span>)</span>
+    <br />Adds the coefficients of an autoregressive model to the 
+      average.
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html">AutoRegressiveModel</a></code></span>:
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#correlation">correlation</a></code>,
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#frictionConstant">frictionConstant</a></code>,
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#memoryFunction">memoryFunction</a></code>,
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#memoryFunctionZ">memoryFunctionZ</a></code>,
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#memoryFunctionZapprox">memoryFunctionZapprox</a></code>,
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#poles">poles</a></code>,
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#predictStep">predictStep</a></code>,
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#spectrum">spectrum</a></code>
+      </p>
+    <div class="private">    <p class="varlist"><span class="varlist-header">Inherited from <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html">AutoRegressiveModel</a></code></span> (private):
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#_findCoefficients">_findCoefficients</a></code>,
+      <code><a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#_setTrajectory">_setTrajectory</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+
+<br />
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Method Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">order</span>,
+        <span class="sig-arg">delta_t</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.Signals.Models-pysrc.html#AveragedAutoRegressiveModel.__init__">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>order</code></strong> (<code><code>int</code></code>) - the order of the model</li>
+        <li><strong class="pname"><code>delta_t</code></strong> (<code><code>float</code></code>) - the sampling interval for the time series</li>
+    </ul>
+    <dl><dt>Overrides:
+      <a href="Scientific.Signals.Models.AutoRegressiveModel-class.html#__init__">AutoRegressiveModel.__init__</a>
+    </dt></dl>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="add"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">add</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">model</span>,
+        <span class="sig-arg">weight</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="Scientific.Signals.Models-pysrc.html#AveragedAutoRegressiveModel.add">source&nbsp;code</a></span>&nbsp;</span
+    ></td>
+  </table>
+  
+  Adds the coefficients of an autoregressive model to the average.
+  <dl><dt></dt><dd>
+    <dl><dt>Parameters:</dt></dl>
+    <ul>
+        <li><strong class="pname"><code>model</code></strong> (<code><a 
+          href="Scientific.Signals.Models.AutoRegressiveModel-class.html" 
+          class="link">AutoRegressiveModel</a></code>) - an autoregressive model</li>
+        <li><strong class="pname"><code>weight</code></strong> (<code><code>float</code></code>) - the weight of the model in the average</li>
+    </ul>
+    <dl><dt>Raises:</dt></dl>
+    <ul>
+        <li><code><strong class='fraise'>ValueError</strong></code> - if the order of the model does not match the order of the 
+        average model</li>
+    </ul>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:40:05 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

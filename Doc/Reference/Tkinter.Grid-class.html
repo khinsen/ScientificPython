@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Tkinter.Grid</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Tkinter ::
+        Grid ::
+        Class&nbsp;Grid
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Tkinter.Grid-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h2 class="class">Class Grid</h2>
+<dl><dt>Known Subclasses:</dt>
+<dd>
+    <a href="Tkinter.Widget-class.html">Widget</a>
+</dd></dl>
+
+<hr />
+<p>Geometry manager Grid.</p>
+  Base class to use the methods grid_* in every widget.<br /><br />
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <td colspan="2" class="summary">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="summary">Instance Methods</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#bbox" class="sig-name">bbox</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">column</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">row</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">col2</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">row2</span>=<span class="sig-default">None</span>)</span>
+    <br />Return a tuple of integer coordinates for the bounding box of this
+      widget controlled by the geometry manager grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#columnconfigure" class="sig-name">columnconfigure</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Configure column INDEX of a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#config" class="sig-name">config</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Position a widget in the parent widget in a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#configure" class="sig-name">configure</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Position a widget in the parent widget in a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#forget" class="sig-name">forget</a>(<span class="sig-arg">self</span>)</span>
+    <br />Unmap this widget.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid" class="sig-name">grid</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Position a widget in the parent widget in a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_bbox" class="sig-name">grid_bbox</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">column</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">row</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">col2</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">row2</span>=<span class="sig-default">None</span>)</span>
+    <br />Return a tuple of integer coordinates for the bounding box of this
+      widget controlled by the geometry manager grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_columnconfigure" class="sig-name">grid_columnconfigure</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Configure column INDEX of a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_configure" class="sig-name">grid_configure</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Position a widget in the parent widget in a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_forget" class="sig-name">grid_forget</a>(<span class="sig-arg">self</span>)</span>
+    <br />Unmap this widget.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_info" class="sig-name">grid_info</a>(<span class="sig-arg">self</span>)</span>
+    <br />Return information about the options for positioning this widget 
+      in a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_location" class="sig-name">grid_location</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>)</span>
+    <br />Return a tuple of column and row which identify the cell at which 
+      the pixel at position X and Y inside the master widget is 
+      located.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_propagate" class="sig-name">grid_propagate</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">flag</span>=<span class="sig-default">['_noarg_']</span>)</span>
+    <br />Set or get the status for propagation of geometry information.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_remove" class="sig-name">grid_remove</a>(<span class="sig-arg">self</span>)</span>
+    <br />Unmap this widget but remember the grid options.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_rowconfigure" class="sig-name">grid_rowconfigure</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Configure row INDEX of a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_size" class="sig-name">grid_size</a>(<span class="sig-arg">self</span>)</span>
+    <br />Return a tuple of the number of column and rows in the grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#grid_slaves" class="sig-name">grid_slaves</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">row</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">column</span>=<span class="sig-default">None</span>)</span>
+    <br />Return a list of all slaves of this widget in its packing 
+      order.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#info" class="sig-name">info</a>(<span class="sig-arg">self</span>)</span>
+    <br />Return information about the options for positioning this widget 
+      in a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#location" class="sig-name">location</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>)</span>
+    <br />Return a tuple of column and row which identify the cell at which 
+      the pixel at position X and Y inside the master widget is 
+      located.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#propagate" class="sig-name">propagate</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">flag</span>=<span class="sig-default">['_noarg_']</span>)</span>
+    <br />Set or get the status for propagation of geometry information.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#rowconfigure" class="sig-name">rowconfigure</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br />Configure row INDEX of a grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#size" class="sig-name">size</a>(<span class="sig-arg">self</span>)</span>
+    <br />Return a tuple of the number of column and rows in the grid.
+  </td>
+</tr>
+<tr>
+  <td width="15%" align="right" valign="top" class="summary">
+    <span class="rtype">
+      &nbsp;
+    </span>
+   </td>
+  <td class="summary">
+    <span class="sig"><a href="Tkinter.Grid-class.html#slaves" class="sig-name">slaves</a>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">row</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">column</span>=<span class="sig-default">None</span>)</span>
+    <br />Return a list of all slaves of this widget in its packing 
+      order.
+  </td>
+</tr>
+</table>
+
+<br />
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <td colspan="2" class="details">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><h3 class="details">Method Details</h3></th>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="bbox"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">bbox</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">column</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">row</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">col2</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">row2</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Return a tuple of integer coordinates for the bounding box of this 
+  widget controlled by the geometry manager grid.</p>
+  <p>If COLUMN, ROW is given the bounding box applies from the cell with 
+  row and column 0 to the specified cell. If COL2 and ROW2 are given the 
+  bounding box starts at that cell.</p>
+  The returned integers specify the offset of the upper left corner in 
+  the master widget and the width and height.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="columnconfigure"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">columnconfigure</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Configure column INDEX of a grid.</p>
+  Valid resources are minsize (minimum size of the column), weight (how 
+  much does additional space propagate to this column) and pad (how much 
+  space to let additionally).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="config"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">config</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <pre class="literalblock">
+Position a widget in the parent widget in a grid. Use as options:
+column=number - use cell identified with given column (starting with 0)
+columnspan=number - this widget will span several columns
+in=master - use master to contain this widget
+ipadx=amount - add internal padding in x direction
+ipady=amount - add internal padding in y direction
+padx=amount - add padding in x direction
+pady=amount - add padding in y direction
+row=number - use cell identified with given row (starting with 0)
+rowspan=number - this widget will span several rows
+sticky=NSEW - if cell is larger on which sides will this
+              widget stick to the cell boundary
+
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="configure"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">configure</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <pre class="literalblock">
+Position a widget in the parent widget in a grid. Use as options:
+column=number - use cell identified with given column (starting with 0)
+columnspan=number - this widget will span several columns
+in=master - use master to contain this widget
+ipadx=amount - add internal padding in x direction
+ipady=amount - add internal padding in y direction
+padx=amount - add padding in x direction
+pady=amount - add padding in y direction
+row=number - use cell identified with given row (starting with 0)
+rowspan=number - this widget will span several rows
+sticky=NSEW - if cell is larger on which sides will this
+              widget stick to the cell boundary
+
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="forget"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">forget</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Unmap this widget.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <pre class="literalblock">
+Position a widget in the parent widget in a grid. Use as options:
+column=number - use cell identified with given column (starting with 0)
+columnspan=number - this widget will span several columns
+in=master - use master to contain this widget
+ipadx=amount - add internal padding in x direction
+ipady=amount - add internal padding in y direction
+padx=amount - add padding in x direction
+pady=amount - add padding in y direction
+row=number - use cell identified with given row (starting with 0)
+rowspan=number - this widget will span several rows
+sticky=NSEW - if cell is larger on which sides will this
+              widget stick to the cell boundary
+
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_bbox"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_bbox</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">column</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">row</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">col2</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">row2</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Return a tuple of integer coordinates for the bounding box of this 
+  widget controlled by the geometry manager grid.</p>
+  <p>If COLUMN, ROW is given the bounding box applies from the cell with 
+  row and column 0 to the specified cell. If COL2 and ROW2 are given the 
+  bounding box starts at that cell.</p>
+  The returned integers specify the offset of the upper left corner in 
+  the master widget and the width and height.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_columnconfigure"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_columnconfigure</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Configure column INDEX of a grid.</p>
+  Valid resources are minsize (minimum size of the column), weight (how 
+  much does additional space propagate to this column) and pad (how much 
+  space to let additionally).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_configure"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_configure</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <pre class="literalblock">
+Position a widget in the parent widget in a grid. Use as options:
+column=number - use cell identified with given column (starting with 0)
+columnspan=number - this widget will span several columns
+in=master - use master to contain this widget
+ipadx=amount - add internal padding in x direction
+ipady=amount - add internal padding in y direction
+padx=amount - add padding in x direction
+pady=amount - add padding in y direction
+row=number - use cell identified with given row (starting with 0)
+rowspan=number - this widget will span several rows
+sticky=NSEW - if cell is larger on which sides will this
+              widget stick to the cell boundary
+
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_forget"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_forget</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Unmap this widget.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_info"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_info</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return information about the options for positioning this widget in a 
+  grid.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_location"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_location</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a tuple of column and row which identify the cell at which the 
+  pixel at position X and Y inside the master widget is located.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_propagate"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_propagate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">flag</span>=<span class="sig-default">['_noarg_']</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Set or get the status for propagation of geometry information.</p>
+  A boolean argument specifies whether the geometry information of the 
+  slaves will determine the size of this widget. If no argument is given, 
+  the current setting will be returned.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_remove"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_remove</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Unmap this widget but remember the grid options.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_rowconfigure"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_rowconfigure</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Configure row INDEX of a grid.</p>
+  Valid resources are minsize (minimum size of the row), weight (how 
+  much does additional space propagate to this row) and pad (how much space
+  to let additionally).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_size"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_size</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a tuple of the number of column and rows in the grid.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="grid_slaves"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">grid_slaves</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">row</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">column</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a list of all slaves of this widget in its packing order.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="info"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">info</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return information about the options for positioning this widget in a 
+  grid.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="location"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">location</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a tuple of column and row which identify the cell at which the 
+  pixel at position X and Y inside the master widget is located.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="propagate"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">propagate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">flag</span>=<span class="sig-default">['_noarg_']</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Set or get the status for propagation of geometry information.</p>
+  A boolean argument specifies whether the geometry information of the 
+  slaves will determine the size of this widget. If no argument is given, 
+  the current setting will be returned.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="rowconfigure"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">rowconfigure</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">cnf</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  <p>Configure row INDEX of a grid.</p>
+  Valid resources are minsize (minimum size of the row), weight (how 
+  much does additional space propagate to this row) and pad (how much space
+  to let additionally).
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="size"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">size</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a tuple of the number of column and rows in the grid.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<a name="slaves"></a>
+<div>
+<table width="100%" class="details" bgcolor="#e0e0e0"><tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3><span class="sig"><span class="sig-name">slaves</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">row</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">column</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;</span
+    ></td>
+  </table>
+  
+  Return a list of all slaves of this widget in its packing order.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="Scientific-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar"
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center">
+            <p class="nomargin">
+              <a class="navbar" target="_top" href="http://dirac.cnrs-orleans.fr/ScientificPython/">Scientific Python</a>
+      </p></th></tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha2 on Tue Jun 13 11:40:24 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sf.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

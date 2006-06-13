@@ -1,11 +1,11 @@
-2.5.8 --> 2.5.9hg
------------------
+2.5.8 --> 2.5.9
+---------------
 
 Improvements:
 
 - Scientifc.IO.NetCDF supports the new 64-bit data structures in Python 2.5
   (not yet tested on a 64-bit machine)
-
+- Docstrings modified for use with Epydoc.
 
 2.5.7 --> 2.5.8
 ---------------
