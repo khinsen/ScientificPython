@@ -13,6 +13,18 @@ except ImportError:
 
 if not done:
     try:
+        from Scientific import use_numpy
+        from numpy import *
+        del use_numpy
+        done = True
+        def int_sum(a, axis=0):
+            return add.reduce(a, axis)
+
+    except ImportError:
+        pass
+
+if not done:
+    try:
         from Scientific import use_numarray
         from numarray import *
         del use_numarray
@@ -24,10 +36,3 @@ if not done:
         pass
 
 del done
-
-## import Scientific, os
-## if os.path.exists(os.path.join(Scientific.__path__[0], 'use_numarray')):
-##     from numarray import *
-## else:
-## del Scientific
-## del os

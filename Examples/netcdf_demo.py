@@ -1,4 +1,4 @@
-from Numeric import *
+from Scientific.N import *
 from Scientific.IO.NetCDF import *
 import time
 

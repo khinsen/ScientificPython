@@ -1,7 +1,7 @@
 # Implementation of Scientific.Geometry.Vector in Pyrex
 #
 # Written by Konrad Hinsen
-# last revision: 2006-4-28
+# last revision: 2006-5-29
 #
 
 
@@ -10,7 +10,7 @@ cdef extern from "math.h":
     double sqrt(double x)
     double acos(double x)
 
-import Numeric
+from Scientific import N
 
 #
 # For efficiency reasons (calling __init__ makes the creation of a vector
@@ -31,7 +31,7 @@ cdef class vector:
 
     property array:
         def __get__(self):
-            return Numeric.array([self.xv, self.yv, self.zv])
+            return N.array([self.xv, self.yv, self.zv])
 
     def __copy__(self, memo = None):
         return self
