@@ -1,0 +1,14 @@
+syntax: glob
+
+.hgignore
+*~
+**.pyc
+**.pyo
+build
+epydoc/html/*
+epydoc/pdf/*
+dist
+Doc/Reference/*
+Test
+MANIFEST
+HG_CHANGESET_ID
