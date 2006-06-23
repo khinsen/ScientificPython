@@ -1,7 +1,7 @@
 # Text files with automatic (un)compression and URL access.
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-5-28
+# Last revision: 2006-6-23
 # 
 
 """
@@ -44,9 +44,9 @@ class TextFile:
     def __init__(self, filename, mode = 'r'):
         """
         @param filename: file name or URL
-        @type filename: C{string}
+        @type filename: C{str}
         @param mode: file access mode: 'r' (read), 'w' (write), or 'a' (append)
-        @type mode: C{string}
+        @type mode: C{str}
         """
         if string.find(filename, ':/') > 1: # URL
             if mode != 'r':

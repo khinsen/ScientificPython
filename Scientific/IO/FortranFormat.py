@@ -17,7 +17,7 @@
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # With contributions from Andreas Prlic <andreas@came.sbg.ac.at>
-# last revision: 2006-5-28
+# last revision: 2006-6-23
 #
 
 """
@@ -141,7 +141,7 @@ class FortranLine:
     def __str__(self):
         """
         @returns: a Fortran-formatted text representation of the data record
-        @rtype: C{string}
+        @rtype: C{str}
         """
         return self.text
 
@@ -248,7 +248,7 @@ class FortranFormat:
     def __init__(self, format, nested = False):
         """
         @param format: a Fortran format specification
-        @type format: C{string}
+        @type format: C{str}
         @param nested: I{for internal use}
         """
         fields = []

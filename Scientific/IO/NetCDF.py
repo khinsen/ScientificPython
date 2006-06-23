@@ -3,7 +3,7 @@
 # package hierarchy.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-5-28
+# Last revision: 2006-6-23
 # 
 
 """
@@ -40,7 +40,7 @@ if sys.modules.has_key('epydoc'):
                              netCDF files have the extension ".nc", but
                              this is not enforced. The filename may contain
                              a home directory indication starting with "~".
-            @type filename: C{string}
+            @type filename: C{str}
 
             @param mode: access mode. "r" means read-only; no data can be
                          modified. "w" means write; a new file is created,
@@ -54,7 +54,7 @@ if sys.modules.has_key('epydoc'):
                          or created in "share" mode, which reduces buffering
                          in order to permit simultaneous read access by other
                          processes to a file that is being written.
-            @type mode: C{string}
+            @type mode: C{str}
             """
             raise ImportError("this code should never be executed")
 
@@ -68,7 +68,7 @@ if sys.modules.has_key('epydoc'):
         def createDimension(self, name, length):
             """
             @param name: the name of the dimension
-            @type name: C{string}
+            @type name: C{str}
             @param length: the length of the new dimension. C{None} stands
                            for the unlimited dimension. Note that there
                            can be only one unlimited dimension per file.
@@ -79,15 +79,15 @@ if sys.modules.has_key('epydoc'):
         def createVariable(self, name, type, dimensions):
             """
             @param name: the name of the new variable
-            @type name: C{string}
+            @type name: C{str}
             @param type: the data type of the elements; the same one-letter
                          codes as in C{Numeric} are used and the use of the
                          pre-defined constants (Numeric.Float etc.) is
                          strongly recommended.
-            @type type: C{string}
+            @type type: C{str}
             @param dimensions: a tuple of dimension names that have been
                                defined earlier
-            @type dimensions: C{tuple} of C{string}
+            @type dimensions: C{tuple} of C{str}
             @returns: the object corresponding to the new variable
             @rtype: L{NetCDFVariable}
             """
@@ -155,7 +155,7 @@ if sys.modules.has_key('epydoc'):
         def typecode(self):
             """
             @returns:  the variable's type code
-            @rtype: C{string}
+            @rtype: C{str}
             """
             pass
 

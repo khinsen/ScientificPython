@@ -3,7 +3,7 @@
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 #        and Jakob Schiotz <schiotz@fysik.dtu.dk>
-# last revision: 2006-6-12
+# last revision: 2006-6-23
 #
 
 """
@@ -86,7 +86,7 @@ if sys.modules.has_key('epydoc'):
             Send data to another process (blocking)
 
             @param data: the data to be sent
-            @type data: C{string} or C{Numeric.array}. Array arguments
+            @type data: C{str} or C{Numeric.array}. Array arguments
                         must have contiguous storage. General object arrays
                         are not allowed.
             @param destination: the rank of the destination process
@@ -101,7 +101,7 @@ if sys.modules.has_key('epydoc'):
             Send data to another process (non-blocking)
 
             @param data: the data to be sent
-            @type data: C{string} or C{Numeric.array}. Array arguments
+            @type data: C{str} or C{Numeric.array}. Array arguments
                         must have contiguous storage. General object arrays
                         are not allowed.
             @param destination: the rank of the destination process
@@ -123,7 +123,7 @@ if sys.modules.has_key('epydoc'):
                          copied to the array, whic must have the right shape.
                          If a typecode, an array of that type is created
                          and used as the buffer for incoming data.
-            @type data: C{Numeric.array} or C{string}
+            @type data: C{Numeric.array} or C{str}
             @param source: the rank of the process from which data is
                            accepted. C{None} means data is accepted from
                            any process.

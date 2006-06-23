@@ -1,7 +1,7 @@
 # Array I/O to text files
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-5-26
+# last revision: 2006-6-23
 #
 
 """
@@ -39,7 +39,7 @@ def readArray(filename):
     if possible.
 
     @param filename: the name of the file to read
-    @type filename: C{string}
+    @type filename: C{str}
 
     @returns: an array containing the data from the file
     @rtype: C{Numeric.array}
@@ -60,7 +60,7 @@ def readFloatArray(filename):
     Read array data from a file into an array of floats
     
     @param filename: the name of the file to read
-    @type filename: C{string}
+    @type filename: C{str}
 
     @returns: an array containing the data from the file
     @rtype: C{Numeric.array} of C{float}
@@ -79,7 +79,7 @@ def readIntegerArray(filename):
     Read array data from a file into an array of integers
     
     @param filename: the name of the file to read
-    @type filename: C{string}
+    @type filename: C{str}
 
     @returns: an array containing the data from the file
     @rtype: C{Numeric.array} of C{int}
@@ -100,9 +100,9 @@ def writeArray(array, filename, mode='w'):
     @param array: the array to be written
     @type array: C{Numeric.array}
     @param filename: the name of the output file
-    @type filename: C{string}
+    @type filename: C{str}
     @param mode: the file access mode, 'w' (new file) or 'a' (append)
-    @type mode: C{string}
+    @type mode: C{str}
     """
     file = TextFile(filename, mode)
     if len(array.shape) == 1:
@@ -128,10 +128,10 @@ def writeDataSets(datasets, filename, separator = ''):
                      (list of (x, y) pairs). Nested lists can be used
                      instead of arrays.
     @param filename: the name of the output file
-    @type filename: C{string}
+    @type filename: C{str}
     @param separator: the contents of the line that is written between
                       two datasets
-    @type separator: C{string}
+    @type separator: C{str}
     """
     file = TextFile(filename, 'w')
     nsets = len(datasets)

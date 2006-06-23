@@ -1,7 +1,7 @@
 # Coordinated I/O for parallel systems
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2006-6-23
 #
 
 """
@@ -29,7 +29,7 @@ class LogFile:
     def __init__(self, filename, communicator = None):
         """
         @param filename: the name of the log file
-        @type filename: C{string}
+        @type filename: C{str}
         @param communicator: the communicator in which the file is accessible.
                              The default value of C{None} means to use the
                              global world communicator, i.e. all possible
@@ -50,7 +50,7 @@ class LogFile:
         Write a string to the file
 
         @param string: the string data
-        @type string: C{string}
+        @type string: C{str}
         """
         self.data = self.data + string
 

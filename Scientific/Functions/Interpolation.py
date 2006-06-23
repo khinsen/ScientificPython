@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2006-6-23
 #
 
 """
@@ -344,15 +344,15 @@ class NetCDFInterpolatingFunction(InterpolatingFunction):
     def __init__(self, filename, axesnames, variablename, default = None):
         """
         @param filename: the name of the netCDF file
-        @type filename: C{string}
+        @type filename: C{str}
 
         @param axesnames: the names of the netCDF variables that contain the
             axes information
-        @type axes: sequence of C{string}
+        @type axes: sequence of C{str}
 
         @param variablename: the name of the netCDF variable that contains
             the data values
-        @type variablename: C{string}
+        @type variablename: C{str}
 
         @param default: the value of the function outside the grid. A value
             of C{None} means that the function is undefined outside

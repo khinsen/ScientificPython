@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-5-28
+# Last revision: 2006-6-23
 # 
 
 """
@@ -105,7 +105,7 @@ def defineAminoAcidResidue(symbol):
     acid residue
     
     @param symbol: the three-letter code for an amino acid
-    @type symbol: C{string}
+    @type symbol: C{str}
     """
     amino_acids.append(string.upper(symbol))
 
@@ -115,7 +115,7 @@ def defineNucleicAcidResidue(symbol):
     acid residue
     
     @param symbol: the one-letter code for a nucleic acid
-    @type symbol: C{string}
+    @type symbol: C{str}
     """
     nucleic_acids.append(string.upper(symbol))
 
@@ -138,14 +138,14 @@ class PDBFile:
     def __init__(self, filename, mode = 'r', subformat = None):
         """
         @param filename: the name of the PDB file
-        @type filename: C{string}
+        @type filename: C{str}
         @param mode: the file access mode, 'r' (read) or 'w' (write)
-        @type mode: C{string}
+        @type mode: C{str}
         @param subformat: indicates a specific dialect of the PDB format.
                           Subformats are defined in
                           L{Scientific.IO.PDBExportFilters}; they are used
                           only when writing.
-        @type subformat: C{string} or C{NoneType}
+        @type subformat: C{str} or C{NoneType}
         """
         self.file = TextFile(filename, mode)
         self.output = string.lower(mode[0]) == 'w'
@@ -258,7 +258,7 @@ class PDBFile:
         need not contain all entries.
 
         @param type: PDB record type
-        @type type: C{string}
+        @type type: C{str}
         @param data: PDB record data
         @type data: C{tuple}
         """
@@ -331,7 +331,7 @@ class PDBFile:
         to the file.
 
         @param text: the comment contents
-        @type text: C{string}
+        @type text: C{str}
         """
         while text:
             eol = string.find(text,'\n')
@@ -348,7 +348,7 @@ class PDBFile:
         the methods L{nextResidue} and L{nextChain}.
 
         @param name: the atom name
-        @type name: C{string}
+        @type name: C{str}
         @param position: the atom position
         @type position: L{Scientific.Geometry.Vector}
         @param occupancy: the occupancy
@@ -356,7 +356,7 @@ class PDBFile:
         @param temperature_factor: the temperature factor (B-factor)
         @type temperature_factor: C{float}
         @param element: the chemical element
-        @type element: C{string}
+        @type element: C{str}
         """
         if self.het_flag:
             type = 'HETATM'
@@ -379,7 +379,7 @@ class PDBFile:
         next call to L{writeAtom}.
 
         @param name: the residue name
-        @type name: C{string}
+        @type name: C{str}
         @param number: the residue number. If C{None}, the residues
                        will be numbered sequentially, starting from 1.
         @type number: C{int} or C{NoneType}
@@ -409,9 +409,9 @@ class PDBFile:
 
         @param chain_id: a chain identifier. If C{None}, consecutive letters
                          from the alphabet are used.
-        @type chain_id: C{string} or C{NoneType}
+        @type chain_id: C{str} or C{NoneType}
         @param segment_id: a chain identifier
-        @type segment_id: C{string}
+        @type segment_id: C{str}
         """
         if chain_id is None:
             self.chain_number = (self.chain_number + 1) % len(self._chain_ids)
@@ -467,7 +467,7 @@ class Atom:
     def __init__(self, name, position, **properties):
         """
         @param name: the atom name
-        @type name: C{string}
+        @type name: C{str}
         @param position: the atom position
         @type position: L{Scientific.Geometry.Vector}
         @param properties: any other atom properties as keyword parameters.
@@ -489,7 +489,7 @@ class Atom:
     def __getitem__(self, item):
         """
         @param item: the name of a property, including "name" or "position"
-        @type item: C{string}
+        @type item: C{str}
         @returns: the property value
         """
         try:
@@ -505,7 +505,7 @@ class Atom:
     def __setitem__(self, item, value):
         """
         @param item: the name of an existing or to be defined property
-        @type item: C{string}
+        @type item: C{str}
         @param value: the new value for the property
         """
         self.properties[item] = value
@@ -518,7 +518,7 @@ class Atom:
     def type(self):
         """
         @returns: the six-letter record type, ATOM or HETATM
-        @rtype: C{string}
+        @rtype: C{str}
         """
         return 'ATOM  '
 
@@ -527,7 +527,7 @@ class Atom:
         Write an atom record to a file
 
         @param file: a PDB file object or a filename
-        @type file: L{PDBFile} or C{string}
+        @type file: L{PDBFile} or C{str}
         """
         close = 0
         if type(file) == type(''):
@@ -571,7 +571,7 @@ class Group:
     def __init__(self, name, atoms = None, number = None):
         """
         @param name: the name of the group
-        @type name: C{string}
+        @type name: C{str}
         @param atoms: a list of atoms (or C{None} for no atoms)
         @type atoms: C{list} or C{NoneType}
         @param number: the PDB residue number (or C{None})
@@ -592,7 +592,7 @@ class Group:
     def __getitem__(self, item):
         """
         @param item: an integer index or an atom name
-        @type item: C{int} or C{string}
+        @type item: C{int} or C{str}
         """
         if type(item) == type(0):
             return self.atom_list[item]
@@ -648,7 +648,7 @@ class Group:
         Set the PDB residue name
 
         @param name: the new name
-        @type name: C{string}
+        @type name: C{str}
         """
         self.name = name
 
@@ -657,7 +657,7 @@ class Group:
         Write the group to a file
 
         @param file: a PDBFile object or a file name
-        @type file: L{PDBFile} or C{string}
+        @type file: L{PDBFile} or C{str}
         """
         close = 0
         if type(file) == type(''):
@@ -819,9 +819,9 @@ class Chain:
                          that the chain is initially empty
         @type residues: C{list} or C{NoneType}
         @param chain_id: a one-letter chain identifier or C{None}
-        @type chain_id: C{string} or C{NoneType}
+        @type chain_id: C{str} or C{NoneType}
         @param segment_id: a multi-character segment identifier or C{None}
-        @type segment_id: C{string} or C{NoneType}
+        @type segment_id: C{str} or C{NoneType}
         """
         if residues is None:
             self.residues = []
@@ -840,7 +840,7 @@ class Chain:
     def sequence(self):
         """
         @returns: the list of residue names
-        @rtype: C{list} of C{string}
+        @rtype: C{list} of C{str}
         """
         return [r.name for r in self.residues]
 
@@ -901,7 +901,7 @@ class Chain:
         Write the chain to a file
 
         @param file: a PDBFile object or a file name
-        @type file: L{PDBFile} or C{string}
+        @type file: L{PDBFile} or C{str}
         """
         close = 0
         if type(file) == type(''):
@@ -992,7 +992,7 @@ class ResidueNumber:
         @param number: the numeric part of the residue number
         @type number: C{int}
         @param insertion_code: the letter part of the residue number
-        @type insertion_code: C{string}
+        @type insertion_code: C{str}
         """
         self.number = number
         self.insertion_code = insertion_code
@@ -1049,13 +1049,13 @@ class Structure:
 
         @param filename: the name of the PDB file. Compressed files
                          and URLs are accepted, as for class L{PDBFile}.
-        @type filename: C{string}
+        @type filename: C{str}
         @param model: the number of the model to read from a multiple-model
                       file. Only one model can be treated at a time.
         @type model: C{int}
         @param alternate_code: the version of the positions to be read
                                from a file with alternate positions.
-        @type alternate_code: single-letter C{string}
+        @type alternate_code: single-letter C{str}
         """
         self.filename = filename
         self.model = model
@@ -1324,7 +1324,7 @@ class Structure:
         Write everything to a file
 
         @param file: a PDB file object or a filename
-        @type file: L{PDBFile} or C{string}
+        @type file: L{PDBFile} or C{str}
         """
         close = 0
         if type(file) == type(''):
