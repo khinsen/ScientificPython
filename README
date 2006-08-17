@@ -32,17 +32,16 @@ E-Mail: hinsen@cnrs-orleans.fr
 Installation:
 -------------
 
-Required: Python 1.5 or higher, the BSP module requires Python 2.1 or
-higher. Most modules also require Numerical Python. If you want to use
-the netCDF interface module, you also need the netCDF library, version
-3.0 or higher.
+Required: Python 2.2 or higher. Most modules also require Numerical
+Python. If you want to use the netCDF interface module, you also need
+the netCDF library, version 3.0 or higher.
 
 Installation is as simple as
 
     python setup.py build
     python setup.py install
 
-(the second command requires root priviledges on many installations).
+(the second command requires root privileges on many installations).
 This will build the netCDF module if it can find a netCDF installation
 in either /usr/local or in /usr. If you you have installed netCDF
 somewhere else, you must edit the file setup.py and replace "None" in
