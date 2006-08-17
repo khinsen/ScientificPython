@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2006-5-29
+ * last revision: 2006-8-17
  */
 
 #ifdef _WIN32
@@ -162,7 +162,6 @@ netcdf_signalerror(int code)
     sprintf(buffer, "netcdf: %s", nc_strerror(code));
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
-    fprintf(stderr, buffer); printf("\n");
     PyErr_SetString(PyExc_IOError, buffer);
  }
 }
@@ -629,8 +628,7 @@ open_netcdf_file(PyNetCDFFileObject *self, char *filename, char *mode)
   }
   if (ret == -1 || strlen(mode) > 3 ||
       (mode[0] != 'r' && mode[0] != 'w' && mode[0] != 'a')) {
-    PyErr_SetString(PyExc_IOError, "illegal mode specification");
-    PyNetCDFFileObject_dealloc(self);
+    PyErr_SetString(PyExc_IOError, "netcdf: illegal mode specification");
     return -1;
   }
   self->open = 0;
@@ -679,12 +677,10 @@ open_netcdf_file(PyNetCDFFileObject *self, char *filename, char *mode)
     }
   }
   else {
-    PyNetCDFFileObject_dealloc(self);
     return -1;
   }
   if (ret != NC_NOERR) {
     netcdf_signalerror(ret);
-    PyNetCDFFileObject_dealloc(self);
     return -1;
   }
   self->name = PyString_FromString(filename);
@@ -705,7 +701,6 @@ PyNetCDFFileObject_init(PyNetCDFFileObject *self,
   if (mode == NULL)
     mode = "r";
   if (open_netcdf_file(self, filename, mode) < 0) {
-    netcdf_seterror();
     return -1;
   }
   if (history != NULL)
