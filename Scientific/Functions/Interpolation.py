@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-23
+# last revision: 2006-9-7
 #
 
 """
@@ -398,10 +398,6 @@ def _combinations(axes):
                 l.append((x,)+y)
         return l
 
-
-# Clean up module (mostly for epydoc)
-
-del index_expression
 
 # Test code
 
