@@ -625,9 +625,6 @@ _diffuse_material_dict = {}
 
 EmissiveMaterial = DiffuseMaterial
 
-del ex
-del ey
-del ez
 
 #
 # Test code

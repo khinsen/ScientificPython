@@ -788,9 +788,6 @@ def EmissiveMaterial(color):
 
 _emissive_material_dict = {}
 
-del ex
-del ey
-del ez
 
 #
 # Test code
