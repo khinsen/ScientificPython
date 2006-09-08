@@ -130,8 +130,8 @@ cdef class vector:
         if op != 2 and op != 3:
             return NotImplemented
         if isinstance(other, vector):
-            eq = self.xv == other.xv and self.yv == other.yv \
-                 and self.zv == other.zv
+            eq = self.xv == other.x() and self.yv == other.y() \
+                 and self.zv == other.z()
         else:
             eq = False
         if op == 2:
@@ -143,11 +143,11 @@ cdef class vector:
         return 3
 
     def __getitem__(self, int index):
-        if index == 0:
+        if index == 0 or index == -3:
             return self.xv
-        elif index == 1:
+        elif index == 1 or index == -2:
             return self.yv
-        elif index == 2:
+        elif index == 2 or index == -1:
             return self.zv
         raise IndexError
 
