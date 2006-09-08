@@ -1,3 +1,16 @@
+2.5.10 --> 2.5.11
+-----------------
+
+Bug fixes:
+
+- Pyrex implementation of vector objects raised exceptions in comparisons
+- Pyrex implementation of vector objects did not accept negative indices
+- Some object deletions during conversion to epydoc had to be reversed
+
+Improvements:
+
+- Two test suites
+
 2.5.9 --> 2.5.10
 ----------------
 
