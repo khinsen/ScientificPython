@@ -4,7 +4,7 @@
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # With contributions from Frank Horowitz
 #                     and Matteo Bertini
-# Last revision: 2006-6-9
+# Last revision: 2006-9-12
 #
 
 """
@@ -547,8 +547,8 @@ class Line(ShapeObject):
         ShapeObject.__init__(self, attr, None, None, center)
 
     def writeSpecification(self, file):
-        p0 = "%f %f %f" % self.points[0]
-        p1 = "%f %f %f" % self.points[1]
+        p0 = "%f %f %f" % tuple(self.points[0])
+        p1 = "%f %f %f" % tuple(self.points[1])
         file.writeString('IndexedLineSet{coord Coordinate{point ')
         file.writeString('[%s,\n%s]} coordIndex[0,1,-1]}\n' % (p0, p1))
 
