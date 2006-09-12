@@ -1,3 +1,3 @@
 # Data used both in the package and by setup.py
 
-__version__ = '2.5.11'
+__version__ = '2.5.12hg'
