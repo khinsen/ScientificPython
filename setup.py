@@ -64,6 +64,28 @@ else:
                              libraries = ['netcdf'],
                              extra_compile_args=extra_compile_args)]
 
+cmdclass = {}
+
+try:
+    # Add code for including documentation in Mac packages
+    import bdist_mpkg
+    from distutils.command.bdist_mpkg import bdist_mpkg as bdist_mpkg
+    class my_bdist_mpkg(bdist_mpkg):
+        def initialize_options(self):
+            bdist_mpkg.initialize_options(self)
+
+            self.scheme_descriptions['examples'] = u'(Optional) ScientificPython example code'
+            self.scheme_map['examples'] = '/Developer/Python/ScientificPython/Examples'
+            self.scheme_copy['examples'] = 'Examples'
+
+            self.scheme_descriptions['doc'] = u'(Optional) ScientificPython documentation'
+            self.scheme_map['doc'] = '/Developer/Python/ScientificPython/Documentation'
+            self.scheme_copy['doc'] = 'Doc'
+
+    cmdclass['bdist_mpkg'] = my_bdist_mpkg
+
+except ImportError:
+    pass
 
 packages = ['Scientific', 'Scientific.Functions',
             'Scientific.Geometry', 'Scientific.IO',
@@ -100,6 +122,8 @@ class modified_install_headers(install_headers):
         self.install_dir = \
                 os.path.join(os.path.split(self.install_dir)[0], 'Scientific')
 
+cmdclass['install_headers'] = modified_install_headers
+
 headers = glob(os.path.join ("Include","Scientific","*.h"))
 
 setup (name = "ScientificPython",
@@ -125,5 +149,5 @@ line plots and 3D wireframe models.""",
        ext_modules = ext_modules,
        scripts = scripts,
 
-       cmdclass = {'install_headers': modified_install_headers},
+       cmdclass = cmdclass,
        )

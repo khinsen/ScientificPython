@@ -5,6 +5,10 @@ Bug fixes:
 
 - VRML2 output would crash for scenes containing Line objects
 
+Improvements:
+
+- builds Macintosh packages with documentation and examples
+
 2.5.10 --> 2.5.11
 -----------------
 
