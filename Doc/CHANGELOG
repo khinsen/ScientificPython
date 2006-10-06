@@ -4,6 +4,10 @@
 Bug fixes:
 
 - VRML2 output would crash for scenes containing Line objects
+- Pyrex implmentation of vector objects could crash instead of raising
+  an exception in divide operations.
+- Pyrex implmentation of vector objects would raise exceptions incorrectly
+  under Python 2.5
 
 Improvements:
 
