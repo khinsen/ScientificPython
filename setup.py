@@ -5,6 +5,10 @@ from distutils.command.install_headers import install_headers
 import os, sys
 from glob import glob
 
+if sys.version[:3] <= '2.1':
+    print "ScientificPython requires Python 2.2 or later"
+    raise SystemExit
+
 # If your netCDF installation is in a non-standard place, set the following
 # variable to the base directory, or set the environment variable
 # NETCDF_PREFIX before running setup.py
@@ -17,21 +21,6 @@ execfile('Scientific/__pkginfo__.py', pkginfo.__dict__)
 
 extra_compile_args = []
 arrayobject_h_include = []
-if "--numpy" in sys.argv:
-    use_numpy = 1
-    extra_compile_args.append("-DNUMPY=1")
-    sys.argv.remove("--numpy")
-    arrayobject_h_include = [os.path.join(sys.prefix,
-                            "lib/python%s.%s/site-packages/numpy/core/include"
-                                          % sys.version_info [:2])]
-else:
-    use_numpy = 0
-if "--numarray" in sys.argv:
-    use_numarray = 1
-    extra_compile_args.append("-DNUMARRAY=1")
-    sys.argv.remove("--numarray")
-else:
-    use_numarray = 0
 
 if netcdf_prefix is None:
     try:
@@ -92,28 +81,15 @@ packages = ['Scientific', 'Scientific.Functions',
             'Scientific.Physics', 'Scientific.QtWidgets',
             'Scientific.Statistics', 'Scientific.Signals',
             'Scientific.Threading', 'Scientific.TkWidgets',
-            'Scientific.Visualization', 'Scientific.MPI']
+            'Scientific.Visualization', 'Scientific.MPI',
+            'Scientific.BSP', 'Scientific.use_numeric']
+
+scripts = ['bsp_virtual']
 
 ext_modules.append(Extension('Scientific_vector',
                              ['Src/Scientific_vector.c'],
                              libraries=['m']))
 
-if 'sdist' in sys.argv:
-    packages.append('Scientific.use_numarray')
-    packages.append('Scientific.use_numeric')
-    packages.append('Scientific.use_numpy')
-elif use_numpy:
-    packages.append('Scientific.use_numpy')
-elif use_numarray:
-    packages.append('Scientific.use_numarray')
-else:
-    packages.append('Scientific.use_numeric')
-
-if sys.version[:3] >= '2.1':
-    packages.append('Scientific.BSP')
-    scripts = ['bsp_virtual']
-else:
-    scripts = []
 
 class modified_install_headers(install_headers):
 
