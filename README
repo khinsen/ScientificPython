@@ -3,12 +3,9 @@ scientific applications. Most of them need the Numerical Python
 extension (aka NumPy), which is available from SourceForge; see
 http://numpy.sourceforge.net for details.
 
-This is release 2.5 of ScientificPython. The odd minor release number
-indicates a development release. The main new feature is partial
-compatibility with numarray (see below).
-
-All the documentation is in Doc. To browse the reference manual for all
-the modules, point your browser at Doc/Reference/index.html.
+This is release 2.6 of ScientificPython. All the documentation is in
+Doc. To browse the reference manual for all the modules, point your
+browser at Doc/Reference/index.html.
 
 If you find bugs, please tell me, and if you improve something, please
 send me the modified version. I don't promise anything, but since I
@@ -23,8 +20,9 @@ from time to time.
 
 
 Konrad Hinsen
-Centre de Biophysique MolÅÈculaire (CNRS)
-et Synchrotron Soleil
+Centre de Biophysique MolÅÈculaire, CNRS OrlÅÈans, France
+and
+Synchrotron Soleil, Saint Aubin, France
 E-Mail: hinsen@cnrs-orleans.fr
 
 ---------------------------------------------------------------------------
@@ -59,40 +57,15 @@ Using numpy or numarray:
 There are three nearly compatible implementations of numeric arrays for
 Python: the original one, Numerical Python (module name "Numeric"),
 a later rewrite called numarray, and an evolution of Numeric that integrates
-features from numarray, called numpy.
+features from numarray, called numpy. In the long run, NumPy will proabably
+replace both Numeric and numarray.
 
-Scientific Python was written for Numeric and still uses Numeric by
-default. However, it is possible to use numpy or numarray instead of Numeric
-for all array operations. To do this, use
-
-    python setup.py build --numpy
-    python setup.py install
-
-or
-
-    python setup.py build --numarray
-    python setup.py install
-
-for installation.
-
-Note that this is a new feature and not very well tested. Feedback is welcome.
-Note also that the modules
-
-  Scientific.Functions.Derivatives
-  Scientific.Functions.FirstDerivatives
-  Scientific.Functions.LeastSquares
-
-do not work correctly with numarray because they rely on a feature of
-Numeric/numpy that is missing in numarray. For the same reason, the modules
-
-  Scientific.Functions.Interpolation
-  Scientific.Physics.PhysicalQuantities
-
-can be used only partially with numarray, the application of mathematical
-functions to the defined objects does not work.
-
-In the long run, numpy is likely to replace both Numeric and numarray.
-At some point, ScientificPython will thus use numpy by default.
+Scientific Python was written for Numeric. A partial adaptation to
+NumPy and numarray is available in the development releases. While the
+numarray support will never be complete (numarray lacks some features
+that Scientific Python requires), NumPy will be fully supported in the
+future. However, the current NumPy integration is neither complete enough
+nor well enough tested to include it in the stable release series.
 
 ---------------------------------------------------------------------------
 
