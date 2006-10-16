@@ -5,7 +5,7 @@
 # are addition, subtraction, and multiplication/division by a scalar.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-13
+# last revision: 2006-10-16
 #
 
 """
@@ -58,6 +58,7 @@ class NumberDict(dict):
         for key in self.keys():
             new[key] = other*self[key]
         return new
+    __rmul__ = __mul__
 
     def __div__(self, other):
         new = NumberDict()
