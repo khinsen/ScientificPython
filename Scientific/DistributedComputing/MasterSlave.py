@@ -50,6 +50,7 @@ class MasterProcess(object):
         import time
         time.sleep(5)
         self.pyro_daemon.shutdown()
+        self.manager_thread.join()
 
     def mainloop(self):
         raise NotImplementedError
@@ -68,8 +69,6 @@ class SlaveProcess(object):
     def _mainloop(self):
         while not self.task_manager.allDone():
             task_id, tag, parameters = self.task_manager.getAnyTask()
-            if task_id is None:
-                continue
             method = getattr(self, "run_%s" % tag)
             result = method(*parameters)
             self.task_manager.storeResult(task_id, result)

@@ -26,44 +26,47 @@ class TaskList(object):
         self.tasks = []
         self.tasks_by_tag = {}
         self.tasks_by_id = {}
-        self.lock = threading.Lock()
+        self.task_available = threading.Condition()
 
     def __len__(self):
         return len(self.tasks)
 
     def addTask(self, task):
-        self.lock.acquire()
+        self.task_available.acquire()
         self.tasks.append(task)
         tasks = self.tasks_by_tag.setdefault(task.tag, [])
         tasks.append(task)
         self.tasks_by_id[task.id] = task
-        self.lock.release()
+        self.task_available.notify()
+        self.task_available.release()
 
     def firstTask(self):
-        self.lock.acquire()
-        task = None
-        if self.tasks:
-            task = self.tasks[0]
-            self._removeTask(task)
-        self.lock.release()
+        self.task_available.acquire()
+        while not self.tasks:
+            self.task_available.wait()
+        task = self.tasks[0]
+        self._removeTask(task)
+        self.task_available.release()
         return task
 
     def firstTaskWithTag(self, tag):
-        self.lock.acquire()
-        task = None
-        if self.tasks_by_tag.has_key(tag):
-            tasks = self.tasks_by_tag[tag]
-            if tasks:
-                task = tasks[0]
-                self._removeTask(task)
-        self.lock.release()
+        self.task_available.acquire()
+        while not self.tasks_by_tag.get(tag, None):
+            self.task_available.wait()
+        task = self.tasks_by_tag[tag][0]
+        self._removeTask(task)
+        self.task_available.release()
         return task
 
     def taskWithId(self, task_id):
-        self.lock.acquire()
-        task = self.tasks_by_id.get(task_id, None)
+        self.task_available.acquire()
+        while True:
+            task = self.tasks_by_id.get(task_id, None)
+            if task is not None:
+                break
+            self.task_available.wait()
         self._removeTask(task)
-        self.lock.release()
+        self.task_available.release()
         return task
 
     def _removeTask(self, task):
@@ -97,23 +100,17 @@ class TaskManager(Pyro.core.ObjBase):
 
     def getTaskWithTag(self, tag):
         task = self.waiting_tasks.firstTaskWithTag(tag)
-        if task is None:
-            return None, None
-        else:
-            self.running_tasks.addTask(task)
-            if debug:
-                print "Handing out task %s" % task.id
-            return task.id, task.parameters
+        self.running_tasks.addTask(task)
+        if debug:
+            print "Handing out task %s" % task.id
+        return task.id, task.parameters
 
     def getAnyTask(self):
         task = self.waiting_tasks.firstTask()
-        if task is None:
-            return None, None, None
-        else:
-            self.running_tasks.addTask(task)
-            if debug:
-                print "Handing out task %s" % task.id
-            return task.id, task.tag, task.parameters
+        self.running_tasks.addTask(task)
+        if debug:
+            print "Handing out task %s" % task.id
+        return task.id, task.tag, task.parameters
 
     def storeResult(self, task_id, result):
         if debug:
@@ -126,23 +123,17 @@ class TaskManager(Pyro.core.ObjBase):
 
     def getAnyResult(self):
         task = self.finished_tasks.firstTask()
-        if task is None:
-            return None, None, None
-        else:
-            result = self.results[task.id]
-            del self.results[task.id]
-            return task.id, task.tag, result
+        result = self.results[task.id]
+        del self.results[task.id]
+        return task.id, task.tag, result
 
     def getResultWithTag(self, tag):
         task = self.finished_tasks.firstTaskWithTag(tag)
-        if task is None:
-            return None, None
-        else:
-            result = self.results[task.id]
-            del self.results[task.id]
-            if debug:
-                print "Handed out result of %s" % task.id
-            return task.id, result
+        result = self.results[task.id]
+        del self.results[task.id]
+        if debug:
+            print "Handed out result of %s" % task.id
+        return task.id, result
 
     def signalTermination(self):
         if debug:
