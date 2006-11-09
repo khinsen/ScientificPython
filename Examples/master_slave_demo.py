@@ -7,11 +7,11 @@ class Master(MasterProcess):
     def __init__(self):
         MasterProcess.__init__(self, "test")
 
-    def mainloop(self):
+    def run(self):
         for i in range(5):
             task_id = self.requestTask("sqrt", float(i))
         for i in range(5):
-            task_id, result = self.retrieveResult("sqrt")
+            task_id, tag, result = self.retrieveResult("sqrt")
             print result
 
 class SquareRoot(SlaveProcess):
@@ -19,7 +19,7 @@ class SquareRoot(SlaveProcess):
     def __init__(self):
         SlaveProcess.__init__(self, "test")
 
-    def run_sqrt(self, x):
+    def do_sqrt(self, x):
         return (x, N.sqrt(x))
 
 
@@ -35,4 +35,4 @@ if master:
     process = Master()
 else:
     process = SquareRoot()
-process.run()
+process.start()
