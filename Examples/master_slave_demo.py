@@ -1,4 +1,5 @@
-from Scientific.DistributedComputing.MasterSlave import MasterProcess, SlaveProcess
+from Scientific.DistributedComputing.MasterSlave \
+     import MasterProcess, SlaveProcess, TaskRaisedException
 from Scientific import N
 import sys
 
@@ -6,10 +7,15 @@ class Master(MasterProcess):
 
     def run(self):
         for i in range(5):
-            task_id = self.requestTask("sqrt", float(i))
+            # For i==0 this raises an exception
+            task_id = self.requestTask("sqrt", float(i-1))
         for i in range(5):
-            task_id, tag, result = self.retrieveResult("sqrt")
-            print result
+            try:
+                task_id, tag, result = self.retrieveResult("sqrt")
+                print result
+            except TaskRaisedException, e:
+                print "Task %s raised %s" % (e.task_id, str(e.exception))
+                print e.traceback
 
 class SquareRoot(SlaveProcess):
     

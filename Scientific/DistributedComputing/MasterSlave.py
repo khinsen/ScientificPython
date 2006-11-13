@@ -7,19 +7,18 @@
 #
 
 # Ideas:
-# - Give each slave an id
-# - When a slave accepts a task, store its id
 # - Add a thread to slaves that makes them ping the manager regularly.
 # - When no ping arrives, the manager removes the slave and puts its
 #   tasks back on the waiting list.
 
 from Scientific.DistributedComputing.TaskManager import \
-                                     TaskManager, TaskManagerTermination
+                      TaskManager, TaskManagerTermination, TaskRaisedException
 import Pyro.core
 import Pyro.naming
 import Pyro.errors
 import threading
 import time
+import sys
 
 class MasterProcess(object):
     
@@ -27,6 +26,7 @@ class MasterProcess(object):
         self.label = label
         self.task_manager = TaskManager()
         self.process_id = self.task_manager.registerProcess()
+        Pyro.core.initServer(banner=False)
         self.pyro_ns = None
         if use_name_server:
             self.pyro_ns=Pyro.naming.NameServerLocator().getNS()
@@ -34,7 +34,6 @@ class MasterProcess(object):
         self.manager_thread.start()
 
     def taskManagerThread(self):
-        Pyro.core.initServer(banner=False)
         self.pyro_daemon=Pyro.core.Daemon()
         if self.pyro_ns is not None:
             self.pyro_daemon.useNameServer(self.pyro_ns)
@@ -51,6 +50,11 @@ class MasterProcess(object):
             self.pyro_daemon.requestLoop()
         finally:
             self.pyro_daemon.shutdown(True)
+        if self.pyro_ns is not None:
+            try:
+                self.pyro_ns.unregister(":TaskManager.%s" % self.label)
+            except Pyro.errors.NamingError:
+                pass
 
     def requestTask(self, tag, *parameters):
         self.task_manager.addTaskRequest(tag, parameters)
@@ -106,7 +110,11 @@ class SlaveProcess(object):
             try:
                 result = method(*parameters)
             except Exception, e:
-                self.task_manager.storeException(task_id, e)
+                import traceback, StringIO
+                tb_text = StringIO.StringIO()
+                traceback.print_exc(None, tb_text)
+                tb_text = tb_text.getvalue()
+                self.task_manager.storeException(task_id, e, tb_text)
             else:
                 self.task_manager.storeResult(task_id, result)
         self.task_manager.unregisterProcess(self.process_id)

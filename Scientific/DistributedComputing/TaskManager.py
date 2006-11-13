@@ -2,7 +2,7 @@
 # Task manager for distributed computing based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-9
+# last revision: 2006-11-13
 #
 
 import Pyro.core
@@ -13,6 +13,14 @@ debug = False
 
 class TaskManagerTermination(Exception):
     pass
+
+class TaskRaisedException(Exception):
+    
+    def __init__(self, task_id, tag, exception, traceback):
+        self.task_id = task_id
+        self.tag = tag
+        self.exception = exception
+        self.traceback = traceback
 
 class Task(object):
     
@@ -125,6 +133,14 @@ class TaskManager(Pyro.core.ObjBase):
     def numberOfActiveProcesses(self):
         return len(self.active_processes)
 
+    def numberOfTasks(self):
+        self.lock.acquire()
+        nwaiting = len(self.waiting_tasks)
+        nrunning = len(self.running_tasks)
+        nfinished = len(self.finished_tasks)
+        self.lock.release()
+        return nwaiting, nrunning, nfinished
+
     def addTaskRequest(self, tag, parameters, process_id=None):
         self.lock.acquire()
         task_id = tag + '_' + str(self.id_counter)
@@ -164,16 +180,18 @@ class TaskManager(Pyro.core.ObjBase):
         self.lock.release()
         task = self.running_tasks.taskWithId(task_id)
         task.end_time = time.time()
+        task.completed = True
         self.finished_tasks.addTask(task)
 
-    def storeException(self, task_id, exception):
+    def storeException(self, task_id, exception, traceback):
         if debug:
             print "Task %s raised exception %s" % (task_id, exception)
         self.lock.acquire()
-        self.results[task_id] = exception
+        self.results[task_id] = (exception, traceback)
         self.lock.release()
         task = self.running_tasks.taskWithId(task_id)
         task.end_time = time.time()
+        task.completed = False
         self.finished_tasks.addTask(task)
 
     def returnTask(self, task_id):
@@ -188,7 +206,10 @@ class TaskManager(Pyro.core.ObjBase):
         task = self.finished_tasks.firstTask()
         result = self.results[task.id]
         del self.results[task.id]
-        return task.id, task.tag, result
+        if task.completed:
+            return task.id, task.tag, result
+        else:
+            raise TaskRaisedException(task.id, task.tag, result[0], result[1])
 
     def getResultWithTag(self, tag):
         task = self.finished_tasks.firstTaskWithTag(tag)
@@ -196,7 +217,10 @@ class TaskManager(Pyro.core.ObjBase):
         del self.results[task.id]
         if debug:
             print "Handed out result of %s" % task.id
-        return task.id, result
+        if task.completed:
+            return task.id, result
+        else:
+            raise TaskRaisedException(task.id, task.tag, result[0], result[1])
 
     def terminate(self):
         if debug:
