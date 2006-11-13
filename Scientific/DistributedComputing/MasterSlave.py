@@ -109,6 +109,10 @@ class SlaveProcess(object):
                 continue
             try:
                 result = method(*parameters)
+            except KeyboardInterrupt:
+                self.task_manager.returnTask(task_id)
+                self.task_manager.unregisterProcess(self.process_id)
+                raise
             except Exception, e:
                 import traceback, StringIO
                 tb_text = StringIO.StringIO()
