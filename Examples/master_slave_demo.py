@@ -3,9 +3,6 @@ from Scientific import N
 import sys
 
 class Master(MasterProcess):
-    
-    def __init__(self):
-        MasterProcess.__init__(self, "test")
 
     def run(self):
         for i in range(5):
@@ -16,9 +13,6 @@ class Master(MasterProcess):
 
 class SquareRoot(SlaveProcess):
     
-    def __init__(self):
-        SlaveProcess.__init__(self, "test")
-
     def do_sqrt(self, x):
         return (x, N.sqrt(x))
 
@@ -31,8 +25,18 @@ else:
     print "Argument must be 'master' or 'slave'"
     raise SystemExit
 
-if master:
-    process = Master()
-else:
-    process = SquareRoot()
+# By default, the Pyro name server is used. Don't forget to start it!
+if True:
+    if master:
+        process = Master("demo")
+    else:
+        process = SquareRoot("demo")
+
+# If you do not want to use the name server, the slaves must know
+# where the master runs:
+if False:
+    if master:
+        process = Master("demo", use_name_server=False)
+    else:
+        process = SquareRoot("demo", master_uri="PYROLOC://localhost:7766/")
 process.start()
