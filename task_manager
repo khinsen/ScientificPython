@@ -1,0 +1,49 @@
+#!python
+
+#
+# Send inquiries to an active task manager
+# (see Scientific.DistributedComputing)
+
+# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
+# last revision: 2006-11-14
+#
+
+from Scientific.DistributedComputing import TaskManager
+import Pyro.core
+import Pyro.errors
+import sys
+
+if len(sys.argv) < 2:
+    print "Usage: task_manager label [host]"
+    raise SystemExit
+label = sys.argv[1]
+
+host = None
+if len(sys.argv) == 3:
+    host = sys.argv[2]
+
+Pyro.core.initClient(banner=False)
+if host is None:
+    try:
+        task_manager = Pyro.core.getProxyForURI("PYRONAME://:TaskManager.%s" % label)
+    except Pyro.errors.NamingError:
+        print "No name server or no task manager with label %s" % label
+        raise SystemExit
+else:
+    try:
+        uri = "PYROLOC://%s/TaskManager.%s" % (host, label)
+        task_manager = Pyro.core.getProxyForURI(uri)
+    except Pyro.errors.URIError:
+        print "No host %s" % host
+        raise SystemExit
+    except Pyro.errors.ProtocolError:
+        print "No task manager with label %s" % label
+        raise SystemExit
+
+active_processes = task_manager.numberOfActiveProcesses()
+waiting, running, finished = task_manager.numberOfTasks()
+
+print "%d active processes" % active_processes
+print "%d waiting tasks" % waiting
+print "%d running tasks" % running
+print "%d results waiting to be retrieved" % finished

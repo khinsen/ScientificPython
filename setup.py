@@ -109,11 +109,10 @@ elif use_numarray:
 else:
     packages.append('Scientific.use_numeric')
 
+scripts = ['task_manager']
 if sys.version[:3] >= '2.1':
     packages.append('Scientific.BSP')
-    scripts = ['bsp_virtual']
-else:
-    scripts = []
+    scripts.append(='bsp_virtual')
 
 class modified_install_headers(install_headers):
 

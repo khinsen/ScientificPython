@@ -3,13 +3,8 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-13
+# last revision: 2006-11-14
 #
-
-# Ideas:
-# - Add a thread to slaves that makes them ping the manager regularly.
-# - When no ping arrives, the manager removes the slave and puts its
-#   tasks back on the waiting list.
 
 from Scientific.DistributedComputing.TaskManager import \
                       TaskManager, TaskManagerTermination, TaskRaisedException
@@ -18,6 +13,7 @@ import Pyro.naming
 import Pyro.errors
 import threading
 import time
+import copy
 import sys
 
 class MasterProcess(object):
@@ -85,21 +81,37 @@ class MasterProcess(object):
 
 class SlaveProcess(object):
 
-    def __init__(self, label, master_uri=None):
+    def __init__(self, label, master_host=None):
         Pyro.core.initClient(banner=False)
-        if master_uri is None:
+        if master_host is None:
             self.task_manager = \
                 Pyro.core.getProxyForURI("PYRONAME://:TaskManager.%s" % label)
         else:
             # URI defaults to "PYROLOC://localhost:7766/"
-            uri = master_uri + "TaskManager.%s" % label
+            uri = "PYROLOC://%s/TaskManager.%s" % (master_host, label)
             self.task_manager = Pyro.core.getProxyForURI(uri)
-        self.process_id = self.task_manager.registerProcess()
+        # Do a ping every minute - maybe this will become a parameter later on
+        self.watchdog_period = 60.
+        self.done = False
+
+    def watchdogThread(self):
+        task_manager = copy.copy(self.task_manager)
+        while True:
+            task_manager.ping(self.process_id)
+            if self.done:
+                break
+            time.sleep(self.watchdog_period)
 
     def start(self):
+        self.process_id = \
+            self.task_manager.registerProcess(self.watchdog_period)
+        self.background_thread = threading.Thread(target=self.watchdogThread)
+        self.background_thread.setDaemon(True)
+        self.background_thread.start()
         while True:
             try:
-                task_id, tag, parameters = self.task_manager.getAnyTask()
+                task_id, tag, parameters = \
+                       self.task_manager.getAnyTask(self.process_id)
             except TaskManagerTermination:
                 break
             try:
@@ -122,3 +134,4 @@ class SlaveProcess(object):
             else:
                 self.task_manager.storeResult(task_id, result)
         self.task_manager.unregisterProcess(self.process_id)
+        self.done = True

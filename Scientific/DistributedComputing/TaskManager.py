@@ -2,7 +2,7 @@
 # Task manager for distributed computing based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-13
+# last revision: 2006-11-14
 #
 
 import Pyro.core
@@ -34,7 +34,7 @@ class Task(object):
         self.start_time = None
         self.end_time = None
 
-class TaskList(object):
+class TaskQueue(object):
 
     def __init__(self):
         self.tasks = []
@@ -57,11 +57,14 @@ class TaskList(object):
             self.task_available.release()
             raise TaskManagerTermination()
 
-    def addTask(self, task):
+    def addTask(self, task, in_front=False):
         self.task_available.acquire()
         self.tasks.append(task)
         tasks = self.tasks_by_tag.setdefault(task.tag, [])
-        tasks.append(task)
+        if in_front:
+            tasks.insert(0, task)
+        else:
+            tasks.append(task)
         self.tasks_by_id[task.id] = task
         self.task_available.notifyAll()
         self.task_available.release()
@@ -109,26 +112,45 @@ class TaskManager(Pyro.core.ObjBase):
     def __init__(self):
         Pyro.core.ObjBase.__init__(self)
         self.id_counter = 0
-        self.waiting_tasks = TaskList()
-        self.running_tasks = TaskList()
-        self.finished_tasks = TaskList()
+        self.waiting_tasks = TaskQueue()
+        self.running_tasks = TaskQueue()
+        self.finished_tasks = TaskQueue()
         self.results = {}
         self.process_counter = 0
         self.active_processes = []
+        self.tasks_by_process = []
         self.lock = threading.Lock()
+        self.watchdog = None
 
-    def registerProcess(self):
+    def registerProcess(self, watchdog_period=None):
         self.lock.acquire()
         process_id = self.process_counter
         self.process_counter += 1
         self.active_processes.append(process_id)
+        self.tasks_by_process.append([])
         self.lock.release()
+        if watchdog_period is not None:
+            if self.watchdog is None:
+                self.watchdog = Watchdog(self)
+            self.watchdog.registerProcess(process_id, watchdog_period)
         return process_id
 
     def unregisterProcess(self, process_id):
+        if debug:
+            print "Unregistering process", process_id
         self.lock.acquire()
         self.active_processes.remove(process_id)
+        tasks = self.tasks_by_process[process_id]
+        self.tasks_by_process[process_id] = []
         self.lock.release()
+        for t in tasks:
+            self.returnTask(t.id)
+        if self.watchdog is not None:
+            self.watchdog.unregisterProcess(process_id)
+
+    def ping(self, process_id):
+        if self.watchdog is not None:
+            self.watchdog.ping(process_id)
 
     def numberOfActiveProcesses(self):
         return len(self.active_processes)
@@ -169,8 +191,13 @@ class TaskManager(Pyro.core.ObjBase):
         task.handling_processor = process_id
         task.start_time = time.time()
         self.running_tasks.addTask(task)
+        if process_id is not None:
+            self.lock.acquire()
+            self.tasks_by_process[process_id].append(task)
+            self.lock.release()
         if debug:
-            print "Handing out task %s to process %d" % (task.id, process_id)
+            print "Handing out task %s to process %s" \
+                  % (task.id, str(process_id))
 
     def storeResult(self, task_id, result):
         if debug:
@@ -182,6 +209,7 @@ class TaskManager(Pyro.core.ObjBase):
         task.end_time = time.time()
         task.completed = True
         self.finished_tasks.addTask(task)
+        self._removeTask(task)
 
     def storeException(self, task_id, exception, traceback):
         if debug:
@@ -193,15 +221,26 @@ class TaskManager(Pyro.core.ObjBase):
         task.end_time = time.time()
         task.completed = False
         self.finished_tasks.addTask(task)
+        self._removeTask(task)
 
     def returnTask(self, task_id):
         if debug:
             print "Task %s returned" % task_id
         task = self.running_tasks.taskWithId(task_id)
+        self._removeTask(task)
         task.start_time = None
         task.handling_processor = None
-        self.waiting_tasks.addTask(task)
+        self.waiting_tasks.addTask(task, in_front=True)
         
+    def _removeTask(self, task):
+        if task.handling_processor is not None:
+            self.lock.acquire()
+            try:
+                self.tasks_by_process[task.handling_processor].remove(task)
+            except ValueError:
+                pass
+            self.lock.release()
+
     def getAnyResult(self):
         task = self.finished_tasks.firstTask()
         result = self.results[task.id]
@@ -228,3 +267,65 @@ class TaskManager(Pyro.core.ObjBase):
         self.waiting_tasks.terminateWaitingThreads()
         self.running_tasks.terminateWaitingThreads()
         self.finished_tasks.terminateWaitingThreads()
+
+
+class Watchdog(object):
+
+    def __init__(self, task_manager):
+        self.task_manager = task_manager
+        self.ping_period = {}
+        self.last_ping = {}
+        self.done = False
+        self.lock = threading.Lock()
+        self.background_thread = threading.Thread(target = self.watchdogThread)
+        self.background_thread.setDaemon(True)
+        self.thread_started = False
+
+    def registerProcess(self, process_id, ping_period):
+        self.lock.acquire()
+        self.ping_period[process_id] = ping_period
+        self.last_ping[process_id] = time.time()
+        self.lock.release()
+        if not self.thread_started:
+            self.background_thread.start()
+            self.thread_started = True
+
+    def unregisterProcess(self, process_id):
+        self.lock.acquire()
+        try:
+            del self.ping_period[process_id]
+            del self.last_ping[process_id]
+        except KeyError:
+            # KeyError happens when processes without watchdog are unregistered
+            pass
+        self.lock.release()
+
+    def ping(self, process_id):
+        self.lock.acquire()
+        self.last_ping[process_id] = time.time()
+        self.lock.release()
+
+    def terminate(self, blocking=False):
+        self.done = True
+        if blocking:
+            self.background_thread.join()
+
+    def watchdogThread(self):
+        while True:
+            now = time.time()
+            dead_processes = []
+            min_delay = min(self.ping_period.values() + [60.])
+            self.lock.acquire()
+            for process_id in self.ping_period.keys():
+                delay = now-self.last_ping[process_id]
+                if delay > 2*self.ping_period[process_id]:
+                    dead_processes.append(process_id)
+            self.lock.release()
+            for process_id in dead_processes:
+                if debug:
+                    print "Process %d died" % process_id
+                self.task_manager.unregisterProcess(process_id)
+            if self.done:
+                break
+            time.sleep(min_delay)
+
