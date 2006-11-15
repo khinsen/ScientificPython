@@ -112,7 +112,7 @@ else:
 scripts = ['task_manager']
 if sys.version[:3] >= '2.1':
     packages.append('Scientific.BSP')
-    scripts.append(='bsp_virtual')
+    scripts.append('bsp_virtual')
 
 class modified_install_headers(install_headers):
 
