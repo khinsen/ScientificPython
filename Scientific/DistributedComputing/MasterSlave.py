@@ -42,6 +42,9 @@ The script "task_manager" prints statistics about a currently active task
 manager; it takes the label as an argument. It shows the number of currently
 active processes (master plus slaves), the number of waiting and running
 tasks, and the number of results waiting to be picked up.
+
+The script Examples/master_slave_demo.py illustrates the use of the
+master-slave setup.
 """
 
 from Scientific.DistributedComputing.TaskManager import \
@@ -147,7 +150,7 @@ class MasterProcess(object):
                  the task
         @rtype: C{tuple}
 
-        @raises L{TaskRaisedException}: if the slave method raised an exception
+        @raises TaskRaisedException: if the slave method raised an exception
         """
         try:
             if tag is None:
