@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2006-8-17
+ * last revision: 2006-11-20
  */
 
 #ifdef _WIN32
@@ -429,20 +429,20 @@ collect_attributes(int fileid, int varid, PyObject *attributes, int nattrs)
 {
   char name[MAX_NC_NAME];
   nc_type type;
-  int length;
+  size_t length;
 #if defined(NUMPY)
   intp lengthp;
+#else
+  int lengthp;
 #endif
   int py_type;
   int i;
   for (i = 0; i < nattrs; i++) {
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ncattname(fileid, varid, i, name);
-    ncattinq(fileid, varid, name, &type, &length);
-#if defined(NUMPY)
+    nc_inq_attname(fileid, varid, i, name);
+    nc_inq_att(fileid, varid, name, &type, &length);
     lengthp = length;
-#endif
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
     py_type = data_types[type];
@@ -450,9 +450,10 @@ collect_attributes(int fileid, int varid, PyObject *attributes, int nattrs)
       char *s = (char *)malloc((length+1)*sizeof(char));
       if (s != NULL) {
 	PyObject *string;
+	*s = '\0';
 	Py_BEGIN_ALLOW_THREADS;
 	acquire_netCDF_lock();
-	ncattget(fileid, varid, name, s);
+	nc_get_att_text(fileid, varid, name, s);
 	release_netCDF_lock();
 	Py_END_ALLOW_THREADS;
 	s[length] = '\0';
@@ -468,12 +469,12 @@ collect_attributes(int fileid, int varid, PyObject *attributes, int nattrs)
 #if defined(NUMPY)
       PyObject *array = PyArray_SimpleNew(1, &lengthp, py_type);
 #else
-      PyObject *array = PyArray_FromDims(1, &length, py_type);
+      PyObject *array = PyArray_FromDims(1, &lengthp, py_type);
 #endif
       if (array != NULL) {
 	Py_BEGIN_ALLOW_THREADS;
 	acquire_netCDF_lock();
-	ncattget(fileid, varid, name, ((PyArrayObject *)array)->data);
+	nc_get_att_text(fileid, varid, name, ((PyArrayObject *)array)->data);
 	release_netCDF_lock();
 	Py_END_ALLOW_THREADS;
 	array = PyArray_Return((PyArrayObject *)array);
@@ -734,17 +735,17 @@ netcdf_file_init(PyNetCDFFileObject *self)
   self->attributes = PyDict_New();
   Py_BEGIN_ALLOW_THREADS;
   acquire_netCDF_lock();
-  ncinquire(self->id, &ndims, &nvars, &ngattrs, &recdim);
+  nc_inq(self->id, &ndims, &nvars, &ngattrs, &recdim);
   release_netCDF_lock();
   Py_END_ALLOW_THREADS;
   self->recdim = recdim;
   for (i = 0; i < ndims; i++) {
     char name[MAX_NC_NAME];
-    long size;
+    unsigned long size;
     PyObject *size_ob;
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ncdiminq(self->id, i, name, &size);
+    nc_inq_dim(self->id, i, name, &size);
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
     if (i == recdim)
@@ -763,7 +764,10 @@ netcdf_file_init(PyNetCDFFileObject *self)
     PyNetCDFVariableObject *variable;
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ncvarinq(self->id, i, name, &datatype, &ndimensions, NULL, &nattrs);
+    nc_inq_varname(self->id, i, name);
+    nc_inq_vartype(self->id, i, &datatype);
+    nc_inq_varndims(self->id, i, &ndimensions);
+    nc_inq_varnatts(self->id, i, &nattrs);
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
     if (ndimensions > 0) {
@@ -774,7 +778,7 @@ netcdf_file_init(PyNetCDFFileObject *self)
       }
       Py_BEGIN_ALLOW_THREADS;
       acquire_netCDF_lock();
-      ncvarinq(self->id, i, NULL, NULL, NULL, dimids, NULL);
+      nc_inq_vardimid(self->id, i, dimids);
       release_netCDF_lock();
       Py_END_ALLOW_THREADS;
     }
@@ -799,7 +803,7 @@ static int
 PyNetCDFFile_CreateDimension(PyNetCDFFileObject *file, char *name, long size)
 {
   PyObject *size_ob;
-  int id;
+  int id, ret;
   if (check_if_open(file, 1)) {
     if (size == 0 && file->recdim != -1) {
       PyErr_SetString(PyExc_IOError,
@@ -809,11 +813,11 @@ PyNetCDFFile_CreateDimension(PyNetCDFFileObject *file, char *name, long size)
     define_mode(file, 1);
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    id = ncdimdef(file->id, name, (size == 0) ? NC_UNLIMITED : size);
+    ret = nc_def_dim(file->id, name, (size == 0) ? NC_UNLIMITED : size, &id);
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
-    if (id == -1) {
-      netcdf_seterror();
+    if (ret != NC_NOERR) {
+      netcdf_signalerror(ret);
       return -1;
     }
     else {
@@ -880,10 +884,11 @@ PyNetCDFFile_CreateVariable(PyNetCDFFileObject *file, char *name, int typecode,
       Py_BEGIN_ALLOW_THREADS;
       acquire_netCDF_lock();
       dimids[i] = ncdimid(file->id, dimension_names[i]);
+      ret = nc_inq_dimid(file->id, dimension_names[i], dimids+i);
       release_netCDF_lock();
       Py_END_ALLOW_THREADS;
-      if (dimids[i] == -1) {
-	netcdf_seterror();
+      if (ret != NC_NOERR) {
+	netcdf_signalerror(ret);
 	free(dimids);
 	return NULL;
       }
@@ -983,7 +988,7 @@ PyNetCDFFile_Sync(PyNetCDFFileObject *file)
     define_mode(file, 0);
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ret = ncsync(file->id);
+    ret = nc_sync(file->id);
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
     if (ret == -1) {
@@ -1280,7 +1285,7 @@ netcdf_variable_new(PyNetCDFFileObject *file, char *name, int id, int type,
     self->unlimited = 0;
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ncinquire(file->id, NULL, NULL, NULL, &recdim);
+    nc_inq_unlimdim(file->id, &recdim);
     self->dimensions = (size_t *)malloc(ndims*sizeof(size_t));
     if (self->dimensions != NULL) {
       for (i = 0; i < ndims; i++)
@@ -1408,7 +1413,7 @@ PyNetCDFVariable_GetAttribute(PyNetCDFVariableObject *self, char *name)
       for (i = 0; i < self->nd; i++) {
 	Py_BEGIN_ALLOW_THREADS;
 	acquire_netCDF_lock();
-	ncdiminq(self->file->id, self->dimids[i], name, NULL);
+	nc_inq_dimname(self->file->id, self->dimids[i], name);
 	release_netCDF_lock();
 	Py_END_ALLOW_THREADS;
 	PyTuple_SetItem(tuple, (Py_ssize_t)i, PyString_FromString(name));
