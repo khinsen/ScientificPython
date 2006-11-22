@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2006-11-20
+ * last revision: 2006-11-22
  */
 
 #ifdef _WIN32
@@ -44,6 +44,12 @@ PyThread_type_lock netCDF_lock;
 #define acquire_netCDF_lock() {}
 #define release_netCDF_lock() {}
 
+#endif
+
+/* Typedef for Numeric/NumPy compatibility */
+
+#if !defined(NUMPY)
+typedef int npy_intp;
 #endif
 
 /* Set error string */
@@ -175,7 +181,11 @@ netcdf_signalerror(int code)
  */
 
 int data_types[] = {-1,  /* not used */
+#if defined(NUMPY)
+		    PyArray_BYTE,  /* signed 8-bit int */
+#else
 		    PyArray_SBYTE,  /* signed 8-bit int */
+#endif
 		    PyArray_CHAR,   /* 8-bit character */
 		    PyArray_SHORT,  /* 16-bit signed int */
 		    PyArray_INT,    /* 32-bit signed int */
@@ -308,22 +318,39 @@ typecode(int type)
 {
   char t;
   switch(type) {
+
+#if defined(NUMPY)
+
+  case PyArray_STRING:
+  case PyArray_CHAR:
+    t = PyArray_CHARLTR;
+    break;
+  case PyArray_BYTE:
+    t = PyArray_BYTELTR;
+    break;
+  case PyArray_SHORT:
+    t = PyArray_SHORTLTR;
+    break;
+  case PyArray_INT:
+    t = PyArray_INTLTR;
+    break;
+  case PyArray_LONG:
+    t = PyArray_LONGLTR;
+    break;
+  case PyArray_FLOAT:
+    t = PyArray_FLOATLTR;
+    break;
+  case PyArray_DOUBLE:
+    t = PyArray_DOUBLELTR;
+    break;
+
+#else
+
 #if ((PyArray_CHAR != PyArray_SBYTE) && (PyArray_CHAR != PyArray_UBYTE))
   case PyArray_CHAR:
     t = 'c';
     break;
 #endif
-#if defined(NUMPY)
-  case PyArray_UBYTE:
-    t = 'B';
-    break;
-  case PyArray_SBYTE:
-    t = 'b';
-    break;
-  case PyArray_SHORT:
-    t = 'h';
-    break;
-#else
   case PyArray_UBYTE:
     t = 'b';
     break;
@@ -333,7 +360,6 @@ typecode(int type)
   case PyArray_SHORT:
     t = 's';
     break;
-#endif
   case PyArray_LONG:
     t = 'l';
     break;
@@ -346,7 +372,11 @@ typecode(int type)
   case PyArray_DOUBLE:
     t = 'd';
     break;
-  default: t = ' ';
+
+#endif
+
+  default:
+    t = ' ';
   }
   return t;
 }
@@ -357,13 +387,16 @@ netcdf_type_from_code(char code)
   int type;
   switch(code) {
   case 'c':
+  case 'S':
     type = NC_CHAR;
     break;
   case 'b':
+  case 'B':
   case '1':
     type = NC_BYTE;
     break;
   case 's':
+  case 'h':
     type = NC_SHORT;
     break;
   case 'i':
@@ -388,11 +421,12 @@ netcdf_type_from_type(char array_type)
   int type;
   switch(array_type) {
 #if !defined(NUMARRAY)
-#if !defined(NUMPY)
   case PyArray_CHAR:
+#if defined(NUMPY)
+  case PyArray_STRING:
+#endif
     type = NC_CHAR;
     break;
-#endif
 #endif
   case PyArray_UBYTE:
 #if defined(NUMPY)
@@ -430,11 +464,7 @@ collect_attributes(int fileid, int varid, PyObject *attributes, int nattrs)
   char name[MAX_NC_NAME];
   nc_type type;
   size_t length;
-#if defined(NUMPY)
-  intp lengthp;
-#else
-  int lengthp;
-#endif
+  npy_intp lengthp;
   int py_type;
   int i;
   for (i = 0; i < nattrs; i++) {
@@ -1501,11 +1531,7 @@ static PyArrayObject *
 PyNetCDFVariable_ReadAsArray(PyNetCDFVariableObject *self,
 			     PyNetCDFIndex *indices)
 {
-#if defined(NUMPY)
-  intp *dims;
-#else
-  int *dims;
-#endif
+  npy_intp *dims;
   PyArrayObject *array;
   int i, d;
   int nitems;
@@ -1520,11 +1546,7 @@ PyNetCDFVariable_ReadAsArray(PyNetCDFVariableObject *self,
   if (self->nd == 0)
     dims = NULL;
   else {
-#if defined(NUMPY)
-    dims = (intp *)malloc(self->nd*sizeof(intp));
-#else
-    dims = (int *)malloc(self->nd*sizeof(int));
-#endif
+    dims = (npy_intp *)malloc(self->nd*sizeof(npy_intp));
     if (dims == NULL) {
       free(indices);
       return (PyArrayObject *)PyErr_NoMemory();

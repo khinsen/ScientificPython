@@ -10,6 +10,15 @@ except ImportError:
 
 if not done:
     try:
+        from Scientific import use_numpy
+        from numpy.oldnumeric.linear_algebra import *
+        del use_numpy
+        done = True
+    except ImportError:
+        pass
+
+if not done:
+    try:
         from Scientific import use_numarray
         from numarray.linear_algebra import *
         del use_numarray

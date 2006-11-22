@@ -14,7 +14,7 @@ except ImportError:
 if not done:
     try:
         from Scientific import use_numpy
-        from numpy import *
+        from numpy.oldnumeric import *
         del use_numpy
         done = True
         def int_sum(a, axis=0):
