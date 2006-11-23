@@ -2,7 +2,7 @@
 # Tests for Scientific.Geometry.Vector
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-9-8
+# last revision: 2006-11-23
 #
 
 import unittest
@@ -71,7 +71,7 @@ class VectorTest(unittest.TestCase):
         for i in range(3):
             for j in range(3):
                 self.assertEqual(dp[i, j], v1[i]*v2[j])
-        self.assertEqual(v1.asTensor().array, v1.array)
+        self.assertTrue(N.logical_and.reduce(v1.asTensor().array == v1.array))
         # Check isVector
         self.assertTrue(isVector(v1))
         self.assertTrue(isVector(v2))
