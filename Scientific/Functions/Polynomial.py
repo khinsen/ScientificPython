@@ -1,7 +1,7 @@
 # This module defines a multivariate polynomial class
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2006-11-23
 #
 
 """
@@ -157,7 +157,7 @@ class Polynomial:
         if n > 1:
             a[1:, :-1] = Numeric.identity(n-1)
         a[:, -1] = -self.coeff[:-1]/self.coeff[-1]
-        from LinearAlgebra import eigenvalues
+        from Scientific.LA import eigenvalues
         return eigenvalues(a)
 
 # Polynomial fit constructor for use in module Interpolation

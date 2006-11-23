@@ -2,7 +2,7 @@
 # least squares fits.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2006-11-23
 #
 
 """
@@ -10,7 +10,7 @@ Non-linear least squares fitting
 
 Usage example::
 
-    from Numeric import exp
+    from Scientific.N import exp
 
     def f(param, t):
         return param[0]*exp(-param[1]/t)

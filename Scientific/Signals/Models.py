@@ -1,7 +1,7 @@
 # Autoregressive Model for stochastic processes
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2006-11-23
 #
 
 """
@@ -100,7 +100,7 @@ class AutoRegressiveModel:
         @rtype: C{Numeric.array} of C{complex}
         """
         if self._poles is None:
-            from LinearAlgebra import eigenvalues
+            from Scientific.LA import eigenvalues
             n = len(self.coeff)
             if n == 1:
                 self._poles = self.coeff

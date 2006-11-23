@@ -3,7 +3,7 @@
 # of rotations in 3d space.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-28
+# last revision: 2006-11-23
 #
 
 """
@@ -99,8 +99,8 @@ class Quaternion:
         @returns: the inverse
         @rtype: L{Quaternion}
         """
-        import LinearAlgebra
-        inverse = LinearAlgebra.inverse(self.asMatrix())
+        import Scientific.LA
+        inverse = Scientific.LA.inverse(self.asMatrix())
         return Quaternion(inverse[:, 0])
 
     def asMatrix(self):

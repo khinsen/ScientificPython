@@ -3,7 +3,7 @@
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 #        and Jakob Schiotz <schiotz@fysik.dtu.dk>
-# last revision: 2006-6-23
+# last revision: 2006-11-23
 #
 
 """
@@ -403,7 +403,7 @@ else:
         del _registerErrorObject
     except ImportError:
 
-        import Numeric
+        import Scientific.N as Numeric
 
         _C_API = None
 
@@ -420,7 +420,7 @@ else:
             def send(self, data, destination, tag):
                 if destination != 0:
                     raise MPIError("invalid MPI destination")
-                self.messages.append((tag, Numeric.array(data, copy=1).flat))
+                self.messages.append((tag, Numeric.array(data, copy=1).ravel()))
 
             def nonblockingSend(self, data, destination, tag):
                 self.send(data, destination, tag)

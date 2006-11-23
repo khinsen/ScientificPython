@@ -3,7 +3,7 @@
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
-# last revision: 2006-6-12
+# last revision: 2006-11-23
 # 
 
 """
@@ -377,11 +377,11 @@ class RotationTranslation(Transformation):
         return Rotation(self.tensor.transpose())*Translation(-self.vector)
 
 #    def screwMotion1(self):
-#        import LinearAlgebra
+#        import Scientific.LA
 #        axis, angle = self.rotation().axisAndAngle()
 #        d = self.vector*axis
 #        x = d*axis-self.vector
-#        r0 = Numeric.dot(LinearAlgebra.generalized_inverse(
+#        r0 = Numeric.dot(Scientific.LA.generalized_inverse(
 #                            self.tensor.array-Numeric.identity(3)), x.array)
 #        return Geometry.Vector(r0), axis, angle, d
 

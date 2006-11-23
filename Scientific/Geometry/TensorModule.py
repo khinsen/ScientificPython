@@ -2,7 +2,7 @@
 # operations on them. The elements are stored in an array.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-28
+# last revision: 2006-11-23
 #
 
 from Scientific import N; Numeric = N
@@ -191,7 +191,7 @@ class Tensor:
         @raises ValueError: if rank !=2 
         """
         if self.rank == 2:
-            from LinearAlgebra import eigenvalues
+            from Scientific.LA import eigenvalues
             return eigenvalues(self.array)
         else:
             raise ValueError('Undefined operation')
@@ -204,7 +204,7 @@ class Tensor:
         @raises ValueError: if rank !=2 
         """
         if self.rank == 2:
-            from LinearAlgebra import eigenvectors
+            from Scientific.LA import eigenvectors
             ev, vectors = eigenvectors(self.array)
             return ev, Tensor(vectors)
         else:
@@ -217,7 +217,7 @@ class Tensor:
         @raises ValueError: if rank !=2 
         """
         if self.rank == 2:
-            from LinearAlgebra import inverse
+            from Scientific.LA import inverse
             return Tensor(inverse(self.array))
         else:
             raise ValueError('Undefined operation')

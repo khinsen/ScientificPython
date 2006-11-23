@@ -1,9 +1,14 @@
 # Interface to Mathematica for plotting
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2005-9-5
+# last revision: 2006-11-23
+#
+# Note: I haven't bee using this for ages. Perhaps it doesn't work with
+# current Mathematica versions any more.
+#
 
-import Numeric, os, string, tempfile
+import Scientific.N as Numeric
+import os, string, tempfile
 
 # Class representing a Mathematica process
 
@@ -191,7 +196,7 @@ def multiplePlots(data, **options):
     
 if __name__ == '__main__':
 
-    from Numeric import arange, sin, NewAxis
+    from Scientific.N import arange, sin, NewAxis
 
 #    data1 = [4,6,5,3]
 #    data2 = [4,6,5,3]

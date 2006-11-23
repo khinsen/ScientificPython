@@ -4,7 +4,7 @@
 # last revision: 14 Nov 98
 #
 # Cosmetic changes by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-21
+# last revision: 2006-11-23
 #
 
 """
@@ -18,7 +18,7 @@ def trapezoid(function, interval, numtraps):
     Example::
 
       >>>from Scientific.Functions.Romberg import trapezoid
-      >>>from Numeric import pi, tan
+      >>>from Scientific.N import pi, tan
       >>>trapezoid(tan, (0.0, pi/3.0), 100)
 
       yields 0.69317459482518262
@@ -77,7 +77,7 @@ def romberg(function, interval, accuracy=1.0E-7):
     Example::
 
       >>>from Scientific.Functions.Romberg import romberg
-      >>>from Numeric import pi, tan
+      >>>from Scientific.N import pi, tan
       >>>romberg(tan, (0.0, pi/3.0))
 
       yields '0.693147180562'
