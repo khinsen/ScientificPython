@@ -1,7 +1,7 @@
 # High-level parallelization classes
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-28
+# last revision: 2006-11-24
 #
 
 import RemoteObjects
@@ -67,11 +67,14 @@ if world is not None:
         requests = []
         if type(obj) is N.arraytype:
             send_data = obj
-            tag = _type_tags.get(send_data.typecode(), 2)
+            try:
+                type_code = send_data.typecode() # Numeric, numarray
+            except AttributeError:
+                type_code = send_data.dtype.char # NumPy
+            tag = _type_tags.get(type_code, 2)
             if _debug_flag:
                 print world.rank, "sending array (type %s, shape %s) to %s" \
-                      % (send_data.typecode(), str(obj.shape), \
-                         str(destinations))
+                      % (type_code, str(obj.shape), str(destinations))
                 sys.stdout.flush()
             if tag == 2:
                 send_data = cPickle.dumps(send_data, 1)

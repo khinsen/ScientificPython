@@ -1,7 +1,7 @@
 # Autoregressive Model for stochastic processes
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-23
+# last revision: 2006-11-24
 #
 
 """
@@ -105,7 +105,7 @@ class AutoRegressiveModel:
             if n == 1:
                 self._poles = self.coeff
             else:
-                a = N.zeros((n, n), self.coeff.typecode())
+                a = N.zeros_st((n, n), self.coeff)
                 a[1:, :-1] = N.identity(n-1)
                 a[:, -1] = self.coeff
                 self._poles = eigenvalues(a)

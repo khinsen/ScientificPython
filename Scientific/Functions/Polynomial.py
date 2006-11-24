@@ -1,7 +1,7 @@
 # This module defines a multivariate polynomial class
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-23
+# last revision: 2006-11-24
 #
 
 """
@@ -69,11 +69,11 @@ class Polynomial:
         shape[:self.dim] = self.coeff.shape
         shape[:other.dim] = Numeric.maximum(shape[:other.dim],
                                             other.coeff.shape)
-        coeff1 = Numeric.zeros(shape, self.coeff.typecode())
+        coeff1 = Numeric.zeros_st(shape, self.coeff)
         index = tuple(map(lambda d: slice(0, d), self.coeff.shape) + \
                       (dim-self.dim)*[0])
         coeff1[index] = self.coeff
-        coeff2 = Numeric.zeros(shape, other.coeff.typecode())
+        coeff2 = Numeric.zeros_st(shape, other.coeff)
         index = tuple(map(lambda d: slice(0, d), other.coeff.shape) + \
                       (dim-other.dim)*[0])
         coeff2[index] = other.coeff
@@ -153,7 +153,7 @@ class Polynomial:
         n = len(self.coeff)-1
         if n == 0:
             return Numeric.array([])
-        a = Numeric.zeros((n, n), self.coeff.typecode())
+        a = Numeric.zeros_st((n, n), self.coeff)
         if n > 1:
             a[1:, :-1] = Numeric.identity(n-1)
         a[:, -1] = -self.coeff[:-1]/self.coeff[-1]

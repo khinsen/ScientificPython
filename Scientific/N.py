@@ -7,6 +7,8 @@ try:
     done = True
     def int_sum(a, axis=0):
         return add.reduce(a, axis)
+    def zeros_st(shape, other):
+        return zeros(shape, other.typecode())
 
 except ImportError:
     pass
@@ -19,6 +21,8 @@ if not done:
         done = True
         def int_sum(a, axis=0):
             return add.reduce(a, axis)
+        def zeros_st(shape, other):
+            return zeros(shape, dtype=other.dtype)
 
     except ImportError:
         pass
@@ -31,6 +35,8 @@ if not done:
         done = True
         def int_sum(a, axis=0):
             return add.reduce(a, axis, type=Int)
+        def zeros_st(shape, other):
+            return zeros(shape, other.typecode())
 
     except ImportError:
         pass
