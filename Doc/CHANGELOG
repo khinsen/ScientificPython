@@ -1,3 +1,15 @@
+2.7 --> 2.7.1
+-------------
+
+Improvements:
+
+- NumPy compatibility. Scientific_netcdf was revised by hand.
+  The Python code was run through numpy.oldnumeric.alter_code1 to
+  identify the critical sections, which were then all handled in
+  some way. It is possible that there are still incompatibilities
+  of the kind that numpy.oldnumeric.alter_code1 cannot detect
+
+
 2.5.12hg --> 2.7
 ----------------
 
