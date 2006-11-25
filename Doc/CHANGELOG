@@ -1,3 +1,11 @@
+2.7.1 --> 2.7.2
+---------------
+
+Bug fixes:
+
+- Scientific_netcdf would not compile with NumPy under Python 2.4
+  because NumPy also defined Py_ssize_t.
+
 2.7 --> 2.7.1
 -------------
 
