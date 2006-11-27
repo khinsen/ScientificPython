@@ -9,6 +9,7 @@ try:
         return add.reduce(a, axis)
     def zeros_st(shape, other):
         return zeros(shape, other.typecode())
+    package = "Numeric"
 
 except ImportError:
     pass
@@ -23,6 +24,7 @@ if not done:
             return add.reduce(a, axis)
         def zeros_st(shape, other):
             return zeros(shape, dtype=other.dtype)
+        package = "NumPy"
 
     except ImportError:
         pass
@@ -37,6 +39,7 @@ if not done:
             return add.reduce(a, axis, type=Int)
         def zeros_st(shape, other):
             return zeros(shape, other.typecode())
+        package = "Numarray"
 
     except ImportError:
         pass
