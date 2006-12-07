@@ -1,3 +1,10 @@
+2.7.2 --> 2.7.3hg
+-----------------
+
+Improvements:
+
+- Added multi-module setup for master-slave computations.
+
 2.7.1 --> 2.7.2
 ---------------
 

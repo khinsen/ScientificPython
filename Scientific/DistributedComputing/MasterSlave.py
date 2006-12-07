@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-15
+# last revision: 2006-12-7
 #
 
 """
@@ -44,7 +44,11 @@ active processes (master plus slaves), the number of waiting and running
 tasks, and the number of results waiting to be picked up.
 
 The script Examples/master_slave_demo.py illustrates the use of the
-master-slave setup.
+master-slave setup in a simple script. Both master and slave processes
+are defined in the same script. The scripts Examples/master.py and
+Examples/slave.py show a master-slave setup using two distinct scripts.
+This is more flexible because task requests and result retrievals
+can be made from anywhere in the master code.
 """
 
 from Scientific.DistributedComputing.TaskManager import \
@@ -168,11 +172,14 @@ class MasterProcess(object):
         try:
             self.run()
         finally:
-            self.task_manager.terminate()
-            while self.task_manager.numberOfActiveProcesses() > 1:
-                time.sleep(0.1)
-            self.pyro_daemon.shutdown()
-            self.manager_thread.join()
+            self.shutdown()
+
+    def shutdown(self):
+        self.task_manager.terminate()
+        while self.task_manager.numberOfActiveProcesses() > 1:
+            time.sleep(0.1)
+        self.pyro_daemon.shutdown()
+        self.manager_thread.join()
 
     def run(self):
         """
@@ -231,10 +238,12 @@ class SlaveProcess(object):
                 break
             time.sleep(self.watchdog_period)
 
-    def start(self):
+    def start(self, namespace=None):
         """
         Starts the slave process.
         """
+        if namespace is None:
+            namespace = self
         self.process_id = \
             self.task_manager.registerProcess(self.watchdog_period)
         self.background_thread = threading.Thread(target=self.watchdogThread)
@@ -247,7 +256,7 @@ class SlaveProcess(object):
             except TaskManagerTermination:
                 break
             try:
-                method = getattr(self, "do_%s" % tag)
+                method = getattr(namespace, "do_%s" % tag)
             except AttributeError:
                 self.task_manager.returnTask(task_id)
                 continue
@@ -267,3 +276,47 @@ class SlaveProcess(object):
                 self.task_manager.storeResult(task_id, result)
         self.task_manager.unregisterProcess(self.process_id)
         self.done = True
+
+
+def initializeMasterProcess(label, use_name_server=True):
+    """
+    Initializes a master process.
+
+    @param label: the label that identifies the task manager
+    @type label: C{str}
+
+    @param use_name_server: If C{True} (default), the task manager is
+                            registered with the Pyro name server. If
+                            C{False}, the name server is not used and
+                            slave processes need to know the host
+                            on which the master process is running.
+    @type use_name_server: C{bool}
+
+    @returns: a process object on which the methods requestTask()
+              and retrieveResult() can be called.
+    @rtype: L{MasterProcess}
+    """
+    import atexit
+    process = MasterProcess(label, use_name_server)
+    atexit.register(process.shutdown)
+    return process
+
+def startSlaveProcess(label, master_host=None):
+    """
+    Starts a slave process. Must be called at the end of a script
+    that defines or imports all task handlers.
+
+    @param label: the label that identifies the task manager
+    @type label: C{str}
+
+    @param master_host: If C{None} (default), the task manager of the
+                        master process is located using the Pyro name
+                        server. If no name server is used, this parameter
+                        must be the hostname of the machine on which the
+                        master process runs, plus the port number if it
+                        is different from the default (7766).
+    @type master_host: C{str} or C{NoneType}
+    """
+    import sys
+    process = SlaveProcess(label, master_host=None)
+    process.start(sys.modules['__main__'])

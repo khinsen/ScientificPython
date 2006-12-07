@@ -15,6 +15,10 @@
 # See the Pyro manual for other setups, e.g. running slaves on remote
 # machines connected to the Internet.
 #
+# Also see master.py and slave.py to see how master and slave process can
+# be defined by separate programs. This is more convenient for multi-module
+# programs.
+#
 
 from Scientific.DistributedComputing.MasterSlave \
      import MasterProcess, SlaveProcess, TaskRaisedException
@@ -62,5 +66,5 @@ if False:
     if master:
         process = Master("demo", use_name_server=False)
     else:
-        process = SquareRoot("demo", master_uri="PYROLOC://localhost:7766/")
+        process = SquareRoot("demo", master_host="localhost")
 process.start()
