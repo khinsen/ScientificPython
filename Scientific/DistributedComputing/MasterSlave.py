@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-12-7
+# last revision: 2006-12-12
 #
 
 """
@@ -103,21 +103,18 @@ class MasterProcess(object):
         if self.pyro_ns is not None:
             self.pyro_daemon.useNameServer(self.pyro_ns)
             try:
-                self.pyro_ns.createGroup(":TaskManager")
+                self.pyro_ns.createGroup("TaskManager")
             except Pyro.errors.NamingError:
                 pass
-            uri = self.pyro_daemon.connect(self.task_manager,
-                                           ":TaskManager.%s" % self.label)
-        else:
-            uri = self.pyro_daemon.connect(self.task_manager,
-                                           "TaskManager.%s" % self.label)
+        uri = self.pyro_daemon.connect(self.task_manager,
+                                       "TaskManager.%s" % self.label)
         try:
             self.pyro_daemon.requestLoop()
         finally:
             self.pyro_daemon.shutdown(True)
         if self.pyro_ns is not None:
             try:
-                self.pyro_ns.unregister(":TaskManager.%s" % self.label)
+                self.pyro_ns.unregister("TaskManager.%s" % self.label)
             except Pyro.errors.NamingError:
                 pass
 
@@ -217,7 +214,7 @@ class SlaveProcess(object):
         Pyro.core.initClient(banner=False)
         if master_host is None:
             self.task_manager = \
-                Pyro.core.getProxyForURI("PYRONAME://:TaskManager.%s" % label)
+                Pyro.core.getProxyForURI("PYRONAME://TaskManager.%s" % label)
         else:
             # URI defaults to "PYROLOC://localhost:7766/"
             uri = "PYROLOC://%s/TaskManager.%s" % (master_host, label)
