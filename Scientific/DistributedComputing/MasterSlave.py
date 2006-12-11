@@ -86,7 +86,8 @@ class MasterProcess(object):
         """
         self.label = label
         self.task_manager = TaskManager()
-        self.process_id = self.task_manager.registerProcess()
+        self.process_id = \
+            self.task_manager.registerProcess(info = getMachineInfo())
         Pyro.core.initServer(banner=False)
         self.pyro_ns = None
         if use_name_server:
@@ -242,7 +243,8 @@ class SlaveProcess(object):
         if namespace is None:
             namespace = self
         self.process_id = \
-            self.task_manager.registerProcess(self.watchdog_period)
+            self.task_manager.registerProcess(self.watchdog_period,
+                                              info = getMachineInfo())
         self.background_thread = threading.Thread(target=self.watchdogThread)
         self.background_thread.setDaemon(True)
         self.background_thread.start()
@@ -274,7 +276,14 @@ class SlaveProcess(object):
         self.task_manager.unregisterProcess(self.process_id)
         self.done = True
 
+def getMachineInfo():
+    import os
+    sysname, nodename, release, version, machine = os.uname()
+    return "%s (%s)" % (nodename, machine)
 
+#
+# Alternate interface for multi-module programs
+#
 def initializeMasterProcess(label, use_name_server=True):
     """
     Initializes a master process.

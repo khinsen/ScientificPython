@@ -2,7 +2,7 @@
 # Task manager for distributed computing based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-15
+# last revision: 2006-12-12
 #
 
 import Pyro.core
@@ -185,6 +185,18 @@ class TaskQueue(object):
         self.tasks_by_tag[task.tag].remove(task)
         del self.tasks_by_id[task.id]
 
+    def taskCount(self):
+        """
+        @returns: a dictionary listing the number of tasks for each tag
+        @rtype: C{dict}
+        """
+        self.task_available.acquire()
+        count = {}
+        for tag, tasks in self.tasks_by_tag.items():
+            count[tag] = len(tasks)
+        self.task_available.release()
+        return count
+
 
 class TaskManager(Pyro.core.ObjBase):
 
@@ -207,17 +219,21 @@ class TaskManager(Pyro.core.ObjBase):
         self.results = {}
         self.process_counter = 0
         self.active_processes = []
+        self.process_info = []
         self.tasks_by_process = []
         self.lock = threading.Lock()
         self.watchdog = None
 
-    def registerProcess(self, watchdog_period=None):
+    def registerProcess(self, watchdog_period=None, info=None):
         """
         @param watchdog_period: the period at which the registering process
                                 promises to ping the task manager to signal
                                 that is still alive. If C{None}, no pings
                                 are expected.
         @type watchdog_period: C{int} or C{NoneType}
+        @param info: an information string telling something about the
+                     machine running the process
+        @type info: C{str}
         @returns: a unique process id
         @rtype: C{int}
         
@@ -228,6 +244,7 @@ class TaskManager(Pyro.core.ObjBase):
         process_id = self.process_counter
         self.process_counter += 1
         self.active_processes.append(process_id)
+        self.process_info.append(info)
         self.tasks_by_process.append([])
         self.lock.release()
         if watchdog_period is not None:
@@ -275,19 +292,29 @@ class TaskManager(Pyro.core.ObjBase):
         """
         return len(self.active_processes)
 
+    def activeProcessInfo(self, pid):
+        """
+        @param pid: the number of an active process
+        @type pid: C{int}
+        @returns: information about the active process number pid
+        @rtype: C{str}
+        """
+        return self.process_info[pid]
+
     def numberOfTasks(self):
         """
-        @returns: a tuple of the number of waiting tasks, the number of
-                  running tasks, and the number of results waiting to be
-                  retrieved.
+        @returns: a tuple of dictionaries containing the number of waiting
+                  tasks, the number of running tasks, and the number of results
+                  waiting to be retrieved. Each dictionary contains the
+                  count for each tag.
         @rtype: C{tuple}
         """
         self.lock.acquire()
-        nwaiting = len(self.waiting_tasks)
-        nrunning = len(self.running_tasks)
-        nfinished = len(self.finished_tasks)
+        waiting = self.waiting_tasks.taskCount()
+        running = self.running_tasks.taskCount()
+        finished = self.finished_tasks.taskCount()
         self.lock.release()
-        return nwaiting, nrunning, nfinished
+        return waiting, running, finished
 
     def addTaskRequest(self, tag, parameters, process_id=None):
         """
