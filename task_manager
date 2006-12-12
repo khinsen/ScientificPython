@@ -13,6 +13,7 @@ import Pyro.core
 import Pyro.naming
 import Pyro.errors
 from optparse import OptionParser
+import os, sys
 
 Pyro.core.initClient(banner=False)
 
@@ -75,6 +76,23 @@ def listTaskManagers():
                 print "  %d active processe(s)" % active_processes
 commands["list"] = listTaskManagers
 arg_count["list"] = 1
+
+
+def runSlave(label):
+    task_manager = getTaskManager(label)
+    try:
+        slave_code = task_manager.retrieveData("slave_code")
+        directory = task_manager.retrieveData("cwd")
+    except KeyError:
+        print "No slave code available for %s" % label
+        raise SystemExit
+    namespace = {}
+    sys.modules["__main__"].SLAVE_PROCESS_LABEL = label
+    sys.modules["__main__"].SLAVE_NAMESPACE = namespace
+    os.chdir(directory)
+    exec slave_code in namespace
+commands["slave"] = runSlave
+arg_count["slave"] = 2
 
 
 # Parse command line and execute command

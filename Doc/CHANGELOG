@@ -1,9 +1,11 @@
-2.7.2 --> 2.7.3hg
------------------
+2.7.2 --> 2.7.3
+---------------
 
 Improvements:
 
 - Added multi-module setup for master-slave computations.
+- More information available through task_manager.
+- task_manager can start slave processes.
 
 2.7.1 --> 2.7.2
 ---------------

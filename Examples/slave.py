@@ -4,7 +4,8 @@
 # 1) Type "ns" in a shell window to start the Pyro name server.
 # 2) Type "python master.py" in a second shell window to start
 #    the master process.
-# 3) Type "python slave.py" in a third shell window to start one slave process.
+# 3) Type "task_manager slave demo" in a third shell window
+#    to start one slave process.
 #
 # You can run as many slaves as you want (though for this trivial example,
 # the first slave will do all the work before you have time to start a
@@ -28,10 +29,4 @@ def do_sqrt(x):
 
 
 # Start the slave process after all task handlers have been defined.
-
-# By default, the Pyro name server is used.
-startSlaveProcess("demo")
-# If you run without a name server, the slave must know on which host
-# the master is running:
-if False:
-    startSlaveProcess("demo", "localhost")
+startSlaveProcess()

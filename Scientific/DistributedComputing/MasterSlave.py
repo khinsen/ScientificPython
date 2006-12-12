@@ -59,7 +59,6 @@ import Pyro.errors
 import threading
 import time
 import copy
-import sys
 
 class MasterProcess(object):
 
@@ -223,6 +222,12 @@ class SlaveProcess(object):
         # Do a ping every minute - maybe this will become a parameter later on
         self.watchdog_period = 60.
         self.done = False
+        # Compile a dictionary of methods that implement tasks
+        import inspect
+        self.task_methods = {}
+        for name, value in inspect.getmembers(self, inspect.ismethod):
+            if name[:3] == "do_":
+                self.task_methods[name] = value
 
     def watchdogThread(self):
         """
@@ -241,7 +246,7 @@ class SlaveProcess(object):
         Starts the slave process.
         """
         if namespace is None:
-            namespace = self
+            namespace = self.task_methods
         self.process_id = \
             self.task_manager.registerProcess(self.watchdog_period,
                                               info = getMachineInfo())
@@ -255,8 +260,8 @@ class SlaveProcess(object):
             except TaskManagerTermination:
                 break
             try:
-                method = getattr(namespace, "do_%s" % tag)
-            except AttributeError:
+                method = namespace["do_%s" % tag]
+            except KeyError:
                 self.task_manager.returnTask(task_id)
                 continue
             try:
@@ -282,14 +287,43 @@ def getMachineInfo():
     return "%s (%s)" % (nodename, machine)
 
 #
+# Job handling utility
+#
+def runJob(label, master_class, slave_class):
+    import inspect
+    import os
+    import sys
+    main_module = sys.modules['__main__']
+    try:
+        slave_label = main_module.SLAVE_PROCESS_LABEL
+        master = label != slave_label
+#        master = not getattr(main_module,
+#                             "RUN_%s_AS_SLAVE" % '_'.join(label.split()))
+    except AttributeError:
+        master = True
+    if master:
+        filename = inspect.getsourcefile(main_module)
+        source = file(filename).read()
+        process = master_class(label)
+        process.task_manager.storeData(slave_code = source,
+                                       cwd = os.getcwd())
+        process.start()
+    else:
+        slave_class(label).start()
+
+#
 # Alternate interface for multi-module programs
 #
-def initializeMasterProcess(label, use_name_server=True):
+def initializeMasterProcess(label, slave_script=None, use_name_server=True):
     """
     Initializes a master process.
 
     @param label: the label that identifies the task manager
     @type label: C{str}
+
+    @param slave_script: the file name of the script that defines
+                         the corresponding slave process
+    @type slave_script: C{str}
 
     @param use_name_server: If C{True} (default), the task manager is
                             registered with the Pyro name server. If
@@ -303,17 +337,24 @@ def initializeMasterProcess(label, use_name_server=True):
     @rtype: L{MasterProcess}
     """
     import atexit
+    import os
     process = MasterProcess(label, use_name_server)
     atexit.register(process.shutdown)
+    if slave_script is not None:
+        source = file(slave_script).read()
+        process.task_manager.storeData(slave_code = source,
+                                       cwd = os.getcwd())
     return process
 
-def startSlaveProcess(label, master_host=None):
+def startSlaveProcess(label=None, master_host=None):
     """
     Starts a slave process. Must be called at the end of a script
     that defines or imports all task handlers.
 
-    @param label: the label that identifies the task manager
-    @type label: C{str}
+    @param label: the label that identifies the task manager. May be
+                  omitted if the slave process is started through
+                  the task_manager script.
+    @type label: C{str} or C{NoneType}
 
     @param master_host: If C{None} (default), the task manager of the
                         master process is located using the Pyro name
@@ -324,5 +365,11 @@ def startSlaveProcess(label, master_host=None):
     @type master_host: C{str} or C{NoneType}
     """
     import sys
+    main_module = sys.modules['__main__']
+    if label is None:
+        label = main_module.SLAVE_PROCESS_LABEL
+        namespace = main_module.SLAVE_NAMESPACE
+    else:
+        namespace = main_module.__dict__
     process = SlaveProcess(label, master_host=None)
-    process.start(sys.modules['__main__'])
+    process.start(namespace)

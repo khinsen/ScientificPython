@@ -221,6 +221,7 @@ class TaskManager(Pyro.core.ObjBase):
         self.active_processes = []
         self.process_info = []
         self.tasks_by_process = []
+        self.data = {}
         self.lock = threading.Lock()
         self.watchdog = None
 
@@ -486,6 +487,29 @@ class TaskManager(Pyro.core.ObjBase):
             return task.id, result
         else:
             raise TaskRaisedException(task.id, task.tag, result[0], result[1])
+
+    def storeData(self, **kw):
+        """
+        @param kw: a keyword list of data items to be stored
+        @type kw: C{dict}
+        
+        This routine permits processes to exchange arbitrary data items
+        through the task manager.
+        """
+        self.lock.acquire()
+        for label, data in kw.items():
+            self.data[label] = data
+        self.lock.release()
+
+    def retrieveData(self, label):
+        """
+        @param label: the label of the data item to be retrieved
+        @type label: C{str}
+        """
+        self.lock.acquire()
+        data = self.data[label]
+        self.lock.release()
+        return data
 
     def terminate(self):
         """

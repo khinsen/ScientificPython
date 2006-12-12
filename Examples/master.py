@@ -4,7 +4,8 @@
 # 1) Type "ns" in a shell window to start the Pyro name server.
 # 2) Type "python master.py" in a second shell window to start
 #    the master process.
-# 3) Type "python slave.py" in a third shell window to start one slave process.
+# 3) Type "task_manager slave demo" in a third shell window
+#    to start one slave process.
 #
 # You can run as many slaves as you want (though for this trivial example,
 # the first slave will do all the work before you have time to start a
@@ -22,11 +23,7 @@
 from Scientific.DistributedComputing.MasterSlave import \
      initializeMasterProcess, TaskRaisedException
 
-# By default, the Pyro name server is used. Don't forget to start it!
-tasks = initializeMasterProcess("demo")
-# Use the following to run without a name server:
-if False:
-    tasks = initializeMasterProcess("demo", use_name_server=False)
+tasks = initializeMasterProcess("demo", slave_script="slave.py")
 
 # Do the master's work
 for i in range(5):
