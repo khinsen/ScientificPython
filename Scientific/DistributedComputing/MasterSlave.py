@@ -290,6 +290,21 @@ def getMachineInfo():
 # Job handling utility
 #
 def runJob(label, master_class, slave_class):
+    """
+    Creates an instance of the master_class and runs it. A copy
+    of the script and the current working directory are stored in the
+    TaskManager object to enable the task_manager script to launch
+    slave processes.
+
+    @param label: the label that identifies the task manager
+    @type label: C{str}
+
+    @param master_class: the class implementing the master process
+                         (a subclass of L{MasterProcess})
+
+    @param slave_class: the class implementing the slave process
+                        (a subclass of L{SlaveProcess})
+    """
     import inspect
     import os
     import sys
