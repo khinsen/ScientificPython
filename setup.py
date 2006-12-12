@@ -92,7 +92,8 @@ packages = ['Scientific', 'Scientific.Functions',
             'Scientific.Physics', 'Scientific.QtWidgets',
             'Scientific.Statistics', 'Scientific.Signals',
             'Scientific.Threading', 'Scientific.TkWidgets',
-            'Scientific.Visualization', 'Scientific.MPI']
+            'Scientific.Visualization', 'Scientific.MPI',
+            'Scientific.DistributedComputing']
 
 ext_modules.append(Extension('Scientific_vector',
                              ['Src/Scientific_vector.c'],
