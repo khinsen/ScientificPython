@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2006-11-22
+ * last revision: 2007-1-9
  */
 
 #ifdef _WIN32
@@ -504,7 +504,7 @@ collect_attributes(int fileid, int varid, PyObject *attributes, int nattrs)
       if (array != NULL) {
 	Py_BEGIN_ALLOW_THREADS;
 	acquire_netCDF_lock();
-	nc_get_att_text(fileid, varid, name, ((PyArrayObject *)array)->data);
+	ncattget(fileid, varid, name, ((PyArrayObject *)array)->data);
 	release_netCDF_lock();
 	Py_END_ALLOW_THREADS;
 	array = PyArray_Return((PyArrayObject *)array);
