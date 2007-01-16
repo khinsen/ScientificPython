@@ -8,6 +8,7 @@ Bug fixes:
 Improvements:
 
 - New methods getBinIndices and getBinCount in Statistics.Histogram.Histogram
+- Physics.PhysicalQuantities: unit definitions added to doc string
 
 2.7.2 --> 2.7.3
 ---------------

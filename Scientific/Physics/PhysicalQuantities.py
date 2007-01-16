@@ -48,6 +48,47 @@ class PhysicalQuantity:
 
       - sin, cos, tan: applicable only to objects whose unit is
         compatible with 'rad'.
+
+    See the documentation of the PhysicalQuantities module for a list
+    of the available units.
+    
+    Here is an example on usage:
+
+    >>> from PhysicalQuantities import PhysicalQuantity as p  # short hand
+    >>> distance1 = p('10 m')
+    >>> distance2 = p('10 km')
+    >>> total = distance1 + distance2
+    >>> total
+    PhysicalQuantity(10010.0,'m')
+    >>> total.convertToUnit('km')
+    >>> total.getValue()
+    10.01
+    >>> total.getUnitName()
+    'km'
+    >>> total = total.inBaseUnits()
+    >>> total
+    PhysicalQuantity(10010.0,'m')
+    >>> 
+    >>> t = p(314159., 's')
+    >>> # convert to days, hours, minutes, and second:
+    >>> t2 = t.inUnitsOf('d','h','min','s')
+    >>> t2_print = ' '.join([str(i) for i in t2])
+    >>> t2_print
+    '3.0 d 15.0 h 15.0 min 59.0 s'
+    >>> 
+    >>> e = p('2.7 Hartree*Nav')
+    >>> e.convertToUnit('kcal/mol')
+    >>> e
+    PhysicalQuantity(1694.2757596034764,'kcal/mol')
+    >>> e = e.inBaseUnits()
+    >>> str(e)
+    '7088849.77818 kg*m**2/s**2/mol'
+    >>> 
+    >>> freeze = p('0 degC')
+    >>> freeze = freeze.inUnitsOf ('degF')
+    >>> str(freeze)
+    '32.0 degF'
+    >>> 
     """
 
     def __init__(self, *args):
@@ -252,6 +293,14 @@ class PhysicalQuantity:
         unit = _findUnit (unit)
         return self.unit.isCompatible (unit)
 
+    def getValue(self):
+        """Return value (float) of physical quantity (no unit)."""
+        return self.value
+
+    def getUnitName(self):
+        """Return unit (string) of physical quantity."""
+        return self.unit.name()
+    
     def sqrt(self):
         return pow(self, 0.5)
 
@@ -568,11 +617,15 @@ _unit_table = {}
 for unit in _base_units:
     _unit_table[unit[0]] = unit[1]
 
-def _addUnit(name, unit):
+_help = []
+
+def _addUnit(name, unit, comment=''):
     if _unit_table.has_key(name):
-        raise KeyError('Unit ' + name + ' already defined')
+	raise KeyError, 'Unit ' + name + ' already defined'
+    if comment:
+        _help.append((name, comment, unit))
     if type(unit) == type(''):
-        unit = eval(unit, _unit_table)
+	unit = eval(unit, _unit_table)
         for cruft in ['__builtins__', '__args__']:
             try: del _unit_table[cruft]
             except: pass
@@ -580,150 +633,189 @@ def _addUnit(name, unit):
     _unit_table[name] = unit
 
 def _addPrefixed(unit):
+    _help.append('Prefixed units for %s:' % unit)
+    _prefixed_names = []
     for prefix in _prefixes:
-        name = prefix[0] + unit
-        _addUnit(name, prefix[1]*_unit_table[unit])
+	name = prefix[0] + unit
+	_addUnit(name, prefix[1]*_unit_table[unit])
+        _prefixed_names.append(name)
+    _help.append(', '.join(_prefixed_names))
 
 
 # SI derived units; these automatically get prefixes
+_help.append('SI derived units; these automatically get prefixes:\n' + \
+     ', '.join([prefix + ' (%.0E)' % value for prefix, value in _prefixes]) + \
+             '\n')
+             
 
 _unit_table['kg'] = PhysicalUnit('kg',   1., [0,1,0,0,0,0,0,0,0])
 
-_addUnit('Hz', '1/s')                # Hertz
-_addUnit('N', 'm*kg/s**2')           # Newton
-_addUnit('Pa', 'N/m**2')             # Pascal
-_addUnit('J', 'N*m')                 # Joule
-_addUnit('W', 'J/s')                 # Watt
-_addUnit('C', 's*A')                 # Coulomb
-_addUnit('V', 'W/A')                 # Volt
-_addUnit('F', 'C/V')                 # Farad
-_addUnit('ohm', 'V/A')               # Ohm
-_addUnit('S', 'A/V')                 # Siemens
-_addUnit('Wb', 'V*s')                # Weber
-_addUnit('T', 'Wb/m**2')             # Tesla
-_addUnit('H', 'Wb/A')                # Henry
-_addUnit('lm', 'cd*sr')              # Lumen
-_addUnit('lx', 'lm/m**2')            # Lux
-_addUnit('Bq', '1/s')                # Becquerel
-_addUnit('Gy', 'J/kg')               # Gray
-_addUnit('Sv', 'J/kg')               # Sievert
+_addUnit('Hz', '1/s', 'Hertz')
+_addUnit('N', 'm*kg/s**2', 'Newton')
+_addUnit('Pa', 'N/m**2', 'Pascal')
+_addUnit('J', 'N*m', 'Joule')
+_addUnit('W', 'J/s', 'Watt')
+_addUnit('C', 's*A', 'Coulomb')
+_addUnit('V', 'W/A', 'Volt')
+_addUnit('F', 'C/V', 'Farad')
+_addUnit('ohm', 'V/A', 'Ohm')
+_addUnit('S', 'A/V', 'Siemens')
+_addUnit('Wb', 'V*s', 'Weber')
+_addUnit('T', 'Wb/m**2', 'Tesla')
+_addUnit('H', 'Wb/A', 'Henry')
+_addUnit('lm', 'cd*sr', 'Lumen')
+_addUnit('lx', 'lm/m**2', 'Lux')
+_addUnit('Bq', '1/s', 'Becquerel')
+_addUnit('Gy', 'J/kg', 'Gray')
+_addUnit('Sv', 'J/kg', 'Sievert')
 
 del _unit_table['kg']
 
 for unit in _unit_table.keys():
     _addPrefixed(unit)
-del unit
 
 # Fundamental constants
+_help.append('Fundamental constants:')
 
 _unit_table['pi'] = N.pi
-_addUnit('c', '299792458.*m/s')      # speed of light
-_addUnit('mu0', '4.e-7*pi*N/A**2')   # permeability of vacuum
-_addUnit('eps0', '1/mu0/c**2')       # permittivity of vacuum
-_addUnit('Grav', '6.67259e-11*m**3/kg/s**2') # gravitational constant
-_addUnit('hplanck', '6.6260755e-34*J*s')     # Planck constant
-_addUnit('hbar', 'hplanck/(2*pi)')   # Planck constant / 2pi
-_addUnit('e', '1.60217733e-19*C')    # elementary charge
-_addUnit('me', '9.1093897e-31*kg')   # electron mass
-_addUnit('mp', '1.6726231e-27*kg')   # proton mass
-_addUnit('Nav', '6.0221367e23/mol')  # Avogadro number
-_addUnit('k', '1.380658e-23*J/K')    # Boltzmann constant
+_addUnit('c', '299792458.*m/s', 'speed of light')
+_addUnit('mu0', '4.e-7*pi*N/A**2', 'permeability of vacuum')
+_addUnit('eps0', '1/mu0/c**2', 'permittivity of vacuum')
+_addUnit('Grav', '6.67259e-11*m**3/kg/s**2', 'gravitational constant')
+_addUnit('hplanck', '6.6260755e-34*J*s', 'Planck constant')
+_addUnit('hbar', 'hplanck/(2*pi)', 'Planck constant / 2pi')
+_addUnit('e', '1.60217733e-19*C', 'elementary charge')
+_addUnit('me', '9.1093897e-31*kg', 'electron mass')
+_addUnit('mp', '1.6726231e-27*kg', 'proton mass')
+_addUnit('Nav', '6.0221367e23/mol', 'Avogadro number')
+_addUnit('k', '1.380658e-23*J/K', 'Boltzmann constant')
 
 # Time units
+_help.append('Time units:')
 
-_addUnit('min', '60*s')              # minute
-_addUnit('h', '60*min')              # hour
-_addUnit('d', '24*h')                # day
-_addUnit('wk', '7*d')                # week
-_addUnit('yr', '365.25*d')           # year
+_addUnit('min', '60*s', 'minute')
+_addUnit('h', '60*min', 'hour')
+_addUnit('d', '24*h', 'day')
+_addUnit('wk', '7*d', 'week')
+_addUnit('yr', '365.25*d', 'year')
 
 # Length units
+_help.append('Length units:')
 
-_addUnit('inch', '2.54*cm')          # inch
-_addUnit('ft', '12*inch')            # foot
-_addUnit('yd', '3*ft')               # yard
-_addUnit('mi', '5280.*ft')           # (British) mile
-_addUnit('nmi', '1852.*m')           # Nautical mile
-_addUnit('Ang', '1.e-10*m')          # Angstrom
-_addUnit('lyr', 'c*yr')              # light year
-_addUnit('Bohr', '4*pi*eps0*hbar**2/me/e**2')  # Bohr radius
+_addUnit('inch', '2.54*cm', 'inch')
+_addUnit('ft', '12*inch', 'foot')
+_addUnit('yd', '3*ft', 'yard')
+_addUnit('mi', '5280.*ft', '(British) mile')
+_addUnit('nmi', '1852.*m', 'Nautical mile')
+_addUnit('Ang', '1.e-10*m', 'Angstrom')
+_addUnit('lyr', 'c*yr', 'light year')
+_addUnit('Bohr', '4*pi*eps0*hbar**2/me/e**2', 'Bohr radius')
 
 # Area units
+_help.append('Area units:')
 
-_addUnit('ha', '10000*m**2')         # hectare
-_addUnit('acres', 'mi**2/640')       # acre
-_addUnit('b', '1.e-28*m')            # barn
+_addUnit('ha', '10000*m**2', 'hectare')
+_addUnit('acres', 'mi**2/640', 'acre')
+_addUnit('b', '1.e-28*m', 'barn')
 
 # Volume units
+_help.append('Volume units:')
 
-_addUnit('l', 'dm**3')               # liter
-_addUnit('dl', '0.1*l')
-_addUnit('cl', '0.01*l')
-_addUnit('ml', '0.001*l')
-_addUnit('tsp', '4.92892159375*ml')  # teaspoon
-_addUnit('tbsp', '3*tsp')            # tablespoon
-_addUnit('floz', '2*tbsp')           # fluid ounce
-_addUnit('cup', '8*floz')            # cup
-_addUnit('pt', '16*floz')            # pint
-_addUnit('qt', '2*pt')               # quart
-_addUnit('galUS', '4*qt')            # US gallon
-_addUnit('galUK', '4.54609*l')       # British gallon
+_addUnit('l', 'dm**3', 'liter')
+_addUnit('dl', '0.1*l', 'deci liter')
+_addUnit('cl', '0.01*l', 'centi liter')
+_addUnit('ml', '0.001*l', 'milli liter')
+_addUnit('tsp', '4.92892159375*ml', 'teaspoon')
+_addUnit('tbsp', '3*tsp', 'tablespoon')
+_addUnit('floz', '2*tbsp', 'fluid ounce')
+_addUnit('cup', '8*floz', 'cup')
+_addUnit('pt', '16*floz', 'pint')
+_addUnit('qt', '2*pt', 'quart')
+_addUnit('galUS', '4*qt', 'US gallon')
+_addUnit('galUK', '4.54609*l', 'British gallon')
 
 # Mass units
+_help.append('Mass units:')
 
-_addUnit('amu', '1.6605402e-27*kg')  # atomic mass units
-_addUnit('oz', '28.349523125*g')     # ounce
-_addUnit('lb', '16*oz')              # pound
-_addUnit('ton', '2000*lb')           # ton
+_addUnit('amu', '1.6605402e-27*kg', 'atomic mass units')
+_addUnit('oz', '28.349523125*g', 'ounce')
+_addUnit('lb', '16*oz', 'pound')
+_addUnit('ton', '2000*lb', 'ton')
 
 # Force units
+_help.append('Force units:')
 
-_addUnit('dyn', '1.e-5*N')           # dyne (cgs unit)
+_addUnit('dyn', '1.e-5*N', 'dyne (cgs unit)')
 
 # Energy units
+_help.append('Energy units:')
 
-_addUnit('erg', '1.e-7*J')           # erg (cgs unit)
-_addUnit('eV', 'e*V')                # electron volt
+_addUnit('erg', '1.e-7*J', 'erg (cgs unit)')
+_addUnit('eV', 'e*V', 'electron volt')
+_addUnit('Hartree', 'me*e**4/16/pi**2/eps0**2/hbar**2', 'Wavenumbers/inverse cm')
+_addUnit('Ken', 'k*K', 'Kelvin as energy unit')
+_addUnit('cal', '4.184*J', 'thermochemical calorie')
+_addUnit('kcal', '1000*cal', 'thermochemical kilocalorie')
+_addUnit('cali', '4.1868*J', 'international calorie')
+_addUnit('kcali', '1000*cali', 'international kilocalorie')
+_addUnit('Btu', '1055.05585262*J', 'British thermal unit')
+
 _addPrefixed('eV')
-_addUnit('Hartree', 'me*e**4/16/pi**2/eps0**2/hbar**2')
-_addUnit('invcm', 'hplanck*c/cm')    # Wavenumbers/inverse cm
-_addUnit('Ken', 'k*K')               # Kelvin as energy unit
-_addUnit('cal', '4.184*J')           # thermochemical calorie
-_addUnit('kcal', '1000*cal')         # thermochemical kilocalorie
-_addUnit('cali', '4.1868*J')         # international calorie
-_addUnit('kcali', '1000*cali')       # international kilocalorie
-_addUnit('Btu', '1055.05585262*J')   # British thermal unit
 
 # Power units
+_help.append('Power units:')
 
-_addUnit('hp', '745.7*W')            # horsepower
+_addUnit('hp', '745.7*W', 'horsepower')
 
 # Pressure units
+_help.append('Pressure units:')
 
-_addUnit('bar', '1.e5*Pa')           # bar (cgs unit)
-_addUnit('atm', '101325.*Pa')        # standard atmosphere
-_addUnit('torr', 'atm/760')          # torr = mm of mercury
-_addUnit('psi', '6894.75729317*Pa')  # pounds per square inch
+_addUnit('bar', '1.e5*Pa', 'bar (cgs unit)')
+_addUnit('atm', '101325.*Pa', 'standard atmosphere')
+_addUnit('torr', 'atm/760', 'torr = mm of mercury')
+_addUnit('psi', '6894.75729317*Pa', 'pounds per square inch')
 
 # Angle units
+_help.append('Angle units:')
 
-_addUnit('deg', 'pi*rad/180')        # degrees
+_addUnit('deg', 'pi*rad/180', 'degrees')
 
+_help.append('Temperature units:')
 # Temperature units -- can't use the 'eval' trick that _addUnit provides
 # for degC and degF because you can't add units
 kelvin = _findUnit ('K')
-_addUnit ('degR', '(5./9.)*K')       # degrees Rankine
-_addUnit ('degC', PhysicalUnit (None, 1.0, kelvin.powers, 273.15))
-_addUnit ('degF', PhysicalUnit (None, 5./9., kelvin.powers, 459.67))
+_addUnit ('degR', '(5./9.)*K', 'degrees Rankine')
+_addUnit ('degC', PhysicalUnit (None, 1.0, kelvin.powers, 273.15),
+          'degrees Celcius')
+_addUnit ('degF', PhysicalUnit (None, 5./9., kelvin.powers, 459.67),
+          'degree Fahrenheit')
 del kelvin
 
+
+def description():
+    """Return a string describing all available units."""
+    s = ''  # collector for description text
+    for entry in _help:
+        if isinstance(entry, basestring):
+            # headline for new section
+            s += '\n' + entry + '\n'
+        elif isinstance(entry, tuple):
+            name, comment, unit = entry
+            s += '%-8s  %-26s %s\n' % (name, comment, unit)
+        else:
+            # impossible
+            raise TypeError, 'wrong construction of _help list'
+    return s
+
+# add the description of the units to the module's doc string:
+__doc__ += '\n' + description()
 
 # Some demonstration code. Run with "python -i PhysicalQuantities.py"
 # to have this available.
 
 if __name__ == '__main__':
 
-    from umath import *
+    from Scientific.N import *
     l = PhysicalQuantity(10., 'm')
     big_l = PhysicalQuantity(10., 'km')
     print big_l + l
