@@ -1,3 +1,10 @@
+2.7.3 --> 2.7.3hg
+-----------------
+
+Improvements:
+
+- New methods getBinIndices and getBinCount in Statistics.Histogram.Histogram
+
 2.7.2 --> 2.7.3
 ---------------
 

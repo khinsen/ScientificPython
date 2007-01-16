@@ -1,7 +1,8 @@
 # Histograms.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-5-28
+# Contributions by Hans-Petter Langtangen
+# last revision: 2007-1-16
 #
 
 """
@@ -19,6 +20,50 @@ class Histogram:
     indexing the histogram with the bin number. Application of len()
     yields the number of bins. A histogram thus behaves like a
     sequence of bin index - bin count pairs.
+
+    Here is an example on usage:
+    
+    >>> nsamples = 1000
+    >>> from numpy import random
+    >>> data = random.normal(1.0, 0.5, nsamples)
+    >>> import Scientific.Statistics as S
+    >>> S.mean(data)
+    0.9607056871982641
+    >>> S.standardDeviation(data)
+    0.50251811830486681
+    >>> S.median(data)
+    0.94853870756924152
+    >>> S.skewness(data)   # should be 0
+    0.038940041870334556
+    >>> S.kurtosis(data)   # should be 3
+    2.865582791273765
+    >>> 
+    >>> from Scientific.Statistics.Histogram import Histogram
+    >>> h = Histogram(data, 50)  # use 50 bins between min & max samples
+    >>> h.normalizeArea()        # make probabilities in histogram
+    >>> h[3]                     # bin index and frequency in the 4th bin
+    array([-0.45791018,  0.01553658])
+    >>> x = h.getBinIndices()
+    >>> y = h.getBinCounts()
+    >>> # can plot the y vector against the x vector (see below)
+    >>> 
+    >>> # add many more samples:
+    >>> nsamples2 = nsamples*100
+    >>> data = random.normal(1.0, 0.5, nsamples2)
+    >>> h.addData(data)
+    >>> h.normalizeArea()
+    >>> x2 = h.getBinIndices()
+    >>> y2 = h.getBinCounts()
+
+    >>> plot (x,y) and (x2,y2):
+    >>> import Gnuplot
+    >>> g = Gnuplot.Gnuplot(persist=1)
+    >>> g.xlabel('sample value');  g.ylabel('probability')
+    >>> d1 = Gnuplot.Data(x, y, with='lines',
+    ...                   title='%d samples' % nsamples)
+    >>> d2 = Gnuplot.Data(x2, y2, with='lines',
+    ...                   title='%d samples' % nsamples2)
+    >>> g.plot(d1,d2)
     """
 
     def __init__(self, data, nbins, range=None):
@@ -68,6 +113,14 @@ class Histogram:
     def __getslice__(self, first, last):
         return self.array[first:last]
 
+    def getBinIndices(self):
+        """Return an array of all the bin indices."""
+        return self.array[:,0].copy()
+    
+    def getBinCounts(self):
+        """Return an array of all the bin counts."""
+        return self.array[:,1].copy()
+        
     def addData(self, data):
         """
         Add values to the originally supplied data sequence. Use this
@@ -183,8 +236,41 @@ class WeightedHistogram(Histogram):
 
 
 if __name__ == '__main__':
+    if N.package == 'Numeric':
+        import RandomArray as random
+    elif N.package == 'NumPy':
+        from numpy import random
+    nsamples = 1000
+    random.seed(12,13)
+    data = random.normal(1.0, 0.5, nsamples)
+    h = Histogram(data, 50)  # use 50 bins between min & max samples
+    h.normalizeArea()        # make probabilities in histogram
+    x = h.getBinIndices()
+    y = h.getBinCounts()
 
-    from Gnuplot import plot
+    # add many more samples:
+    nsamples2 = nsamples*100
+    data = random.normal(1.0, 0.5, nsamples2)
+    h.addData(data)
+    h.normalizeArea()
+    x2 = h.getBinIndices()
+    y2 = h.getBinCounts()
 
-    data = N.arange(50000.)**2
-    h = Histogram(data, 10)
+    # and more:
+    nsamples3 = nsamples*1000
+    data = random.normal(1.0, 0.5, nsamples3)
+    h.addData(data)
+    h.normalizeArea()
+    x3 = h.getBinIndices()
+    y3 = h.getBinCounts()
+
+    import Gnuplot
+    g = Gnuplot.Gnuplot(persist=1)
+    g.xlabel('sample value');  g.ylabel('probability')
+    d1 = Gnuplot.Data(x, y, with='lines',
+                      title='%d samples' % nsamples)
+    d2 = Gnuplot.Data(x2, y2, with='lines',
+                      title='%d samples' % nsamples2)
+    d3 = Gnuplot.Data(x3, y3, with='lines',
+                      title='%d samples' % nsamples3)
+    g.plot(d1, d2, d3)
