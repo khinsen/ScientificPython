@@ -1,6 +1,10 @@
 2.7.3 --> 2.7.3hg
 -----------------
 
+Bug fixes:
+
+- Replaced float equality test in Functions.InterpolatingFunction
+
 Improvements:
 
 - New methods getBinIndices and getBinCount in Statistics.Histogram.Histogram

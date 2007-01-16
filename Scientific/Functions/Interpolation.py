@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-9-7
+# last revision: 2007-1-16
 #
 
 """
@@ -377,7 +377,7 @@ NetCDFInterpolatingFunction._constructor = InterpolatingFunction
 def _lookup(point, axis):
     j = Numeric.int_sum(Numeric.less_equal(axis, point))
     if j == len(axis):
-        if point == axis[j-1]:
+        if Numeric.fabs(point - axis[j-1]) < 1.e-9:
             return j-2, j-1, 1.
         else:
             j = 0
