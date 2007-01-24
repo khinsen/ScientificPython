@@ -1,7 +1,7 @@
 # Automatic nth-order derivatives
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2007-1-24
 #
 
 """
@@ -124,7 +124,7 @@ class DerivVar:
         @type order: C{int}
         @raise ValueError: if order < 0
         """
-        if order < 0 or order > 1:
+        if order < 0:
             raise ValueError('Negative derivative order')
         self.value = value
         if recursive:

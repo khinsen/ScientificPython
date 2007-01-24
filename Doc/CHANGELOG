@@ -4,6 +4,7 @@
 Bug fixes:
 
 - Replaced float equality test in Functions.InterpolatingFunction
+- Removed exception for order > 1 in Derivatives.DerivVar.__init__
 
 Improvements:
 
