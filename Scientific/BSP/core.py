@@ -1,7 +1,7 @@
 # High-level parallelization classes
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-24
+# last revision: 2007-2-6
 #
 
 import RemoteObjects
@@ -697,6 +697,43 @@ class ParSequence(ParValue):
                                                 :item.skip])
         else:
             return global_object(self.value[item-self.first])
+
+#
+# ParRootSequence objects distribute a sequence stored initially on
+# processor 0 over the processors
+#
+class ParRootSequence(ParSequence):
+
+    """
+    Global distributed sequence with data taken from processor 0
+
+    The local value of a ParRootSequence object is a slice of the input
+    sequence, which is constructed such that the concatenation of the
+    local values of all processors equals the input sequence while making
+    the number of elements on each processor as equal as possible.
+    """
+
+    def __init__(self, full_sequence):
+        """
+        @param full_sequence: on processor 0: the full sequence,
+                              equal to the concatenation of the local values
+                              of all processors. The local values
+                              on the other processors are not used.
+        @type full_sequence: L{ParValue}
+        """
+        messages = []
+        if processorID == 0:
+            full_sequence = full_sequence.value
+            length = len(full_sequence)
+            for pid in range(numberOfProcessors):
+                chunk = (length+numberOfProcessors-1)/numberOfProcessors
+                first = min(pid*chunk, length)
+                last = min(first+chunk, length)
+                value = full_sequence[first:last]
+                messages.append((pid, (first, last, length, value)))
+        send(messages)
+        self.first, self.last, self.length, self.value = retrieveMessages()[0]
+        self.valid = 1
 
 #
 # ParMessages serves to send exchange arbitray data between processors.

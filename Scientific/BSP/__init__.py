@@ -19,8 +19,8 @@ being different from sent objects.
 """
 
 from core import numberOfProcessors, processorID, ParValue, ParConstant, \
-     ParData, ParSequence, ParMessages, ParTuple, ParAccumulator, \
-     ParFunction, ParRootFunction, ParIndex, ParIterator, \
+     ParData, ParSequence, ParRootSequence, ParMessages, ParTuple, \
+     ParAccumulator, ParFunction, ParRootFunction, ParIndex, ParIterator, \
      ParIndexIterator, ParClass, ParBase, ParInvalid, is_invalid
 
 import sys
