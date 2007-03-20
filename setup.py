@@ -97,6 +97,11 @@ packages = ['Scientific', 'Scientific.Functions',
 
 ext_modules.append(Extension('Scientific_vector',
                              ['Src/Scientific_vector.c'],
+                             include_dirs=['Include']+arrayobject_h_include,
+                             libraries=['m']))
+ext_modules.append(Extension('Scientific_affinitypropagation',
+                             ['Src/Scientific_affinitypropagation.c'],
+                             include_dirs=['Include']+arrayobject_h_include,
                              libraries=['m']))
 
 if 'sdist' in sys.argv:

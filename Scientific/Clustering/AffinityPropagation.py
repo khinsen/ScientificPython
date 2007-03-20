@@ -1,7 +1,7 @@
 # Clustering by affinity propagation.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-3-16
+# last revision: 2007-3-20
 #
 
 """
@@ -209,7 +209,7 @@ class DataSet(object):
         convergence_count = 0
         self.exemplar = N.zeros((self.nitems,), N.Int)
         while True:
-            a, r = self._affinityPropagation(s, a, r, damping)
+            a, r = _affinityPropagation(self, s, a, r, damping)
             e = a + r
             exemplar = N.zeros((self.nitems,), N.Int)
             for i in range(self.nitems):
@@ -235,20 +235,29 @@ class DataSet(object):
             clusters.append([self.items[m] for m in members])
         return clusters
 
-    def _affinityPropagation(self, s, a, r, damping):
+
+try:
+
+    from Scientific_affinitypropagation import _affinityPropagation
+
+except ImportError:
+
+    def _affinityPropagation(dataset, s, a, r, damping):
         as = a + s
         r_new = N.zeros(s.shape, N.Float)
-        for i in range(self.nsimilarities):
+        for i in range(dataset.nsimilarities):
             r_new[i] = s[i] \
-                       - N.maximum.reduce(N.take(as, self.r_update_indices[i]))
+                       - N.maximum.reduce(N.take(as,
+                                                 dataset.r_update_indices[i]))
         r = damping*r + (1-damping)*r_new
 
         rpos = N.maximum(0., r)
-        a_new = N.take(r, self.a_update_indices_1)
-        a_new[-self.nitems:] = 0.
-        for i in range(self.nsimilarities):
-            a_new[i] += N.add.reduce(N.take(rpos, self.a_update_indices_2[i]))
-        a_new[:-self.nitems] = N.minimum(0., a_new[:-self.nitems])
+        a_new = N.take(r, dataset.a_update_indices_1)
+        a_new[-dataset.nitems:] = 0.
+        for i in range(dataset.nsimilarities):
+            a_new[i] += N.add.reduce(N.take(rpos,
+                                            dataset.a_update_indices_2[i]))
+        a_new[:-dataset.nitems] = N.minimum(0., a_new[:-dataset.nitems])
         a = damping*a + (1-damping)*a_new
 
         return a, r
@@ -289,24 +298,3 @@ if __name__ == "__main__":
         print c
     from Gnuplot import plot
     apply(plot, clusters)
-
-##    Profiling suggests rewriting _affinityPropagation in Pyrex:
-##
-##    Ordered by: cumulative time
-##
-##    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-##         1    0.013    0.013  379.472  379.472 <string>:1(<module>)
-##         1    4.228    4.228  379.459  379.459 /Users/hinsen/Programs/ScientificPython/main/Scientific/Clustering/AffinityPropagation.py:129(findClusters)
-##        76  144.989    1.908  372.125    4.896 /Users/hinsen/Programs/ScientificPython/main/Scientific/Clustering/AffinityPropagation.py:172(_affinityPropagation)
-##  16583276  115.459    0.000  115.459    0.000 {built-in method reduce}
-##  16732236  110.740    0.000  110.740    0.000 {multiarray.take}
-##       229    1.797    0.008    1.797    0.008 {range}
-##    148960    1.286    0.000    1.795    0.000 /Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/site-packages/Numeric/Numeric.py:279(argmax)
-##    148960    0.438    0.000    0.438    0.000 {multiarray.argmax}
-##       156    0.324    0.002    0.324    0.002 {multiarray.zeros}
-##       488    0.015    0.000    0.072    0.000 /Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/site-packages/Numeric/Numeric.py:146(repeat)
-##    149451    0.072    0.000    0.072    0.000 {len}
-##       488    0.056    0.000    0.056    0.000 {multiarray.repeat}
-##    109100    0.048    0.000    0.048    0.000 {method 'random' of '_random.Random' objects}
-##         1    0.000    0.000    0.006    0.006 /Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/site-packages/Numeric/Numeric.py:231(concatenate)
-##         1    0.006    0.006    0.006    0.006 {multiarray.concatenate}
