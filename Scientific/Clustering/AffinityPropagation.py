@@ -1,7 +1,7 @@
 # Clustering by affinity propagation.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-3-20
+# last revision: 2007-3-21
 #
 
 """
@@ -131,6 +131,12 @@ class DataSet(object):
             self.similarities.append(s)
 
     def _setupIndices(self):
+        self._setupRIndices()
+        self._setupAIndices1()
+        self._setupAIndices2()
+        self._setupEIndices()
+
+    def _setupRIndices(self):
         indices = []
         for i in range(self.nsimilarities):
             indices.append([])
@@ -141,27 +147,29 @@ class DataSet(object):
                         indices[index1].append(index2)
         self.r_update_indices = [N.array(i) for i in indices]
 
+    def _setupAIndices1(self):
         indices = N.zeros((self.nsimilarities,), N.Int)
         for i in range(self.nitems):
             for k, index in self.index[i].items():
                 indices[index] = self.index[k][k]
         self.a_update_indices_1 = indices
 
-        indices = []
-        for i in range(self.nsimilarities):
-            indices.append([])
+    def _setupAIndices2(self):
+        index_inv = {}
+        for i in range(self.nitems):
+            index_inv[i] = {}
         for i in range(self.nitems):
             for k, index in self.index[i].items():
-                for ip in range(self.nitems):
-                    if ip != i and ip != k:
-                        try:
-                            n = self.index[ip][k]
-                        except KeyError:
-                            n = None
-                        if n:
-                            indices[index].append(n)
-        self.a_update_indices_2 = [N.array(i) for i in indices]
+                index_inv[k][i] = index
+        indices = self.nsimilarities*[None]
+        for k in range(self.nitems):
+            all = index_inv[k].items()
+            for i, index in all:
+                indices[index] = N.array([x[1] for x in all
+                                          if x[0] != i and x[0] != k])
+        self.a_update_indices_2 = indices
 
+    def _setupEIndices(self):
         indices = []
         for i in range(self.nitems):
             ii = []
