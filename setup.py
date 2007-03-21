@@ -98,11 +98,13 @@ packages = ['Scientific', 'Scientific.Functions',
 ext_modules.append(Extension('Scientific_vector',
                              ['Src/Scientific_vector.c'],
                              include_dirs=['Include']+arrayobject_h_include,
-                             libraries=['m']))
+                             libraries=['m'],
+                             extra_compile_args=extra_compile_args))
 ext_modules.append(Extension('Scientific_affinitypropagation',
                              ['Src/Scientific_affinitypropagation.c'],
                              include_dirs=['Include']+arrayobject_h_include,
-                             libraries=['m']))
+                             libraries=['m'],
+                             extra_compile_args=extra_compile_args))
 
 if 'sdist' in sys.argv:
     packages.append('Scientific.use_numarray')
