@@ -1,10 +1,16 @@
-2.7.3 --> 2.7.3hg
------------------
+2.7.3 --> 2.7.4
+---------------
+
+New features:
+
+- New module Clustering.AffinityPropagation.
+- New class BSP.ParRootSequence.
 
 Bug fixes:
 
 - Replaced float equality test in Functions.InterpolatingFunction
 - Removed exception for order > 1 in Derivatives.DerivVar.__init__
+- Fixed reading of non-string attributes from netCDF files.
 
 Improvements:
 
