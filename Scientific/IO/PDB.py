@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-23
+# Last revision: 2007-4-11
 # 
 
 """
@@ -56,6 +56,9 @@ Example::
 @undocumented: ter_format
 @undocumented: model_format
 @undocumented: header_format
+@undocumented: cryst1_format
+@undocumented: scalen_format
+@undocumented: mtrixn_format
 @undocumented: generic_format
 @undocumented: export_filters
 @undocumented: DummyChain
@@ -64,6 +67,7 @@ Example::
 from Scientific.IO.TextFile import TextFile
 from Scientific.IO.FortranFormat import FortranFormat, FortranLine
 from Scientific.Geometry import Vector, Tensor
+from Scientific import N
 from PDBExportFilters import export_filters
 import copy, string
 
@@ -77,6 +81,9 @@ conect_format = FortranFormat('A6,11I5')
 ter_format = FortranFormat('A6,I5,6X,A4,A1,I4,A1')
 model_format = FortranFormat('A6,4X,I4')
 header_format = FortranFormat('A6,4X,A40,A9,3X,A4')
+cryst1_format = FortranFormat('A6,3F9.3,3F7.2,1X,A11,I4')
+scalen_format = FortranFormat('A6,4X,3F10.6,5X,F10.5')
+mtrixn_format = FortranFormat('A6,1X,I3,3F10.6,5X,F10.5,4X,I1')
 generic_format = FortranFormat('A6,A74')
 
 #
@@ -165,19 +172,19 @@ class PDBFile:
 
     def readLine(self):
         """
-        Return the contents of the next non-blank line (= record)
-        The return value is a tuple whose first element (a string)
+        Return the contents of the next non-blank line (= record) The
+        return value is a tuple whose first element (a string)
         contains the record type. For supported record types (HEADER,
-        ATOM, HETATM, ANISOU, TERM, MODEL, CONECT), the items from the
-        remaining fields are put into a dictionary which is returned
-        as the second tuple element. Most dictionary elements are
-        strings or numbers; atom positions are returned as a vector,
-        and anisotropic temperature factors are returned as a rank-2
-        tensor, already multiplied by 1.e-4. White space is stripped
-        from all strings except for atom names, whose correct
-        interpretation can depend on an initial space. For unsupported
-        record types, the second tuple element is a string containing
-        the remaining part of the record.
+        CRYST1, SCALEn, MTRIXn, ATOM, HETATM, ANISOU, TERM, MODEL,
+        CONECT), the items from the remaining fields are put into a
+        dictionary which is returned as the second tuple element. Most
+        dictionary elements are strings or numbers; atom positions are
+        returned as a vector, and anisotropic temperature factors are
+        returned as a rank-2 tensor, already multiplied by 1.e-4.
+        White space is stripped from all strings except for atom
+        names, whose correct interpretation can depend on an initial
+        space. For unsupported record types, the second tuple element
+        is a string containing the remaining part of the record.
 
         @returns: the contents of one PDB record
         @rtype: C{tuple}
@@ -246,6 +253,33 @@ class PDBFile:
             data = {'compound': line[1],
                     'date': line[2],
                     'pdb_code': line[3]}
+            return type, data
+        elif type == 'CRYST1':
+            line = FortranLine(line, cryst1_format)
+            data = {'a': line[1],
+                    'b': line[2],
+                    'c': line[3],
+                    'alpha': line[4],
+                    'beta': line[5],
+                    'gamma': line[6],
+                    'space_group': line[7],
+                    'z': line[8]}
+            return type, data
+        elif type[:-1] == 'SCALE':
+            line = FortranLine(line, scalen_format)
+            data = {'s1': line[1],
+                    's2': line[2],
+                    's3': line[3],
+                    'u': line[4]}
+            return type, data
+        elif type[:-1] == 'MTRIX':
+            line = FortranLine(line, mtrixn_format)
+            data = {'serial': line[1],
+                    'm1': line[2],
+                    'm2': line[3],
+                    'm3': line[4],
+                    'v': line[5],
+                    'given': line[6] == 1}
             return type, data
         else:
             return type, line[6:]
@@ -1039,6 +1073,20 @@ class Structure:
      - 's.objects' is a list of all high-level objects (peptide chains,
        nucleotide chains, and molecules) in their original order.
 
+     - 's.to_fractional' is the transformation from real-space coordinates
+       to fractional coordinates, as read from the SCALEn records.
+
+     - 's.from_fractional' is the transformation from fractional coordinates
+       to real-space coordinates, the inverse of s.to_fractional.
+
+     - 's.ncs_transformations' is a list of transformations that
+        describe non-crystallographic symmetries, as read from the
+        MTRIXn records.
+
+     - if a CRYST1 record exists, 's.a', 's.b', 's.c', 's.alpha',
+       's.beta', 's.gamma' are the parameters of the unit cell and
+       's.space_group' is a string indicating the space group.
+
     An iteration over a Structure instance by a for-loop is equivalent
     to an iteration over the residue list.
     """
@@ -1066,6 +1114,8 @@ class Structure:
         self.peptide_chains = []
         self.nucleotide_chains = []
         self.molecules = {}
+        self.to_fractional = self.from_fractional = None
+        self.ncs_transformations = []
         self.parseFile(PDBFile(filename))
 
     peptide_chain_constructor = PeptideChain
@@ -1243,6 +1293,45 @@ class Structure:
             if type == 'END': break
             elif type == 'HEADER':
                 self.pdb_code = data['pdb_code']
+            elif type == 'CRYST1':
+                for name, value in data.items():
+                    setattr(self, name, value)
+            elif type[:-1] == 'SCALE':
+                if not hasattr(self, '_scale_matrix'):
+                    self._scale_matrix = {}
+                self._scale_matrix[type[-1]] = data
+                if type[-1] == '3': # last line read
+                    from Scientific.Geometry.Transformation \
+                         import Shear, Translation
+                    l1 = self._scale_matrix['1']
+                    l2 = self._scale_matrix['2']
+                    l3 = self._scale_matrix['3']
+                    s = N.array([[l1['s1'], l1['s2'], l1['s3']],
+                                 [l2['s1'], l2['s2'], l2['s3']],
+                                 [l3['s1'], l3['s2'], l3['s3']]])
+                    u = Vector(l1['u'], l2['u'], l3['u'])
+                    self.to_fractional = Translation(u)*Shear(s)
+                    self.from_fractional = self.to_fractional.inverse()
+                    del self._scale_matrix
+            elif type[:-1] == 'MTRIX':
+                if not hasattr(self, '_ncs_matrix'):
+                    self._ncs_matrix = {}
+                self._ncs_matrix[type[-1]] = data
+                if type[-1] == '3': # last line read
+                    from Scientific.Geometry.Transformation \
+                         import Rotation, Translation
+                    l1 = self._ncs_matrix['1']
+                    l2 = self._ncs_matrix['2']
+                    l3 = self._ncs_matrix['3']
+                    m = N.array([[l1['m1'], l1['m2'], l1['m3']],
+                                 [l2['m1'], l2['m2'], l2['m3']],
+                                 [l3['m1'], l3['m2'], l3['m3']]])
+                    v = Vector(l1['v'], l2['v'], l3['v'])
+                    tr = Translation(v)*Rotation(Tensor(m))
+                    tr.given = data['given']
+                    tr.serial = data['serial']
+                    self.ncs_transformations.append(tr)
+                    del self._ncs_matrix
             elif type == 'MODEL':
                 read = data['serial_number'] == self.model
                 if self.model == 0 and len(self.residues) == 0:
@@ -1350,5 +1439,5 @@ if __name__ == '__main__':
 
     if 1:
 
-        s = Structure('~/Desktop/1G61.pdb')
+        s = Structure('~/proteins/PDB/193l.pdb')
         print s
