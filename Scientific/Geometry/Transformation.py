@@ -3,7 +3,7 @@
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
-# last revision: 2006-11-23
+# last revision: 2007-4-11
 # 
 
 """
@@ -15,7 +15,7 @@ from Scientific import N; Numeric = N
 from math import atan2
 
 #
-# Abstract base class
+# Abstract base classes
 #
 class Transformation:
 
@@ -35,6 +35,31 @@ class Transformation:
     of concrete subclasses, i.e. translations or rotations.
     """
 
+    def __call__(self, vector):
+        """
+        @param vector: the input vector
+        @type param: L{Scientific.Geometry.Vector}
+        @returns: the transformed vector
+        @rtype: L{Scientific.Geometry.Vector}
+        """
+        return NotImplementedError
+
+    def inverse(self):
+        """
+        @returns: the inverse transformation
+        @rtype: L{Transformation}
+        """
+        return NotImplementedError
+
+#
+# Rigid body transformations
+#
+class RigidBodyTransformation(Transformation):
+
+    """
+    Combination of translations and rotations
+    """
+
     def rotation(self):
         """
         @returns: the rotational component
@@ -51,13 +76,6 @@ class Transformation:
         """
         pass
 
-    def inverse(self):
-        """
-        @returns: the inverse transformation
-        @rtype: L{Transformation}
-        """
-        pass
-
     def screwMotion(self):
         """
         @returns: the four parameters
@@ -71,10 +89,11 @@ class Transformation:
                   (a L{Scientific.Geometry.Vector}).
         """
         pass
+
 #
 # Pure translation
 #
-class Translation(Transformation):
+class Translation(RigidBodyTransformation):
 
     """
     Translational transformation
@@ -89,6 +108,9 @@ class Translation(Transformation):
 
     is_translation = 1
 
+    def asLinearTransformation(self):
+        return LinearTransformation(Geometry.delta, self.vector)
+
     def __mul__(self, other):
         if hasattr(other, 'is_translation'):
             return Translation(self.vector + other.vector)
@@ -97,7 +119,7 @@ class Translation(Transformation):
         elif hasattr(other, 'is_rotation_translation'):
             return RotationTranslation(other.tensor, other.vector+self.vector)
         else:
-            raise ValueError('incompatible object')
+            return self.asLinearTransformation()*other.asLinearTransformation()
 
     def __call__(self, vector):
         return self.vector + vector
@@ -128,7 +150,7 @@ class Translation(Transformation):
 #
 # Pure rotation
 #
-class Rotation(Transformation):
+class Rotation(RigidBodyTransformation):
 
     """
     Rotational transformation
@@ -160,6 +182,9 @@ class Rotation(Transformation):
 
     is_rotation = 1
 
+    def asLinearTransformation(self):
+        return LinearTransformation(self.tensor, Geometry.nullVector)
+
     def __mul__(self, other):
         if hasattr(other, 'is_rotation'):
             return Rotation(self.tensor.dot(other.tensor))
@@ -169,7 +194,7 @@ class Rotation(Transformation):
             return RotationTranslation(self.tensor.dot(other.tensor),
                                        self.tensor*other.vector)
         else:
-            raise ValueError('incompatible object')
+            return self.asLinearTransformation()*other.asLinearTransformation()
 
     def __call__(self,other):
         if hasattr(other,'is_vector'):
@@ -336,7 +361,7 @@ class Rotation(Transformation):
 #
 # Combined translation and rotation
 #
-class RotationTranslation(Transformation):
+class RotationTranslation(RigidBodyTransformation):
 
     """
     Combined translational and rotational transformation.
@@ -351,6 +376,9 @@ class RotationTranslation(Transformation):
 
     is_rotation_translation = 1
 
+    def asLinearTransformation(self):
+        return LinearTransformation(self.tensor, self.vector)
+
     def __mul__(self, other):
         if hasattr(other, 'is_rotation'):
             return RotationTranslation(self.tensor.dot(other.tensor),
@@ -362,7 +390,7 @@ class RotationTranslation(Transformation):
             return RotationTranslation(self.tensor.dot(other.tensor),
                                        self.tensor*other.vector+self.vector)
         else:
-            raise ValueError('incompatible object')
+            return self.asLinearTransformation()*other.asLinearTransformation()
 
     def __call__(self, vector):
         return self.tensor*vector + self.vector
@@ -396,6 +424,107 @@ class RotationTranslation(Transformation):
             r0 = -0.5*((N.cos(0.5*angle)/N.sin(0.5*angle))*axis.cross(x)+x)
         return r0, axis, angle, d
 
+#
+# Scaling
+#
+class Scaling(Transformation):
+
+    """
+    Scaling
+    """
+    def __init__(self, scale_factor):
+        """
+        @param scale_factor: the scale factor
+        @type scale_factor: C{float}
+        """
+        self.scale_factor = scale_factor
+
+    is_scaling = 1
+
+    def asLinearTransformation(self):
+        return LinearTransformation(self.scale_factor*Geometry.delta,
+                                    Geometry.nullVector)
+
+    def __call__(self, vector):
+        return self.scale_factor*vector
+
+    def __mul__(self, other):
+        if hasattr(other, 'is_scaling'):
+            return Scaling(self.scale_factor*other.scale_factor)
+        else:
+            return self.asLinearTransformation()*other.asLinearTransformation()
+
+    def inverse(self):
+        return Scaling(1./self.scale_factor)
+
+#
+# Inversion is scaling by -1
+#
+class Inversion(Scaling):
+
+    def __init__(self):
+        Scaling.__init__(self, -1.)
+
+#
+# Shear
+#
+class Shear(Transformation):
+
+    def __init__(self, *args):
+        if len(args) == 1:
+            if Geometry.isTensor(args[0]):
+                self.tensor = args[0]
+            else:
+                self.tensor = Geometry.Tensor(args[0])
+                assert self.tensor.rank == 2
+        elif len(args) == 3 and Geometry.isVector(args[0]) \
+                 and Geometry.isVector(args[1]) and Geometry.isVector(args[2]):
+            self.tensor = Geometry.Tensor([args[0].array, args[1].array,
+                                           args[2].array]).transpose()
+
+    def asLinearTransformation(self):
+        return LinearTransformation(self.tensor, Geometry.nullVector)
+
+    def __mul__(self, other):
+        return self.asLinearTransformation()*other
+
+    def __call__(self, vector):
+        return self.tensor*vector
+
+    def inverse(self):
+        return Shear(self.tensor.inverse())
+
+#
+# General linear transformation
+#
+class LinearTransformation(Transformation):
+
+    """
+    General linear transformation.
+
+    Objects of this class are not created directly, but can be the
+    result of a composition of transformations.
+    """
+
+    def __init__(self, tensor, vector):
+        self.tensor = tensor
+        self.vector = vector
+
+    def asLinearTransformation(self):
+        return self
+
+    def __mul__(self, other):
+        other = other.asLinearTransformation()
+        return LinearTransformation(self.tensor.dot(other.tensor),
+                                    self.tensor*other.vector+self.vector)
+
+    def __call__(self, vector):
+        return self.tensor*vector + self.vector
+
+    def inverse(self):
+        return Rotation(self.tensor.inverse())*Translation(-self.vector)
+
+
 # Utility functions
 
 def angleFromSineAndCosine(y, x):
@@ -415,7 +544,8 @@ if __name__ == '__main__':
     angles = r.threeAngles(Geometry.Vector(1., 0., 0.),
                            Geometry.Vector(0., 1., 0.),
                            Geometry.Vector(0., 0., 1.))
-    #print angles
     c = t*r
     print c.screwMotion()
-    print c.screwMotion1()
+    s = Scaling(2.)
+    all = s*t*r
+    print all(Geometry.ex)
