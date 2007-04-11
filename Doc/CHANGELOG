@@ -1,3 +1,20 @@
+2.7.4 --> 2.7.5hg
+-----------------
+
+New features:
+
+- Scaling, inversion, and shear transformations added to
+  Geometry.Transformations
+
+Improvements:
+
+- PDB parser handles CRYST1, SCALEn and MTRIXn records
+
+Bug fixes:
+
+- Scientific_affinitypropagation.c compiles with NumPy
+
+
 2.7.3 --> 2.7.4
 ---------------
 
