@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2007-4-11
+# Last revision: 2007-4-12
 # 
 
 """
@@ -1117,10 +1117,12 @@ class Structure:
         self.molecules = {}
         self.to_fractional = self.from_fractional = None
         self.ncs_transformations = []
+        self.cs_transformations = []
         self.a = self.b = self.c = None
         self.alpha = self.beta = self.gamma = None
         self.space_group = None
         self.parseFile(PDBFile(filename))
+        self.findSpaceGroupTransformations()
 
     peptide_chain_constructor = PeptideChain
     nucleotide_chain_constructor = NucleotideChain
@@ -1377,6 +1379,18 @@ class Structure:
                     if chain is None:
                         raise ValueError("TERM record before chain")
                     chain = None
+
+    def findSpaceGroupTransformations(self):
+        if self.space_group is not None and self.to_fractional is not None:
+            from Scientific.IO.PDBSpaceGroups import \
+                 getSpaceGroupTransformations
+            try:
+                trs = getSpaceGroupTransformations(self.space_group)
+            except KeyError:
+                return
+            for tr in trs:
+                tr = self.from_fractional*tr*self.to_fractional
+                self.cs_transformations.append(tr)
 
     def renumberAtoms(self):
         """
