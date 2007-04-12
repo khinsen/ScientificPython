@@ -1085,7 +1085,8 @@ class Structure:
 
      - if a CRYST1 record exists, 's.a', 's.b', 's.c', 's.alpha',
        's.beta', 's.gamma' are the parameters of the unit cell and
-       's.space_group' is a string indicating the space group.
+       's.space_group' is a string indicating the space group. If no
+       CRYST1 record exists, all those values are None.
 
     An iteration over a Structure instance by a for-loop is equivalent
     to an iteration over the residue list.
@@ -1116,6 +1117,9 @@ class Structure:
         self.molecules = {}
         self.to_fractional = self.from_fractional = None
         self.ncs_transformations = []
+        self.a = self.b = self.c = None
+        self.alpha = self.beta = self.gamma = None
+        self.space_group = None
         self.parseFile(PDBFile(filename))
 
     peptide_chain_constructor = PeptideChain
