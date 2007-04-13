@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2007-4-12
+# Last revision: 2007-4-13
 # 
 
 """
@@ -1302,6 +1302,7 @@ class Structure:
             elif type == 'CRYST1':
                 for name, value in data.items():
                     setattr(self, name, value)
+                self.space_group = self.space_group.strip()
             elif type[:-1] == 'SCALE':
                 if not hasattr(self, '_scale_matrix'):
                     self._scale_matrix = {}
@@ -1457,5 +1458,5 @@ if __name__ == '__main__':
 
     if 1:
 
-        s = Structure('~/proteins/PDB/193l.pdb')
+        s = Structure('~/Programs/MMTK/main/MMTK/Database/PDB/insulin.pdb')
         print s

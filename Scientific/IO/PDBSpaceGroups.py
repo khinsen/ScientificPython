@@ -18,8 +18,9 @@ def getSpaceGroupTransformations(space_group_label):
     try:
         return _space_group_table[space_group_label].transformations
     except KeyError:
-        space_group_label = ''.join(space_group_label.split())
-        return _space_group_table[space_group_label].transformations
+        pass
+    space_group_label = ''.join(space_group_label.split())
+    return _space_group_table[space_group_label].transformations
 
 transformations = []
 rot = N.array([1.,0.,0.,0.,1.,0.,0.,0.,1.])
