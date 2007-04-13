@@ -87,7 +87,7 @@ try:
 except ImportError:
     pass
 
-packages = ['Scientific', 'Scientific.Functions',
+packages = ['Scientific', 'Scientific.Clustering', 'Scientific.Functions',
             'Scientific.Geometry', 'Scientific.IO',
             'Scientific.Physics', 'Scientific.QtWidgets',
             'Scientific.Statistics', 'Scientific.Signals',
