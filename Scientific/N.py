@@ -1,47 +1,30 @@
-done = False
+import Scientific_numerics_package_id
+package = Scientific_numerics_package_id.getNumericsPackageName()
+del Scientific_numerics_package_id
 
-try:
-    from Scientific import use_numeric
+if package == "Numeric":
     from Numeric import *
-    del use_numeric
-    done = True
     def int_sum(a, axis=0):
         return add.reduce(a, axis)
     def zeros_st(shape, other):
         return zeros(shape, other.typecode())
-    package = "Numeric"
 
-except ImportError:
-    pass
+elif package == "NumPy":
 
-if not done:
-    try:
-        from Scientific import use_numpy
-        from numpy.oldnumeric import *
-        del use_numpy
-        done = True
-        def int_sum(a, axis=0):
-            return add.reduce(a, axis)
-        def zeros_st(shape, other):
-            return zeros(shape, dtype=other.dtype)
-        package = "NumPy"
+    from numpy.oldnumeric import *
+    def int_sum(a, axis=0):
+        return add.reduce(a, axis)
+    def zeros_st(shape, other):
+        return zeros(shape, dtype=other.dtype)
 
-    except ImportError:
-        pass
+elif package == "Numarray":
 
-if not done:
-    try:
-        from Scientific import use_numarray
-        from numarray import *
-        del use_numarray
-        done = True
-        def int_sum(a, axis=0):
-            return add.reduce(a, axis, type=Int)
-        def zeros_st(shape, other):
-            return zeros(shape, other.typecode())
-        package = "Numarray"
+    from numarray import *
+    def int_sum(a, axis=0):
+        return add.reduce(a, axis, type=Int)
+    def zeros_st(shape, other):
+        return zeros(shape, other.typecode())
 
-    except ImportError:
-        pass
+else:
 
-del done
+    raise ImportError("Unknown numerics package " + package)

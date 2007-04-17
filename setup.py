@@ -105,6 +105,10 @@ ext_modules.append(Extension('Scientific_affinitypropagation',
                              include_dirs=['Include']+arrayobject_h_include,
                              libraries=['m'],
                              extra_compile_args=extra_compile_args))
+ext_modules.append(Extension('Scientific_numerics_package_id',
+                             ['Src/Scientific_numerics_package_id.c'],
+                             include_dirs=['Include']+arrayobject_h_include,
+                             extra_compile_args=extra_compile_args))
 
 if 'sdist' in sys.argv:
     packages.append('Scientific.use_numarray')

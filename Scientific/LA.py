@@ -1,29 +1,19 @@
-done = False
+import Scientific_numerics_package_id
+package = Scientific_numerics_package_id.getNumericsPackageName()
+del Scientific_numerics_package_id
 
-try:
-    from Scientific import use_numeric
+if package == "Numeric":
+
     from LinearAlgebra import *
-    del use_numeric
-    done = True
-except ImportError:
-    pass
 
-if not done:
-    try:
-        from Scientific import use_numpy
-        from numpy.oldnumeric.linear_algebra import *
-        del use_numpy
-        done = True
-    except ImportError:
-        pass
+elif package == "NumPy":
 
-if not done:
-    try:
-        from Scientific import use_numarray
-        from numarray.linear_algebra import *
-        del use_numarray
-        done = True
-    except ImportError:
-        pass
+    from numpy.oldnumeric.linear_algebra import *
 
-del done
+elif package == "Numarray":
+
+    from numarray.linear_algebra import *
+
+else:
+
+    raise ImportError("Unknown numerics package " + package)
