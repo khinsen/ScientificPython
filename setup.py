@@ -110,17 +110,6 @@ ext_modules.append(Extension('Scientific_numerics_package_id',
                              include_dirs=['Include']+arrayobject_h_include,
                              extra_compile_args=extra_compile_args))
 
-if 'sdist' in sys.argv:
-    packages.append('Scientific.use_numarray')
-    packages.append('Scientific.use_numeric')
-    packages.append('Scientific.use_numpy')
-elif use_numpy:
-    packages.append('Scientific.use_numpy')
-elif use_numarray:
-    packages.append('Scientific.use_numarray')
-else:
-    packages.append('Scientific.use_numeric')
-
 scripts = ['task_manager']
 if sys.version[:3] >= '2.1':
     packages.append('Scientific.BSP')
