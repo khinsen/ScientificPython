@@ -48,9 +48,9 @@ class APTest(unittest.TestCase):
                         (-10., N.array([ 1,  1,  1,  5,  5,  5,  6,  6,  6, 13,
                                          21,  6,  1, 13,  6, 19, 19, 19, 19, 19,
                                          21, 21, 19, 19,  6])),
-                        (-1., N.array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,
-                                        10, 14, 12, 13, 14, 15, 16, 17, 18, 15,
-                                        20, 21, 15, 23, 24]))]
+                        ( -5., N.array([ 1,  1,  1,  5,  5,  5,  6,  6,  6, 13,
+                                         21,  6,  1, 13,  6, 22, 17, 17, 17,
+                                         22, 21, 21, 22, 22,  6]))]
 
     def simfunc(self, p1, p2):
         return -N.sum((p1-p2)**2)
@@ -60,7 +60,7 @@ class APTest(unittest.TestCase):
         self.assertAlmostEqual(data.median_similarity, -16.159450725, 10)
         for threshold, result in self.results:
             data.findClusters(threshold)
-            self.assertEqual(data.exemplar, result)
+            self.assert_(N.logical_and.reduce(data.exemplar == result))
 
 if __name__ == '__main__':
     unittest.main()
