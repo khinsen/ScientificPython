@@ -1,5 +1,5 @@
-2.7.4 --> 2.7.5hg
------------------
+2.7.4 --> 2.7.5
+---------------
 
 New features:
 
@@ -9,6 +9,7 @@ New features:
 Improvements:
 
 - PDB parser handles CRYST1, SCALEn and MTRIXn records
+- Better identification of the Numerics package that is being used
 
 Bug fixes:
 
