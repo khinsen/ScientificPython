@@ -1,7 +1,7 @@
 # This module defines some geometrical objects in 3D-space.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2007-4-27
 #
 
 """
@@ -287,7 +287,7 @@ def _intersectSphereCone(sphere, cone):
         raise ValueError("Not yet implemented")
     from_center = sphere.radius*Numeric.cos(cone.angle)
     radius = sphere.radius*Numeric.sin(cone.angle)
-    return Circle(cone.center+from_center*cone.axis, cone.axis, radius)
+    return Circle(cone.center+cone.axis*from_center, cone.axis, radius)
 
 _addIntersectFunction(_intersectSphereCone, Sphere, Cone)
 
@@ -327,8 +327,8 @@ def _intersectCirclePlane(circle, plane):
             normal = circle.normal.cross(line.direction)
             if line.distanceFrom(circle.center+normal) > x:
                 normal = -normal
-            return (circle.center+x*normal-along_line*line.direction,
-                    circle.center+x*normal+along_line*line.direction)
+            return (circle.center+x*normal-line.direction*along_line,
+                    circle.center+x*normal+line.direction*along_line)
             
 _addIntersectFunction(_intersectCirclePlane, Circle, Plane)
 
@@ -340,7 +340,7 @@ def rotateDirection(vector, axis, angle):
     c = Numeric.cos(angle)
     c1 = 1-c
     axis = axis.direction
-    return s*axis.cross(vector) + c1*(axis*vector)*axis + c*vector
+    return axis.cross(vector)*s + ((axis*vector)*axis)*c1 + vector*c
 
 def rotatePoint(point, axis, angle):
     return axis.point + rotateDirection(point-axis.point, axis, angle)
