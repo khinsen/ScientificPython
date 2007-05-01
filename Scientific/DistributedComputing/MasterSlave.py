@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-12-12
+# last revision: 2007-5-1
 #
 
 """
@@ -101,9 +101,11 @@ class MasterProcess(object):
         """
         self.pyro_daemon=Pyro.core.Daemon()
         if self.pyro_ns is not None:
-            self.pyro_daemon.useNameServer(self.pyro_ns)
+            # Make another name server proxy for this thread
+            pyro_ns=Pyro.naming.NameServerLocator().getNS()
+            self.pyro_daemon.useNameServer(pyro_ns)
             try:
-                self.pyro_ns.createGroup("TaskManager")
+                pyro_ns.createGroup("TaskManager")
             except Pyro.errors.NamingError:
                 pass
         uri = self.pyro_daemon.connect(self.task_manager,
@@ -114,7 +116,7 @@ class MasterProcess(object):
             self.pyro_daemon.shutdown(True)
         if self.pyro_ns is not None:
             try:
-                self.pyro_ns.unregister("TaskManager.%s" % self.label)
+                pyro_ns.unregister("TaskManager.%s" % self.label)
             except Pyro.errors.NamingError:
                 pass
 
