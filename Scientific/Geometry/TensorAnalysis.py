@@ -1,7 +1,7 @@
 # This module provides a class representing scalar, vector, and tensor fields.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2007-5-22
 #
 
 """
@@ -348,8 +348,13 @@ class VectorField(TensorField):
         @rtype: L{ScalarField}
         """
         l = Numeric.sqrt(Numeric.add.reduce(self.values**2, -1))
-        try: default = Numeric.sqrt(Numeric.add.reduce(self.default))
-        except ValueError: default = None
+        if self.default is None:
+            default = None
+        else:
+            try:
+                default = Numeric.sqrt(Numeric.add.reduce(self.default))
+            except ValueError:
+                default = None
         return ScalarField(self.axes, l, default, 0)
 
 VectorField._constructor = VectorField
