@@ -1,7 +1,7 @@
 # Automatic nth-order derivatives
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-1-24
+# last revision: 2007-5-25
 #
 
 """
@@ -370,7 +370,7 @@ def _mapderiv(func, a, b):
 # Convert argument to float if it is integer
 
 def _toFloat(x):
-    if type(x) == type(0):
+    if isinstance(x, int):
         return float(x)
     return x
 

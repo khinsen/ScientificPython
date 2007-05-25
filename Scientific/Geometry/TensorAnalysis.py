@@ -1,7 +1,7 @@
 # This module provides a class representing scalar, vector, and tensor fields.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-5-22
+# last revision: 2007-5-25
 #
 
 """
@@ -90,7 +90,7 @@ class TensorField(Interpolation.InterpolatingFunction):
             return Tensor(value)
 
     def __getitem__(self, index):
-        if type(index) == type(0):
+        if isinstance(index, int):
             index = (index,)
         rank = self.rank - len(index)
         if rank < 0:

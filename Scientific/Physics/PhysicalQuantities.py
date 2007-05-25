@@ -2,7 +2,7 @@
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # with contributions from Greg Ward
-# last revision: 2006-4-28
+# last revision: 2007-5-25
 #
 
 """
@@ -414,10 +414,10 @@ class PhysicalUnit:
     def __pow__(self, other):
         if self.offset != 0:
             raise TypeError("cannot exponentiate units with non-zero offset")
-        if type(other) == type(0):
+        if isinstance(other, int):
             return PhysicalUnit(other*self.names, pow(self.factor, other),
                                 map(lambda x,p=other: x*p, self.powers))
-        if type(other) == type(0.):
+        if isinstance(other, float):
             inv_exp = 1./other
             rounded = int(N.floor(inv_exp+0.5))
             if abs(inv_exp-rounded) < 1.e-10:

@@ -1,7 +1,7 @@
 # Parallel IO
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2007-5-25
 #
 
 """
@@ -241,7 +241,7 @@ class _ParNetCDFVariable(ParBase):
                              item.skip)
         if self.index is not None:
             split = item[self.index]
-            if type(split) == type(0):
+            if isinstance(split, int):
                 raise ValueError("Must use slice along split dimension")
             first, last, skip = split.start, split.stop, split.step
             if first is None: first = 0

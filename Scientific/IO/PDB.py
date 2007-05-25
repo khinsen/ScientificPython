@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2007-4-13
+# Last revision: 2007-5-25
 # 
 
 """
@@ -431,7 +431,7 @@ class PDBFile:
         self.data['residue_number'] = (self.data['residue_number'] + 1) % 10000
         self.data['insertion_code'] = ''
         if number is not None:
-            if type(number) is type(0):
+            if isinstance(number, int):
                 self.data['residue_number'] = number % 10000
             else:
                 self.data['residue_number'] = number.number % 10000
@@ -628,7 +628,7 @@ class Group:
         @param item: an integer index or an atom name
         @type item: C{int} or C{str}
         """
-        if type(item) == type(0):
+        if isinstance(item, int):
             return self.atom_list[item]
         else:
             return self.atoms[item]
@@ -1032,7 +1032,7 @@ class ResidueNumber:
         self.insertion_code = insertion_code
 
     def __cmp__(self, other):
-        if type(other) == type(0):
+        if isinstance(other, int):
             if self.number == other:
                 return 1
             else:

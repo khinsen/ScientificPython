@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-1-16
+# last revision: 2007-5-25
 #
 
 """
@@ -99,7 +99,7 @@ class InterpolatingFunction:
         @raise TypeError: if i is not an allowed index expression
         """
         ti = type(i)
-        if ti == type(0):
+        if isinstance(ti, int):
             if len(self.axes) == 1:
                 return (self.axes[0][i], self.values[i])
             else:
@@ -111,7 +111,7 @@ class InterpolatingFunction:
             axes = []
             rest = self.axes[:]
             for item in i:
-                if type(item) != type(0):
+                if not isinstance(item, int):
                     axes.append(rest[0][item])
                 del rest[0]
             axes = axes + rest
