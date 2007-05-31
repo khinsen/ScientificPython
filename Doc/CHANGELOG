@@ -1,3 +1,13 @@
+2.7.5 --> 2.7.6
+---------------
+
+Bug fixes:
+
+- NumPy compatibility fixes.
+
+- Pyro 3.6 compatibility fix in DistributedComputing.MasterSlave
+
+
 2.7.4 --> 2.7.5
 ---------------
 
