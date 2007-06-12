@@ -1,14 +1,14 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-5-25
+# last revision: 2007-6-12
 #
 
 """
 Interpolation of functions defined on a grid
 """
 
-from Scientific import N; Numeric = N
+from Scientific import N
 import Polynomial
 from Scientific.indexing import index_expression
 import operator
@@ -30,30 +30,40 @@ class InterpolatingFunction:
     like a complex function (even if its values are real).
     """
 
-    def __init__(self, axes, values, default = None):
+    def __init__(self, axes, values, default = None, period = None):
         """
         @param axes: a sequence of one-dimensional arrays, one for each
             variable, specifying the values of the variables at
             the grid points
-        @type axes: sequence of Numeric.array
+        @type axes: sequence of N.array
 
         @param values: the function values on the grid
-        @type values: Numeric.array
+        @type values: N.array
 
         @param default: the value of the function outside the grid. A value
             of C{None} means that the function is undefined outside
             the grid and that any attempt to evaluate it there
             raises an exception.
         @type default: number or C{None}
+
+        @param period: the period for each of the variables, or C{None} for
+            variables in which the function is not periodic.
+        @type period: sequence of numbers or C{None}
         """
         if len(axes) > len(values.shape):
             raise ValueError('Inconsistent arguments')
         self.axes = list(axes)
+        self.shape = sum([axis.shape for axis in self.axes], ())
         self.values = values
         self.default = default
-        self.shape = ()
-        for axis in self.axes:
-            self.shape = self.shape + axis.shape
+        if period is None:
+            period = len(self.axes)*[None]
+        self.period = period
+        if len(self.period) != len(self.axes):
+            raise ValueError('Inconsistent arguments')
+        for a, p in zip(self.axes, self.period):
+            if p is not None and a[0]+p <= a[-1]:
+                raise ValueError('Period too short')
 
     def __call__(self, *points):
         """
@@ -67,18 +77,17 @@ class InterpolatingFunction:
         if len(points) != len(self.axes):
             raise TypeError('Wrong number of arguments')
         try:
-            neighbours = map(_lookup, points, self.axes)
+            neighbours = map(_lookup, points, self.axes, self.period)
         except ValueError, text:
             if self.default is not None:
                 return self.default
             else:
                 raise ValueError(text)
-        slices = ()
-        for item in neighbours:
-            slices = slices + index_expression[item[0]:item[1]+1:1]
+        slices = sum([item[0] for item in neighbours], ())
         values = self.values[slices]
         for item in neighbours:
-            values = (1.-item[2])*values[0]+item[2]*values[1]
+            weight = item[1]
+            values = (1.-weight)*values[0]+weight*values[1]
         return values
 
     def __len__(self):
@@ -90,8 +99,8 @@ class InterpolatingFunction:
 
     def __getitem__(self, i):
         """
-        @param i: any indexing expression possible for C{Numeric.array}
-            that does not use C{Numeric.NewAxis}
+        @param i: any indexing expression possible for C{N.array}
+            that does not use C{N.NewAxis}
         @type i: indexing expression
         @returns: an InterpolatingFunction whose number of variables
             is reduced, or a number if no variable is left
@@ -144,7 +153,7 @@ class InterpolatingFunction:
                 default = default.real
             except:
                 pass
-            return self._constructor(self.axes, values, default)
+            return self._constructor(self.axes, values, default. self.period)
         elif attr == 'imag':
             try:
                 values = self.values.imag
@@ -158,7 +167,7 @@ class InterpolatingFunction:
                     default = 0*self.default
                 except:
                     default = None
-            return self._constructor(self.axes, values, default)
+            return self._constructor(self.axes, values, default, self.period)
         else:
             raise AttributeError(attr)
 
@@ -175,13 +184,13 @@ class InterpolatingFunction:
         @rtype: L{InterpolatingFunction}
         """
         x = self.axes[variable]
-        c = Numeric.logical_and(Numeric.greater_equal(x, first),
-                                Numeric.less_equal(x, last))
-        i_axes = self.axes[:variable] + [Numeric.compress(c, x)] + \
+        c = N.logical_and(N.greater_equal(x, first),
+                          N.less_equal(x, last))
+        i_axes = self.axes[:variable] + [N.compress(c, x)] + \
                  self.axes[variable+1:]
-        i_values = Numeric.compress(c, self.values, variable)
-        return self._constructor(i_axes, i_values, None)
-        
+        i_values = N.compress(c, self.values, variable)
+        return self._constructor(i_axes, i_values, None, None)
+
     def derivative(self, variable = 0):
         """
         @param variable: the index of the variable of the function
@@ -192,20 +201,29 @@ class InterpolatingFunction:
         @rtype: L{InterpolatingFunction}
         """
         diffaxis = self.axes[variable]
-        ui = variable*index_expression[::] + \
-             index_expression[1::] + index_expression[...]
-        li = variable*index_expression[::] + \
-             index_expression[:-1:] + index_expression[...]
         ai = index_expression[::] + \
-             (len(self.values.shape)-variable-1) * index_expression[Numeric.NewAxis]
-        d_values = (self.values[ui]-self.values[li]) / \
-                   (diffaxis[1:]-diffaxis[:-1])[ai]
-        diffaxis = 0.5*(diffaxis[1:]+diffaxis[:-1])
+             (len(self.values.shape)-variable-1) * index_expression[N.NewAxis]
+        period = self.period[variable]
+        if period is None:
+            ui = variable*index_expression[::] + \
+                 index_expression[1::] + index_expression[...]
+            li = variable*index_expression[::] + \
+                 index_expression[:-1:] + index_expression[...]
+            d_values = (self.values[ui]-self.values[li]) / \
+                       (diffaxis[1:]-diffaxis[:-1])[ai]
+            diffaxis = 0.5*(diffaxis[1:]+diffaxis[:-1])
+        else:
+            u = N.take(self.values, range(1, len(diffaxis))+[0], axis=variable)
+            l = self.values
+            ua = N.concatenate((diffaxis[1:], period+diffaxis[0:1]))
+            la = diffaxis
+            d_values = (u-l)/(ua-la)[ai]
+            diffaxis = 0.5*(ua+la)
         d_axes = self.axes[:variable]+[diffaxis]+self.axes[variable+1:]
         d_default = None
         if self.default is not None:
             d_default = 0.
-        return self._constructor(d_axes, d_values, d_default)
+        return self._constructor(d_axes, d_values, d_default, self.period)
 
     def integral(self, variable = 0):
         """
@@ -217,24 +235,26 @@ class InterpolatingFunction:
             the integral at the first grid point is zero.
         @rtype: L{InterpolatingFunction}
         """
+        if self.period[variable] is not None:
+            raise ValueError('Integration over periodic variables not defined')
         intaxis = self.axes[variable]
         ui = variable*index_expression[::] + \
              index_expression[1::] + index_expression[...]
         li = variable*index_expression[::] + \
              index_expression[:-1:] + index_expression[...]
         uai = index_expression[1::] + (len(self.values.shape)-variable-1) * \
-              index_expression[Numeric.NewAxis]
+              index_expression[N.NewAxis]
         lai = index_expression[:-1:] + (len(self.values.shape)-variable-1) * \
-              index_expression[Numeric.NewAxis]
-        i_values = 0.5*Numeric.add.accumulate((self.values[ui]
+              index_expression[N.NewAxis]
+        i_values = 0.5*N.add.accumulate((self.values[ui]
                                                +self.values[li])* \
                                               (intaxis[uai]-intaxis[lai]),
                                               variable)
         s = list(self.values.shape)
         s[variable] = 1
-        z = Numeric.zeros(tuple(s))
+        z = N.zeros(tuple(s))
         return self._constructor(self.axes,
-                                 Numeric.concatenate((z, i_values), variable),
+                                 N.concatenate((z, i_values), variable),
                                  None)
 
     def definiteIntegral(self, variable = 0):
@@ -249,16 +269,18 @@ class InterpolatingFunction:
             is a number
         @rtype: L{InterpolatingFunction} or number
         """
+        if self.period[variable] is not None:
+            raise ValueError('Integration over periodic variables not defined')
         intaxis = self.axes[variable]
         ui = variable*index_expression[::] + \
              index_expression[1::] + index_expression[...]
         li = variable*index_expression[::] + \
              index_expression[:-1:] + index_expression[...]
         uai = index_expression[1::] + (len(self.values.shape)-variable-1) * \
-              index_expression[Numeric.NewAxis]
+              index_expression[N.NewAxis]
         lai = index_expression[:-1:] + (len(self.values.shape)-variable-1) * \
-              index_expression[Numeric.NewAxis]
-        i_values = 0.5*Numeric.add.reduce((self.values[ui]+self.values[li]) * \
+              index_expression[N.NewAxis]
+        i_values = 0.5*N.add.reduce((self.values[ui]+self.values[li]) * \
                    (intaxis[uai]-intaxis[lai]), variable)
         if len(self.axes) == 1:
             return i_values
@@ -274,9 +296,13 @@ class InterpolatingFunction:
             by a X{least-squares} fit to the grid values
         @rtype: L{Scientific.Functions.Polynomial}
         """
+        for p in self.period:
+            if p is not None:
+                raise ValueError('Polynomial fit not possible ' +
+                                 'for periodic function')
         points = _combinations(self.axes)
         return Polynomial._fitPolynomial(order, points,
-                                         Numeric.ravel(self.values))
+                                         N.ravel(self.values))
 
     def __abs__(self):
         values = abs(self.values)
@@ -294,40 +320,40 @@ class InterpolatingFunction:
         return self._constructor(self.axes, function(self.values), default)
 
     def exp(self):
-        return self._mathfunc(Numeric.exp)
+        return self._mathfunc(N.exp)
 
     def log(self):
-        return self._mathfunc(Numeric.log)
+        return self._mathfunc(N.log)
 
     def sqrt(self):
-        return self._mathfunc(Numeric.sqrt)
+        return self._mathfunc(N.sqrt)
 
     def sin(self):
-        return self._mathfunc(Numeric.sin)
+        return self._mathfunc(N.sin)
 
     def cos(self):
-        return self._mathfunc(Numeric.cos)
+        return self._mathfunc(N.cos)
 
     def tan(self):
-        return self._mathfunc(Numeric.tan)
+        return self._mathfunc(N.tan)
 
     def sinh(self):
-        return self._mathfunc(Numeric.sinh)
+        return self._mathfunc(N.sinh)
 
     def cosh(self):
-        return self._mathfunc(Numeric.cosh)
+        return self._mathfunc(N.cosh)
 
     def tanh(self):
-        return self._mathfunc(Numeric.tanh)
+        return self._mathfunc(N.tanh)
 
     def arcsin(self):
-        return self._mathfunc(Numeric.arcsin)
+        return self._mathfunc(N.arcsin)
 
     def arccos(self):
-        return self._mathfunc(Numeric.arccos)
+        return self._mathfunc(N.arccos)
 
     def arctan(self):
-        return self._mathfunc(Numeric.arctan)
+        return self._mathfunc(N.arctan)
 
 InterpolatingFunction._constructor = InterpolatingFunction
 
@@ -341,7 +367,8 @@ class NetCDFInterpolatingFunction(InterpolatingFunction):
     A subclass of L{InterpolatingFunction}.
     """
 
-    def __init__(self, filename, axesnames, variablename, default = None):
+    def __init__(self, filename, axesnames, variablename, default = None,
+                 period = None):
         """
         @param filename: the name of the netCDF file
         @type filename: C{str}
@@ -359,6 +386,10 @@ class NetCDFInterpolatingFunction(InterpolatingFunction):
             the grid and that any attempt to evaluate it there
             raises an exception.
         @type default: number or C{None}
+
+        @param period: the period for each of the variables, or C{None} for
+            variables in which the function is not periodic.
+        @type period: sequence of numbers or C{None}
         """
         from Scientific.IO.NetCDF import NetCDFFile
         self.file = NetCDFFile(filename, 'r')
@@ -368,24 +399,43 @@ class NetCDFInterpolatingFunction(InterpolatingFunction):
         self.shape = ()
         for axis in self.axes:
             self.shape = self.shape + axis.shape
+        if period is None:
+            period = len(self.axes)*[None]
+        self.period = period
+        if len(self.period) != len(self.axes):
+            raise ValueError('Inconsistent arguments')
+        for a, p in zip(self.axes, self.period):
+            if p is not None and a[0]+p <= a[-1]:
+                raise ValueError('Period too short')
 
 NetCDFInterpolatingFunction._constructor = InterpolatingFunction
 
 
 # Helper functions
 
-def _lookup(point, axis):
-    j = Numeric.int_sum(Numeric.less_equal(axis, point))
-    if j == len(axis):
-        if Numeric.fabs(point - axis[j-1]) < 1.e-9:
-            return j-2, j-1, 1.
+def _lookup(point, axis, period):
+    if period is None:
+        j = N.int_sum(N.less_equal(axis, point))
+        if j == len(axis):
+            if N.fabs(point - axis[j-1]) < 1.e-9:
+                return index_expression[j-2:j:1], 1.
+            else:
+                j = 0
+        if j == 0:
+            raise ValueError('Point outside grid of values')
+        i = j-1
+        weight = (point-axis[i])/(axis[j]-axis[i])
+        return index_expression[i:j+1:1], weight
+    else:
+        point = axis[0] + (point-axis[0]) % period
+        j = N.int_sum(N.less_equal(axis, point))
+        i = j-1
+        if j == len(axis):
+            weight = (point-axis[i])/(axis[0]+period-axis[i])
+            return index_expression[0:i+1:i], 1.-weight
         else:
-            j = 0
-    if j == 0:
-        raise ValueError('Point outside grid of values')
-    i = j-1
-    weight = (point-axis[i])/(axis[j]-axis[i])
-    return i, j, weight
+            weight = (point-axis[i])/(axis[j]-axis[i])
+            return index_expression[i:j+1:1], weight
 
 def _combinations(axes):
     if len(axes) == 1:
@@ -403,16 +453,24 @@ def _combinations(axes):
 
 if __name__ == '__main__':
 
-    from Numeric import *
-    axis = arange(0,1.1,0.1)
-    values = sqrt(axis)
-    s = InterpolatingFunction((axis,), values)
-    print s(0.22), sqrt(0.22)
-    sd = s.derivative()
-    print sd(0.35), 0.5/sqrt(0.35)
-    si = s.integral()
-    print si(0.42), (0.42**1.5)/1.5
-    print s.definiteIntegral()
-    values = sin(axis[:,NewAxis])*cos(axis)
-    sc = InterpolatingFunction((axis,axis),values)
-    print sc(0.23, 0.77), sin(0.23)*cos(0.77)
+##     axis = N.arange(0,1.1,0.1)
+##     values = N.sqrt(axis)
+##     s = InterpolatingFunction((axis,), values)
+##     print s(0.22), N.sqrt(0.22)
+##     sd = s.derivative()
+##     print sd(0.35), 0.5/N.sqrt(0.35)
+##     si = s.integral()
+##     print si(0.42), (0.42**1.5)/1.5
+##     print s.definiteIntegral()
+##     values = N.sin(axis[:,N.NewAxis])*N.cos(axis)
+##     sc = InterpolatingFunction((axis,axis),values)
+##     print sc(0.23, 0.77), N.sin(0.23)*N.cos(0.77)
+
+    axis = N.arange(20)*(2.*N.pi)/20.
+    values = N.sin(axis)
+    s = InterpolatingFunction((axis,), values, period=(2.*N.pi,))
+    c = s.derivative()
+    for x in N.arange(0., 15., 1.):
+        print x
+        print N.sin(x), s(x)
+        print N.cos(x), c(x)
