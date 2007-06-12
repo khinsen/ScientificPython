@@ -1,7 +1,7 @@
 # This module provides a class representing scalar, vector, and tensor fields.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-5-25
+# last revision: 2007-6-12
 #
 
 """
@@ -21,8 +21,8 @@ class TensorField(Interpolation.InterpolatingFunction):
     """Tensor field of arbitrary rank
 
     A tensor field is described by a tensor at each point of
-    a three-dimensional rectangular grid. The grid spacing
-    may be non-uniform. Tensor fields are implemented as a subclass
+    a three-dimensional rectangular grid. The grid spacing must
+    be uniform. Tensor fields are implemented as a subclass
     of InterpolatingFunction from the module
     Scientific.Functions.Interpolation and thus share all methods
     defined in that class.
@@ -33,7 +33,8 @@ class TensorField(Interpolation.InterpolatingFunction):
      - 'tensorfield(coordinates)'  (sequence containing three coordinates)
     """
 
-    def __init__(self, rank, axes, values, default = None, check = True):
+    def __init__(self, rank, axes, values, default = None,
+                 period = (None, None, None), check = True):
         """
         @param rank: the tensor rank
         @type rank: C{int}
@@ -56,11 +57,17 @@ class TensorField(Interpolation.InterpolatingFunction):
                         correct rank.
         @type default: L{Scientific.Geometry.Tensor} or C{NoneType}
 
+        @param period: the period for each of the variables, or C{None} for
+            variables in which the function is not periodic.
+        @type period: sequence of length three
+
         @raise ValueError: if the arguments are not consistent
         """
         if check:
             if len(axes) != 3:
                 raise ValueError('Field must have three axes')
+            if len(period) != 3:
+                raise ValueError('Field requires three period values')
             if len(values.shape) != 3 + rank:
                 raise ValueError('Values must have rank ' + `rank`)
             if values.shape[3:] != rank*(3,):
@@ -75,7 +82,7 @@ class TensorField(Interpolation.InterpolatingFunction):
                 if abs(dmin-Numeric.maximum.reduce(d)) > 0.0001*dmin:
                     raise ValueError('Grid must be equidistant')
         Interpolation.InterpolatingFunction.__init__(self, axes, values,
-                                                     default)
+                                                     default, period)
 
     def __call__(self, *points):
         if len(points) == 1:
@@ -99,11 +106,14 @@ class TensorField(Interpolation.InterpolatingFunction):
         try: default = self.default[index]
         except TypeError: default = None
         if rank == 0:
-            return ScalarField(self.axes, self.values[index], default, 0)
+            return ScalarField(self.axes, self.values[index], default,
+                               self.period, False)
         elif rank == 1:
-            return VectorField(self.axes, self.values[index], default, 0)
+            return VectorField(self.axes, self.values[index], default,
+                               self.period, False)
         else:
-            return TensorField(self.axes, rank, self.values[index], default, 0)
+            return TensorField(self.axes, rank, self.values[index], default,
+                               self.period, False)
 
     def zero(self):
         """
@@ -123,18 +133,27 @@ class TensorField(Interpolation.InterpolatingFunction):
         @returns: the derivative with respect to variable
         @rtype: L{TensorField}
         """
-        ui = variable*index_expression[::] + \
-             index_expression[2::] + index_expression[...]
-        li = variable*index_expression[::] + \
-             index_expression[:-2:] + index_expression[...]
-        d_values = 0.5*(self.values[ui]-self.values[li])/self.spacing[variable]
-        diffaxis = self.axes[variable]
-        diffaxis = 0.5*(diffaxis[2:]+diffaxis[:-2])
-        d_axes = self.axes[:variable]+[diffaxis]+self.axes[variable+1:]
+        period = self.period[variable]
+        if period is None:
+            ui = variable*index_expression[::] + \
+                 index_expression[2::] + index_expression[...]
+            li = variable*index_expression[::] + \
+                 index_expression[:-2:] + index_expression[...]
+            d_values = 0.5*(self.values[ui]-self.values[li]) \
+                       /self.spacing[variable]
+            diffaxis = self.axes[variable][1:-1]
+            d_axes = self.axes[:variable]+[diffaxis]+self.axes[variable+1:]
+        else:
+            u = N.take(self.values, range(2, len(self.axes[variable]))+[0, 1],
+                       axis=variable)
+            l = self.values
+            d_values = (u-l)/self.spacing[variable]
+            d_axes = self.axes
         d_default = None
         if self.default is not None:
             d_default = Numeric.zeros(self.rank*(3,), Numeric.Float)
-        return self._constructor(d_axes, d_values, d_default, 0)
+        return self._constructor(d_axes, d_values, d_default,
+                                 self.period, False)
 
     def allDerivatives(self):
         """
@@ -142,14 +161,17 @@ class TensorField(Interpolation.InterpolatingFunction):
         @rtype: (L{TensorField}, L{TensorField}, L{TensorField})
         """
         x = self.derivative(0)
-        x._reduceAxis(1)
-        x._reduceAxis(2)
         y = self.derivative(1)
-        y._reduceAxis(0)
-        y._reduceAxis(2)
         z = self.derivative(2)
-        z._reduceAxis(0)
-        z._reduceAxis(1)
+        if self.period[0] is None:
+            y._reduceAxis(0)
+            z._reduceAxis(0)
+        if self.period[1] is None:
+            x._reduceAxis(1)
+            z._reduceAxis(1)
+        if self.period[2] is None:
+            x._reduceAxis(2)
+            y._reduceAxis(2)
         return x, y, z
 
     def _reduceAxis(self, variable):
@@ -159,7 +181,8 @@ class TensorField(Interpolation.InterpolatingFunction):
         self.values = self.values[i]
 
     def _checkCompatibility(self, other):
-        pass
+        if self.period != other.period:
+            raise ValueError("Periods don't match")
 
     def __add__(self, other):
         self._checkCompatibility(other)
@@ -168,7 +191,7 @@ class TensorField(Interpolation.InterpolatingFunction):
         else:
             default = self.default + other.default
         return self._constructor(self.axes, self.values+other.values,
-                                 default, 0)
+                                 default, self.period, False)
 
     def __sub__(self, other):
         self._checkCompatibility(other)
@@ -177,7 +200,7 @@ class TensorField(Interpolation.InterpolatingFunction):
         else:
             default = self.default - other.default
         return self._constructor(self.axes, self.values-other.values,
-                                 default, 0)
+                                 default, self.period, False)
 
 #
 # Scalar field class definition
@@ -189,7 +212,8 @@ class ScalarField(TensorField):
     A subclass of TensorField.
     """
 
-    def __init__(self, axes, values, default = None, check = True):
+    def __init__(self, axes, values, default = None,
+                 period = (None, None, None), check = True):
         """
         @param axes: three arrays specifying the axis ticks for the three
                      axes
@@ -208,9 +232,13 @@ class ScalarField(TensorField):
                         correct rank.
         @type default: number or C{NoneType}
 
+        @param period: the period for each of the variables, or C{None} for
+            variables in which the function is not periodic.
+        @type period: sequence of length three
+
         @raise ValueError: if the arguments are not consistent
         """
-        TensorField.__init__(self, 0, axes, values, default, check)
+        TensorField.__init__(self, 0, axes, values, default, period, check)
 
     def gradient(self):
         """
@@ -224,7 +252,7 @@ class ScalarField(TensorField):
             default = None
         else:
             default = Numeric.zeros((3,), Numeric.Float)
-        return VectorField(x.axes, grad, default, 0)
+        return VectorField(x.axes, grad, default, self.period, False)
 
     def laplacian(self):
         """
@@ -245,7 +273,8 @@ class VectorField(TensorField):
     A subclass of TensorField.
     """
 
-    def __init__(self, axes, values, default = None, check = True):
+    def __init__(self, axes, values, default = None,
+                 period = (None, None, None), check = True):
         """
         @param axes: three arrays specifying the axis ticks for the three
                      axes
@@ -264,9 +293,13 @@ class VectorField(TensorField):
                         the grid. Any other value must a vector
         @type default: L{Scientific.Geometry.Vector} or C{NoneType}
 
+        @param period: the period for each of the variables, or C{None} for
+            variables in which the function is not periodic.
+        @type period: sequence of length three
+
         @raise ValueError: if the arguments are not consistent
         """
-        TensorField.__init__(self, 1, axes, values, default, check)
+        TensorField.__init__(self, 1, axes, values, default, period, check)
 
     def zero(self):
         return Vector(0., 0., 0.)
@@ -284,7 +317,7 @@ class VectorField(TensorField):
             default = None
         else:
             default = Numeric.zeros((3,), Numeric.Float)
-        return VectorField(x.axes, curl, default, 0)
+        return VectorField(x.axes, curl, default, self.period, False)
 
     def _strain(self, x, y, z):
         strain = Numeric.transpose(Numeric.array([x.values, y.values,
@@ -298,7 +331,7 @@ class VectorField(TensorField):
             default = None
         else:
             default = Numeric.zeros((3, 3), Numeric.Float)
-        return TensorField(2, x.axes, strain, default, 0)
+        return TensorField(2, x.axes, strain, default, self.period, False)
         
     def divergence(self):
         """
@@ -355,7 +388,7 @@ class VectorField(TensorField):
                 default = Numeric.sqrt(Numeric.add.reduce(self.default))
             except ValueError:
                 default = None
-        return ScalarField(self.axes, l, default, 0)
+        return ScalarField(self.axes, l, default, self.period, False)
 
 VectorField._constructor = VectorField
 
@@ -367,7 +400,13 @@ if __name__ == '__main__':
     from Numeric import *
     axis = arange(0., 1., 0.1)
     values = zeros((10,10,10,3), Float)
+
     zero = VectorField(3*(axis,), values)
+    div = zero.divergence()
+    curl = zero.curl()
+    strain = zero.strain()
+
+    zero = VectorField(3*(axis,), values, period=(1.1, 1.1, 1.1))
     div = zero.divergence()
     curl = zero.curl()
     strain = zero.strain()
