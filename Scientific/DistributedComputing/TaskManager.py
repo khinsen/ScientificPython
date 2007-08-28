@@ -2,7 +2,7 @@
 # Task manager for distributed computing based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-12-12
+# last revision: 2007-8-28
 #
 
 import Pyro.core
@@ -577,7 +577,7 @@ class Watchdog(object):
             self.lock.acquire()
             for process_id in self.ping_period.keys():
                 delay = now-self.last_ping[process_id]
-                if delay > 2*self.ping_period[process_id]:
+                if delay > 4*self.ping_period[process_id]:
                     dead_processes.append(process_id)
             self.lock.release()
             for process_id in dead_processes:

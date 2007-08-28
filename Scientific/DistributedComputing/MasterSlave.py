@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-5-1
+# last revision: 2007-8-28
 #
 
 """
@@ -200,7 +200,7 @@ class SlaveProcess(object):
     method "start".
     """
 
-    def __init__(self, label, master_host=None):
+    def __init__(self, label, master_host=None, watchdog_period=120.):
         """
         @param label: the label that identifies the task manager
         @type label: C{str}
@@ -212,6 +212,14 @@ class SlaveProcess(object):
                             master process runs, plus the port number if it
                             is different from the default (7766).
         @type master_host: C{str} or C{NoneType}
+
+        @param watchdog_period: the interval (in seconds) at which the
+                                slave process sends messages to the
+                                manager to signal that it is still alive.
+                                If None, no messages are sent at all. In that
+                                case, the manager cannot recognize if the slave
+                                job has crashed or been killed.
+        @type watchdog_period: C{int} or C{NoneType}
         """
         Pyro.core.initClient(banner=False)
         if master_host is None:
@@ -221,8 +229,7 @@ class SlaveProcess(object):
             # URI defaults to "PYROLOC://localhost:7766/"
             uri = "PYROLOC://%s/TaskManager.%s" % (master_host, label)
             self.task_manager = Pyro.core.getProxyForURI(uri)
-        # Do a ping every minute - maybe this will become a parameter later on
-        self.watchdog_period = 60.
+        self.watchdog_period = watchdog_period
         self.done = False
         # Compile a dictionary of methods that implement tasks
         import inspect
@@ -252,9 +259,11 @@ class SlaveProcess(object):
         self.process_id = \
             self.task_manager.registerProcess(self.watchdog_period,
                                               info = getMachineInfo())
-        self.background_thread = threading.Thread(target=self.watchdogThread)
-        self.background_thread.setDaemon(True)
-        self.background_thread.start()
+        if self.watchdog_period is not None:
+            self.background_thread = \
+                              threading.Thread(target=self.watchdogThread)
+            self.background_thread.setDaemon(True)
+            self.background_thread.start()
         while True:
             try:
                 task_id, tag, parameters = \
@@ -291,7 +300,7 @@ def getMachineInfo():
 #
 # Job handling utility
 #
-def runJob(label, master_class, slave_class):
+def runJob(label, master_class, slave_class, watchdog_period=120.):
     """
     Creates an instance of the master_class and runs it. A copy
     of the script and the current working directory are stored in the
@@ -306,6 +315,14 @@ def runJob(label, master_class, slave_class):
 
     @param slave_class: the class implementing the slave process
                         (a subclass of L{SlaveProcess})
+
+    @param watchdog_period: the interval (in seconds) at which the
+                            slave process sends messages to the
+                            manager to signal that it is still alive.
+                            If None, no messages are sent at all. In that
+                            case, the manager cannot recognize if the slave
+                            job has crashed or been killed.
+    @type watchdog_period: C{int} or C{NoneType}
     """
     import inspect
     import os
@@ -326,7 +343,7 @@ def runJob(label, master_class, slave_class):
                                        cwd = os.getcwd())
         process.start()
     else:
-        slave_class(label).start()
+        slave_class(label, watchdog_period=watchdog_period).start()
 
 #
 # Alternate interface for multi-module programs
