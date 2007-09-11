@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-6-12
+# last revision: 2007-9-11
 #
 
 """
@@ -107,16 +107,15 @@ class InterpolatingFunction:
         @rtype: L{InterpolatingFunction} or number
         @raise TypeError: if i is not an allowed index expression
         """
-        ti = type(i)
-        if isinstance(ti, int):
+        if isinstance(i, int):
             if len(self.axes) == 1:
                 return (self.axes[0][i], self.values[i])
             else:
                 return self._constructor(self.axes[1:], self.values[i])
-        elif ti == type(slice(None)):
+        elif isinstance(i, slice):
             axes = [self.axes[0][i]] + self.axes[1:]
             return self._constructor(axes, self.values[i])
-        elif ti == type(()):
+        elif isinstance(i, tuple):
             axes = []
             rest = self.axes[:]
             for item in i:
