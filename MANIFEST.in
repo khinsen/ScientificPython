@@ -9,5 +9,5 @@ include Doc/BSP_Tutorial.pdf
 include Doc/Reference/*
 include Examples/*.c Examples/*.py Examples/BSP/*.py Examples/README
 recursive-include Include *.h
-include Tools/makeheader.py
+recursive-include Tools *.py
 exclude Scientific/BSP/Tasks.py
