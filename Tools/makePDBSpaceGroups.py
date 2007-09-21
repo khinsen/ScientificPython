@@ -4,10 +4,11 @@
 # available to run this script.
 #
 # Written by Konrad Hinsen
-# last revision: 2007-4-12
+# last revision: 2007-9-21
 #
 
 from cctbx.sgtbx import space_group_info
+from Scientific import N
 
 def format_rational(r):
     s = str(r)
@@ -16,20 +17,20 @@ def format_rational(r):
     else:
         return s + '.'
 
-def space_group_table_entry(labels):
-    sgi = space_group_info(labels[0])
+def space_group_table_entry(number, labels, sgi):
     group = sgi.group()
     print "transformations = []"
     for symmetry_transformation in group:
         rot =  symmetry_transformation.as_rational().r
         trans =  symmetry_transformation.as_rational().t
         print 'rot = N.array([' + \
-              ','.join([format_rational(x) for x in rot]) + '])'
+              ','.join([str(x) for x in rot]) + '])'
         print 'rot.shape = (3, 3)'
         print 'trans = Vector(' + \
               ','.join([format_rational(x) for x in trans]) + ')'
-        print 'transformations.append(Translation(trans)*Rotation(Tensor(rot)))'
-    print 'sg = SpaceGroup(%s, transformations)' % str(labels)
+        print 'transformations.append((rot, trans))'
+    print 'sg = SpaceGroup(%d, %s, transformations)' % (number, str(labels))
+    print "_space_group_table[%d] = sg" % number
     for l in labels:
         print "_space_group_table[%s] = sg" % repr(l)
     print
@@ -580,28 +581,68 @@ from Scientific import N
 
 class SpaceGroup(object):
 
-    def __init__(self, labels, transformations):
+    def __init__(self, number, labels, transformations):
+        self.number = number
         self.labels = labels
-        self.transformations = transformations
+        self.transformations = []
+        for rot, trans in transformations:
+            self.transformations.append(Translation(trans)*Rotation(Tensor(rot)))
 
 _space_group_table = {}
 
-def getSpaceGroupTransformations(space_group_label):
+def getSpaceGroupTransformations(space_group_label_or_number):
     try:
-        return _space_group_table[space_group_label].transformations
+        return _space_group_table[space_group_label_or_number].transformations
     except KeyError:
         pass
     space_group_label = ''.join(space_group_label.split())
     return _space_group_table[space_group_label].transformations
 """
 
+# The space group label list has many groups more than once (there are only
+# 230 space groups), so we need to identify the unique space groups first.
+space_groups = {}
+space_group_names = {}
 for labels in space_group_labels:
     for i in range(len(labels)):
         if not ':' in labels[i]:
             l = labels[i]
             del labels[i]
             labels.insert(0, l)
-    space_group_table_entry(labels)
+    sgi = space_group_info(labels[0])
+    unique_name = sgi.symbol_and_number() 
+    start = unique_name.find('(No. ')
+    end = unique_name.find(')')
+    number = int(unique_name[start+5:end])
+    space_groups[number] = sgi
+    space_group_names[number] = \
+              space_group_names.get(number, []) + labels
+
+# Space groups with reflection operations cannot occur in biomolecular
+# crystals, so remove them.
+to_remove = []
+for number in space_groups.keys():
+    sgi = space_groups[number]
+    for symmetry_transformation in sgi.group():
+        rot =  symmetry_transformation.as_rational().r
+        rot = N.array(rot)
+        rot.shape = (3, 3)
+        det = rot[0,0] * (rot[1, 1]*rot[2,2]-rot[1,2]*rot[2,1]) \
+            - rot[0,1] * (rot[1, 0]*rot[2,2]-rot[1,2]*rot[2,0]) \
+            + rot[0,2] * (rot[1, 0]*rot[2,1]-rot[1,1]*rot[2,0])
+        assert abs(det) == 1
+        if det < 0:
+            to_remove.append(number)
+            break
+
+for number in to_remove:
+    del space_groups[number]
+    del space_group_names[number]
+
+# Generate the code lines for the remaining space groups
+for number in space_groups.keys():
+    space_group_table_entry(number, space_group_names[number],
+                            space_groups[number])
 
 print """
 del transformations
