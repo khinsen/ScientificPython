@@ -8,6 +8,7 @@ if package == "Numeric":
         return add.reduce(a, axis)
     def zeros_st(shape, other):
         return zeros(shape, other.typecode())
+    array_type = ArrayType
 
 elif package == "NumPy":
 
@@ -16,6 +17,7 @@ elif package == "NumPy":
         return add.reduce(a, axis)
     def zeros_st(shape, other):
         return zeros(shape, dtype=other.dtype)
+    from numpy import ndarray as array_type
 
 elif package == "Numarray":
 
