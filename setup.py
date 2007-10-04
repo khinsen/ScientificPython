@@ -21,6 +21,9 @@ execfile('Scientific/__pkginfo__.py', pkginfo.__dict__)
 
 extra_compile_args = []
 arrayobject_h_include = []
+math_libraries = []
+if sys.platform != 'win32':
+    math_libraries.append('m')
 
 if netcdf_prefix is None:
     try:
@@ -88,7 +91,7 @@ scripts = ['bsp_virtual']
 
 ext_modules.append(Extension('Scientific_vector',
                              ['Src/Scientific_vector.c'],
-                             libraries=['m']))
+                             libraries=math_libraries))
 
 
 class modified_install_headers(install_headers):
