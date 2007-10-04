@@ -1,3 +1,14 @@
+2.6 --> 2.6.1
+-------------
+
+Bug fixes:
+
+- A typo in Scientific.IO.PDB was fixed.
+- The build procedure was broken under Windows, it tried to link with
+  libm as under Unix.
+- Removed exception for order > 1 in Derivatives.DerivVar.__init__
+- Replaced float equality test in Functions.InterpolatingFunction
+
 2.5.11 --> 2.6
 --------------
 
