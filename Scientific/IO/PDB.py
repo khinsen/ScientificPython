@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-23
+# Last revision: 2007-10-4
 # 
 
 """
@@ -1300,7 +1300,7 @@ class Structure:
         if self.model != 0:
             s = s + ", model=" + repr(self.model)
         if self.alternate != 'A':
-            s = s + ", alternate_code = " + repr(self.alternate_code)
+            s = s + ", alternate_code = " + repr(self.alternate)
         s = s + "):\n"
         for name, list in [("Peptide", self.peptide_chains),
                            ("Nucleotide", self.nucleotide_chains)]:
