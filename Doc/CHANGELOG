@@ -1,3 +1,28 @@
+2.7.6 --> 2.7.7
+---------------
+
+Bug fixes:
+
+- Installation on Windows didn't work because the Unix maths libraries
+  don't exist there.
+
+
+Improvements:
+
+- InterpolatingFunction and TensorField objects can represent
+  periodic functions/fields.
+
+- DistributedComputing: the watchdog period of slave processes is now
+  a user-definable parameter.
+
+- PDBSpaceGroups was simplified, making it shorter and faster to load.
+
+- Scientific.N contains the array type object in the variable array_type.
+  This makes it possible to write Pyrex modules using arrays in such a
+  way that they always use the numeric module for which ScientificPython
+  was compiled.
+
+ 
 2.7.5 --> 2.7.6
 ---------------
 
