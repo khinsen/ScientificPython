@@ -33,6 +33,10 @@ if "--numarray" in sys.argv:
 else:
     use_numarray = 0
 
+math_libraries = []
+if sys.platform != 'win32':
+    math_libraries.append('m')
+
 if netcdf_prefix is None:
     try:
         netcdf_prefix=os.environ['NETCDF_PREFIX']
@@ -98,12 +102,12 @@ packages = ['Scientific', 'Scientific.Clustering', 'Scientific.Functions',
 ext_modules.append(Extension('Scientific_vector',
                              ['Src/Scientific_vector.c'],
                              include_dirs=['Include']+arrayobject_h_include,
-                             libraries=['m'],
+                             libraries=math_libraries,
                              extra_compile_args=extra_compile_args))
 ext_modules.append(Extension('Scientific_affinitypropagation',
                              ['Src/Scientific_affinitypropagation.c'],
                              include_dirs=['Include']+arrayobject_h_include,
-                             libraries=['m'],
+                             libraries=math_libraries,
                              extra_compile_args=extra_compile_args))
 ext_modules.append(Extension('Scientific_numerics_package_id',
                              ['Src/Scientific_numerics_package_id.c'],
