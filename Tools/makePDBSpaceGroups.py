@@ -4,7 +4,7 @@
 # available to run this script.
 #
 # Written by Konrad Hinsen
-# last revision: 2007-9-21
+# last revision: 2007-10-18
 #
 
 from cctbx.sgtbx import space_group_info
@@ -595,7 +595,7 @@ def getSpaceGroupTransformations(space_group_label_or_number):
         return _space_group_table[space_group_label_or_number].transformations
     except KeyError:
         pass
-    space_group_label = ''.join(space_group_label.split())
+    space_group_label = ''.join(space_group_label_or_number.split())
     return _space_group_table[space_group_label].transformations
 """
 

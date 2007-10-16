@@ -22,7 +22,7 @@ def getSpaceGroupTransformations(space_group_label_or_number):
         return _space_group_table[space_group_label_or_number].transformations
     except KeyError:
         pass
-    space_group_label = ''.join(space_group_label.split())
+    space_group_label = ''.join(space_group_label_or_number.split())
     return _space_group_table[space_group_label].transformations
 
 transformations = []
