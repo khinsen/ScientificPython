@@ -1,7 +1,7 @@
 # Implementation of Scientific.Geometry.Vector in Pyrex
 #
 # Written by Konrad Hinsen
-# last revision: 2006-5-29
+# last revision: 2007-10-16
 #
 
 
@@ -32,6 +32,17 @@ cdef class vector:
     property array:
         def __get__(self):
             return N.array([self.xv, self.yv, self.zv])
+
+    # __array_priority__ and __array_wrap__ are needed to permit
+    # multiplication with numpy scalar types.
+    property __array_priority__:
+        def __get__(self):
+            return 10.0
+
+    def __array_wrap__(self, array):
+        result = vector()
+        vector.set(result, array[0], array[1], array[2])
+        return result
 
     def __copy__(self, memo = None):
         return self
