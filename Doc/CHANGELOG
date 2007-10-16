@@ -1,3 +1,20 @@
+2.7.6 --> 2.7.8hg
+-----------------
+
+Bug fixes:
+
+- Due to a typo in Scientific.IO.PDBSpaceGroups, some space group
+  names were not found in the space group table.
+
+Improvements:
+
+- Vector objects can now be multiplied with NumPy scalar objects
+  (which is what you get when extracting numbers from NumPy
+  arrays). Due to the way NumPy scalars handle multiplication, the
+  result used to be an array rather than a Vector, which caused
+  various applications to crash.
+
+
 2.7.6 --> 2.7.7
 ---------------
 
