@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2007-6-22
+# Last revision: 2007-10-17
 # 
 
 """
@@ -1085,8 +1085,11 @@ class Structure:
 
      - if a CRYST1 record exists, 's.a', 's.b', 's.c', 's.alpha',
        's.beta', 's.gamma' are the parameters of the unit cell and
-       's.space_group' is a string indicating the space group. If no
-       CRYST1 record exists, all those values are None.
+       's.space_group' is a string indicating the space group.
+       If no CRYST1 record exists, all those values are None.
+       Furthermore, 's.cs_transformations' is a list of transformations
+       that describe crystallographic symmetries. If no CRYST1 record
+       exists, the list is empty.
 
     An iteration over a Structure instance by a for-loop is equivalent
     to an iteration over the residue list.
