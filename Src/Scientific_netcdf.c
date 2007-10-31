@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2007-1-9
+ * last revision: 2007-10-31
  */
 
 #ifdef _WIN32
@@ -346,16 +346,14 @@ typecode(int type)
 
 #else
 
-#if ((PyArray_CHAR != PyArray_SBYTE) && (PyArray_CHAR != PyArray_UBYTE))
-  case PyArray_CHAR:
-    t = 'c';
-    break;
-#endif
   case PyArray_UBYTE:
     t = 'b';
     break;
   case PyArray_SBYTE:
     t = '1';
+    break;
+  case PyArray_CHAR:
+    t = 'c';
     break;
   case PyArray_SHORT:
     t = 's';
