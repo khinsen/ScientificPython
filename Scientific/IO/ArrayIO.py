@@ -136,7 +136,7 @@ def writeDataSets(datasets, filename, separator = ''):
     file = TextFile(filename, 'w')
     nsets = len(datasets)
     for i in range(nsets):
-        d = Numeric.array(datasets[i])
+        d = Numeric.array(list(datasets[i]))
         if len(d.shape) == 1:
             d = d[:, Numeric.NewAxis]
         for point in d:
