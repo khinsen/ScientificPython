@@ -36,6 +36,8 @@ Required: Python 2.2 or higher. Most modules also require Numerical
 Python. If you want to use the netCDF interface module, you also need
 the netCDF library, version 3.0 or higher.
 
+1) Unix-like systems, including Linux and MacOS X
+
 Installation is as simple as
 
     python setup.py build
@@ -43,14 +45,31 @@ Installation is as simple as
 
 (the second command requires root privileges on many installations).
 This will build the netCDF module if it can find a netCDF installation
-in either /usr/local or in /usr. If you you have installed netCDF
-somewhere else, you must edit the file setup.py and replace "None" in
-line 10 by the name of the base directory in quotes.
+in either /usr/local or in /usr. If your netCDF installation is elsewhere,
+set the environment variable "NETCDF_PREFIX" to the directory in which
+"include/netcdf.h" and "lib/netcdf.so" are located.
 
+2) Windows
 
-Note for Macintosh users: Scientific Python is available through the
-fink project. However, you can also use the standard Unix installation
-procedure if you prefer.
+To build the netCDF interface module, you must have a binary version
+of netCDF. You can either compile it yourself, or download the
+precompiled netcdf.dll from the netCDF Web site. You also need the
+file netcdf.h, which you can find in the netCDF source code
+distribution. PLEASE MAKE SURE THAT NETCDF.DLL AND NETCDF.H ARE FOR
+THE SAME NETCDF RELEASE!
+
+Installation is as simple as
+
+    python setup.py build --netcdf_prefix=dir_h --netcdf_dll=dir_dll
+    python setup.py install --netcdf_prefix=dir_h --netcdf_dll=dir_dll
+
+where "dir_h" is the directory in which netcdf.h is located and
+"dir_dll" is the the directory in which netcdf.dll is located.
+
+Alternatively, you can create a binary installer using
+
+    python setup.py bdist_wininst --netcdf_prefix=dir_h --netcdf_dll=dir_dll
+
 
 
 Using numpy or numarray:

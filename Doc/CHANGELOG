@@ -1,5 +1,5 @@
-2.7.6 --> 2.7.8hg
------------------
+2.7.6 --> 2.7.8
+---------------
 
 Bug fixes:
 
@@ -14,6 +14,9 @@ Improvements:
   result used to be an array rather than a Vector, which caused
   various applications to crash.
 
+- The build procedure under Windows has been improved. It can
+  generate a binary installer that includes the netCDF DLL,
+  making ScientificPython independent of a netCDF installation.
 
 2.7.6 --> 2.7.7
 ---------------

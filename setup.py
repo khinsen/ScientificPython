@@ -5,11 +5,6 @@ from distutils.command.install_headers import install_headers
 import os, sys
 from glob import glob
 
-# If your netCDF installation is in a non-standard place, set the following
-# variable to the base directory, or set the environment variable
-# NETCDF_PREFIX before running setup.py
-netcdf_prefix = None
-
 class Dummy:
     pass
 pkginfo = Dummy()
@@ -17,6 +12,11 @@ execfile('Scientific/__pkginfo__.py', pkginfo.__dict__)
 
 extra_compile_args = []
 arrayobject_h_include = []
+data_files = []
+scripts = []
+cmdclass = {}
+options = {}
+
 if "--numpy" in sys.argv:
     use_numpy = 1
     extra_compile_args.append("-DNUMPY=1")
@@ -37,29 +37,62 @@ math_libraries = []
 if sys.platform != 'win32':
     math_libraries.append('m')
 
+#
+# Locate netCDF library
+#
+netcdf_prefix = None
+for arg in sys.argv[1:]:
+    if arg[:16] == "--netcdf_prefix=":
+        netcdf_prefix = arg[16:]
+        sys.argv.remove(arg)
+        break
+
+if sys.platform == 'win32':
+    netcdf_dll = None
+    for arg in sys.argv[1:]:
+        if arg[:13] == "--netcdf_dll=":
+            netcdf_dll = arg[13:]
+            sys.argv.remove(arg)
+            break
+
 if netcdf_prefix is None:
     try:
         netcdf_prefix=os.environ['NETCDF_PREFIX']
     except KeyError:
-        for netcdf_prefix in ['/usr/local', '/usr', '/sw']:
-            netcdf_include = os.path.join(netcdf_prefix, 'include')
-            netcdf_lib = os.path.join(netcdf_prefix, 'lib')
-            if os.path.exists(os.path.join(netcdf_include, 'netcdf.h')):
-                break
-        else:
-            netcdf_prefix = None
+        pass
+if netcdf_prefix is None:
+    for netcdf_prefix in ['/usr/local', '/usr', '/sw']:
+        netcdf_include = os.path.join(netcdf_prefix, 'include')
+        netcdf_lib = os.path.join(netcdf_prefix, 'lib')
+        if os.path.exists(os.path.join(netcdf_include, 'netcdf.h')):
+            break
+    else:
+        netcdf_prefix = None
 
 if netcdf_prefix is None:
     print "netCDF not found, the netCDF module will not be built!"
-    print "If netCDF is installed somewhere on this computer,"
-    print "please set NETCDF_PREFIX to the path where"
-    print "include/netcdf.h and lib/netcdf.a are located"
-    print "and re-run the build procedure."
+    if sys.platform != 'win32':
+        print "If netCDF is installed somewhere on this computer,"
+        print "please set NETCDF_PREFIX to the path where"
+        print "include/netcdf.h and lib/netcdf.a are located"
+        print "and re-run the build procedure."
     ext_modules = []
 else:
-    print "Using netCDF installation in ", netcdf_prefix
-    netcdf_include = os.path.join(netcdf_prefix, 'include')
-    netcdf_lib = os.path.join(netcdf_prefix, 'lib')
+    if sys.platform == 'win32':
+        if netcdf_dll is None:
+            print "Option --netcdf_dll is missing"
+            raise SystemExit
+        netcdf_include = netcdf_prefix
+        netcdf_h_file = os.path.join(netcdf_prefix, 'netcdf.h')
+        netcdf_lib = netcdf_dll
+        data_files.append(('DLLs', [os.path.join(netcdf_dll, 'netcdf.dll')]))
+        scripts.append('scientific_win32_postinstall.py')
+        options['bdist_wininst'] = {'install_script': "scientific_win32_postinstall.py"}
+    else:
+        print "Using netCDF installation in ", netcdf_prefix
+        netcdf_include = os.path.join(netcdf_prefix, 'include')
+        netcdf_h_file = os.path.join(netcdf_prefix, 'include', 'netcdf.h')
+        netcdf_lib = os.path.join(netcdf_prefix, 'lib')
     ext_modules = [Extension('Scientific_netcdf',
                              ['Src/Scientific_netcdf.c'],
                              include_dirs=['Include', netcdf_include]
@@ -67,8 +100,6 @@ else:
                              library_dirs=[netcdf_lib],
                              libraries = ['netcdf'],
                              extra_compile_args=extra_compile_args)]
-
-cmdclass = {}
 
 try:
     # Add code for including documentation in Mac packages
@@ -114,7 +145,7 @@ ext_modules.append(Extension('Scientific_numerics_package_id',
                              include_dirs=['Include']+arrayobject_h_include,
                              extra_compile_args=extra_compile_args))
 
-scripts = ['task_manager']
+scripts.append('task_manager')
 if sys.version[:3] >= '2.1':
     packages.append('Scientific.BSP')
     scripts.append('bsp_virtual')
@@ -129,6 +160,7 @@ class modified_install_headers(install_headers):
 cmdclass['install_headers'] = modified_install_headers
 
 headers = glob(os.path.join ("Include","Scientific","*.h"))
+headers.append(netcdf_h_file)
 
 setup (name = "ScientificPython",
        version = pkginfo.__version__,
@@ -152,6 +184,8 @@ line plots and 3D wireframe models.""",
        ext_package = 'Scientific.'+sys.platform,
        ext_modules = ext_modules,
        scripts = scripts,
-
+       data_files = data_files,
+ 
        cmdclass = cmdclass,
+       options = options,
        )
