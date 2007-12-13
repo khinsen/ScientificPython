@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2007-10-17
+# Last revision: 2007-12-13
 # 
 
 """
@@ -659,7 +659,7 @@ class Group:
         Remove an atom from the group
 
         @param atom: the atom to be removed
-        @type atom: L{atom}
+        @type atom: L{Atom}
         @raises KeyError: if the atom is not part of the group
         """
         self.atom_list.remove(atom)
@@ -1233,6 +1233,40 @@ class Structure:
             self.molecules[molecule.name] = molecule_list
         molecule_list.append(molecule)
         self.objects.append(molecule)
+    
+    def deleteResidue(self, residue):
+        self.residues.remove(residue)
+        delete = None
+        for type, mlist in self.molecules.items():
+            try:
+                mlist.remove(residue)
+            except ValueError:
+                pass
+            if len(mlist) == 0:
+                delete = type
+        if delete is not None:
+            del self.molecules[delete]
+        delete = None
+        for chain in self.peptide_chains + self.nucleotide_chains:
+            try:
+                chain.residues.remove(residue)
+            except ValueError:
+                pass
+            if len(chain.residues) == 0:
+                delete = chain
+        if delete is not None:
+            try:
+                self.peptide_chains.remove(chain)
+            except ValueError:
+                pass
+            try:
+                self.nucleotide_chains.remove(chain)
+            except ValueError:
+                pass
+        try:
+            self.objects.remove(residue)
+        except ValueError:
+            pass
 
     def extractData(self, data):
         atom_data = {}
