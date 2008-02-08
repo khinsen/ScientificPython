@@ -144,6 +144,11 @@ ext_modules.append(Extension('Scientific_numerics_package_id',
                              ['Src/Scientific_numerics_package_id.c'],
                              include_dirs=['Include']+arrayobject_h_include,
                              extra_compile_args=extra_compile_args))
+ext_modules.append(Extension('Scientific_interpolation',
+                             ['Src/Scientific_interpolation.c'],
+                             include_dirs=['Include']+arrayobject_h_include,
+                             libraries=math_libraries,
+                             extra_compile_args=extra_compile_args))
 
 scripts.append('task_manager')
 if sys.version[:3] >= '2.1':

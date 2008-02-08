@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-9-11
+# last revision: 2008-2-8
 #
 
 """
@@ -11,6 +11,7 @@ Interpolation of functions defined on a grid
 from Scientific import N
 import Polynomial
 from Scientific.indexing import index_expression
+from Scientific_interpolation import _interpolate
 import operator
 
 #
@@ -76,6 +77,17 @@ class InterpolatingFunction:
         """
         if len(points) != len(self.axes):
             raise TypeError('Wrong number of arguments')
+        if len(points) == 1:
+            # Fast Pyrex implementation for the important special case
+            # of a function of one variable with all arrays of type double.
+            period = self.period[0]
+            if period is None: period = 0.
+            try:
+                return _interpolate(points[0], self.axes[0],
+                                    self.values, period)
+            except:
+                # Run the Python version if anything goes wrong
+                pass
         try:
             neighbours = map(_lookup, points, self.axes, self.period)
         except ValueError, text:
