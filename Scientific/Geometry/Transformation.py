@@ -3,7 +3,7 @@
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
-# last revision: 2007-4-11
+# last revision: 2008-2-21
 # 
 
 """
@@ -522,7 +522,7 @@ class LinearTransformation(Transformation):
         return self.tensor*vector + self.vector
 
     def inverse(self):
-        return Rotation(self.tensor.inverse())*Translation(-self.vector)
+        return LinearTransformation(self.tensor.inverse(), -self.vector)
 
 
 # Utility functions
