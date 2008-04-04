@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-8-28
+# last revision: 2008-4-4
 #
 
 """
@@ -59,6 +59,9 @@ import Pyro.errors
 import threading
 import time
 import copy
+
+debug = False
+
 
 class MasterProcess(object):
 
@@ -234,9 +237,17 @@ class SlaveProcess(object):
         # Compile a dictionary of methods that implement tasks
         import inspect
         self.task_methods = {}
-        for name, value in inspect.getmembers(self, inspect.ismethod):
+        if debug:
+            print "Scanning task handler methods..."
+        for name, value in inspect.getmembers(self, inspect.isroutine):
             if name[:3] == "do_":
                 self.task_methods[name] = value
+                if debug:
+                    print "   found handler for task ", name[:3]
+        if debug:
+            print len(self.task_methods), "task handlers found in class"
+            print "If the slave is defined by a script or module, it is"
+            print "normal that none have been found!"
 
     def watchdogThread(self):
         """
@@ -254,6 +265,8 @@ class SlaveProcess(object):
         """
         Starts the slave process.
         """
+        if debug:
+            print "Starting slave process"
         if namespace is None:
             namespace = self.task_methods
         self.process_id = \
@@ -268,27 +281,44 @@ class SlaveProcess(object):
             try:
                 task_id, tag, parameters = \
                        self.task_manager.getAnyTask(self.process_id)
+                if debug:
+                    print "Got task", task_id, "of type", tag
             except TaskManagerTermination:
                 break
             try:
                 method = namespace["do_%s" % tag]
             except KeyError:
+                if debug:
+                    print "No suitable handler was found, returning task."
                 self.task_manager.returnTask(task_id)
                 continue
             try:
+                if debug:
+                    print "Executing task handler..."
                 result = method(*parameters)
+                if debug:
+                    print "...done."
             except KeyboardInterrupt:
+                if debug:
+                    print "Keyboard interrupt"
                 self.task_manager.returnTask(task_id)
                 self.task_manager.unregisterProcess(self.process_id)
                 raise
             except Exception, e:
+                if debug:
+                    print "Exception:"
+                    traceback.print_exc()
                 import traceback, StringIO
                 tb_text = StringIO.StringIO()
                 traceback.print_exc(None, tb_text)
                 tb_text = tb_text.getvalue()
                 self.task_manager.storeException(task_id, e, tb_text)
             else:
+                if debug:
+                    print "Storing result..."
                 self.task_manager.storeResult(task_id, result)
+                if debug:
+                    print "...done."
         self.task_manager.unregisterProcess(self.process_id)
         self.done = True
 
@@ -348,7 +378,8 @@ def runJob(label, master_class, slave_class, watchdog_period=120.):
 #
 # Alternate interface for multi-module programs
 #
-def initializeMasterProcess(label, slave_script=None, use_name_server=True):
+def initializeMasterProcess(label, slave_script=None, slave_module=None,
+                            use_name_server=True):
     """
     Initializes a master process.
 
@@ -358,6 +389,10 @@ def initializeMasterProcess(label, slave_script=None, use_name_server=True):
     @param slave_script: the file name of the script that defines
                          the corresponding slave process
     @type slave_script: C{str}
+
+    @param slave_module: the name of the module that defines
+                         the corresponding slave process
+    @type slave_module: C{str}
 
     @param use_name_server: If C{True} (default), the task manager is
                             registered with the Pyro name server. If
@@ -374,10 +409,28 @@ def initializeMasterProcess(label, slave_script=None, use_name_server=True):
     import os
     process = MasterProcess(label, use_name_server)
     atexit.register(process.shutdown)
-    if slave_script is not None:
-        source = file(slave_script).read()
+    if slave_script is not None or slave_module is not None:
+        if slave_script is not None:
+            source = file(slave_script).read()
+        else:
+            source = """
+import Scientific.DistributedComputing.MasterSlave
+from %s import *
+""" % slave_module
+            if debug:
+                source += "print 'Slave definitions:'\n"
+                source += "print dir()\n"
+                source += "Scientific.DistributedComputing.MasterSlave.debug=True\n"
+            source += """
+Scientific.DistributedComputing.MasterSlave.startSlaveProcess()
+"""
         process.task_manager.storeData(slave_code = source,
                                        cwd = os.getcwd())
+        if debug:
+            print "Slave source code:"
+            print 50*'-'
+            print source
+            print 50*'-'
     return process
 
 def startSlaveProcess(label=None, master_host=None):
@@ -405,5 +458,7 @@ def startSlaveProcess(label=None, master_host=None):
         namespace = main_module.SLAVE_NAMESPACE
     else:
         namespace = main_module.__dict__
+    if debug:
+        print "Initializing slave process", label
     process = SlaveProcess(label, master_host=None)
     process.start(namespace)
