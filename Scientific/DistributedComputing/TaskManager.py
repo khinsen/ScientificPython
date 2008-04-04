@@ -511,6 +511,15 @@ class TaskManager(Pyro.core.ObjBase):
         self.lock.release()
         return data
 
+    def deleteData(self, label):
+        """
+        @param label: the label of the data item to be deleted
+        @type label: C{str}
+        """
+        self.lock.acquire()
+        del self.data[label]
+        self.lock.release()
+
     def terminate(self):
         """
         Signals that no more tasks or results will be requested. All waiting

@@ -96,6 +96,7 @@ class MasterProcess(object):
             self.pyro_ns=Pyro.naming.NameServerLocator().getNS()
         self.manager_thread = threading.Thread(target = self.taskManagerThread)
         self.manager_thread.start()
+        self.global_states = {}
 
     def taskManagerThread(self):
         """
@@ -167,6 +168,23 @@ class MasterProcess(object):
         except TaskManagerTermination:
             return None, None, None
 
+    def setGlobalState(self, **kw):
+        state_id = min(self.global_states.keys() + [0]) + 1
+        self.global_states[state_id] = kw.keys()
+        for name, value in kw.items():
+            label = "state_%d_%s" % (state_id, name)
+            if debug:
+                print "Storing state value ", label
+            self.task_manager.storeData(**{label: value})
+        return state_id
+
+    def deleteGlobalState(self, state_id):
+        for name in self.global_states[state_id]:
+            label = "state_%d_%s" % (state_id, name)
+            if debug:
+                print "Deleting state value ", label
+            self.task_manager.deleteData(label)
+
     def start(self):
         """
         Starts the master process.
@@ -234,6 +252,7 @@ class SlaveProcess(object):
             self.task_manager = Pyro.core.getProxyForURI(uri)
         self.watchdog_period = watchdog_period
         self.done = False
+        self.global_state_cache = {}
         # Compile a dictionary of methods that implement tasks
         import inspect
         self.task_methods = {}
@@ -261,6 +280,21 @@ class SlaveProcess(object):
                 break
             time.sleep(self.watchdog_period)
 
+    def processParameter(self, parameter):
+        if isinstance(parameter, GlobalStateValue):
+            try:
+                if debug:
+                    print "Returning state value", parameter.label
+                return self.global_state_cache[parameter.label]
+            except KeyError:
+                if debug:
+                    print "Retrieving state value", parameter.label
+                self.global_state_cache[parameter.label] = \
+                        self.task_manager.retrieveData(parameter.label)
+                return self.global_state_cache[parameter.label]
+        else:
+            return parameter
+
     def start(self, namespace=None):
         """
         Starts the slave process.
@@ -277,7 +311,9 @@ class SlaveProcess(object):
                               threading.Thread(target=self.watchdogThread)
             self.background_thread.setDaemon(True)
             self.background_thread.start()
+        # The slave process main loop
         while True:
+            # Get a task
             try:
                 task_id, tag, parameters = \
                        self.task_manager.getAnyTask(self.process_id)
@@ -285,6 +321,7 @@ class SlaveProcess(object):
                     print "Got task", task_id, "of type", tag
             except TaskManagerTermination:
                 break
+            # Find the method to call
             try:
                 method = namespace["do_%s" % tag]
             except KeyError:
@@ -292,6 +329,9 @@ class SlaveProcess(object):
                     print "No suitable handler was found, returning task."
                 self.task_manager.returnTask(task_id)
                 continue
+            # Replace GlobalStateValue objects by the associated values
+            parameters = tuple(self.processParameter(p) for p in parameters)
+            # Call the method
             try:
                 if debug:
                     print "Executing task handler..."
@@ -326,6 +366,12 @@ def getMachineInfo():
     import os
     sysname, nodename, release, version, machine = os.uname()
     return "%s (%s)" % (nodename, machine)
+
+
+class GlobalStateValue(object):
+
+    def __init__(self, state_id, name):
+        self.label = "state_%d_%s" % (state_id, name)
 
 #
 # Job handling utility
