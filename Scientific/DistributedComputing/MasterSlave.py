@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-4-4
+# last revision: 2008-4-8
 #
 
 """
@@ -208,6 +208,43 @@ class MasterProcess(object):
         """
         raise NotImplementedError
 
+    def launchSlaveJobs(self, n=1):
+        """
+        Launch n slave jobs on the machine that also runs the master job.
+        @param n: the number of slave jobs to be launched.
+        @type n: C{int}
+        """
+        import subprocess, sys
+        slave_script = ('label="%s"\n' % self.label) + '''
+import Pyro.core
+import Pyro.errors
+import sys
+Pyro.core.initClient(banner=False)
+while True:
+    try:
+        task_manager = \
+             Pyro.core.getProxyForURI("PYROLOC://localhost/TaskManager.%s"
+                                      % label)
+        break
+    except Pyro.errors.NamingError:
+        continue
+try:
+    slave_code = task_manager.retrieveData("slave_code")
+except KeyError:
+    print "No slave code available for %s" % label
+    raise SystemExit
+namespace = {}
+sys.modules["__main__"].SLAVE_PROCESS_LABEL = label
+sys.modules["__main__"].SLAVE_NAMESPACE = namespace
+exec slave_code in namespace
+'''
+        directory = self.task_manager.retrieveData("cwd")
+        for i in range(n):
+            process = subprocess.Popen([sys.executable],
+                                       stdin=subprocess.PIPE,
+                                       cwd=directory)
+            process.stdin.write(slave_script)
+            process.stdin.close()
 
 class SlaveProcess(object):
 
