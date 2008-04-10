@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-4-8
+# last revision: 2008-4-10
 #
 
 """
@@ -413,7 +413,8 @@ class GlobalStateValue(object):
 #
 # Job handling utility
 #
-def runJob(label, master_class, slave_class, watchdog_period=120.):
+def runJob(label, master_class, slave_class, watchdog_period=120.,
+           launch_slaves=0):
     """
     Creates an instance of the master_class and runs it. A copy
     of the script and the current working directory are stored in the
@@ -436,6 +437,11 @@ def runJob(label, master_class, slave_class, watchdog_period=120.):
                             case, the manager cannot recognize if the slave
                             job has crashed or been killed.
     @type watchdog_period: C{int} or C{NoneType}
+
+    @param lauch_slaves: the number of slaves jobs to launch
+                         immediately on the same machine that runs
+                         the master process
+    @type lauch_slaves: C{int}
     """
     import inspect
     import os
@@ -444,8 +450,6 @@ def runJob(label, master_class, slave_class, watchdog_period=120.):
     try:
         slave_label = main_module.SLAVE_PROCESS_LABEL
         master = label != slave_label
-#        master = not getattr(main_module,
-#                             "RUN_%s_AS_SLAVE" % '_'.join(label.split()))
     except AttributeError:
         master = True
     if master:
@@ -454,6 +458,8 @@ def runJob(label, master_class, slave_class, watchdog_period=120.):
         process = master_class(label)
         process.task_manager.storeData(slave_code = source,
                                        cwd = os.getcwd())
+        if launch_slaves > 0:
+            process.launchSlaveJobs(launch_slaves)
         process.start()
     else:
         slave_class(label, watchdog_period=watchdog_period).start()
