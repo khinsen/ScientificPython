@@ -2,7 +2,7 @@
 # Task manager for distributed computing based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-8-28
+# last revision: 2008-4-16
 #
 
 import Pyro.core
@@ -553,10 +553,10 @@ class Watchdog(object):
         self.lock.acquire()
         self.ping_period[process_id] = ping_period
         self.last_ping[process_id] = time.time()
-        self.lock.release()
         if not self.thread_started:
             self.background_thread.start()
             self.thread_started = True
+        self.lock.release()
 
     def unregisterProcess(self, process_id):
         self.lock.acquire()
