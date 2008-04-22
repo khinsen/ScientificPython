@@ -1254,10 +1254,11 @@ rot = N.array([-1,1,0,-1,0,0,0,0,1])
 rot.shape = (3, 3)
 trans = Vector(2./3.,1./3.,1./3.)
 transformations.append((rot, trans))
-sg = SpaceGroup(146, ['C3^4', 'R 3', 'R3:H', '146:H', 'C3^4', 'P 3*', 'R3:R', '146:R'], transformations)
+sg = SpaceGroup(146, ['C3^4', 'R 3', 'H 3', 'R3:H', '146:H', 'C3^4', 'P 3*', 'R3:R', '146:R'], transformations)
 _space_group_table[146] = sg
 _space_group_table['C3^4'] = sg
 _space_group_table['R 3'] = sg
+_space_group_table['H 3'] = sg
 _space_group_table['R3:H'] = sg
 _space_group_table['146:H'] = sg
 _space_group_table['C3^4'] = sg
@@ -1530,10 +1531,11 @@ rot = N.array([0,1,0,1,0,0,0,0,-1])
 rot.shape = (3, 3)
 trans = Vector(2./3.,1./3.,1./3.)
 transformations.append((rot, trans))
-sg = SpaceGroup(155, ['D3^7', 'R 3 2"', 'R32:H', '155:H', 'D3^7', 'P 3* 2', 'R32:R', '155:R'], transformations)
+sg = SpaceGroup(155, ['D3^7', 'R 3 2', 'H 3 2', 'R32:H', '155:H', 'D3^7', 'P 3* 2', 'R32:R', '155:R'], transformations)
 _space_group_table[155] = sg
 _space_group_table['D3^7'] = sg
-_space_group_table['R 3 2"'] = sg
+_space_group_table['R 3 2'] = sg
+_space_group_table['H 3 2'] = sg
 _space_group_table['R32:H'] = sg
 _space_group_table['155:H'] = sg
 _space_group_table['D3^7'] = sg
