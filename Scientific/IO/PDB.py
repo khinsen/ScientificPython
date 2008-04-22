@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2007-12-13
+# Last revision: 2008-4-22
 # 
 
 """
@@ -142,10 +142,10 @@ class PDBFile:
     (for reading) can be used as well.
     """
 
-    def __init__(self, filename, mode = 'r', subformat = None):
+    def __init__(self, file_or_filename, mode = 'r', subformat = None):
         """
-        @param filename: the name of the PDB file
-        @type filename: C{str}
+        @param file_or_filename: the name of the PDB file, or a file object
+        @type filename: C{str} or C{file}
         @param mode: the file access mode, 'r' (read) or 'w' (write)
         @type mode: C{str}
         @param subformat: indicates a specific dialect of the PDB format.
@@ -154,7 +154,10 @@ class PDBFile:
                           only when writing.
         @type subformat: C{str} or C{NoneType}
         """
-        self.file = TextFile(filename, mode)
+        if isinstance(file_or_filename, str):
+            self.file = TextFile(file_or_filename, mode)
+        else:
+            self.file = file_or_filename
         self.output = string.lower(mode[0]) == 'w'
         self.export_filter = None
         if subformat is not None:
@@ -1095,13 +1098,12 @@ class Structure:
     to an iteration over the residue list.
     """
 
-    def __init__(self, filename, model = 0, alternate_code = 'A'):
+    def __init__(self, file_or_filename, model = 0, alternate_code = 'A'):
         """
-        Constructor: Structure(|filename|, |model|='0', |alternate_code|='"A"'),
-
-        @param filename: the name of the PDB file. Compressed files
-                         and URLs are accepted, as for class L{PDBFile}.
-        @type filename: C{str}
+        @param file_or_filename: the name of the PDB file, or a file object.
+                                 Compressed files and URLs are accepted,
+                                 as for class L{PDBFile}.
+        @type filename: C{str} or C{file}
         @param model: the number of the model to read from a multiple-model
                       file. Only one model can be treated at a time.
         @type model: C{int}
@@ -1109,7 +1111,10 @@ class Structure:
                                from a file with alternate positions.
         @type alternate_code: single-letter C{str}
         """
-        self.filename = filename
+        if isinstance(file_or_filename, str):
+            self.filename = file_or_filename
+        else:
+            self.filename = ''
         self.model = model
         self.alternate = alternate_code
         self.pdb_code = ''
@@ -1124,7 +1129,7 @@ class Structure:
         self.a = self.b = self.c = None
         self.alpha = self.beta = self.gamma = None
         self.space_group = None
-        self.parseFile(PDBFile(filename))
+        self.parseFile(PDBFile(file_or_filename))
         self.findSpaceGroupTransformations()
 
     peptide_chain_constructor = PeptideChain
