@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-4-10
+# last revision: 2008-4-22
 #
 
 """
@@ -350,6 +350,9 @@ class SlaveProcess(object):
             self.background_thread.start()
         # The slave process main loop
         while True:
+            # Should we terminate for whatever reason?
+            if self.terminationTest():
+                break
             # Get a task
             try:
                 task_id, tag, parameters = \
@@ -398,6 +401,10 @@ class SlaveProcess(object):
                     print "...done."
         self.task_manager.unregisterProcess(self.process_id)
         self.done = True
+
+    # Subclasses can redefine this method
+    def terminationTest(self):
+        return False
 
 def getMachineInfo():
     import os
