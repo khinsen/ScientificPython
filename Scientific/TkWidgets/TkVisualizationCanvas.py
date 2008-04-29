@@ -2,7 +2,7 @@
 # for Tk user interfaces.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-12
+# Last revision: 2008-4-29
 #
 
 """
@@ -23,14 +23,14 @@ graphics libraries in addition to Tk.
 import Tkinter
 from Canvas import Line
 import string
-from Scientific import N as Numeric
+from Scientific import N
 from Scientific.Geometry import Vector
 from Scientific.Geometry.Transformation import Rotation
 
 class PolyPoints3D:
 
     def __init__(self, points, attr):
-        self.points = Numeric.array(points)
+        self.points = N.array(points)
         self.scaled = self.points
         self.attributes = {}
         for name, value in self._attributes.items():
@@ -40,16 +40,16 @@ class PolyPoints3D:
             self.attributes[name] = value
 
     def boundingBox(self):
-        return Numeric.minimum.reduce(self.points), \
-               Numeric.maximum.reduce(self.points)
+        return N.minimum.reduce(self.points), \
+               N.maximum.reduce(self.points)
 
     def project(self, axis, plane):
-        self.depth = Numeric.dot(self.points, axis)
-        self.projection = Numeric.dot(self.points, plane)
+        self.depth = N.dot(self.points, axis)
+        self.projection = N.dot(self.points, plane)
 
     def boundingBoxPlane(self):
-        return Numeric.minimum.reduce(self.projection), \
-               Numeric.maximum.reduce(self.projection)
+        return N.minimum.reduce(self.projection), \
+               N.maximum.reduce(self.projection)
 
     def scaleAndShift(self, scale=1, shift=0):
         self.scaled = scale*self.projection+shift
@@ -113,8 +113,8 @@ class VisualizationGraphics:
         p1, p2 = self.objects[0].boundingBox()
         for o in self.objects[1:]:
             p1o, p2o = o.boundingBox()
-            p1 = Numeric.minimum(p1, p1o)
-            p2 = Numeric.maximum(p2, p2o)
+            p1 = N.minimum(p1, p1o)
+            p2 = N.maximum(p2, p2o)
         return p1, p2
 
     def project(self, axis, plane):
@@ -125,8 +125,8 @@ class VisualizationGraphics:
         p1, p2 = self.objects[0].boundingBoxPlane()
         for o in self.objects[1:]:
             p1o, p2o = o.boundingBoxPlane()
-            p1 = Numeric.minimum(p1, p1o)
-            p2 = Numeric.maximum(p2, p2o)
+            p1 = N.minimum(p1, p1o)
+            p2 = N.maximum(p2, p2o)
         return p1, p2
 
     def scaleAndShift(self, scale=1, shift=0):
@@ -191,10 +191,10 @@ class VisualizationCanvas(Tkinter.Frame):
         self.canvas.bind('<ButtonRelease-3>', self.releasehandler3)
         self._setsize()
         self.scale = None
-        self.translate = Numeric.array([0., 0.])
+        self.translate = N.array([0., 0.])
         self.last_draw = None
-        self.axis = Numeric.array([0.,0.,1.])
-        self.plane = Numeric.array([[1.,0.], [0.,1.], [0.,0.]])
+        self.axis = N.array([0.,0.,1.])
+        self.plane = N.array([[1.,0.], [0.,1.], [0.,0.]])
 
     def reconfigure(self, event):
         new_width = event.width-self.border[0]
@@ -211,10 +211,10 @@ class VisualizationCanvas(Tkinter.Frame):
     def _setsize(self):
         self.width = string.atoi(self.canvas.cget('width'))
         self.height = string.atoi(self.canvas.cget('height'))
-        self.plotbox_size = 0.97*Numeric.array([self.width, -self.height])
+        self.plotbox_size = 0.97*N.array([self.width, -self.height])
         xo = 0.5*(self.width-self.plotbox_size[0])
         yo = self.height-0.5*(self.height+self.plotbox_size[1])
-        self.plotbox_origin = Numeric.array([xo, yo])
+        self.plotbox_origin = N.array([xo, yo])
 
     def copyViewpointFrom(self, other):
         self.axis = other.axis
@@ -244,16 +244,16 @@ class VisualizationCanvas(Tkinter.Frame):
         p1, p2 = graphics.boundingBoxPlane()
         center = 0.5*(p1+p2)
         scale = self.plotbox_size / (p2-p1)
-        sign = scale/Numeric.fabs(scale)
+        sign = scale/N.fabs(scale)
         if self.scale is None:
-            minscale = Numeric.minimum.reduce(Numeric.fabs(scale))
+            minscale = N.minimum.reduce(N.fabs(scale))
             self.scale = 0.9*minscale
         scale = sign*self.scale
         box_center = self.plotbox_origin + 0.5*self.plotbox_size
         shift = -center*scale + box_center + self.translate
         graphics.scaleAndShift(scale, shift)
         items, depths = graphics.lines()
-        sort = Numeric.argsort(depths)
+        sort = N.argsort(depths)
         for index in sort:
             x1, y1, x2, y2, color, width = items[index]
             Line(self.canvas, x1, y1, x2, y2, fill=color, width=width)
@@ -302,7 +302,7 @@ class VisualizationCanvas(Tkinter.Frame):
             normal = Vector(self.axis)
             move = Vector(-dx*self.plane[:,0]+dy*self.plane[:,1])
             axis = normal.cross(move) / \
-                   Numeric.minimum.reduce(Numeric.fabs(self.plotbox_size))
+                   N.minimum.reduce(N.fabs(self.plotbox_size))
             rot = Rotation(axis.normal(), axis.length())
             self.axis = rot(normal).array
             self.plane[:,0] = rot(Vector(self.plane[:,0])).array
@@ -319,7 +319,7 @@ class VisualizationCanvas(Tkinter.Frame):
         except AttributeError:
             return
         if dx != 0 or dy != 0:
-            self.translate = self.translate + Numeric.array([dx, dy])
+            self.translate = self.translate + N.array([dx, dy])
             self.clear(1)
             self.redraw()
 
@@ -356,7 +356,7 @@ if __name__ == '__main__':
             if record_type == 'ATOM  ' or record_type == 'HETATM':
                 data = FortranLine(line, atom_format)
                 atom_name = string.strip(data[2])
-                position = Numeric.array(data[8:11])
+                position = N.array(data[8:11])
                 if atom_name == 'CA':
                     positions.append(position)
                 elif atom_name == 'OXT':

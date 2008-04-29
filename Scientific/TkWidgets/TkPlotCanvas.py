@@ -19,14 +19,14 @@ plots into Tk-based user interfaces.
 """
 
 import Tkinter
-from Scientific import N as Numeric
+from Scientific import N
 from Canvas import Line, CanvasText
 import string
 
 class PolyPoints:
 
     def __init__(self, points, attr):
-        self.points = Numeric.array(points)
+        self.points = N.array(points)
         self.scaled = self.points
         self.attributes = {}
         for name, value in self._attributes.items():
@@ -36,8 +36,8 @@ class PolyPoints:
             self.attributes[name] = value
 
     def boundingBox(self):
-        return Numeric.minimum.reduce(self.points), \
-               Numeric.maximum.reduce(self.points)
+        return N.minimum.reduce(self.points), \
+               N.maximum.reduce(self.points)
 
     def scaleAndShift(self, scale=1, shift=0):
         self.scaled = scale*self.points+shift
@@ -286,8 +286,8 @@ class PlotGraphics:
         p1, p2 = self.objects[0].boundingBox()
         for o in self.objects[1:]:
             p1o, p2o = o.boundingBox()
-            p1 = Numeric.minimum(p1, p1o)
-            p2 = Numeric.maximum(p2, p2o)
+            p1 = N.minimum(p1, p1o)
+            p2 = N.maximum(p2, p2o)
         return p1, p2
 
     def scaleAndShift(self, scale=1, shift=0):
@@ -416,10 +416,10 @@ class PlotCanvas(Tkinter.Frame):
     def _setsize(self):
         self.width = string.atoi(self.canvas.cget('width'))
         self.height = string.atoi(self.canvas.cget('height'))
-        self.plotbox_size = 0.97*Numeric.array([self.width, -self.height])
+        self.plotbox_size = 0.97*N.array([self.width, -self.height])
         xo = 0.5*(self.width-self.plotbox_size[0])
         yo = self.height-0.5*(self.height+self.plotbox_size[1])
-        self.plotbox_origin = Numeric.array([xo, yo])
+        self.plotbox_origin = N.array([xo, yo])
 
     def draw(self, graphics, xaxis = None, yaxis = None):
         """
@@ -462,8 +462,8 @@ class PlotCanvas(Tkinter.Frame):
             text_height[1] = max(text_height[1], h)
         else:
             yticks = None
-        text1 = Numeric.array([text_width[0], -text_height[1]])
-        text2 = Numeric.array([text_width[1], -text_height[0]])
+        text1 = N.array([text_width[0], -text_height[1]])
+        text2 = N.array([text_width[1], -text_height[0]])
         scale = (self.plotbox_size-text1-text2) / (p2-p1)
         shift = -p1*scale + self.plotbox_origin + text1
         self.transformation = (scale, shift)
@@ -485,8 +485,8 @@ class PlotCanvas(Tkinter.Frame):
             range = upper-lower
             if range == 0.:
                 return lower-0.5, upper+0.5
-            log = Numeric.log10(range)
-            power = Numeric.floor(log)
+            log = N.log10(range)
+            power = N.floor(log)
             fraction = log-power
             if fraction <= 0.05:
                 power = power-1
@@ -513,12 +513,12 @@ class PlotCanvas(Tkinter.Frame):
             lower, upper = xaxis
             text = 1
             for y, d in [(bb1[1], -3), (bb2[1], 3)]:
-                p1 = scale*Numeric.array([lower, y])+shift
-                p2 = scale*Numeric.array([upper, y])+shift
+                p1 = scale*N.array([lower, y])+shift
+                p2 = scale*N.array([upper, y])+shift
                 Line(self.canvas, p1[0], p1[1], p2[0], p2[1],
                      fill = 'black', width = 1)
                 for x, label in xticks:
-                    p = scale*Numeric.array([x, y])+shift
+                    p = scale*N.array([x, y])+shift
                     Line(self.canvas, p[0], p[1], p[0], p[1]+d,
                          fill = 'black', width = 1)
                     if text:
@@ -531,12 +531,12 @@ class PlotCanvas(Tkinter.Frame):
             lower, upper = yaxis
             text = 1
             for x, d in [(bb1[0], -3), (bb2[0], 3)]:
-                p1 = scale*Numeric.array([x, lower])+shift
-                p2 = scale*Numeric.array([x, upper])+shift
+                p1 = scale*N.array([x, lower])+shift
+                p2 = scale*N.array([x, upper])+shift
                 Line(self.canvas, p1[0], p1[1], p2[0], p2[1],
                      fill = 'black', width = 1)
                 for y, label in yticks:
-                    p = scale*Numeric.array([x, y])+shift
+                    p = scale*N.array([x, y])+shift
                     Line(self.canvas, p[0], p[1], p[0]-d, p[1],
                          fill = 'black', width = 1)
                     if text:
@@ -548,13 +548,13 @@ class PlotCanvas(Tkinter.Frame):
         ideal = (upper-lower)/7.
         if ideal == 0.:
             ideal = 1./7.
-        log = Numeric.log10(ideal)
-        power = Numeric.floor(log)
+        log = N.log10(ideal)
+        power = N.floor(log)
         fraction = log-power
         factor = 1.
         error = fraction
         for f, lf in self._multiples:
-            e = Numeric.fabs(fraction-lf)
+            e = N.fabs(fraction-lf)
             if e < error:
                 error = e
                 factor = f
@@ -568,13 +568,13 @@ class PlotCanvas(Tkinter.Frame):
             digits = -int(power)
             format = '%'+`digits+2`+'.'+`digits`+'f'
         ticks = []
-        t = -grid*Numeric.floor(-lower/grid)
+        t = -grid*N.floor(-lower/grid)
         while t <= upper and len(ticks) < 200:
             ticks.append((t, format % (t,)))
             t = t + grid
         return ticks
 
-    _multiples = [(2., Numeric.log10(2.)), (5., Numeric.log10(5.))]
+    _multiples = [(2., N.log10(2.)), (5., N.log10(5.))]
 
     def _textBoundingBox(self, text):
         bg = self.canvas.cget('background')
@@ -609,7 +609,7 @@ class PlotCanvas(Tkinter.Frame):
     def _mouseMotion(self, event):
         if self.mouse_state == 0:
             scale, shift = self.transformation
-            p = (Numeric.array([self.startx, self.starty])-shift)/scale
+            p = (N.array([self.startx, self.starty])-shift)/scale
             bb1, bb2 = self.bbox
             if self.selectfn is not None and p[1] < bb1[1]:
                 self.mouse_state = 2
@@ -640,10 +640,10 @@ class PlotCanvas(Tkinter.Frame):
         if self.mouse_state == 1:
             self.canvas.delete(self.rubberband)
             self.rubberband = None
-            p1 = Numeric.array([self.startx, self.starty])
-            p2 = Numeric.array([self.canvas.canvasx(event.x),
+            p1 = N.array([self.startx, self.starty])
+            p2 = N.array([self.canvas.canvasx(event.x),
                                 self.canvas.canvasy(event.y)])
-            if Numeric.minimum.reduce(Numeric.fabs(p1-p2)) > 5:
+            if N.minimum.reduce(N.fabs(p1-p2)) > 5:
                 scale, shift = self.transformation
                 p1 = (p1-shift)/scale
                 p2 = (p2-shift)/scale
@@ -727,7 +727,7 @@ class PlotCanvas(Tkinter.Frame):
         scale, shift = self.transformation
         x = self.canvas.canvasx(event.x)
         y = self.canvas.canvasy(event.y)
-        point = Numeric.array([x, y])
+        point = N.array([x, y])
         point = (point-shift)/scale
         text = "x = %f\ny = %f" % tuple(point)
         self.label = self.canvas.create_window(x, y,
@@ -745,12 +745,12 @@ if __name__ == '__main__':
     window = Tkinter.Frame()
     window.pack(fill=Tkinter.BOTH, expand=Tkinter.YES)
 
-    data1 = 2.*Numeric.pi*Numeric.arange(200)/200.
+    data1 = 2.*N.pi*N.arange(200)/200.
     data1.shape = (100, 2)
-    data1[:,1] = Numeric.sin(data1[:,0])
+    data1[:,1] = N.sin(data1[:,0])
     lines1 = PolyLine(data1, color='green')
 
-    pi = Numeric.pi
+    pi = N.pi
     lines2 = PolyLine([(0., 0.), (pi/2., 1.), (pi, 0.), (3.*pi/2., -1),
                        (2.*pi, 0.)], color='red')
 
