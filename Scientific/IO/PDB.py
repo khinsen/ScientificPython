@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-4-22
+# Last revision: 2008-4-29
 # 
 
 """
@@ -435,7 +435,10 @@ class PDBFile:
         self.data['insertion_code'] = ''
         if number is not None:
             if isinstance(number, int):
-                self.data['residue_number'] = number % 10000
+                if number >= 0:
+                    self.data['residue_number'] = number % 10000
+                else:
+                    self.data['residue_number'] = -((-number) % 1000)
             else:
                 self.data['residue_number'] = number.number % 10000
                 self.data['insertion_code'] = number.insertion_code
