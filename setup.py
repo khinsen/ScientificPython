@@ -21,9 +21,13 @@ if "--numpy" in sys.argv:
     use_numpy = 1
     extra_compile_args.append("-DNUMPY=1")
     sys.argv.remove("--numpy")
-    arrayobject_h_include = [os.path.join(sys.prefix,
-                            "lib/python%s.%s/site-packages/numpy/core/include"
-                                          % sys.version_info [:2])]
+    if sys.platform == 'win32':
+        arrayobject_h_include = [os.path.join(sys.prefix,
+                                 "Lib/site-packages/numpy/core/include")]
+    else:
+        arrayobject_h_include = [os.path.join(sys.prefix,
+                                "lib/python%s.%s/site-packages/numpy/core/include"
+                                % sys.version_info [:2])]
 else:
     use_numpy = 0
 if "--numarray" in sys.argv:
