@@ -352,6 +352,22 @@ class PDBFile:
         elif type == 'MODEL':
             format = model_format
             line = line + [data.get('serial_number')]
+        elif type == 'CRYST1':
+            format = cryst1_format
+            line = line + [data.get('a'), data.get('b'), data.get('c'),
+                           data.get('alpha'), data.get('beta'),
+                           data.get('gamma'),
+                           data.get('space_group'),
+                           data.get('z')]
+        elif type[:-1] == 'SCALE':
+            format = scalen_format
+            line = line + [data.get('s1'), data.get('s2'), data.get('s3'),
+                           data.get('u')]
+        elif type[:-1] == 'MTRIX':
+            format = scalen_format
+            line = line + [data.get('serial'),
+                           data.get('m1'), data.get('m2'), data.get('m3'),
+                           data.get('v'), int(data.get('given'))]
         elif type == 'HEADER':
             format = header_format
             line = line + [data.get('compound', ''), data.get('date', ''),
