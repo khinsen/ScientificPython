@@ -409,7 +409,8 @@ class SlaveProcess(object):
 def getMachineInfo():
     import os
     sysname, nodename, release, version, machine = os.uname()
-    return "%s (%s)" % (nodename, machine)
+    pid = os.getpid()
+    return "PID %d on %s (%s)" % (pid, nodename, machine)
 
 
 class GlobalStateValue(object):
