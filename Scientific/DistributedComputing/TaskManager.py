@@ -268,8 +268,8 @@ class TaskManager(Pyro.core.ObjBase):
             print "Unregistering process", process_id
         self.lock.acquire()
         position = self.active_processes.index(process_id)
-        del self.active_processes.remove[position]
-        del self.process_info.remove[position]
+        del self.active_processes[position]
+        del self.process_info[position]
         tasks = self.tasks_by_process[process_id]
         del self.tasks_by_process[process_id]
         self.lock.release()
