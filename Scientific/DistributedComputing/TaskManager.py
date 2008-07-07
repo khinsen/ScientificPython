@@ -270,8 +270,8 @@ class TaskManager(Pyro.core.ObjBase):
         position = self.active_processes.index(process_id)
         del self.active_processes[position]
         del self.process_info[position]
-        tasks = self.tasks_by_process[process_id]
-        del self.tasks_by_process[process_id]
+        tasks = self.tasks_by_process[position]
+        del self.tasks_by_process[position]
         self.lock.release()
         for t in tasks:
             self.returnTask(t.id)
