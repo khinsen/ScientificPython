@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-4-29
+# Last revision: 2008-7-7
 # 
 
 """
@@ -114,7 +114,9 @@ def defineAminoAcidResidue(symbol):
     @param symbol: the three-letter code for an amino acid
     @type symbol: C{str}
     """
-    amino_acids.append(string.upper(symbol))
+    symbol = symbol.upper()
+    if symbol not in amino_acids:
+        amino_acids.append(symbol)
 
 def defineNucleicAcidResidue(symbol):
     """
@@ -124,7 +126,9 @@ def defineNucleicAcidResidue(symbol):
     @param symbol: the one-letter code for a nucleic acid
     @type symbol: C{str}
     """
-    nucleic_acids.append(string.upper(symbol))
+    symbol = symbol.upper()
+    if symbol not in nucleic_acids:
+        nucleic_acids.append(symbol)
 
 
 #
