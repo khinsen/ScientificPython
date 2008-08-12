@@ -1,3 +1,17 @@
+2.6.1 --> 2.6.2
+---------------
+
+License change: ScientificPython is now distributed under the
+CeCILL-C license, which is an adaptation of the LGPL to French
+law. The previously used CeCILL license, similar to the GPL, was
+considered too restrictive.
+
+Bug fixes:
+
+- The typecode for string variables in netCDF files was not returned
+  correctly.
+
+
 2.6 --> 2.6.1
 -------------
 

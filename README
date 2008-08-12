@@ -51,21 +51,21 @@ fink project. However, you can also use the standard Unix installation
 procedure if you prefer.
 
 
-Using numpy or numarray:
+Using NumPy or numarray:
 ------------------------
 
 There are three nearly compatible implementations of numeric arrays for
 Python: the original one, Numerical Python (module name "Numeric"),
 a later rewrite called numarray, and an evolution of Numeric that integrates
-features from numarray, called numpy. In the long run, NumPy will proabably
+features from numarray, called NumPy. In the long run, NumPy will proabably
 replace both Numeric and numarray.
 
-Scientific Python was written for Numeric. A partial adaptation to
-NumPy and numarray is available in the development releases. While the
-numarray support will never be complete (numarray lacks some features
-that Scientific Python requires), NumPy will be fully supported in the
-future. However, the current NumPy integration is neither complete enough
-nor well enough tested to include it in the stable release series.
+Scientific Python was originally written for Numeric, and this stable
+releas series (2.6.x) still supports only Numeric. The current
+development release series (2.7.x) is making the transition to NumPy,
+and the next stable release (2.8) will support NumPy by default, with
+Numeric as an option. The development series also has partial support
+for numarray, which however will not be continued.
 
 ---------------------------------------------------------------------------
 
