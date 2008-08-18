@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-7-7
+# Last revision: 2008-8-14
 # 
 
 """
@@ -761,7 +761,9 @@ class AminoAcidResidue(Residue):
         the peptide group. C{False} otherwise.
         @rtype: C{bool}
         """
-        return self.atoms.has_key('OXT') or self.atoms.has_key('OT2')
+        return self.name == 'NME' \
+               or self.atoms.has_key('OXT') \
+               or self.atoms.has_key('OT2')
 
     def isNTerminus(self):
         """
