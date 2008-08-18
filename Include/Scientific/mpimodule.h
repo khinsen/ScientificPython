@@ -85,7 +85,7 @@
 extern "C" {
 #endif
 
-#include "Numeric/arrayobject.h"
+#include "Scientific/arrayobject.h"
 #include "mpi.h"
 
 #ifndef MPI_VERSION

@@ -113,7 +113,7 @@ newPyMPIOperationObject(MPI_Op mpi_op, char *op_name)
 static void
 PyMPIOperation_dealloc(PyMPIOperationObject *self)
 {
-  PyMem_DEL(self);
+  PyObject_FREE(self);
 }
 
 /* __repr__ */
@@ -167,12 +167,12 @@ newPyMPICommunicatorObject(MPI_Comm handle)
   self->handle = handle;
   if (MPI_Comm_rank(handle, &self->rank) != MPI_SUCCESS) {
     PyErr_SetString(PyExc_MPIError, "couldn't obtain communicator rank");
-    PyMem_DEL(self);
+    PyObject_FREE(self);
     return NULL;
   }
   if (MPI_Comm_size(handle, &self->size) != MPI_SUCCESS) {
     PyErr_SetString(PyExc_MPIError, "couldn't obtain communicator size");
-    PyMem_DEL(self);
+    PyObject_FREE(self);
     return NULL;
   }
   return self;
@@ -187,7 +187,7 @@ PyMPICommunicator_dealloc(PyMPICommunicatorObject *self)
 {
   if (self->handle != MPI_COMM_WORLD)
     MPI_Comm_free(&self->handle);
-  PyMem_DEL(self);
+  PyObject_FREE(self);
 }
 
 
@@ -387,7 +387,9 @@ PyMPICommunicator_send(PyMPICommunicatorObject *self, PyObject *args)
 
   if (!PyArg_ParseTuple(args, "Oii", &data, &dest, &tag))
     return NULL;
-  if (PyArray_Check(data)) {
+  /* #define PyArray_Check(op) PyObject_TypeCheck(op, &PyArray_Type) */
+  /*  if (PyArray_Check(data)) { */
+  if (PyObject_TypeCheck(data, &PyArray_Type)) {
     if (PyMPI_SendArray(self, (PyArrayObject *)data, dest, tag) != 0)
       return NULL;
   }
@@ -1162,7 +1164,7 @@ static void
 PyMPIRequest_dealloc(PyMPIRequestObject *self)
 {
   Py_XDECREF(self->buffer);  /* Release an eventual reference to the buffer */
-  PyMem_DEL(self);
+  PyObject_FREE(self);
 }
 
 /* __repr__ */
@@ -1406,13 +1408,11 @@ initScientific_mpi(void)
   PyDict_SetItemString(d, "_C_API", PyCObject_FromVoidPtr(PyMPI_API, NULL));
 
   /* Import the array module */
-#ifdef import_array
   import_array();
   if (PyErr_Occurred()) {
     PyErr_SetString(PyExc_ImportError, "Can\'t import Numeric.");
     return;
   }
-#endif
 
   /* Check that MPI has been initialized */
   if (MPI_Initialized(&mpi_init_flag) != MPI_SUCCESS || !mpi_init_flag) {
@@ -1456,5 +1456,3 @@ initScientific_mpi(void)
 /* c-basic-offset: 2 */
 /* c-hanging-braces-alist: ((brace-list-open) (substatement-open after) (class-open after) (class-close before) (block-close . c-snug-do-while)) */
 /* End: */
-
-    

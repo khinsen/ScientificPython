@@ -1,5 +1,6 @@
 from Scientific import MPI
-import Numeric, sys
+from Scientific import N
+import sys
 
 communicator = MPI.world.duplicate()
 
@@ -7,7 +8,7 @@ communicator = MPI.world.duplicate()
 
 if communicator.rank == 0:
 
-    data = 1.*Numeric.arange(10)
+    data = 1.*N.arange(10)
     communicator.send(data, 1, 0)
     print "%d sent:\n%s" % (communicator.rank, str(data))
 
@@ -17,7 +18,7 @@ if communicator.rank == 0:
 elif communicator.rank == 1:
 
     data, source, tag, count = \
-          communicator.receive(Numeric.Float, None, None)
+          communicator.receive(N.Float, None, None)
     print "%d received from %d:\n%s" \
           % (communicator.rank, source, str(data))
 
@@ -37,7 +38,7 @@ sys.stdout.flush()
 
 # Broadcast
 
-data = Numeric.zeros((5,), Numeric.Float)
+data = N.zeros((5,), N.Float)
 if communicator.rank == 0:
     data[:] = 42.
 communicator.broadcast(data, 0)
@@ -47,14 +48,14 @@ sys.stdout.flush()
 communicator.barrier()
 
 # Reduce
-data_send = (communicator.rank+1) * Numeric.arange(3)
-data_recv = Numeric.zeros(3)
+data_send = (communicator.rank+1) * N.arange(3)
+data_recv = N.zeros_st(3, data_send)
 communicator.reduce(data_send, data_recv, MPI.sum, 0)
 print "%d has:\n   %s" % (communicator.rank, str(data_recv))
 
 # Share
 
-to_share = (communicator.rank+1)*Numeric.arange(5)
-all = Numeric.zeros((communicator.size,)+to_share.shape, to_share.typecode())
+to_share = (communicator.rank+1)*N.arange(5)
+all = N.zeros_st((communicator.size,)+to_share.shape, to_share)
 communicator.share(to_share, all)
 print "%d has:\n%s" % (communicator.rank, str(all))
