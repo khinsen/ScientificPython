@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#include "Numeric/arrayobject.h"
+#include "Scientific/arrayobject.h"
 #include "bsp.h"
 
 /* Include the automatically generated API definitions */
