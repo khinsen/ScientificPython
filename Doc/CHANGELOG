@@ -1,4 +1,22 @@
-2.7.6 --> 2.7.8
+2.7.8 --> 2.7.9
+---------------
+
+License change: ScientificPython is now distributed under the
+CeCILL-C license, which is an adaptation of the LGPL to French
+law. The previously used CeCILL license, similar to the GPL, was
+considered too restrictive.
+
+Bug fixes:
+
+- MPI interfaces did not work correctly with NumPy and/or Python 2.5.
+
+Improvements:
+
+- Compilation script for mpipython works around a Python configuration
+  bug under MacOS X.
+- Docstrings have been cleaned up.
+
+2.7.7 --> 2.7.8
 ---------------
 
 Bug fixes:
