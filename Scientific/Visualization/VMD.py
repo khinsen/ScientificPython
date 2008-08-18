@@ -7,7 +7,7 @@
 # by 12 individual triangles.
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-9
+# Last revision: 2008-8-18
 #
 
 """
@@ -267,8 +267,8 @@ class Molecules(VMDObject):
     
     def __init__(self, object, **attr):
         """
-        @param filename: the name of a PDB file
-        @type filename: C{str}
+        @param object: the name of a PDB file or an MMTK object
+        @type object: C{str} or MMTK.ChemicalObject
         @param attr: keyword attributes
         """
         VMDObject.__init__(self, attr)

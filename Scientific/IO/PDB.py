@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-8-14
+# Last revision: 2008-8-18
 # 
 
 """
@@ -149,7 +149,7 @@ class PDBFile:
     def __init__(self, file_or_filename, mode = 'r', subformat = None):
         """
         @param file_or_filename: the name of the PDB file, or a file object
-        @type filename: C{str} or C{file}
+        @type file_or_filename: C{str} or C{file}
         @param mode: the file access mode, 'r' (read) or 'w' (write)
         @type mode: C{str}
         @param subformat: indicates a specific dialect of the PDB format.
@@ -1128,7 +1128,7 @@ class Structure:
         @param file_or_filename: the name of the PDB file, or a file object.
                                  Compressed files and URLs are accepted,
                                  as for class L{PDBFile}.
-        @type filename: C{str} or C{file}
+        @type file_or_filename: C{str} or C{file}
         @param model: the number of the model to read from a multiple-model
                       file. Only one model can be treated at a time.
         @type model: C{int}

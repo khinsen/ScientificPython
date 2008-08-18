@@ -3,7 +3,7 @@
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
-# last revision: 2008-2-21
+# last revision: 2008-8-18
 # 
 
 """
@@ -38,7 +38,7 @@ class Transformation:
     def __call__(self, vector):
         """
         @param vector: the input vector
-        @type param: L{Scientific.Geometry.Vector}
+        @type vector: L{Scientific.Geometry.Vector}
         @returns: the transformed vector
         @rtype: L{Scientific.Geometry.Vector}
         """

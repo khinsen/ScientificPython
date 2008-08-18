@@ -2,7 +2,7 @@
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions by Hans-Petter Langtangen
-# last revision: 2007-1-16
+# last revision: 2008-8-18
 #
 
 """
@@ -70,8 +70,8 @@ class Histogram:
         """
         @param data: a sequence of data points
         @type data: C{Numeric.array} of C{float} or C{int}
-        @param bins: the number of bins into which the data is to be sorted
-        @type bins: C{int}
+        @param nbins: the number of bins into which the data is to be sorted
+        @type nbins: C{int}
         @param range: a tuple of two values, specifying the lower and
                       the upper end of the interval spanned by the bins.
                       Any data point outside this interval will be ignored.
@@ -188,8 +188,8 @@ class WeightedHistogram(Histogram):
         @type data: C{Numeric.array}
         @param weights: a sequence of weights, same length as data
         @type weights: C{Numeric.array}
-        @param bins: the number of bins into which the data is to be sorted
-        @type bins: C{int}
+        @param nbins: the number of bins into which the data is to be sorted
+        @type nbins: C{int}
         @param range: a tuple of two values, specifying the lower and
                       the upper end of the interval spanned by the bins.
                       Any data point outside this interval will be ignored.

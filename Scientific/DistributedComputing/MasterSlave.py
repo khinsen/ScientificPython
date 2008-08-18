@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-4-22
+# last revision: 2008-8-18
 #
 
 """
@@ -446,10 +446,10 @@ def runJob(label, master_class, slave_class, watchdog_period=120.,
                             job has crashed or been killed.
     @type watchdog_period: C{int} or C{NoneType}
 
-    @param lauch_slaves: the number of slaves jobs to launch
-                         immediately on the same machine that runs
-                         the master process
-    @type lauch_slaves: C{int}
+    @param launch_slaves: the number of slaves jobs to launch
+                          immediately on the same machine that runs
+                          the master process
+    @type launch_slaves: C{int}
     """
     import inspect
     import os

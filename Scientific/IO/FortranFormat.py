@@ -17,7 +17,7 @@
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # With contributions from Andreas Prlic <andreas@came.sbg.ac.at>
-# last revision: 2006-6-23
+# last revision: 2008-8-18
 #
 
 """
@@ -83,7 +83,7 @@ class FortranLine:
     
     def __init__(self, line, format, length = 80):
         """
-        @param data: either a sequence of Python objects, or a string
+        @param line: either a sequence of Python objects, or a string
                      formatted according to Fortran rules
 
         @param format: either a Fortran-style format string, or a

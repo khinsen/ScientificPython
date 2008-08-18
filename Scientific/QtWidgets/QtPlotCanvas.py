@@ -3,7 +3,7 @@
 # See the example at the end for documentation...
 #
 # Written by Konrad Hinsen <khinsen@cnrs-orleans.fr>
-# Last revision: 2006-5-31
+# Last revision: 2008-8-18
 #
 
 """
@@ -299,7 +299,6 @@ class PlotCanvas(QWidget):
         @type background: C{str}
         @param font: the font for axis labels, default: 10 point Helevetica
         @type font: QFont
-        @param attr: widget attributes
         
         @keyword zoom: a flag that indicates whether interactive
                        zooming (using the left mouse button) is enabled; the

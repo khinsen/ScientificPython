@@ -1,7 +1,7 @@
 # Various useful small widgets
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-5-30
+# Last revision: 2008-8-18
 #
 
 import Tkinter, Dialog, FileDialog
@@ -19,7 +19,7 @@ class FilenameEntry(Tkinter.Frame):
     name.
     """
 
-    def __init__(self, master, text, browse_pattern = '*', must_exist = True,
+    def __init__(self, master, text, pattern = '*', must_exist = True,
                  **attr):
         """
         @param master: the parent widget
@@ -29,9 +29,9 @@ class FilenameEntry(Tkinter.Frame):
                         file list in the file selection dialog
         @type pattern: C{str}
         @param must_exist: if C{True}, allow only names of existing files
-        @type must_exit: C{bool}
+        @type must_exist: C{bool}
         """
-        self.pattern = browse_pattern
+        self.pattern = pattern
         self.must_exist = must_exist
         newattr = copy.copy(attr)
         newattr['text'] = text

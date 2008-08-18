@@ -1,7 +1,7 @@
 # This module provides color definitions for use in Visualization.
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-9
+# Last revision: 2008-8-18
 #
 
 """
@@ -119,9 +119,9 @@ class SymmetricColorScale:
 
     def __init__(self, max, n = 20):
         """
-        @param range: a positive number defining the range, which is from
-                      -number to +number.
-        @type range: C{float}
+        @param max: a positive number defining the range, which is from
+                    -max to +max.
+        @type max: C{float}
         """
         self.range = max
         self.n = n

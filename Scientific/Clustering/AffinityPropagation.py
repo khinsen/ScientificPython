@@ -1,7 +1,7 @@
 # Clustering by affinity propagation.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-3-21
+# last revision: 2008-8-18
 #
 
 """
@@ -18,7 +18,7 @@ Low preference values yield few big clusters, whereas high preference
 values yield many small clusters.
 
 The algorithm is described in:
-    B.J. Frey & D. Dueck, Science 315, 972-976 (2007)
+B.J. Frey & D. Dueck, Science 315, 972-976 (2007)
 """
 
 from Scientific import N
@@ -36,7 +36,7 @@ class DataSet(object):
         @type items: sequence
 
         @param similarities: similarity values for item pairs.
-            This parameter can have one of three forms:
+           This parameter can have one of three forms:
             - a list if triples (index1, index2, similarity),
               where the indices point into the item list and the
               similarity is a real number.

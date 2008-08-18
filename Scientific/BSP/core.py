@@ -1,7 +1,7 @@
 # High-level parallelization classes
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2007-2-6
+# last revision: 2008-8-18
 #
 
 import RemoteObjects
@@ -902,8 +902,8 @@ class ParRootFunction(ParFunction):
 
     def __init__(self, local_function, other_function=None):
         """
-        @param root_function: the local function for processor 0
-        @type root_function: callable
+        @param local_function: the local function for processor 0
+        @type local_function: callable
         @param other_function: the local function for all other processors.
                                The default is a function that returns None.
         @type other_function: callable
@@ -986,9 +986,8 @@ class ParIterator(object):
 
     def __init__(self, sequence):
         """
-        @param global_sequence: a global object representing a distributed
-                                sequence
-        @type global_sequence: L{ParSequence}
+        @param sequence: a global object representing a distributed sequence
+        @type sequence: L{ParSequence}
         """
         self.sequence = sequence.value
         self.n = len(sequence.value)
@@ -1018,9 +1017,8 @@ class ParIndexIterator(object):
 
     def __init__(self, sequence):
         """
-        @param global_sequence: a global object representing a distributed
-                                sequence
-        @type global_sequence: L{ParSequence}
+        @param sequence: a global object representing a distributed sequence
+        @type sequence: L{ParSequence}
         """
         self.n = len(sequence.value)
         self.max_n = ParValue(self.n).reduce(max, 0).broadcast().value

@@ -2,7 +2,7 @@
 # least squares fits.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-23
+# last revision: 2008-8-18
 #
 
 """
@@ -58,7 +58,7 @@ def leastSquaresFit(model, parameters, data, max_iterations=None,
         differentiation is used to obtain the derivatives with respect to the
         parameters, the function may only use the mathematical functions known
         to the module FirstDerivatives.
-    @type param: callable
+    @type model: callable
 
     @param parameters: a tuple of initial values for the
         fit parameters
@@ -125,7 +125,7 @@ def polynomialLeastSquaresFit(parameters, data):
     the number of parameter values.
 
     @note: This could also be done with a linear least squares fit
-        from L{LinearAlgebra}
+           from L{Scientific.LA}
 
     @param parameters: a tuple of initial values for the polynomial
         coefficients

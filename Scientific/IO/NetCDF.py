@@ -3,7 +3,7 @@
 # package hierarchy.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-23
+# Last revision: 2008-8-18
 # 
 
 """
@@ -34,7 +34,7 @@ if sys.modules.has_key('epydoc'):
         an attribute of the NetCDFFile object. 
         """
 
-        def __init__(self, *args):
+        def __init__(self, filename, mode):
             """
             @param filename: name of the netCDF file. By convention,
                              netCDF files have the extension ".nc", but

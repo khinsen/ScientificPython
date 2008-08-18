@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-2-8
+# last revision: 2008-8-18
 #
 
 """
@@ -386,7 +386,7 @@ class NetCDFInterpolatingFunction(InterpolatingFunction):
 
         @param axesnames: the names of the netCDF variables that contain the
             axes information
-        @type axes: sequence of C{str}
+        @type axesnames: sequence of C{str}
 
         @param variablename: the name of the netCDF variable that contains
             the data values
