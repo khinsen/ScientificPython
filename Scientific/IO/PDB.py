@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-8-18
+# Last revision: 2008-8-19
 # 
 
 """
@@ -545,6 +545,7 @@ class Atom:
             else:
                 self.properties['element'] = name[0:2]
         self.name = string.strip(name)
+        self.parent = None
 
     def __getitem__(self, item):
         """
@@ -679,6 +680,7 @@ class Group:
         """
         self.atom_list.append(atom)
         self.atoms[atom.name] = atom
+        atom.parent = self
 
     def deleteAtom(self, atom):
         """
@@ -690,6 +692,7 @@ class Group:
         """
         self.atom_list.remove(atom)
         del self.atoms[atom.name]
+        atom.parent = None
 
     def deleteHydrogens(self):
         """
