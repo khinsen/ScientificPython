@@ -2,7 +2,7 @@
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions by Hans-Petter Langtangen
-# last revision: 2008-8-18
+# last revision: 2008-8-20
 #
 
 """
@@ -263,14 +263,3 @@ if __name__ == '__main__':
     h.normalizeArea()
     x3 = h.getBinIndices()
     y3 = h.getBinCounts()
-
-    import Gnuplot
-    g = Gnuplot.Gnuplot(persist=1)
-    g.xlabel('sample value');  g.ylabel('probability')
-    d1 = Gnuplot.Data(x, y, with='lines',
-                      title='%d samples' % nsamples)
-    d2 = Gnuplot.Data(x2, y2, with='lines',
-                      title='%d samples' % nsamples2)
-    d3 = Gnuplot.Data(x3, y3, with='lines',
-                      title='%d samples' % nsamples3)
-    g.plot(d1, d2, d3)
