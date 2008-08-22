@@ -3,7 +3,7 @@
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
-# last revision: 2008-8-18
+# last revision: 2008-8-22
 # 
 
 """
@@ -175,8 +175,8 @@ class Rotation(RigidBodyTransformation):
             axis = axis.normal()
             projector = axis.dyadicProduct(axis)
             self.tensor = projector - \
-                          Numeric.sin(angle)*Geometry.epsilon*axis + \
-                          Numeric.cos(angle)*(Geometry.delta-projector)
+                          N.sin(angle)*Geometry.epsilon*axis + \
+                          N.cos(angle)*(Geometry.delta-projector)
         else:
             raise TypeError('one or two arguments required')
 
@@ -213,8 +213,8 @@ class Rotation(RigidBodyTransformation):
                   The angle is in the interval (-pi, pi]
         @rtype: (L{Scientific.Geometry.Vector}, C{float})
         """
-        as = -self.tensor.asymmetricalPart()
-        axis = Geometry.Vector(as[1,2], as[2,0], as[0,1])
+        asym = -self.tensor.asymmetricalPart()
+        axis = Geometry.Vector(asym[1,2], asym[2,0], asym[0,1])
         sine = axis.length()
         if abs(sine) > 1.e-10:
             axis = axis/sine
@@ -223,11 +223,11 @@ class Rotation(RigidBodyTransformation):
             angle = angleFromSineAndCosine(sine, cosine)
         else:
             t = 0.5*(self.tensor+Geometry.delta)
-            i = Numeric.argmax(t.diagonal().array)
-            axis = (t[i]/Numeric.sqrt(t[i,i])).asVector()
+            i = N.argmax(t.diagonal().array)
+            axis = (t[i]/N.sqrt(t[i,i])).asVector()
             angle = 0.
             if t.trace() < 2.:
-                angle = Numeric.pi
+                angle = N.pi
         return axis, angle
 
     def threeAngles(self, e1, e2, e3, tolerance=1e-7):
@@ -246,7 +246,7 @@ class Rotation(RigidBodyTransformation):
         @type e3: L{Scientific.Geometry.Vector}
         @returns: a list containing two arrays of shape (3,),
                   each containing the three angles of one solution
-        @rtype: C{list} of C{Numeric.array}
+        @rtype: C{list} of C{N.array}
         @raise ValueError: if two consecutive axes are parallel
         """
 
@@ -290,11 +290,11 @@ class Rotation(RigidBodyTransformation):
                               % (_c/_norm))
         #if _c/_norm > 1: raise ValueError('Step1: No solution')
         _th = angleFromSineAndCosine(_b/_norm, _a/_norm)
-        _xmth = Numeric.arccos(_c/_norm)
+        _xmth = N.arccos(_c/_norm)
 
         # a2a and a2b are the two possible solutions to the equation.
-        a2a = mod_angle((_th + _xmth), 2*Numeric.pi)
-        a2b = mod_angle((_th - _xmth), 2*Numeric.pi)
+        a2a = mod_angle((_th + _xmth), 2*N.pi)
+        a2b = mod_angle((_th - _xmth), 2*N.pi)
         
         solutions = []
         # for each solution, find the two other angles (a1, a3).
@@ -312,7 +312,7 @@ class Rotation(RigidBodyTransformation):
                 cosa1 = (v1*w1)/norm
                 sina1 = v1*(w1.cross(e1))/norm
                 a1 = mod_angle(angleFromSineAndCosine(sina1, cosa1),
-                               2*Numeric.pi)
+                               2*N.pi)
                 
             R3 = Rotation(e2, -1*a2)*Rotation(e1, -1*a1)*self
             # u = normalized test vector perpendicular to e3
@@ -323,13 +323,13 @@ class Rotation(RigidBodyTransformation):
             cosa3 = u*R3(u)
             sina3 = u*(R3(u).cross(e3))
             a3 =  mod_angle(angleFromSineAndCosine(sina3, cosa3),
-                            2*Numeric.pi)
+                            2*N.pi)
             
-            solutions.append(Numeric.array([a1, a2, a3]))
+            solutions.append(N.array([a1, a2, a3]))
             
         # Gives the closest solution to 0,0,0 first
-        if Numeric.add.reduce(solutions[0]**2) > \
-               Numeric.add.reduce(solutions[1]**2):
+        if N.add.reduce(solutions[0]**2) > \
+               N.add.reduce(solutions[1]**2):
             solutions = [solutions[1], solutions[0]]
         return solutions
 
@@ -340,8 +340,8 @@ class Rotation(RigidBodyTransformation):
         """
         from Quaternion import Quaternion
         axis, angle = self.axisAndAngle()
-        sin_angle_2 = Numeric.sin(0.5*angle)
-        cos_angle_2 = Numeric.cos(0.5*angle)
+        sin_angle_2 = N.sin(0.5*angle)
+        cos_angle_2 = N.cos(0.5*angle)
         return Quaternion(cos_angle_2, sin_angle_2*axis[0],
                           sin_angle_2*axis[1], sin_angle_2*axis[2])
 
@@ -409,8 +409,8 @@ class RotationTranslation(RigidBodyTransformation):
 #        axis, angle = self.rotation().axisAndAngle()
 #        d = self.vector*axis
 #        x = d*axis-self.vector
-#        r0 = Numeric.dot(Scientific.LA.generalized_inverse(
-#                            self.tensor.array-Numeric.identity(3)), x.array)
+#        r0 = N.dot(Scientific.LA.generalized_inverse(
+#                            self.tensor.array-N.identity(3)), x.array)
 #        return Geometry.Vector(r0), axis, angle, d
 
     def screwMotion(self):

@@ -1,7 +1,7 @@
 # Clustering by affinity propagation.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-8-18
+# last revision: 2008-8-22
 #
 
 """
@@ -251,11 +251,11 @@ try:
 except ImportError:
 
     def _affinityPropagation(dataset, s, a, r, damping):
-        as = a + s
+        aps = a + s
         r_new = N.zeros(s.shape, N.Float)
         for i in range(dataset.nsimilarities):
             r_new[i] = s[i] \
-                       - N.maximum.reduce(N.take(as,
+                       - N.maximum.reduce(N.take(aps,
                                                  dataset.r_update_indices[i]))
         r = damping*r + (1-damping)*r_new
 
