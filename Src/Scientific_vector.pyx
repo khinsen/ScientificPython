@@ -1,7 +1,7 @@
 # Implementation of Scientific.Geometry.Vector in Pyrex
 #
 # Written by Konrad Hinsen
-# last revision: 2007-10-16
+# last revision: 2008-8-27
 #
 
 
@@ -205,8 +205,8 @@ cdef class vector:
         "Returns the dyadic product with vector or tensor |other|."
         from Scientific import Geometry
         if isinstance(other, vector):
-            return Geometry.Tensor(self.array, 1) * \
-                   Geometry.Tensor(other.array, 1)
+            return Geometry.Tensor(self.array[:, N.NewAxis]
+                                   * other.array[N.NewAxis, :], 1)
         elif Geometry.isTensor(other):
             return Geometry.Tensor(self.array, 1)*other
         else:

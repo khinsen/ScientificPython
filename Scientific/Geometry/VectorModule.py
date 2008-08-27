@@ -3,7 +3,7 @@
 # array.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-4-28
+# last revision: 2008-8-27
 #
 
 from Scientific import N; Numeric = N
@@ -198,8 +198,8 @@ class Vector:
         """
         from Scientific import Geometry
         if isVector(other):
-            return Geometry.Tensor(self.array, 1) * \
-                   Geometry.Tensor(other.array, 1)
+            return Geometry.Tensor(self.array[:, N.NewAxis]
+                                   * other.array[N.NewAxis, :], 1)
         elif Geometry.isTensor(other):
             return Geometry.Tensor(self.array, 1)*other
         else:
