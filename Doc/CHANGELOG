@@ -1,3 +1,21 @@
+2.7.9 --> 2.7.10
+----------------
+
+Bug fixes:
+
+- Removed all occurrences of "as" as a variable name for compatibility
+  with Python 2.6.
+
+- Installation without the netCDF module did not work.
+
+Improvements:
+
+- Vector.dyadicProduct() was replaced by a more efficient implementation.
+
+- Scientific.IO.PDB: Atom objects now have a parent attribute whose
+  value is the containing group.
+
+
 2.7.8 --> 2.7.9
 ---------------
 
