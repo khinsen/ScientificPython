@@ -17,10 +17,29 @@ scripts = []
 cmdclass = {}
 options = {}
 
+use_numpy = True
+use_numeric = False
+use_numarray = False
+
 if "--numpy" in sys.argv:
-    use_numpy = 1
-    extra_compile_args.append("-DNUMPY=1")
     sys.argv.remove("--numpy")
+
+if "--numeric" in sys.argv:
+    use_numeric = True
+    use_numpy = False
+    sys.argv.remove("--numeric")
+
+if "--numarray" in sys.argv:
+    use_numarray = True
+    use_numpy = False
+    sys.argv.remove("--numarray")
+
+if use_numeric:
+    extra_compile_args.append("-DNUMERIC=1")
+elif use_numarray:
+    extra_compile_args.append("-DNUMARRAY=1")
+else :
+    extra_compile_args.append("-DNUMPY=1")
     if sys.platform == 'win32':
         arrayobject_h_include = [os.path.join(sys.prefix,
                                  "Lib/site-packages/numpy/core/include")]
@@ -28,14 +47,6 @@ if "--numpy" in sys.argv:
         arrayobject_h_include = [os.path.join(sys.prefix,
                                 "lib/python%s.%s/site-packages/numpy/core/include"
                                 % sys.version_info [:2])]
-else:
-    use_numpy = 0
-if "--numarray" in sys.argv:
-    use_numarray = 1
-    extra_compile_args.append("-DNUMARRAY=1")
-    sys.argv.remove("--numarray")
-else:
-    use_numarray = 0
 
 math_libraries = []
 if sys.platform != 'win32':

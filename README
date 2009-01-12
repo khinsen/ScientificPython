@@ -3,9 +3,8 @@ scientific applications. Most of them need the Numerical Python
 extension (aka NumPy), which is available from SourceForge; see
 http://numpy.sourceforge.net for details.
 
-This is release 2.7 of ScientificPython. The odd minor release number
-indicates a development release. The main new feature is the subpackage
-DistributedComputing (see manual and Examples/master_slave_demo.py).
+This is release 2.9 of ScientificPython. The odd minor release number
+indicates a development release.
 
 All the documentation is in Doc. To browse the reference manual for all
 the modules, point your browser at Doc/Reference/index.html.
