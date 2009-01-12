@@ -360,13 +360,11 @@ initScientific_bsplib(void)
   PyDict_SetItemString(d, "numberOfProcessors", PyInt_FromLong((long)nprocs));
 
   /* Import the array module */
-#ifdef import_array
   import_array();
   if (PyErr_Occurred()) {
     PyErr_SetString(PyExc_ImportError, "Can\'t import Numeric.");
     return;
   }
-#endif
 
   /* Check for errors */
   if (PyErr_Occurred())
