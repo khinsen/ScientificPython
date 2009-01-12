@@ -3,7 +3,7 @@
 # package hierarchy.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-8-18
+# Last revision: 2008-12-4
 # 
 
 """
@@ -53,7 +53,11 @@ if sys.modules.has_key('epydoc'):
                          above; it indicates that the file will be opened
                          or created in "share" mode, which reduces buffering
                          in order to permit simultaneous read access by other
-                         processes to a file that is being written.
+                         processes to a file that is being written. When
+                         creating a file in write mode, an "l" or "4" can
+                         be appended to use the large-file format (introduced
+                         with netCDF 3.6) or the HDF5 format (introduced
+                         with netCDF 4).
             @type mode: C{str}
             """
             raise ImportError("this code should never be executed")

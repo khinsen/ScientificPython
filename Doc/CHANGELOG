@@ -1,3 +1,13 @@
+2.7.10 --> 2.9.0
+-----------------
+
+Improvements:
+
+- Scientific.IO.NetCDF.NetCDFFile accepts optional flags for
+  the 64-bit file format (from netCDF 3.6) and the HDF5 file format
+  (from netCDF 4).
+
+
 2.7.9 --> 2.7.10
 ----------------
 

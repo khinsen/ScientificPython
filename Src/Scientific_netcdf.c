@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2007-10-31
+ * last revision: 2008-12-4
  */
 
 #ifdef _WIN32
@@ -643,16 +643,28 @@ PyNetCDFFileObject_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static int
 open_netcdf_file(PyNetCDFFileObject *self, char *filename, char *mode)
 {
-  int rw, share, ret;
-  rw = share = ret = 0;
+  int rw, modef, ret;
+  rw = modef = ret = 0;
   if (strlen(mode) > 1) {
     if (mode[1] == '+') rw = 1;
-    else if (mode[1] == 's') share = NC_SHARE;
+    else if (mode[1] == 's') modef |= NC_SHARE;
+#ifdef NC_64BIT_OFFSET
+    else if (mode[1] == 'l') modef |= NC_64BIT_OFFSET;
+#endif
+#ifdef NC_NETCDF4
+    else if (mode[1] == '4') modef |= NC_NETCDF4;
+#endif
     else ret = -1;
   }
   if (strlen(mode) > 2) {
     if (mode[2] == '+') rw = 1;
-    else if (mode[2] == 's') share = NC_SHARE;
+    else if (mode[2] == 's') modef |= NC_SHARE;
+#ifdef NC_64BIT_OFFSET
+    else if (mode[2] == 'l') modef |= NC_64BIT_OFFSET;
+#endif
+#ifdef NC_NETCDF4
+    else if (mode[2] == '4') modef |= NC_NETCDF4;
+#endif
     else ret = -1;
   }
   if (ret == -1 || strlen(mode) > 3 ||
@@ -664,7 +676,7 @@ open_netcdf_file(PyNetCDFFileObject *self, char *filename, char *mode)
   if (mode[0] == 'w') {
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ret = nc_create(filename, NC_CLOBBER|share, &self->id);
+    ret = nc_create(filename, modef|NC_CLOBBER, &self->id);
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
     self->define = 1;
@@ -677,10 +689,10 @@ open_netcdf_file(PyNetCDFFileObject *self, char *filename, char *mode)
   else if (mode[0] == 'a') {
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ret = nc_open(filename, NC_WRITE|share, &self->id);
+    ret = nc_open(filename, modef|NC_WRITE, &self->id);
     self->define = 0;
     if (ret == ENOENT) {
-      ret = nc_create(filename, NC_NOCLOBBER|share, &self->id);
+      ret = nc_create(filename, modef|NC_NOCLOBBER, &self->id);
       self->define = 1;
     }
     release_netCDF_lock();
@@ -694,7 +706,7 @@ open_netcdf_file(PyNetCDFFileObject *self, char *filename, char *mode)
   else if (mode[0] == 'r') {
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
-    ret = nc_open(filename, rw ? (NC_WRITE|share) : (NC_NOWRITE|share),
+    ret = nc_open(filename, rw ? (modef|NC_WRITE) : (modef|NC_NOWRITE),
 		  &self->id);
     release_netCDF_lock();
     Py_END_ALLOW_THREADS;
