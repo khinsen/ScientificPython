@@ -7,6 +7,11 @@ Improvements:
   the 64-bit file format (from netCDF 3.6) and the HDF5 file format
   (from netCDF 4).
 
+Bug fixes:
+
+- Methods derivative() and integral() crashed because index_expression
+  was deleted at the end of the module.
+
 
 2.7.9 --> 2.7.10
 ----------------

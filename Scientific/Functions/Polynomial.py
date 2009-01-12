@@ -1,7 +1,7 @@
 # This module defines a multivariate polynomial class
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-11-24
+# last revision: 2008-12-15
 #
 
 """
@@ -203,10 +203,6 @@ def _isSequence(object):
     except: pass
     return n >= 0
 
-
-# Clean up module (mostly for epydoc)
-
-del index_expression
 
 # Test code
 
