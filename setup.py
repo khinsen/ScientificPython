@@ -2,7 +2,7 @@
 
 from distutils.core import setup, Extension
 from distutils.command.install_headers import install_headers
-import os, sys
+import os, sys, platform
 from glob import glob
 
 class Dummy:
@@ -38,11 +38,15 @@ if use_numeric:
     extra_compile_args.append("-DNUMERIC=1")
 elif use_numarray:
     extra_compile_args.append("-DNUMARRAY=1")
-else :
+else:
     extra_compile_args.append("-DNUMPY=1")
     if sys.platform == 'win32':
         arrayobject_h_include = [os.path.join(sys.prefix,
                                  "Lib/site-packages/numpy/core/include")]
+    elif platform.machine() == 'x86_64':
+        arrayobject_h_include = [os.path.join(sys.prefix,
+                                "lib64/python%s.%s/site-packages/numpy/core/include"
+                                % sys.version_info [:2])]
     else:
         arrayobject_h_include = [os.path.join(sys.prefix,
                                 "lib/python%s.%s/site-packages/numpy/core/include"
