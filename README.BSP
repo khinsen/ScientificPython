@@ -59,12 +59,12 @@ bsp_virtual emulates a standard Python interpreter even better than
 the interactive BSP scripts mentioned above. In addition, it provides
 interactive debugging of virtual processes. The commandline syntax is
 
-   bsp_virtual np [options] [script.py]
+   bsp_virtual [options] [script.py]
 
-where np is the number of (virtual) processors and script.py is
-a Python script to execute. The options are
+where script.py is a Python script to execute. The options are
 
    -i:  continue in interactive mode after the script terminates
+   -n np: set the number of (virtual) processors to n (default: 1)
    -r:  print the runtime used by each virtual processor
 
 Debugging is handled by the standard pdb, which however is invoked in

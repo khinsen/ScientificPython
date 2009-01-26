@@ -3,7 +3,7 @@
 # Run BSP code using threads to emulate processors
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2005-9-6
+# last revision: 2009-1-26
 #
 
 import code, getopt
@@ -337,21 +337,20 @@ class VirtualConsole(code.InteractiveConsole):
         debugger.quitting = 1
         sys.settrace(None)
         
-options, args = getopt.getopt(sys.argv[1:], 'it')
-interactive = 0
-runtime = 0
+options, args = getopt.getopt(sys.argv[1:], 'in:t')
+interactive = False
+runtime = False
+nproc = 1
 for option, value in options:
     if option == '-i':
-        interactive = 1
+        interactive = True
     if option == '-t':
-        runtime = 1
+        runtime = True
+    if option == '-n':
+        nproc = int(value)
 if len(args) < 2:
-    interactive = 1
+    interactive = True
 
-try:
-    nproc = int(args[0])
-except IndexError:
-    nproc = 1
 machine = VirtualBSPMachine(nproc, runtime)
 sys.virtual_bsp_machine = machine
 
