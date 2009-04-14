@@ -31,7 +31,7 @@ E-Mail: hinsen@cnrs-orleans.fr
 Installation:
 -------------
 
-Required: Python 2.2 or higher. Most modules also require Numerical
+Required: Python 2.5 or higher. Most modules also require Numerical
 Python. If you want to use the netCDF interface module, you also need
 the netCDF library, version 3.0 or higher.
 
