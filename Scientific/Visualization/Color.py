@@ -1,7 +1,7 @@
 # This module provides color definitions for use in Visualization.
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-8-18
+# Last revision: 2009-6-10
 #
 
 """
@@ -66,12 +66,12 @@ class ColorScale:
 
     def __init__(self, range):
         """
-        @param range: a tuple of two numbers (the center of the interval
-                      and its width), or a single number specifying the
-                      width for a default center of zero
+        @param range: a tuple of two numbers (the lower and upper limits
+                      of the interval), or a single number specifying the
+                      upper limit for a default lower limit of zero
         @type range: C{float} or C{tuple}
         """
-        if type(range) == type(()):
+        if isinstance(range, tuple):
             self.zero, self.range = range
             self.range = self.range-self.zero
         else:
