@@ -202,7 +202,7 @@ line plots and 3D wireframe models.""",
        author = "Konrad Hinsen",
        author_email = "hinsen@cnrs-orleans.fr",
        url = "http://dirac.cnrs-orleans.fr/ScientificPython/",
-       license = "CeCILL",
+       license = "CeCILL-C",
 
        packages = packages,
        headers = headers,
