@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-8-18
+# last revision: 2010-1-7
 #
 
 """
@@ -407,8 +407,8 @@ class SlaveProcess(object):
         return False
 
 def getMachineInfo():
-    import os
-    sysname, nodename, release, version, machine = os.uname()
+    import os, platform
+    sysname, nodename, release, version, machine, processor = platform.uname()
     pid = os.getpid()
     return "PID %d on %s (%s)" % (pid, nodename, machine)
 
