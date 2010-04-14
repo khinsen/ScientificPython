@@ -1,7 +1,7 @@
 # Automatic first-order derivatives
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-6-12
+# last revision: 2010-4-14
 #
 
 """
@@ -69,23 +69,6 @@ class DerivVar:
 
     """
     Numerical variable with automatic derivatives of first order
-    """
-
-    """Variable with derivatives
-
-    Constructor: DerivVar(|value|, |index| = 0)
-
-    Arguments:
-
-    |value| -- the numerical value of the variable
-
-    |index| -- the variable index (an integer), which serves to
-               distinguish between variables and as an index for
-               the derivative lists. Each explicitly created
-               instance of DerivVar must have a unique index.
-
-    Indexing with an integer yields the derivatives of the corresponding
-    order.
     """
 
     def __init__(self, value, index=0, order=1):
@@ -330,3 +313,78 @@ def DerivVector(x, y, z, index=0):
         return Vector(DerivVar(x, index),
                       DerivVar(y, index+1),
                       DerivVar(z, index+2))
+
+# Functions with derivatives
+
+class DerivFn(object):
+
+    """
+    Function with derivatives, applicable to DerivVar objects
+    """
+
+    def __init__(self, fn, *deriv_fns):
+        """
+        @param fn: a Python function from numbers to numbers
+        @param *deriv_fns: Python functions from numbers to numbers defining
+                           the partial derivatives of the defined function
+                           with respect to its arguments. There must be as many
+                           derivative functions as the main function has
+                           arguments.
+        """
+        self.fn = fn
+        self.deriv_fns = deriv_fns
+
+    def __call__(self, *args):
+        """
+        Apply the function to the supplied arguments. The number of arguments
+        must be equal to the number of derivative functions given in the
+        constructor. The arguments can be plain numbers or DerivVar objects.
+        The return value is a DerivVar object.
+        """
+        assert len(args) == len(self.deriv_fns)
+        values = []
+        derivs = []
+        nderivs = 0
+        for x in args:
+            if isinstance(x, DerivVar):
+                values.append(x.value)
+                derivs.append(x.deriv)
+                nderivs = max(nderivs, len(x.deriv))
+            else:
+                values.append(x)
+                derivs.append([])
+        derivs = [d+(nderivs-len(d))*[0] for d in derivs]
+        v = self.fn(*values)
+        d = [f(*values) for f in self.deriv_fns]
+        rderivs = nderivs*[0]
+        for i in range(len(d)):
+            rderivs = [r+d[i]*x for (r, x) in zip(rderivs, derivs[i])]
+        return DerivVar(v, rderivs)
+
+class NumDerivFn(DerivFn):
+
+    """
+    Function with derivatives evaluated by numerical approximation,
+    applicable to DerivVar objects
+    """
+    
+    def __init__(self, fn, *hs):
+        """
+        @param fn: a Python function from numbers to numbers
+        @param hs: one step value h for each argument of the function.
+                   The ith partial derivative is calculated
+                   symmetrically as
+                   (f(xs[i]+hs[i])-f(xs[i]-hs[i]))/(2.*hs[i]).
+        """
+        deriv_fns = []
+        for i in range(len(hs)):
+            h = hs[i]
+            deriv_fns.append(self._makeDerivFn(fn, i, h))
+        DerivFn.__init__(self, fn, *deriv_fns)
+
+    def _makeDerivFn(self, fn, i, h):
+        def deriv_fn(*args):
+            args_p = args[:i] + (args[i]+h,) + args[i+1:]
+            args_m = args[:i] + (args[i]-h,) + args[i+1:]
+            return (fn(*args_p)-fn(*args_m))/(2.*h)
+        return deriv_fn
