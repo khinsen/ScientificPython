@@ -47,7 +47,8 @@ def _chiSquare(model, parameters, data):
     return chi_sq, alpha
 
 def leastSquaresFit(model, parameters, data, max_iterations=None,
-                    stopping_limit = 0.005):
+                    stopping_limit = 0.005,
+                    validator = None):
     """General non-linear least-squares fit using the
     X{Levenberg-Marquardt} algorithm and X{automatic differentiation}.
 
@@ -94,6 +95,10 @@ def leastSquaresFit(model, parameters, data, max_iterations=None,
         delta = LA.solve_linear_equations(alpha+l*N.diagonal(alpha)*id,
                                           -0.5*N.array(chi_sq[1]))
         next_p = map(lambda a,b: a+b, p, delta)
+        if validator is not None:
+            while not validator(*next_p):
+                delta *= 0.8
+                next_p = map(lambda a,b: a+b, p, delta)
         next_chi_sq, next_alpha = _chiSquare(model, next_p, data)
         if next_chi_sq > chi_sq:
             l = 10.*l
