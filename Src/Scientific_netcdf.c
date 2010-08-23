@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2008-12-4
+ * last revision: 2010-8-23
  */
 
 #ifdef _WIN32
@@ -1849,7 +1849,7 @@ PyNetCDFVariable_WriteArray(PyNetCDFVariableObject *self,
 	    }
 	  }
 	}
-	if (self->unlimited)
+	if (self->unlimited && error == NC_NOERR)
 	  error = nc_inq_dimlen(self->file->id, self->dimids[0],
 				&self->dimensions[0]);
 	release_netCDF_lock();
