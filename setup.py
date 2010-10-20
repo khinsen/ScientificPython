@@ -40,17 +40,8 @@ elif use_numarray:
     extra_compile_args.append("-DNUMARRAY=1")
 else :
     extra_compile_args.append("-DNUMPY=1")
-    if sys.platform == 'win32':
-        arrayobject_h_include = [os.path.join(sys.prefix,
-                                 "Lib/site-packages/numpy/core/include")]
-    elif platform.machine() == 'x86_64':
-        arrayobject_h_include = [os.path.join(sys.prefix,
-                                "lib64/python%s.%s/site-packages/numpy/core/include"
-                                % sys.version_info [:2])]
-    else:
-        arrayobject_h_include = [os.path.join(sys.prefix,
-                                "lib/python%s.%s/site-packages/numpy/core/include"
-                                % sys.version_info [:2])]
+    import numpy.distutils.misc_util
+    arrayobject_h_include = numpy.distutils.misc_util.get_numpy_include_dirs()
 
 math_libraries = []
 if sys.platform != 'win32':
