@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-8-19
+# Last revision: 2010-10-20
 # 
 
 """
@@ -398,7 +398,7 @@ class PDBFile:
             text = text[eol+1:]
 
     def writeAtom(self, name, position, occupancy=0.0, temperature_factor=0.0,
-                  element=''):
+                  element='', alternate=''):
         """
         Write an ATOM or HETATM record using the information supplied.
         The residue and chain information is taken from the last calls to
@@ -414,6 +414,8 @@ class PDBFile:
         @type temperature_factor: C{float}
         @param element: the chemical element
         @type element: C{str}
+        @param alternate: the alternate location character
+        @type element: C{str}
         """
         if self.het_flag:
             type = 'HETATM'
@@ -425,6 +427,7 @@ class PDBFile:
         self.data['name'] = name
         self.data['position'] = position
         self.data['serial_number'] = (self.data['serial_number'] + 1) % 100000
+        self.data['alternate'] = alternate
         self.data['occupancy'] = occupancy
         self.data['temperature_factor'] = temperature_factor
         self.data['element'] = element
