@@ -359,7 +359,10 @@ class DerivFn(object):
         rderivs = nderivs*[0]
         for i in range(len(d)):
             rderivs = [r+d[i]*x for (r, x) in zip(rderivs, derivs[i])]
-        return DerivVar(v, rderivs)
+        if rderivs:
+            return DerivVar(v, rderivs)
+        else:
+            return v
 
 class NumDerivFn(DerivFn):
 
