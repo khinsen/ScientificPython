@@ -1,9 +1,6 @@
 2.9.0 --> 2.9.1
 ----------------
 
-2.7.10 --> 2.9.0
------------------
-
 Improvements:
 
 - The task_manager script accepts an optional argument -w/--wait
@@ -23,6 +20,20 @@ Bug fixes:
 
 - DistributedComputing: improved Windows compatibility
 
+
+2.7.10 --> 2.9.0
+-----------------
+
+Improvements:
+
+- Scientific.IO.NetCDF.NetCDFFile accepts optional flags for
+  the 64-bit file format (from netCDF 3.6) and the HDF5 file format
+  (from netCDF 4).
+
+Bug fixes:
+ 
+- Methods derivative() and integral() crashed because index_expression
+  was deleted at the end of the module.
 
 2.7.9 --> 2.7.10
 ----------------
