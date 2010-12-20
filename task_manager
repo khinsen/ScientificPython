@@ -5,7 +5,7 @@
 # (see Scientific.DistributedComputing)
 
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2006-12-12
+# last revision: 2010-12-18
 #
 
 from Scientific.DistributedComputing import TaskManager
@@ -13,7 +13,7 @@ import Pyro.core
 import Pyro.naming
 import Pyro.errors
 from optparse import OptionParser
-import os, sys
+import os, sys, time
 
 Pyro.core.initClient(banner=False)
 
@@ -22,21 +22,41 @@ arg_count = {}
 
 def getTaskManager(label):
     if options.master is None:
-        try:
-            return Pyro.core.getProxyForURI("PYRONAME://TaskManager.%s" % label)
-        except Pyro.errors.NamingError:
-            print "No name server or no task manager with label %s" % label
-            raise SystemExit
+        if options.wait:
+            while True:
+                try:
+                    return Pyro.core.getProxyForURI("PYRONAME://TaskManager.%s"
+                                                    % label)
+                except Pyro.errors.NamingError:
+                    time.sleep(1)
+        else:
+            try:
+                return Pyro.core.getProxyForURI("PYRONAME://TaskManager.%s"
+                                                % label)
+            except Pyro.errors.NamingError:
+                print "No name server or no task manager with label %s" % label
+                raise SystemExit
     else:
-        try:
-            uri = "PYROLOC://%s/TaskManager.%s" % (options.master, label)
-            return Pyro.core.getProxyForURI(uri)
-        except Pyro.errors.URIError:
-            print "No host %s" % options.master
-            raise SystemExit
-        except Pyro.errors.ProtocolError:
-            print "No task manager with label %s" % label
-            raise SystemExit
+        if options.wait:
+            while True:
+                try:
+                    uri = "PYROLOC://%s/TaskManager.%s" % (options.master, label)
+                    return Pyro.core.getProxyForURI(uri)
+                except Pyro.errors.ProtocolError:
+                    time.sleep(1)
+                except Pyro.errors.URIError:
+                    print "No host %s" % options.master
+                    raise SystemExit
+        else:
+            try:
+                uri = "PYROLOC://%s/TaskManager.%s" % (options.master, label)
+                return Pyro.core.getProxyForURI(uri)
+            except Pyro.errors.URIError:
+                print "No host %s" % options.master
+                raise SystemExit
+            except Pyro.errors.ProtocolError:
+                print "No task manager with label %s" % label
+                raise SystemExit
 
 def showInfo(label):
     task_manager = getTaskManager(label)
@@ -102,6 +122,9 @@ parser.add_option("-m", "--master",
 parser.add_option("-v", "--verbose",
                   action="store_true",
                   help="verbose output")
+parser.add_option("-w", "--wait",
+                  action="store_true",
+                  help="wait for master to be launched")
 options, args = parser.parse_args()
 if len(args) < 1:
     parser.error("incorrect number of arguments")
