@@ -1,16 +1,27 @@
+2.9.0 --> 2.9.1
+----------------
+
 2.7.10 --> 2.9.0
 -----------------
 
 Improvements:
 
-- Scientific.IO.NetCDF.NetCDFFile accepts optional flags for
-  the 64-bit file format (from netCDF 3.6) and the HDF5 file format
-  (from netCDF 4).
+- The task_manager script accepts an optional argument -w/--wait
+  that makes it wait for the named task to start.
+
+- New classes DerivFn and NumDerivFn in Functions.FirstDerivatives.
+
+- New optional validator in Functions.LeastSquares.
+
+- PDB output can handle alternate location fields.
+
+- The NumPy header location is obtained from NumPy during installation.
 
 Bug fixes:
 
-- Methods derivative() and integral() crashed because index_expression
-  was deleted at the end of the module.
+- Better error handling in netCDF array write operations.
+
+- DistributedComputing: improved Windows compatibility
 
 
 2.7.9 --> 2.7.10
