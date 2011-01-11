@@ -2,7 +2,7 @@
 # Task manager for distributed computing based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-4-16
+# last revision: 2010-12-22
 #
 
 import Pyro.core
@@ -222,7 +222,7 @@ class TaskManager(Pyro.core.ObjBase):
         self.process_info = []
         self.tasks_by_process = []
         self.data = {}
-        self.lock = threading.Lock()
+        self.lock = threading.RLock()
         self.watchdog = None
 
     def registerProcess(self, watchdog_period=None, info=None):
@@ -268,13 +268,13 @@ class TaskManager(Pyro.core.ObjBase):
             print "Unregistering process", process_id
         self.lock.acquire()
         position = self.active_processes.index(process_id)
+        for t in self.tasks_by_process[position]:
+            self.returnTask(t.id)
+        assert len(self.tasks_by_process[position]) == 0
+        del self.tasks_by_process[position]
         del self.active_processes[position]
         del self.process_info[position]
-        tasks = self.tasks_by_process[position]
-        del self.tasks_by_process[position]
         self.lock.release()
-        for t in tasks:
-            self.returnTask(t.id)
         if self.watchdog is not None:
             self.watchdog.unregisterProcess(process_id)
 
@@ -378,7 +378,8 @@ class TaskManager(Pyro.core.ObjBase):
         self.running_tasks.addTask(task)
         if process_id is not None:
             self.lock.acquire()
-            self.tasks_by_process[process_id].append(task)
+            position = self.active_processes.index(process_id)
+            self.tasks_by_process[position].append(task)
             self.lock.release()
         if debug:
             print "Handing out task %s to process %s" \
@@ -450,7 +451,8 @@ class TaskManager(Pyro.core.ObjBase):
         if task.handling_processor is not None:
             self.lock.acquire()
             try:
-                self.tasks_by_process[task.handling_processor].remove(task)
+                position = self.active_processes.index(task.handling_processor)
+                self.tasks_by_process[position].remove(task)
             except ValueError:
                 pass
             self.lock.release()
@@ -546,7 +548,7 @@ class Watchdog(object):
         self.ping_period = {}
         self.last_ping = {}
         self.done = False
-        self.lock = threading.Lock()
+        self.lock = threading.RLock()
         self.background_thread = threading.Thread(target = self.watchdogThread)
         self.background_thread.setDaemon(True)
         self.thread_started = False
