@@ -3,7 +3,7 @@
 # based on Pyro
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2010-1-7
+# last revision: 2011-1-18
 #
 
 """
@@ -385,10 +385,10 @@ class SlaveProcess(object):
                 self.task_manager.unregisterProcess(self.process_id)
                 raise
             except Exception, e:
+                import traceback, StringIO
                 if debug:
                     print "Exception:"
                     traceback.print_exc()
-                import traceback, StringIO
                 tb_text = StringIO.StringIO()
                 traceback.print_exc(None, tb_text)
                 tb_text = tb_text.getvalue()
