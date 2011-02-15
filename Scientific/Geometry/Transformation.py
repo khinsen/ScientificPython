@@ -3,7 +3,7 @@
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
 # Contributions from Pierre Legrand <pierre.legrand@synchrotron-soleil.fr>
-# last revision: 2008-8-22
+# last revision: 2011-1-24
 # 
 
 """
@@ -11,7 +11,7 @@ Linear transformations in 3D space
 """
 
 from Scientific import Geometry
-from Scientific import N; Numeric = N
+from Scientific import N
 from math import atan2
 
 #
