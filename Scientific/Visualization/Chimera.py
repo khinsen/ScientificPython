@@ -150,7 +150,7 @@ class Scene(object):
         @param filename: the name of the script
         @type filename: C{str}
         """
-        file = SceneFile(filename, 'w', self.scale, delete)
+        file = SceneFile(filename, 'w', self.scale)
         for o in self.objects:
             o.writeToFile(file)
         file.close()
@@ -160,14 +160,15 @@ class Scene(object):
         Load the scene into Chimera
 
         @param args: not used, for compatibility with VRML modules only
+        @returns: the Chimera VRML model that was created.
         """
         f = InternalSceneFile(self.scale)
         for o in self.objects:
             o.writeToFile(f)
         f.close()
         import chimera
-        chimera.openModels.open(StringIO(str(f)), type="Bild",
-                                identifyAs=self.name)
+        return chimera.openModels.open(StringIO(str(f)), type="Bild",
+                                       identifyAs=self.name)[0]
 
     def __str__(self):
         f = InternalSceneFile(self.scale)
