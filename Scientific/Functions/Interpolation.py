@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-8-18
+# last revision: 2011-2-15
 #
 
 """
@@ -404,8 +404,13 @@ class NetCDFInterpolatingFunction(InterpolatingFunction):
         """
         from Scientific.IO.NetCDF import NetCDFFile
         self.file = NetCDFFile(filename, 'r')
-        self.axes = map(lambda n, f=self.file: f.variables[n], axesnames)
+        self.axes = [self.file.variables[n] for n in axesnames]
+        for a in self.axes:
+            if len(a.dimensions) != 1:
+                raise ValueError("axes must be 1d arrays")
         self.values = self.file.variables[variablename]
+        if tuple(v.dimensions[0] for v in self.axes) != self.values.dimensions:
+            raise ValueError("axes and values have incompatible dimensions")
         self.default = default
         self.shape = ()
         for axis in self.axes:
@@ -426,7 +431,7 @@ NetCDFInterpolatingFunction._constructor = InterpolatingFunction
 
 def _lookup(point, axis, period):
     if period is None:
-        j = N.int_sum(N.less_equal(axis, point))
+        j = int(N.int_sum(N.less_equal(axis, point)))
         if j == len(axis):
             if N.fabs(point - axis[j-1]) < 1.e-9:
                 return index_expression[j-2:j:1], 1.
@@ -439,7 +444,7 @@ def _lookup(point, axis, period):
         return index_expression[i:j+1:1], weight
     else:
         point = axis[0] + (point-axis[0]) % period
-        j = N.int_sum(N.less_equal(axis, point))
+        j = int(N.int_sum(N.less_equal(axis, point)))
         i = j-1
         if j == len(axis):
             weight = (point-axis[i])/(axis[0]+period-axis[i])
