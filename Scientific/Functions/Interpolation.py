@@ -1,7 +1,7 @@
 # This module provides interpolation for functions defined on a grid.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2011-2-15
+# last revision: 2011-2-18
 #
 
 """
@@ -35,7 +35,7 @@ class InterpolatingFunction:
         """
         @param axes: a sequence of one-dimensional arrays, one for each
             variable, specifying the values of the variables at
-            the grid points
+            the grid points in ascending order
         @type axes: sequence of N.array
 
         @param values: the function values on the grid
@@ -53,6 +53,14 @@ class InterpolatingFunction:
         """
         if len(axes) > len(values.shape):
             raise ValueError('Inconsistent arguments')
+        for i, axis in enumerate(axes):
+            if len(axis.shape) != 1:
+                raise ValueError("Axes must be 1D arrays")
+            if len(axis) != values.shape[i]:
+                raise ValueError("Axes must match value array")
+            if N.logical_or.reduce(axis[1:]-axis[:-1] <= 0.):
+                raise ValueError("Axis values must be distinct and "
+                                 "in ascending order")
         self.axes = list(axes)
         self.shape = sum([axis.shape for axis in self.axes], ())
         self.values = values
