@@ -2,7 +2,7 @@
  * Objects representing netCDF files and variables.
  *
  * Written by Konrad Hinsen
- * last revision: 2010-8-23
+ * last revision: 2011-6-2
  */
 
 #ifdef _WIN32
@@ -781,7 +781,7 @@ netcdf_file_init(PyNetCDFFileObject *self)
   self->recdim = recdim;
   for (i = 0; i < ndims; i++) {
     char name[MAX_NC_NAME];
-    unsigned long size;
+    size_t size;
     PyObject *size_ob;
     Py_BEGIN_ALLOW_THREADS;
     acquire_netCDF_lock();
