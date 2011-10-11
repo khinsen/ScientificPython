@@ -716,7 +716,7 @@ _help.append('Area units:')
 
 _addUnit('ha', '10000*m**2', 'hectare')
 _addUnit('acres', 'mi**2/640', 'acre')
-_addUnit('b', '1.e-28*m', 'barn')
+_addUnit('b', '1.e-28*m**2', 'barn')
 
 # Volume units
 _help.append('Volume units:')
