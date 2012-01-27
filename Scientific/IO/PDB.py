@@ -158,7 +158,7 @@ class PDBFile:
                           only when writing.
         @type subformat: C{str} or C{NoneType}
         """
-        if isinstance(file_or_filename, str):
+        if isinstance(file_or_filename, basestring):
             self.file = TextFile(file_or_filename, mode)
         else:
             self.file = file_or_filename
@@ -422,7 +422,7 @@ class PDBFile:
         else:
             type = 'ATOM'
         name = string.upper(name)
-        if element != '' and len(element) == 1 and name and name[0] == element:
+        if element != '' and len(element) == 1 and name and name[0] == element and len(name) < 4:
             name = ' ' + name
         self.data['name'] = name
         self.data['position'] = position
@@ -1142,7 +1142,7 @@ class Structure:
                                from a file with alternate positions.
         @type alternate_code: single-letter C{str}
         """
-        if isinstance(file_or_filename, str):
+        if isinstance(file_or_filename, basestring):
             self.filename = file_or_filename
         else:
             self.filename = ''
