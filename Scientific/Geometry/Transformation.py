@@ -416,13 +416,17 @@ class RotationTranslation(RigidBodyTransformation):
     def screwMotion(self):
         axis, angle = self.rotation().axisAndAngle()
         d = self.vector*axis
-        x = d*axis-self.vector
+        if d < 0.:
+            d = -d
+            axis = -axis
+            angle = -angle
         if abs(angle) < 1.e-9:
             r0 = Geometry.Vector(0., 0., 0.)
             angle = 0.
         else:
+            x = d*axis-self.vector
             r0 = -0.5*((N.cos(0.5*angle)/N.sin(0.5*angle))*axis.cross(x)+x)
-        return r0, axis, angle, d
+        return r0, axis, angle % (2.*N.pi), d
 
 #
 # Scaling
