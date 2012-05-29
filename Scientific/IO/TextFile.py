@@ -1,7 +1,7 @@
 # Text files with automatic (un)compression and URL access.
 #
 # Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-6-23
+# Last revision: 2012-5-29
 # 
 
 """
@@ -48,6 +48,7 @@ class TextFile:
         @param mode: file access mode: 'r' (read), 'w' (write), or 'a' (append)
         @type mode: C{str}
         """
+        self.file = None
         if string.find(filename, ':/') > 1: # URL
             if mode != 'r':
                 raise IOError("can't write to a URL")
@@ -106,7 +107,8 @@ class TextFile:
                 raise IOError((0, 'Illegal mode: ' + repr(mode)))
 
     def __del__(self):
-        self.close()
+        if self.file is not None:
+            self.close()
 
     def __getitem__(self, item):
         line = self.file.readline()
