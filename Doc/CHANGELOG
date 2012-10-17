@@ -1,3 +1,32 @@
+2.9.1 --> 2.9.2
+----------------
+
+Improvements:
+
+- Allow unicode strings where reasonable, in particular for filenames.
+
+- Include C versions of Cython modules in the distribution, removing the
+  build dependence on Cython.
+
+- New submodule of Visualization for the molecular viewer Chimera.
+
+Bug fixes:
+
+- NumPy compatibility fixes.
+
+- IO.TextFile: make sure that __del__ closes a file only if it was
+  opened successfully
+
+- Geometry.Transformation: ensure that screwMotion returns a positive distance.
+ 
+- Physics.PhysicalQuantities: fix definition of barn.
+
+- IO.NetCDF: replace unsigned long by size_t in C interface to netCDF.
+
+- Functions.Interpolation: more checks on axis arrays.
+
+- DistributedComputing: fixed deadlock in task manager.
+
 2.9.0 --> 2.9.1
 ----------------
 
