@@ -1,7 +1,7 @@
 # This module handles input and output of PDB files.
 #
 # Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2010-10-20
+# Last revision: 2012-10-17
 # 
 
 """
@@ -162,7 +162,7 @@ class PDBFile:
             self.file = TextFile(file_or_filename, mode)
         else:
             self.file = file_or_filename
-        self.output = string.lower(mode[0]) == 'w'
+        self.output = mode[0].lower() == 'w'
         self.export_filter = None
         if subformat is not None:
             export = export_filters.get(subformat, None)
@@ -200,49 +200,49 @@ class PDBFile:
             line = self.file.readline()
             if not line: return ('END','')
             if line[-1] == '\n': line = line[:-1]
-            line = string.strip(line)
+            line = line.strip()
             if line: break
-        line = string.ljust(line, 80)
-        type = string.strip(line[:6])
+        line = line.ljust(80)
+        type = line[:6].strip()
         if type == 'ATOM' or type == 'HETATM':
             line = FortranLine(line, atom_format)
             data = {'serial_number': line[1],
                     'name': line[2],
-                    'alternate': string.strip(line[3]),
-                    'residue_name': string.strip(line[4]),
-                    'chain_id': string.strip(line[5]),
+                    'alternate': line[3].strip(),
+                    'residue_name': line[4].strip(),
+                    'chain_id': line[5].strip(),
                     'residue_number': line[6],
-                    'insertion_code': string.strip(line[7]),
+                    'insertion_code': line[7].strip(),
                     'position': Vector(line[8:11]),
                     'occupancy': line[11],
                     'temperature_factor': line[12],
-                    'segment_id': string.strip(line[13]),
-                    'element': string.strip(line[14]),
-                    'charge': string.strip(line[15])}
+                    'segment_id': line[13].strip(),
+                    'element': line[14].strip(),
+                    'charge': line[15].strip()}
             return type, data
         elif type == 'ANISOU':
             line = FortranLine(line, anisou_format)
             data = {'serial_number': line[1],
                     'name': line[2],
-                    'alternate': string.strip(line[3]),
-                    'residue_name': string.strip(line[4]),
-                    'chain_id': string.strip(line[5]),
+                    'alternate': line[3].strip(),
+                    'residue_name': line[4].strip(),
+                    'chain_id': line[5].strip(),
                     'residue_number': line[6],
-                    'insertion_code': string.strip(line[7]),
+                    'insertion_code': line[7].strip(),
                     'u': 1.e-4*Tensor([[line[8], line[11], line[12]],
                                        [line[11], line[9] , line[13]],
                                        [line[12], line[13], line[10]]]),
-                    'segment_id': string.strip(line[14]),
-                    'element': string.strip(line[15]),
-                    'charge': string.strip(line[16])}
+                    'segment_id': line[14].strip(),
+                    'element': line[15].strip(),
+                    'charge': line[16].strip()}
             return type, data
         elif type == 'TER':
             line = FortranLine(line, ter_format)
             data = {'serial_number': line[1],
-                    'residue_name': string.strip(line[2]),
-                    'chain_id': string.strip(line[3]),
+                    'residue_name': line[2].strip(),
+                    'chain_id': line[3].strip(),
                     'residue_number': line[4],
-                    'insertion_code': string.strip(line[5])}
+                    'insertion_code': line[5].strip()}
             return type, data
         elif type == 'CONECT':
             line = FortranLine(line, conect_format)
@@ -314,7 +314,7 @@ class PDBFile:
             line = line + [data.get('serial_number', 1),
                            data.get('name'),
                            data.get('alternate', ''),
-                           string.rjust(data.get('residue_name', ''), 3),
+                           data.get('residue_name', '').rjust(3),
                            data.get('chain_id', ''),
                            data.get('residue_number', 1),
                            data.get('insertion_code', ''),
@@ -322,7 +322,7 @@ class PDBFile:
                            data.get('occupancy', 0.),
                            data.get('temperature_factor', 0.),
                            data.get('segment_id', ''),
-                           string.rjust(data.get('element', ''), 2),
+                           data.get('element', '').rjust(2),
                            data.get('charge', '')]
         elif type == 'ANISOU':
             format = anisou_format
@@ -332,18 +332,18 @@ class PDBFile:
             line = line + [data.get('serial_number', 1),
                            data.get('name'),
                            data.get('alternate', ''),
-                           string.rjust(data.get('residue_name'), 3),
+                           data.get('residue_name').rjust(3),
                            data.get('chain_id', ''),
                            data.get('residue_number', 1),
                            data.get('insertion_code', '')] \
                         + u \
                         + [data.get('segment_id', ''),
-                           string.rjust(data.get('element', ''), 2),
+                           data.get('element', '').rjust(2),
                            data.get('charge', '')]
         elif type == 'TER':
             format = ter_format
             line = line + [data.get('serial_number', 1),
-                           string.rjust(data.get('residue_name'), 3),
+                           data.get('residue_name').rjust(3),
                            data.get('chain_id', ''),
                            data.get('residue_number', 1),
                            data.get('insertion_code', '')]
@@ -391,7 +391,7 @@ class PDBFile:
         @type text: C{str}
         """
         while text:
-            eol = string.find(text,'\n')
+            eol = text.find('\n')
             if eol == -1:
                 eol = len(text)
             self.file.write('REMARK %s \n' % text[:eol])
@@ -421,7 +421,7 @@ class PDBFile:
             type = 'HETATM'
         else:
             type = 'ATOM'
-        name = string.upper(name)
+        name = name.upper()
         if element != '' and len(element) == 1 and name and name[0] == element and len(name) < 4:
             name = ' ' + name
         self.data['name'] = name
@@ -448,7 +448,7 @@ class PDBFile:
                          information in order to use different atom or
                          residue names in terminal residues.
         """
-        name  = string.upper(name)
+        name  = name.upper()
         if self.export_filter is not None:
             name, number = self.export_filter.processResidue(name, number,
                                                              terminus)
@@ -547,7 +547,7 @@ class Atom:
                 self.properties['element'] = name[0]
             else:
                 self.properties['element'] = name[0:2]
-        self.name = string.strip(name)
+        self.name = name.strip()
         self.parent = None
 
     def __getitem__(self, item):
@@ -811,7 +811,7 @@ class NucleotideResidue(Residue):
 
     def __init__(self, name, atoms = None, number = None):
         self.pdbname = name
-        name = string.strip(name)
+        name = name.strip()
         if name[0] != 'D' and name[0] != 'R':
             name = 'D' + name
         Residue.__init__(self, name, atoms, number)
@@ -1316,7 +1316,7 @@ class Structure:
         element = data['element']
         if element != '':
             try:
-                string.atoi(element)
+                int(element)
             except ValueError:
                 atom_data['element'] = element
         residue_data = {'residue_name': data['residue_name']}
