@@ -170,6 +170,8 @@ class PhysicalQuantity:
         else:
             return self.__class__(value, unit)
 
+    __truediv__ = __div__
+
     def __rdiv__(self, other):
         if not isPhysicalQuantity(other):
             return self.__class__(other/self.value, pow(self.unit, -1))
@@ -397,6 +399,8 @@ class PhysicalUnit:
         else:
             return PhysicalUnit(self.names+{str(other): -1},
                                 self.factor/other, self.powers)
+
+    __truediv__ = __div__
 
     def __rdiv__(self, other):
         if self.offset != 0 or (isPhysicalUnit (other) and other.offset != 0):

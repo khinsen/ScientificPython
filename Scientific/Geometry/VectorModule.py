@@ -113,6 +113,8 @@ class Vector:
         else:
             return Vector(Numeric.divide(self.array,1.*other))
             
+    __truediv__ = __div__
+
     def __rdiv__(self, other):
         raise TypeError("Can't divide by a vector")
 

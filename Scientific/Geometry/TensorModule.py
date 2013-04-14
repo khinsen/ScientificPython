@@ -85,6 +85,8 @@ class Tensor:
         else:
             return Tensor(self.array/(1.*other), 1)
 
+    __truediv__ = __div__
+
     def __rdiv__(self, other):
         raise TypeError("Can't divide by a tensor")
 

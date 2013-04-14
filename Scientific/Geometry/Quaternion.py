@@ -71,6 +71,8 @@ class Quaternion:
             raise ValueError('Division by quaternions is not allowed.')
         return Quaternion(self.array/other)
 
+    __truediv__ = __div__
+
     def __rdiv__(self, other):
         raise ValueError('Division by quaternions is not allowed.')
 

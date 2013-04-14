@@ -507,6 +507,8 @@ class ParValue(object):
         else:
             return ParValue(None, 0)
 
+    __truediv__ = __div__
+
     def __mod__(self, other):
         if self.valid and other.valid:
             return ParValue(self.value % other.value)

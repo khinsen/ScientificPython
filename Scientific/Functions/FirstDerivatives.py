@@ -169,6 +169,8 @@ class DerivVar:
     def __rdiv__(self, other):
         return other/self
 
+    __truediv__ = __div__
+
     def __pow__(self, other, z=None):
         if z is not None:
             raise TypeError('DerivVar does not support ternary pow()')

@@ -96,6 +96,8 @@ class Polynomial:
         from Rational import RationalFunction
         return RationalFunction(self, other)
 
+    __truediv__ = __div__
+
     def __rdiv__(self, other):
         from Rational import RationalFunction
         return RationalFunction(other, self)

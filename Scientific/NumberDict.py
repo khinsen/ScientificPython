@@ -65,3 +65,5 @@ class NumberDict(dict):
         for key in self.keys():
             new[key] = self[key]/other
         return new
+
+    __truediv__ = __div__

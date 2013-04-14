@@ -97,6 +97,8 @@ class RationalFunction:
         return RationalFunction(self.numerator*other.denominator,
                                 self.denominator*other.numerator)
 
+    __truediv__ = __div__
+
     def __rdiv__(self, other):
         return RationalFunction(other.numerator*self.denominator,
                                 other.denominator*self.numerator)
