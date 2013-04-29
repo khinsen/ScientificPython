@@ -1313,7 +1313,7 @@ netcdf_variable_new(PyNetCDFFileObject *file, char *name, int id, int type,
   int recdim;
   int i;
   if (check_if_open(file, -1)) {
-    self = PyObject_NEW(PyNetCDFVariableObject, &PyNetCDFVariable_Type);
+    self = PyObject_New(PyNetCDFVariableObject, &PyNetCDFVariable_Type);
     if (self == NULL)
       return NULL;
     self->file = file;

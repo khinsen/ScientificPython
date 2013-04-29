@@ -101,7 +101,7 @@ newPyMPIOperationObject(MPI_Op mpi_op, char *op_name)
 {
   PyMPIOperationObject *self;
 
-  self = PyObject_NEW(PyMPIOperationObject, &PyMPIOperation_Type);
+  self = PyObject_New(PyMPIOperationObject, &PyMPIOperation_Type);
   if (self == NULL)
     return NULL;
   self->mpi_op = mpi_op;
@@ -161,7 +161,7 @@ newPyMPICommunicatorObject(MPI_Comm handle)
 {
   PyMPICommunicatorObject *self;
 
-  self = PyObject_NEW(PyMPICommunicatorObject, &PyMPICommunicator_Type);
+  self = PyObject_New(PyMPICommunicatorObject, &PyMPICommunicator_Type);
   if (self == NULL)
     return NULL;
   self->handle = handle;
@@ -1147,7 +1147,7 @@ newPyMPIRequestObject(MPI_Request rq, PyObject *buffer, int operation,
 {
   PyMPIRequestObject *self;
 
-  self = PyObject_NEW(PyMPIRequestObject, &PyMPIRequest_Type);
+  self = PyObject_New(PyMPIRequestObject, &PyMPIRequest_Type);
   if (self == NULL)
     return NULL;
   self->handle[0] = rq;
