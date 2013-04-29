@@ -10,11 +10,24 @@ class Dummy:
 pkginfo = Dummy()
 execfile('Scientific/__pkginfo__.py', pkginfo.__dict__)
 
+# Check for Cython and use it if the environment variable
+# COMPILE_CYTHON is set to a non-zero value.
+use_cython = int(os.environ.get('COMPILE_CYTHON', '0')) != 0
+if use_cython:
+    try:
+        from Cython.Distutils import build_ext
+        use_cython = True
+    except ImportError:
+        use_cython = False
+if not use_cython:
+    from distutils.command.build_ext import build_ext
+src_ext = 'pyx' if use_cython else 'c'
+cmdclass = {'build_ext': build_ext}
+
 extra_compile_args = []
 arrayobject_h_include = []
 data_files = []
 scripts = []
-cmdclass = {}
 options = {}
 
 use_numpy = True
@@ -141,21 +154,21 @@ packages = ['Scientific', 'Scientific.Clustering', 'Scientific.Functions',
             'Scientific.DistributedComputing']
 
 ext_modules.append(Extension('Scientific_vector',
-                             ['Src/Scientific_vector.c'],
+                             ['Src/Scientific_vector.%s' % src_ext],
                              include_dirs=['Include']+arrayobject_h_include,
                              libraries=math_libraries,
                              extra_compile_args=extra_compile_args))
 ext_modules.append(Extension('Scientific_affinitypropagation',
-                             ['Src/Scientific_affinitypropagation.c'],
+                             ['Src/Scientific_affinitypropagation.%s' % src_ext],
                              include_dirs=['Include']+arrayobject_h_include,
                              libraries=math_libraries,
                              extra_compile_args=extra_compile_args))
 ext_modules.append(Extension('Scientific_numerics_package_id',
-                             ['Src/Scientific_numerics_package_id.c'],
+                             ['Src/Scientific_numerics_package_id.%s' % src_ext],
                              include_dirs=['Include']+arrayobject_h_include,
                              extra_compile_args=extra_compile_args))
 ext_modules.append(Extension('Scientific_interpolation',
-                             ['Src/Scientific_interpolation.c'],
+                             ['Src/Scientific_interpolation.%s' % src_ext],
                              include_dirs=['Include']+arrayobject_h_include,
                              libraries=math_libraries,
                              extra_compile_args=extra_compile_args))
