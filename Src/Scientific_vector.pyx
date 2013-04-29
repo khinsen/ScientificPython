@@ -125,7 +125,7 @@ cdef class vector:
             else:
                 return product
         elif hasattr(y, "_product_with_vector"):
-            return y._product_with_vector(self)
+            return y._product_with_vector(x)
         else:
             v1 = x
             result = vector()
