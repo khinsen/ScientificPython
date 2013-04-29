@@ -16,8 +16,8 @@ sources='mpipython.c Scientific_mpi.c'
 extra_compile_args = ""
 if N.package == "NumPy":
     arrayobject_h_include = os.path.join(sys.prefix,
-                            "lib/python%s.%s/site-packages/numpy/core/include"
-                                          % sys.version_info [:2])
+                            "%s/numpy/core/include"
+                                          % distutils.sysconfig.get_python_lib())
     extra_compile_args = "-DNUMPY=1 -I"+arrayobject_h_include
 
 linkforshared = cfgDict['LINKFORSHARED']
