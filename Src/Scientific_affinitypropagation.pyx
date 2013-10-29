@@ -1,21 +1,20 @@
-# Implementation of Affinity Propagation in Pyrex
+# Implementation of Affinity Propagation in Cython
 # Accelerates DataSet.findCluster by a factor of 5.
 #
 # Written by Konrad Hinsen
-# last revision: 2007-3-20
+# last revision: 2013-08-02
 #
 
-include 'Scientific/numeric.pxi'
+import numpy as np
+cimport numpy as np
 
-from Scientific import N
-
-def _affinityPropagation(dataset, ArrayType s, ArrayType a,
-                         ArrayType r, float damping):
-    cdef ArrayType as
-    cdef ArrayType r_new
-    cdef ArrayType a_new
-    cdef ArrayType rpos
-    cdef ArrayType ind_array
+def _affinityPropagation(dataset, np.ndarray s, np.ndarray a,
+                         np.ndarray r, float damping):
+    cdef np.ndarray as
+    cdef np.ndarray r_new
+    cdef np.ndarray a_new
+    cdef np.ndarray rpos
+    cdef np.ndarray ind_array
     cdef long *ind
     cdef double *dptr
     cdef double v
@@ -23,7 +22,7 @@ def _affinityPropagation(dataset, ArrayType s, ArrayType a,
     cdef int j
 
     as = a + s
-    r_new = N.zeros((dataset.nsimilarities,), N.Float)
+    r_new = np.zeros((dataset.nsimilarities,), np.float)
     for i from 0 <= i < dataset.nsimilarities:
         ind_array = dataset.r_update_indices[i]
         ind = <long *>ind_array.data
@@ -35,8 +34,8 @@ def _affinityPropagation(dataset, ArrayType s, ArrayType a,
         r_new[i] = s[i] - v
     r = damping*r + (1-damping)*r_new
 
-    rpos = N.maximum(0., r)
-    a_new = N.take(r, dataset.a_update_indices_1)
+    rpos = np.maximum(0., r)
+    a_new = np.take(r, dataset.a_update_indices_1)
     a_new[-dataset.nitems:] = 0.
     for i from 0 <= i < dataset.nsimilarities:
         ind_array = dataset.a_update_indices_2[i]
@@ -46,7 +45,7 @@ def _affinityPropagation(dataset, ArrayType s, ArrayType a,
         for j from 1 <= j < ind_array.dimensions[0]:
             v = v + dptr[ind[j]]
         a_new[i] = a_new[i] + v
-    a_new[:-dataset.nitems] = N.minimum(0., a_new[:-dataset.nitems])
+    a_new[:-dataset.nitems] = np.minimum(0., a_new[:-dataset.nitems])
     a = damping*a + (1-damping)*a_new
 
     return a, r
