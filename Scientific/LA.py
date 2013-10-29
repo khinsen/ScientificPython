@@ -1,19 +1,6 @@
-import Scientific_numerics_package_id
-package = Scientific_numerics_package_id.getNumericsPackageName()
-del Scientific_numerics_package_id
+# This package exists for compatibility with previous releases
+# of ScientificPython that supported both NumPy and the old
+# Numeric package. Please don't use it in new code, use numpy
+# directly.
 
-if package == "Numeric":
-
-    from LinearAlgebra import *
-
-elif package == "NumPy":
-
-    from numpy.oldnumeric.linear_algebra import *
-
-elif package == "Numarray":
-
-    from numarray.linear_algebra import *
-
-else:
-
-    raise ImportError("Unknown numerics package " + package)
+from numpy.oldnumeric.linear_algebra import *
