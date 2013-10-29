@@ -1,7 +1,6 @@
 # Clustering by affinity propagation.
 #
-# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-8-22
+# Written by Konrad Hinsen <konrad.hinsen@cnrs-orleans.fr>
 #
 
 """
@@ -246,7 +245,7 @@ class DataSet(object):
 
 try:
 
-    from Scientific_affinitypropagation import _affinityPropagation
+    from Scientific._affinitypropagation import _affinityPropagation
 
 except ImportError:
 

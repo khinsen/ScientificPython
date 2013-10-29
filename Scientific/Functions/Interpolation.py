@@ -1,7 +1,6 @@
 # This module provides interpolation for functions defined on a grid.
 #
-# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2011-2-18
+# Written by Konrad Hinsen <konrad.hinsen@cnrs-orleans.fr>
 #
 
 """
@@ -11,7 +10,7 @@ Interpolation of functions defined on a grid
 from Scientific import N
 import Polynomial
 from Scientific.indexing import index_expression
-from Scientific_interpolation import _interpolate
+from Scientific._interpolation import _interpolate
 import operator
 
 #

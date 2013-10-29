@@ -1,7 +1,6 @@
 # High-level parallelization classes
 #
-# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# last revision: 2008-8-18
+# Written by Konrad Hinsen
 #
 
 import RemoteObjects
@@ -15,8 +14,7 @@ try:
 except AttributeError:
     virtual_bsp_machine = None
     try:
-        import Scientific_bsplib
-        bsplib = Scientific_bsplib
+        from Scientific import _bsplib as bsplib
         world = None
     except ImportError:
         bsplib = None

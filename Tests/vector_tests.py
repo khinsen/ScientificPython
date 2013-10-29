@@ -21,8 +21,8 @@ class VectorTest(unittest.TestCase):
         self.shouldPass(Vector, isVector)
         self.shouldFail(Vector, isVector)
 
-    def testVectorPyrex(self):
-        from Scientific_vector import Vector, isVector
+    def testVectorCython(self):
+        from Scientific._vector import Vector, isVector
         self.shouldPass(Vector, isVector)
         self.shouldFail(Vector, isVector)
 

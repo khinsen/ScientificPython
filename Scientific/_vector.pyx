@@ -1,7 +1,6 @@
-# Implementation of Scientific.Geometry.Vector in Pyrex
+# Implementation of Scientific.Geometry.Vector in Cython
 #
 # Written by Konrad Hinsen
-# last revision: 2008-8-27
 #
 
 
@@ -10,7 +9,8 @@ cdef extern from "math.h":
     double sqrt(double x)
     double acos(double x)
 
-from Scientific import N
+import numpy as np
+cimport numpy as np
 
 #
 # For efficiency reasons (calling __init__ makes the creation of a vector
@@ -31,7 +31,7 @@ cdef class vector:
 
     property array:
         def __get__(self):
-            return N.array([self.xv, self.yv, self.zv])
+            return np.array([self.xv, self.yv, self.zv])
 
     # __array_priority__ and __array_wrap__ are needed to permit
     # multiplication with numpy scalar types.
@@ -207,8 +207,8 @@ cdef class vector:
         "Returns the dyadic product with vector or tensor |other|."
         from Scientific import Geometry
         if isinstance(other, vector):
-            return Geometry.Tensor(self.array[:, N.NewAxis]
-                                   * other.array[N.NewAxis, :], 1)
+            return Geometry.Tensor(self.array[:, np.newaxis]
+                                   * other.array[np.newaxis, :], 1)
         elif Geometry.isTensor(other):
             return Geometry.Tensor(self.array, 1)*other
         else:

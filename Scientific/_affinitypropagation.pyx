@@ -2,7 +2,6 @@
 # Accelerates DataSet.findCluster by a factor of 5.
 #
 # Written by Konrad Hinsen
-# last revision: 2013-08-02
 #
 
 import numpy as np
@@ -28,7 +27,7 @@ def _affinityPropagation(dataset, np.ndarray s, np.ndarray a,
         ind = <long *>ind_array.data
         dptr = <double *>as.data
         v = dptr[ind[0]]
-        for j from 1 <= j < ind_array.dimensions[0]:
+        for j from 1 <= j < ind_array.shape[0]:
             if dptr[ind[j]] > v:
                 v = dptr[ind[j]]
         r_new[i] = s[i] - v
@@ -42,7 +41,7 @@ def _affinityPropagation(dataset, np.ndarray s, np.ndarray a,
         ind = <long *>ind_array.data
         dptr = <double *>rpos.data
         v = dptr[ind[0]]
-        for j from 1 <= j < ind_array.dimensions[0]:
+        for j from 1 <= j < ind_array.shape[0]:
             v = v + dptr[ind[j]]
         a_new[i] = a_new[i] + v
     a_new[:-dataset.nitems] = np.minimum(0., a_new[:-dataset.nitems])

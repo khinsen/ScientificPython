@@ -2219,7 +2219,7 @@ static PyMethodDef netcdf_methods[] = {
 /* Module initialization */
 
 DL_EXPORT(void)
-initScientific_netcdf(void)
+init_netcdf(void)
 {
   PyObject *m;
   static void *PyNetCDF_API[PyNetCDF_API_pointers];
@@ -2241,7 +2241,7 @@ initScientific_netcdf(void)
 #endif
 
   /* Create the module and add the functions */
-  m = Py_InitModule("Scientific_netcdf", netcdf_methods);
+  m = Py_InitModule("Scientific._netcdf", netcdf_methods);
 
   /* Import the array module */
   import_array();
@@ -2295,5 +2295,5 @@ initScientific_netcdf(void)
 
   /* Check for errors */
   if (PyErr_Occurred())
-    Py_FatalError("can't initialize module Scientific_netcdf");
+    Py_FatalError("can't initialize module Scientific._netcdf");
 }

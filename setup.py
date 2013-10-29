@@ -15,23 +15,22 @@ execfile('Scientific/__pkginfo__.py', pkginfo.__dict__)
 use_cython = int(os.environ.get('COMPILE_CYTHON', '0')) != 0
 if use_cython:
     try:
-        from Cython.Distutils import build_ext
+        from Cython.Build import cythonize
         use_cython = True
     except ImportError:
         use_cython = False
-if not use_cython:
-    from distutils.command.build_ext import build_ext
-src_ext = 'pyx' if use_cython else 'c'
-cmdclass = {'build_ext': build_ext}
 
+src_ext = 'pyx' if use_cython else 'c'
+
+cmdclass = {}
 extra_compile_args = ["-DNUMPY=1"]
-arrayobject_h_include = []
+numpy_include = []
 data_files = []
 scripts = []
 options = {}
 
 import numpy.distutils.misc_util
-arrayobject_h_include = numpy.distutils.misc_util.get_numpy_include_dirs()
+numpy_include = numpy.distutils.misc_util.get_numpy_include_dirs()
 
 math_libraries = []
 if sys.platform != 'win32':
@@ -93,10 +92,10 @@ else:
         netcdf_include = os.path.join(netcdf_prefix, 'include')
         netcdf_h_file = os.path.join(netcdf_prefix, 'include', 'netcdf.h')
         netcdf_lib = os.path.join(netcdf_prefix, 'lib')
-    ext_modules = [Extension('Scientific_netcdf',
-                             ['Src/Scientific_netcdf.c'],
+    ext_modules = [Extension('Scientific._netcdf',
+                             ['Scientific/_netcdf.c'],
                              include_dirs=['Include', netcdf_include]
-                                          + arrayobject_h_include,
+                                          + numpy_include,
                              library_dirs=[netcdf_lib],
                              libraries = ['netcdf'],
                              extra_compile_args=extra_compile_args)]
@@ -130,21 +129,24 @@ packages = ['Scientific', 'Scientific.Clustering', 'Scientific.Functions',
             'Scientific.Visualization', 'Scientific.MPI',
             'Scientific.DistributedComputing']
 
-ext_modules.append(Extension('Scientific_vector',
-                             ['Src/Scientific_vector.%s' % src_ext],
-                             include_dirs=['Include']+arrayobject_h_include,
+ext_modules.append(Extension('Scientific._vector',
+                             ['Scientific/_vector.%s' % src_ext],
+                             include_dirs=['Include']+numpy_include,
                              libraries=math_libraries,
                              extra_compile_args=extra_compile_args))
-ext_modules.append(Extension('Scientific_affinitypropagation',
-                             ['Src/Scientific_affinitypropagation.%s' % src_ext],
-                             include_dirs=['Include']+arrayobject_h_include,
+ext_modules.append(Extension('Scientific._affinitypropagation',
+                             ['Scientific/_affinitypropagation.%s' % src_ext],
+                             include_dirs=['Include']+numpy_include,
                              libraries=math_libraries,
                              extra_compile_args=extra_compile_args))
-ext_modules.append(Extension('Scientific_interpolation',
-                             ['Src/Scientific_interpolation.%s' % src_ext],
-                             include_dirs=['Include']+arrayobject_h_include,
+ext_modules.append(Extension('Scientific._interpolation',
+                             ['Scientific/_interpolation.%s' % src_ext],
+                             include_dirs=['Include']+numpy_include,
                              libraries=math_libraries,
                              extra_compile_args=extra_compile_args))
+
+if use_cython:
+    ext_modules = cythonize(ext_modules)
 
 scripts.append('task_manager')
 if sys.version[:3] >= '2.1':
@@ -183,7 +185,6 @@ line plots and 3D wireframe models.""",
 
        packages = packages,
        headers = headers,
-       ext_package = 'Scientific.'+sys.platform,
        ext_modules = ext_modules,
        scripts = scripts,
        data_files = data_files,

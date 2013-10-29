@@ -2,8 +2,7 @@
 # adds some luxury and puts everything in its proper place in the
 # package hierarchy.
 #
-# Written by Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2008-12-4
+# Written by Konrad Hinsen <konrad.hinsen@cnrs-orleans.fr>
 # 
 
 """
@@ -16,7 +15,7 @@ if sys.modules.has_key('epydoc'):
 
     # Fake code just for the docstrings!
 
-    from Scientific_netcdf import _C_API
+    from Scientific._netcdf import _C_API
 
     class NetCDFFile:
 
@@ -166,8 +165,8 @@ if sys.modules.has_key('epydoc'):
 else:
 
     # This is the real code.
-    from Scientific_netcdf import *
-    from Scientific_netcdf import _C_API
+    from Scientific._netcdf import *
+    from Scientific._netcdf import _C_API
     import os
 
     _NetCDFFile = NetCDFFile

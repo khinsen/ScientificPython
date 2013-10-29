@@ -1,7 +1,6 @@
 # Subpackage Scientific.Geometry
 #
-# Written by: Konrad Hinsen <hinsen@cnrs-orleans.fr>
-# Last revision: 2006-5-26
+# Written by: Konrad Hinsen <konrad.hinsen@cnrs-orleans.fr>
 #
 
 """
@@ -22,10 +21,9 @@ geometrical objects such as spheres and planes.
 # in Scientific.Geometry.
 
 try:
-    import Scientific_vector
-    Vector = Scientific_vector.Vector
-    isVector = Scientific_vector.isVector
-    del Scientific_vector
+    import Scientific._vector
+    Vector = Scientific._vector.Vector
+    isVector = Scientific._vector.isVector
 except ImportError:
     import VectorModule
     Vector = VectorModule.Vector

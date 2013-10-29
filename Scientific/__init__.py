@@ -18,9 +18,6 @@ Passing Interface, message-based parallel programming), and to BSPlib
 manual.
 
 @undocumented: __pkginfo__
-@undocumented: use_numeric
-@undocumented: use_numarray
-@undocumented: use_numpy
 @undocumented: LA
 @undocumented: N
 @undocumented: Mathematica
@@ -30,14 +27,6 @@ manual.
 # Package information
 #
 from __pkginfo__ import __version__
-
-#
-# Add shared library path to sys.path
-#
-import os, sys
-sys.path.append(os.path.join(os.path.split(os.path.abspath(__file__))[0], sys.platform))
-del os
-del sys
 
 #
 # New exception class

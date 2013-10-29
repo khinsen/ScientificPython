@@ -1,7 +1,6 @@
 # Implementation of function interpolation in Cython
 #
 # Written by Konrad Hinsen
-# last revision: 2013-08-02
 #
 
 import numpy as np
@@ -19,7 +18,7 @@ def _interpolate(double x, np.ndarray axis, np.ndarray values, double period):
 
     assert axis.descr.type_num == np.NPY_DOUBLE \
            and values.descr.type_num == np.NPY_DOUBLE
-    npoints = axis.dimensions[0]
+    npoints = axis.shape[0]
     axis_s = axis.strides[0]/sizeof(double)
     axis_d = <double *>axis.data
     values_s = values.strides[0]/sizeof(double)
