@@ -1,9 +1,8 @@
 include README README.BSP README.MPI README.BSPlib LICENSE LICENCE MANIFEST.in HG_CHANGESET_ID
 include bsp_virtual bsp_virtual_stackless
 include scientific_win32_postinstall.py
-recursive-include Include *.pxi
-include Src/*.pyx
-include Src/*.c
+include Scientific/*.pyx
+include Scientific/*.c
 include Src/MPI/Scientific_mpi.c Src/MPI/Scientific_mpi.export Src/MPI/mpipython.c Src/MPI/compile.py Src/MPI/impipython
 include Src/BSPlib/Scientific_bsplib.c Src/BSPlib/Scientific_bsplib.export Src/BSPlib/bsppython.c Src/BSPlib/compile_bsponmpi.py Src/BSPlib/compile_oxford_toolset.py Src/BSPlib/ibsppython
 include Tests/*.py
