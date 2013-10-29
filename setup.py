@@ -24,37 +24,14 @@ if not use_cython:
 src_ext = 'pyx' if use_cython else 'c'
 cmdclass = {'build_ext': build_ext}
 
-extra_compile_args = []
+extra_compile_args = ["-DNUMPY=1"]
 arrayobject_h_include = []
 data_files = []
 scripts = []
 options = {}
 
-use_numpy = True
-use_numeric = False
-use_numarray = False
-
-if "--numpy" in sys.argv:
-    sys.argv.remove("--numpy")
-
-if "--numeric" in sys.argv:
-    use_numeric = True
-    use_numpy = False
-    sys.argv.remove("--numeric")
-
-if "--numarray" in sys.argv:
-    use_numarray = True
-    use_numpy = False
-    sys.argv.remove("--numarray")
-
-if use_numeric:
-    extra_compile_args.append("-DNUMERIC=1")
-elif use_numarray:
-    extra_compile_args.append("-DNUMARRAY=1")
-else :
-    extra_compile_args.append("-DNUMPY=1")
-    import numpy.distutils.misc_util
-    arrayobject_h_include = numpy.distutils.misc_util.get_numpy_include_dirs()
+import numpy.distutils.misc_util
+arrayobject_h_include = numpy.distutils.misc_util.get_numpy_include_dirs()
 
 math_libraries = []
 if sys.platform != 'win32':
@@ -162,10 +139,6 @@ ext_modules.append(Extension('Scientific_affinitypropagation',
                              ['Src/Scientific_affinitypropagation.%s' % src_ext],
                              include_dirs=['Include']+arrayobject_h_include,
                              libraries=math_libraries,
-                             extra_compile_args=extra_compile_args))
-ext_modules.append(Extension('Scientific_numerics_package_id',
-                             ['Src/Scientific_numerics_package_id.%s' % src_ext],
-                             include_dirs=['Include']+arrayobject_h_include,
                              extra_compile_args=extra_compile_args))
 ext_modules.append(Extension('Scientific_interpolation',
                              ['Src/Scientific_interpolation.%s' % src_ext],
