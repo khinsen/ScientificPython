@@ -9,3 +9,4 @@ def int_sum(a, axis=0):
 def zeros_st(shape, other):
     return zeros(shape, dtype=other.dtype)
 from numpy import ndarray as array_type
+package = "NumPy"
