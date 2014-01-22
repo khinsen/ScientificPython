@@ -550,7 +550,7 @@ class ParValue(object):
             else:
                 return ParValue(None, 0)
         else:
-            return global_object(self.value[item])
+            return global_object(_getValue(self.value[item])[0])
 
     def __getattr__(self, attr):
         if attr == 'valid' or attr == '__coerce__':
@@ -601,6 +601,40 @@ class ParConstant(ParValue):
         else:
             self.value = value
         self.valid = 1
+
+#
+# This dummy class is used on nonroot machines because the value on
+# the root machine might be an object on which instance methods are
+# called.
+#
+class RootNoneObject(object):
+    def __getattr__(self, attr):
+        return None
+    
+    def __getitem__(self, item):
+        return None
+
+#
+# ParRootConstant is a constant on the root machine and None on all
+# other machines.
+#
+class ParRootConstant(ParConstant):
+    """
+    Global constant present only on processor 0.
+    """
+    def __init__(self, value):
+        """
+        @param value: the value to store.
+        @type value: any
+        """
+        self.value = RootNoneObject()
+        if processorID == 0:
+            if hasattr(value, 'is_parvalue'):
+                self.value = value.value
+            else:
+                self.value = value
+        self.valid = 1
+        
 
 #
 # ParData generates the local values as a function of processor id
@@ -872,6 +906,7 @@ class ParFunction(ParValue):
         @param local_function: any function
         @type local_function: callable
         """
+        local_function, is_valid = _getValue(local_function)
         self.value = local_function
         self.valid = 1
 
@@ -908,12 +943,13 @@ class ParRootFunction(ParFunction):
                                The default is a function that returns None.
         @type other_function: callable
         """
+        local_function, is_valid = _getValue(local_function)
         if processorID == 0:
             self.value = local_function
         else:
             if other_function is None:
                 def other_function(*args, **kwargs):
-                    return ParValue(None)
+                    return RootNoneObject()
             self.value = other_function
         self.local_instance = None
         self.valid = 1
