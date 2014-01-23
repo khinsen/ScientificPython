@@ -397,8 +397,8 @@ if sys.modules.has_key('epydoc'):
 else:
 
     try:
-        from Scientific.Scientific_mpi import *
-        from Scientific.Scientific_mpi import _C_API, _registerErrorObject
+        from Scientific_mpi import *
+        from Scientific_mpi import _C_API, _registerErrorObject
         _registerErrorObject(MPIError)
         del _registerErrorObject
     except ImportError:
