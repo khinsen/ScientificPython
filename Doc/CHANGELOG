@@ -1,3 +1,28 @@
+2.9.2 --> 2.9.3
+----------------
+
+Cleanup:
+
+- Support for Numeric and numarray was removed, because it becomes
+  difficult to test. The only supported array package is NumPy.
+
+- The Cython modules were updated following recent evolutions in
+  Cython. In particular, Cython's numpy.pxd is used for accessing
+  NumPy arrays.
+
+- Functions from the standard library module "string" were replaced
+  by string methods as far as possible.
+
+Improvements:
+
+- No more platform-specific subpackages for the extension modules.
+  They are placed at the same level as the Python modules.
+
+Bug fixes:
+
+- Scientific.BSP: Some operations created nested ParValue objects.
+  (Thanks to Kelson Zawack!)
+  
 2.9.1 --> 2.9.2
 ----------------
 
