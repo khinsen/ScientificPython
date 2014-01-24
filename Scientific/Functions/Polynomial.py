@@ -219,7 +219,7 @@ if __name__ == '__main__':
     p2 = Polynomial([[1.,0.3],[-0.2,0.5]])
     y = 0.3
     print p2(x,y), 1. + 0.3*y - 0.2*x + 0.5*x*y
-    fit = fitPolynomial(2, [1.,2.,3.,4.], [2.,4.,8.,14.])
+    fit = _fitPolynomial(2, [1.,2.,3.,4.], [2.,4.,8.,14.])
     print fit.coeff
 
 

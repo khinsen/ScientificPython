@@ -731,8 +731,8 @@ class PlotCanvas(Tkinter.Frame):
         point = (point-shift)/scale
         text = "x = %f\ny = %f" % tuple(point)
         self.label = self.canvas.create_window(x, y,
-                                               window=Label(self.canvas,
-                                                            text=text))
+                                               window=Tkinter.Label(self.canvas,
+                                                                    text=text))
 
     def _hideValue(self, event):
         if self.label is not None:
