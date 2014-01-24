@@ -3,7 +3,6 @@
 # Written by Konrad Hinsen
 #
 
-import RemoteObjects
 from Scientific import N
 import cPickle, operator, sys, types
 
@@ -225,14 +224,7 @@ else:
 #
 
 def retrieveMessages():
-    messages = sync()
-    filtered_messages = []
-    for m in messages:
-        if isinstance(m, RemoteObjects.TransferToken):
-            RemoteObjects.remote_object_manager.handleTransfer(m)
-        else:
-            filtered_messages.append(m)
-    return filtered_messages
+    return sync()
 
 #
 # The dictionary _wrappers stores the global class corresponding

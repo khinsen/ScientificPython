@@ -13,7 +13,6 @@ return list can either be the sent object or a copy of it. Application
 programs thus should not make any assumptions about received objects
 being different from sent objects.
 
-@undocumented: RemoteObjects
 @undocumented: Tasks
 @undocumented: core
 """
