@@ -625,11 +625,11 @@ _help = []
 
 def _addUnit(name, unit, comment=''):
     if _unit_table.has_key(name):
-	raise KeyError, 'Unit ' + name + ' already defined'
+        raise KeyError, 'Unit ' + name + ' already defined'
     if comment:
         _help.append((name, comment, unit))
     if type(unit) == type(''):
-	unit = eval(unit, _unit_table)
+        unit = eval(unit, _unit_table)
         for cruft in ['__builtins__', '__args__']:
             try: del _unit_table[cruft]
             except: pass
@@ -640,8 +640,8 @@ def _addPrefixed(unit):
     _help.append('Prefixed units for %s:' % unit)
     _prefixed_names = []
     for prefix in _prefixes:
-	name = prefix[0] + unit
-	_addUnit(name, prefix[1]*_unit_table[unit])
+        name = prefix[0] + unit
+        _addUnit(name, prefix[1]*_unit_table[unit])
         _prefixed_names.append(name)
     _help.append(', '.join(_prefixed_names))
 
