@@ -557,5 +557,5 @@ def startSlaveProcess(label=None, master_host=None):
         namespace = main_module.__dict__
     if debug:
         print "Initializing slave process", label
-    process = SlaveProcess(label, master_host=None)
+    process = SlaveProcess(label, master_host)
     process.start(namespace)
