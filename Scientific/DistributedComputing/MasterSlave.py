@@ -94,8 +94,11 @@ class MasterProcess(object):
         self.pyro_ns = None
         if use_name_server:
             self.pyro_ns=Pyro.naming.NameServerLocator().getNS()
+        self.pyro_daemon = None
         self.manager_thread = threading.Thread(target = self.taskManagerThread)
         self.manager_thread.start()
+        while self.pyro_daemon is None:
+            pass
         self.global_states = {}
 
     def taskManagerThread(self):
@@ -103,7 +106,7 @@ class MasterProcess(object):
         This method represents the code that is executed in a background
         thread for remote access to the task manager.
         """
-        self.pyro_daemon=Pyro.core.Daemon()
+        self.pyro_daemon = Pyro.core.Daemon()
         if self.pyro_ns is not None:
             # Make another name server proxy for this thread
             pyro_ns=Pyro.naming.NameServerLocator().getNS()
@@ -215,7 +218,7 @@ class MasterProcess(object):
         @type n: C{int}
         """
         import subprocess, sys
-        slave_script = ('label="%s"\n' % self.label) + '''
+        slave_script = ('label="%s"\npyro_port=%d\n' % (self.label, self.pyro_daemon.port)) + '''
 import Pyro.core
 import Pyro.errors
 import sys
@@ -223,8 +226,8 @@ Pyro.core.initClient(banner=False)
 while True:
     try:
         task_manager = \
-             Pyro.core.getProxyForURI("PYROLOC://localhost/TaskManager.%s"
-                                      % label)
+             Pyro.core.getProxyForURI("PYROLOC://localhost:%d/TaskManager.%s"
+                                      % (pyro_port, label))
         break
     except Pyro.errors.NamingError:
         continue
@@ -236,6 +239,7 @@ except KeyError:
 namespace = {}
 sys.modules["__main__"].SLAVE_PROCESS_LABEL = label
 sys.modules["__main__"].SLAVE_NAMESPACE = namespace
+sys.modules["__main__"].PYRO_MASTER = "localhost:%d" % pyro_port
 exec slave_code in namespace
 '''
         directory = self.task_manager.retrieveData("cwd")
@@ -553,6 +557,12 @@ def startSlaveProcess(label=None, master_host=None):
     if label is None:
         label = main_module.SLAVE_PROCESS_LABEL
         namespace = main_module.SLAVE_NAMESPACE
+        if master_host is None:
+            try:
+                master_host = main_module.PYRO_MASTER
+                print master_host
+            except AttributeError:
+                pass
     else:
         namespace = main_module.__dict__
     if debug:
