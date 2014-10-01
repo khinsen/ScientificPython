@@ -1,3 +1,19 @@
+2.9.3 --> 2.9.4
+----------------
+
+Cleanup:
+
+ - The module Scientific.BSP.RemoteObjects was removed.
+   It was experimental and never fully functional.
+
+ - Tabs were replaced by spaces in two files.
+
+Bug fixes:
+
+ - MasterSlave computations without a name server didn't work.
+
+ - Various typos in comments and docstrings
+
 2.9.2 --> 2.9.3
 ----------------
 
@@ -22,7 +38,7 @@ Bug fixes:
 
 - Scientific.BSP: Some operations created nested ParValue objects.
   (Thanks to Kelson Zawack!)
-  
+
 2.9.1 --> 2.9.2
 ----------------
 

@@ -1,3 +1,3 @@
 # Data used both in the package and by setup.py
 
-__version__ = '2.9.3'
+__version__ = '2.9.4'
